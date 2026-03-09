@@ -1,0 +1,27 @@
+{
+  "lastFetchTime": "2026-03-09T11:23:52.565Z",
+  "fetchCount": 3,
+  "totalRules": 5,
+  "newRulesCount": 1,
+  "sources": {
+    "天猫规则中心": {
+      "status": "online",
+      "lastCheck": "2026-03-09T11:23:52.565Z"
+    },
+    "淘宝大学": {
+      "status": "online",
+      "lastCheck": "2026-03-09T11:23:52.565Z"
+    },
+    "天猫国际": {
+      "status": "online",
+      "lastCheck": "2026-03-09T11:23:52.565Z"
+    }
+  },
+  "errors": [
+    {
+      "url": "https://rulechannel.tmall.com/",
+      "message": "No timeline items found",
+      "timestamp": "2026-03-09T11:23:52.565Z"
+    }
+  ]
+}

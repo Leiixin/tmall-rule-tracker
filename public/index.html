@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天猫规则监控中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+/* === CSS VARIABLES === */
+:root {
+  --red: #FF0036;
+  --red-dim: #cc002b;
+  --red-glow: rgba(255, 0, 54, 0.15);
+  --red-glow-strong: rgba(255, 0, 54, 0.35);
+  --bg-deep: #08090d;
+  --bg-panel: #0e1017;
+  --bg-card: #131620;
+  --bg-card-hover: #181c28;
+  --border: #1e2233;
+  --border-light: #2a2f44;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b90a5;
+  --text-dim: #555a70;
+  --green: #00e87b;
+  --amber: #ffb800;
+  --blue: #3b82f6;
+  --sidebar-w: 260px;
+  --header-h: 56px;
+  --statusbar-h: 40px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+.status-bar {
+  height: var(--statusbar-h);
+  background: linear-gradient(90deg, #0a0c12 0%, #101320 50%, #0a0c12 100%);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 20px;
+  font-size: 12px;
+  position: relative;
+  z-index: 100;
+}
+.status-bar::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  opacity: 0.4;
+}
+.fetch-indicator { display: flex; align-items: center; gap: 8px; color: var(--green); }
+.fetch-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid transparent;
+  border-top-color: var(--green);
+  border-right-color: var(--green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.fetch-spinner.idle { animation: none; border-color: var(--text-dim); opacity: 0.4; }
+.fetch-indicator.idle { color: var(--text-secondary); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fetch-text { letter-spacing: 0.5px; }
+.status-divider { width: 1px; height: 16px; background: var(--border-light); }
+.status-time { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.status-sources { display: flex; gap: 12px; margin-left: auto; }
+.source-dot { display: flex; align-items: center; gap: 5px; color: var(--text-dim); font-size: 11px; }
+.source-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.app-layout { display: flex; height: calc(100vh - var(--statusbar-h)); }
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; flex-shrink: 0;
+  position: relative;
+}
+.sidebar::after {
+  content: '';
+  position: absolute; right: 0; top: 0;
+  width: 1px; height: 100%;
+  background: linear-gradient(180deg, var(--red) 0%, transparent 50%, var(--red) 100%);
+  opacity: 0.15;
+}
+.sidebar-header { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+.logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--red), #ff3366);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; color: white;
+  box-shadow: 0 4px 16px var(--red-glow);
+}
+.logo-text {
+  font-size: 16px; font-weight: 700; letter-spacing: 1px;
+  background: linear-gradient(135deg, #fff, #ccc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.logo-sub {
+  font-size: 10px; color: var(--text-dim);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-top: 6px; padding-left: 48px;
+}
+.search-box { padding: 16px 20px; }
+.search-input-wrap { position: relative; }
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 10px 36px;
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-input::placeholder { color: var(--text-dim); }
+.search-input:focus { border-color: var(--red); box-shadow: 0 0 0 3px var(--red-glow); }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 13px; }
+.nav-tabs { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-tab {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
+  position: relative; border: 1px solid transparent;
+}
+.nav-tab:hover { background: var(--bg-card); border-color: var(--border); }
+.nav-tab.active {
+  background: var(--bg-card);
+  border-color: var(--red);
+  box-shadow: 0 0 20px var(--red-glow), inset 0 0 20px var(--red-glow);
+}
+.nav-tab.active::before {
+  content: '';
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--red);
+  border-radius: 0 2px 2px 0;
+}
+.tab-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.tab-icon.home { background: rgba(255, 255, 255, 0.08); color: var(--text-primary); }
+.tab-icon.shelf { background: rgba(255, 184, 0, 0.12); color: var(--amber); }
+.tab-icon.score { background: rgba(59, 130, 246, 0.12); color: var(--blue); }
+.tab-icon.ship { background: rgba(0, 232, 123, 0.12); color: var(--green); }
+.tab-icon.penalty { background: rgba(255, 0, 54, 0.12); color: var(--red); }
+.tab-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
+.nav-tab.active .tab-label { color: var(--text-primary); }
+.tab-count {
+  margin-left: auto; font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-dim); background: var(--bg-deep);
+  padding: 2px 8px; border-radius: 10px;
+}
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); }
+.data-sources-title { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.data-source-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 11px; color: var(--text-secondary); }
+.data-source-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 4px var(--green); }
+.main-content { flex: 1; overflow-y: auto; padding: 28px 32px; position: relative; }
+.main-content::-webkit-scrollbar { width: 6px; }
+.main-content::-webkit-scrollbar-track { background: transparent; }
+.main-content::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+.section-header { margin-bottom: 28px; position: relative; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+}
+.section-tag::before { content: ''; width: 8px; height: 8px; border: 2px solid var(--red); border-radius: 2px; display: inline-block; }
+.section-title { font-size: 26px; font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; }
+.section-desc { color: var(--text-secondary); font-size: 13px; line-height: 1.6; }
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; margin-bottom: 36px; }
+.rule-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s; cursor: default;
+}
+.rule-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--card-accent, var(--red)), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.rule-card:hover {
+  border-color: var(--border-light);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.rule-card:hover::before { opacity: 1; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.card-title { font-size: 15px; font-weight: 700; line-height: 1.4; flex: 1; margin-right: 12px; }
+.severity-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; letter-spacing: 1px; white-space: nowrap; flex-shrink: 0; }
+.severity-badge.critical { background: rgba(255,0,54,0.15); color: var(--red); border: 1px solid rgba(255,0,54,0.3); }
+.severity-badge.warning { background: rgba(255,184,0,0.12); color: var(--amber); border: 1px solid rgba(255,184,0,0.25); }
+.severity-badge.info { background: rgba(59,130,246,0.12); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+.severity-badge.normal { background: rgba(0,232,123,0.10); color: var(--green); border: 1px solid rgba(0,232,123,0.2); }
+.card-body { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+.card-body ul { list-style: none; padding: 0; }
+.card-body li { padding: 3px 0; padding-left: 16px; position: relative; }
+.card-body li::before { content: '›'; position: absolute; left: 2px; color: var(--red); font-weight: 700; }
+.card-body .highlight { color: var(--red); font-weight: 500; }
+.card-body .num { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-weight: 500; }
+.card-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
+.date-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+.card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(255,255,255,0.04); color: var(--text-dim); border: 1px solid var(--border); }
+.card-link {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--blue); text-decoration: none;
+  padding: 3px 8px; border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.06);
+  margin-left: auto; white-space: nowrap;
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;
+}
+.card-link:hover { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); color: #6ba6ff; }
+.change-link {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--blue); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-top: 4px; transition: color 0.2s;
+}
+.change-link:hover { color: #6ba6ff; }
+.timeline-section { margin-top: 8px; }
+.timeline-header { font-size: 15px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.timeline-header::before { content: ''; width: 14px; height: 2px; background: var(--red); }
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 1px; background: linear-gradient(180deg, var(--red), var(--border), transparent); }
+.timeline-item { position: relative; padding-bottom: 20px; transition: opacity .2s; cursor: pointer; }
+.timeline-item:hover { opacity: .8; }
+.timeline-item:hover .timeline-text { color: var(--text-primary); }
+.timeline-item::before {
+  content: '';
+  position: absolute; left: -24px; top: 6px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--bg-card); border: 2px solid var(--red);
+}
+.timeline-item:first-child::before { background: var(--red); box-shadow: 0 0 8px var(--red-glow-strong); }
+.timeline-date { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); margin-bottom: 4px; }
+.timeline-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.timeline-text strong { color: var(--text-primary); font-weight: 500; }
+.content-section { display: none; }
+.content-section.active { display: block; }
+.init-overlay {
+  position: fixed; inset: 0; background: var(--bg-deep); z-index: 10000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+}
+.init-text { font-size: 14px; color: var(--text-dim); letter-spacing: 4px; text-transform: uppercase; }
+.init-bar { width: 200px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+.init-bar-fill { height: 100%; width: 0; background: var(--red); border-radius: 1px; }
+.no-results { text-align: center; padding: 60px 20px; color: var(--text-dim); }
+.no-results-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.3; }
+.no-results-text { font-size: 15px; margin-bottom: 8px; color: var(--text-secondary); }
+.no-results-sub { font-size: 12px; }
+.fetch-panel {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.fetch-panel-title { font-size: 13px; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+.fetch-stats { display: flex; gap: 16px; flex: 1; flex-wrap: wrap; }
+.fetch-stat { display: flex; flex-direction: column; gap: 2px; }
+.fetch-stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.fetch-stat-value { font-size: 13px; font-family: 'JetBrains Mono', monospace; color: var(--green); }
+.fetch-stat-value.error { color: var(--red); }
+.fetch-stat-value.pending { color: var(--amber); }
+.fetch-btn {
+  padding: 8px 20px;
+  background: linear-gradient(135deg, var(--red), var(--red-dim));
+  color: #fff; border: none; border-radius: 6px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  position: relative; overflow: hidden;
+}
+.fetch-btn:hover { box-shadow: 0 4px 16px var(--red-glow-strong); transform: translateY(-1px); }
+.fetch-btn:active { transform: translateY(0); }
+.fetch-btn.loading { pointer-events: none; opacity: 0.7; }
+.fetch-btn.loading::after {
+  content: ''; position: absolute; top: 50%; right: 12px;
+  width: 14px; height: 14px; margin-top: -7px;
+  border: 2px solid transparent; border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+.source-status-row { width: 100%; display: flex; gap: 12px; padding-top: 12px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.source-chip { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
+.source-chip .chip-dot { width: 6px; height: 6px; border-radius: 50%; }
+.source-chip .chip-dot.online { background: var(--green); box-shadow: 0 0 4px var(--green); }
+.source-chip .chip-dot.error { background: var(--red); box-shadow: 0 0 4px var(--red); }
+.source-chip .chip-dot.unknown { background: var(--text-dim); }
+.fetched-section { margin-top: 28px; }
+.changes-panel {
+  margin-top: 32px;
+  border: 1px solid rgba(255, 0, 54, 0.25);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 0, 54, 0.04) 0%, rgba(59, 130, 246, 0.03) 100%);
+  overflow: hidden;
+}
+.changes-panel-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  background: rgba(255, 0, 54, 0.06);
+}
+.changes-panel-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--red-glow-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.changes-panel-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.changes-panel-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.changes-panel-badge {
+  margin-left: auto; font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  background: var(--red-glow); color: var(--red);
+  padding: 3px 10px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap;
+}
+.changes-list { padding: 12px 16px; }
+.change-item {
+  display: flex; gap: 14px;
+  padding: 14px 16px; border: 1px solid var(--border);
+  border-radius: 8px; margin-bottom: 10px;
+  background: var(--bg-card); transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.change-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
+.change-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+.change-item.type-new::before { background: var(--green); }
+.change-item.type-modify::before { background: var(--amber); }
+.change-item.type-remove::before { background: var(--red); }
+.change-type-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+.change-type-tag.new { background: rgba(0, 232, 123, 0.15); color: var(--green); }
+.change-type-tag.modify { background: rgba(255, 184, 0, 0.15); color: var(--amber); }
+.change-type-tag.remove { background: rgba(255, 0, 54, 0.15); color: var(--red); }
+.change-content { flex: 1; min-width: 0; }
+.change-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+.change-detail { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+.change-detail .old { text-decoration: line-through; color: var(--text-dim); background: rgba(255, 0, 54, 0.08); padding: 1px 4px; border-radius: 2px; }
+.change-detail .new-val { color: var(--green); background: rgba(0, 232, 123, 0.08); padding: 1px 4px; border-radius: 2px; font-weight: 500; }
+.change-date { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); margin-top: 8px; }
+.analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.analysis-card { border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); overflow: hidden; transition: border-color 0.2s; }
+.analysis-card:hover { border-color: var(--border-light); }
+.analysis-card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.analysis-card-header.impact { background: linear-gradient(135deg, rgba(255, 184, 0, 0.06) 0%, rgba(255, 0, 54, 0.04) 100%); }
+.analysis-card-header.strategy { background: linear-gradient(135deg, rgba(0, 232, 123, 0.06) 0%, rgba(59, 130, 246, 0.04) 100%); }
+.analysis-card-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.analysis-card-icon.impact { background: rgba(255, 184, 0, 0.2); }
+.analysis-card-icon.strategy { background: rgba(0, 232, 123, 0.2); }
+.analysis-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+.analysis-card-body { padding: 16px 18px; }
+.analysis-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(30, 34, 51, 0.6); }
+.analysis-item:last-child { border-bottom: none; padding-bottom: 4px; }
+.analysis-bullet { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.analysis-bullet.high { background: var(--red); box-shadow: 0 0 6px var(--red-glow); }
+.analysis-bullet.medium { background: var(--amber); }
+.analysis-bullet.low { background: var(--blue); }
+.analysis-bullet.action { background: var(--green); box-shadow: 0 0 6px rgba(0, 232, 123, 0.3); }
+.analysis-item-content { flex: 1; min-width: 0; }
+.analysis-item-title { font-size: 12.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+.analysis-item-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.65; }
+.analysis-item-desc .warn { color: var(--amber); font-weight: 500; }
+.analysis-item-desc .good { color: var(--green); font-weight: 500; }
+.analysis-item-desc .num { font-family: 'JetBrains Mono', monospace; color: var(--blue); }
+.fetched-section-header { font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.fetched-section-header .badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; background: var(--red-glow); color: var(--red); padding: 2px 8px; border-radius: 4px; }
+.fetched-rule-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 8px;
+  margin-bottom: 8px; transition: all 0.2s;
+}
+.fetched-rule-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
+.fetched-cat-dot { width: 8px; height: 8px; border-radius: 2px; margin-top: 6px; flex-shrink: 0; }
+.fetched-cat-dot.shelf { background: var(--amber); }
+.fetched-cat-dot.score { background: var(--blue); }
+.fetched-cat-dot.ship { background: var(--green); }
+.fetched-cat-dot.penalty { background: var(--red); }
+.fetched-cat-dot.general { background: var(--text-dim); }
+.fetched-rule-content { flex: 1; min-width: 0; }
+.fetched-rule-title { font-size: 13px; color: var(--text-primary); line-height: 1.5; word-break: break-all; }
+.fetched-rule-link { color: var(--text-primary); text-decoration: none; transition: color 0.2s; }
+.fetched-rule-link:hover { color: var(--blue); }
+.fetched-rule-meta { font-size: 11px; color: var(--text-dim); margin-top: 4px; display: flex; gap: 12px; }
+.cron-info { font-size: 11px; color: var(--text-dim); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+/* Home page */
+.home-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+.home-stat-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; position: relative; overflow: hidden; cursor: pointer; transition: all 0.3s;
+}
+.home-stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--card-color, var(--red)), transparent); opacity: 0.6;
+}
+.home-stat-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.home-stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.home-stat-value { font-size: 28px; font-weight: 900; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+.home-stat-sub { font-size: 11px; color: var(--text-secondary); }
+.home-section-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.home-section-title::before { content: ''; width: 14px; height: 2px; background: var(--red); }
+.home-category-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.home-category-item {
+  display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  cursor: pointer; transition: all 0.2s; position: relative;
+}
+.home-category-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateX(4px); }
+.home-category-item .cat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.home-category-item .cat-info { flex: 1; min-width: 0; }
+.home-category-item .cat-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.home-category-item .cat-desc { font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.home-category-item .cat-count { font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); margin-left: auto; }
+.home-category-item .cat-arrow { color: var(--text-dim); font-size: 14px; margin-left: 8px; transition: transform 0.2s; }
+.home-category-item:hover .cat-arrow { transform: translateX(3px); color: var(--text-secondary); }
+.home-recent { margin-bottom: 32px; }
+.home-recent-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.home-recent-item:last-child { border-bottom: none; }
+.home-recent-date { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); white-space: nowrap; padding-top: 2px; min-width: 80px; }
+.home-recent-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.home-recent-text strong { color: var(--text-primary); font-weight: 500; }
+@media (max-width: 900px) {
+  .sidebar { width: 56px; }
+  .sidebar-header, .search-box, .sidebar-footer, .tab-label, .tab-count, .logo-sub { display: none; }
+  .logo-area { justify-content: center; }
+  .logo-icon { width: 32px; height: 32px; font-size: 14px; }
+  .nav-tab { justify-content: center; padding: 12px 8px; }
+  .tab-icon { width: 28px; height: 28px; font-size: 13px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .main-content { padding: 20px 16px; }
+  .status-sources { display: none; }
+  .analysis-row { grid-template-columns: 1fr; }
+  .home-stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<!-- INIT OVERLAY -->
+<div class="init-overlay" id="initOverlay">
+  <div class="logo-icon" style="width:48px;height:48px;font-size:22px;">猫</div>
+  <div class="init-text">系统初始化</div>
+  <div class="init-bar"><div class="init-bar-fill" id="initBarFill"></div></div>
+</div>
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="fetch-indicator idle" id="fetchIndicator">
+    <div class="fetch-spinner idle" id="fetchSpinner"></div>
+    <span class="fetch-text" id="fetchText">规则自动抓取中 · 已执行6次</span>
+  </div>
+  <div class="status-divider"></div>
+  <div class="status-time" id="statusTime">最近更新: --</div>
+  <div class="status-divider"></div>
+  <div class="status-time" id="ruleCount">已收录规则: --</div>
+  <div class="status-divider"></div>
+  <div class="status-time" id="cronInfo">定时抓取: 每天09:00</div>
+  <div class="status-sources">
+    <span class="source-dot">天猫规则中心</span>
+    <span class="source-dot">淘宝大学</span>
+    <span class="source-dot">天猫国际</span>
+  </div>
+</div>
+<!-- APP LAYOUT -->
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-area">
+        <div class="logo-icon">猫</div>
+        <span class="logo-text">规则监控中心</span>
+      </div>
+      <div class="logo-sub">Tmall Rules Monitor</div>
+    </div>
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" class="search-input" placeholder="搜索规则关键词..." id="searchInput">
+      </div>
+    </div>
+    <nav class="nav-tabs" id="navTabs">
+      <div class="nav-tab active" data-tab="home">
+        <div class="tab-icon home">⌂</div>
+        <span class="tab-label">首页</span>
+        <span class="tab-count"></span>
+      </div>
+      <div class="nav-tab" data-tab="shelf">
+        <div class="tab-icon shelf">⏱</div>
+        <span class="tab-label">商品效期要求</span>
+        <span class="tab-count">6</span>
+      </div>
+      <div class="nav-tab" data-tab="score">
+        <div class="tab-icon score">★</div>
+        <span class="tab-label">店铺真实体验分</span>
+        <span class="tab-count">8</span>
+      </div>
+      <div class="nav-tab" data-tab="ship">
+        <div class="tab-icon ship">⇢</div>
+        <span class="tab-label">发货时效</span>
+        <span class="tab-count">6</span>
+      </div>
+      <div class="nav-tab" data-tab="penalty">
+        <div class="tab-icon penalty">⚠</div>
+        <span class="tab-label">发货违规及处罚</span>
+        <span class="tab-count">5</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="data-sources-title">数据来源</div>
+      <div class="data-source-item"><span class="dot"></span>天猫规则中心</div>
+      <div class="data-source-item"><span class="dot"></span>淘宝大学</div>
+      <div class="data-source-item"><span class="dot"></span>天猫国际</div>
+    </div>
+  </aside>
+  <main class="main-content" id="mainContent"></main>
+</div>
+<script>
+// === DATA ===
+const RULES_DATA = {
+  shelf: {
+    tag: 'SHELF-LIFE RULES',
+    title: '商品效期要求',
+    desc: '天猫平台对在售商品的保质期、效期管理的强制性规范，适用于食品、保健品、美妆等类目。依据《天猫商品保质期发布规范》及《天猫国际商品效期管理规范》。',
+    cards: [
+      { title: '\u4e34\u671f\u5546\u54c1\u5b9a\u4e49\u4e0e\u6807\u6ce8\u8981\u6c42', severity: 'critical', severityText: '\u5f3a\u5236', date: '2023-04-03', tags: ['\u5168\u7c7b\u76ee'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005', body: '<ul><li>\u4e34\u671f\u5546\u54c1\u5fc5\u987b\u5728\u6807\u9898\u6216\u8be6\u60c5\u9875\u6700\u4e0a\u65b9\u5c55\u793a <span class="highlight">\u201c\u4e34\u671f\u5546\u54c1\u201d</span> \u6216 \u201cX\u5e74X\u6708\u5230\u671f\u201d \u5b57\u6837</li><li>\u4fdd\u8d28\u671f \u2265 <span class="num">1080\u5929</span>\uff1a\u4e34\u4fdd\u671f = <span class="num">180\u5929</span></li><li>\u4fdd\u8d28\u671f 730\uff5e1080\u5929\uff1a\u4e34\u4fdd\u671f = <span class="num">150\u5929</span></li><li>\u4fdd\u8d28\u671f 365\uff5e730\u5929\uff1a\u4e34\u4fdd\u671f = <span class="num">90\u5929</span></li><li>\u4fdd\u8d28\u671f 180\uff5e365\u5929\uff1a\u4e34\u4fdd\u671f = <span class="num">60\u5929</span></li><li>\u4fdd\u8d28\u671f 90\uff5e180\u5929\uff1a\u4e34\u4fdd\u671f = 1/3\u4fdd\u8d28\u671f\uff08\u81f3\u591a40\u5929\uff09</li><li>\u4fdd\u8d28\u671f 30\uff5e90\u5929\uff1a\u4e34\u4fdd\u671f = 1/3\u4fdd\u8d28\u671f\uff08\u81f3\u591a20\u5929\uff09</li><li>\u6765\u6e90\uff1a\u300a\u5929\u732b\u5546\u54c1\u4fdd\u8d28\u671f\u53d1\u5e03\u89c4\u8303\u300b\u7b2c\u4e00\u6761/\u7b2c\u4e8c\u6761</li></ul>' },
+      { title: '化妆品保质期/货架期要求', severity: 'warning', severityText: '警告', date: '2020-03-30', tags: ['化妆品类目'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11002181&cId=45005#/rule/detail?ruleId=11002181&cId=45005', body: '<ul><li>保质期 ≥ <span class="num">3年</span> 的化妆品：剩余 &lt; <span class="num">1年</span> 必须如实说明；剩余 &lt; <span class="num">180天</span> <span class="highlight">禁止销售</span></li><li>保质期 &lt; <span class="num">3年</span> 的化妆品：剩余 &lt; 保质期的 <span class="num">1/3</span> 必须如实说明；剩余 &lt; 保质期的 <span class="num">1/6</span> <span class="highlight">禁止销售</span></li><li>临期商品须在详情页 <span class="highlight">醒目位置</span> 展示剩余保质期信息</li><li>有效期不可写"详见产品外包装"，必须具体展示（如"保质期x个月"）</li><li>适用类目：彩妆/香水、美容护肤/美体/精油、美发护发、母婴洗护、孕产妇用品、洗护清洁剂等</li><li>来源：《天猫化妆品发布规范》第2.1.4条 产品描述规范</li></ul>' },
+      { title: '\u533b\u7597\u4fdd\u5065/\u9690\u5f62\u773c\u955c\u7981\u552e\u6807\u51c6', severity: 'critical', severityText: '\u5f3a\u5236', date: '2023-04-03', tags: ['\u533b\u7597\u4fdd\u5065'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005', body: '<ul><li>\u9690\u5f62\u773c\u955c/\u5f69\u8272\u9690\u5f62\u773c\u955c\uff1a\u5269\u4f59\u4fdd\u8d28\u671f &lt; <span class="num">180\u5929</span>\uff0c\u4e14\u4e0d\u4f4e\u4e8e\u6b63\u5e38\u4f7f\u7528\u5468\u671f \u2192 \u7981\u552e</li><li>\u62a4\u7406\u6db2\uff1a\u5269\u4f59\u4fdd\u8d28\u671f &lt; <span class="num">180\u5929</span> \u7981\u552e</li><li>\u4fdd\u5065\u7528\u54c1\uff1a\u5269\u4f59\u4fdd\u8d28\u671f &lt; \u4fdd\u8d28\u671f\u7684 <span class="num">1/10</span> \u7981\u552e</li><li>\u5904\u65b9\u836f(\u4e2d\u836f\u996e\u7247\u9664\u5916)\u53caOTC\uff1a\u5269\u4f59\u4fdd\u8d28\u671f &lt; <span class="num">90\u5929</span> \u7981\u552e</li><li>\u4fdd\u5065\u98df\u54c1/\u81b3\u98df\u8425\u517b\u8865\u5145\u98df\u54c1\uff1a\u5269\u4f59 &lt; \u4fdd\u8d28\u671f\u7684 <span class="num">1/5</span> \u7981\u552e</li><li>\u8840\u7cd6\u8bd5\u7eb8\uff1a\u5269\u4f59 &lt; \u4fdd\u8d28\u671f\u7684 <span class="num">1/8</span> \u7981\u552e</li><li>\u6765\u6e90\uff1a\u300a\u5929\u732b\u5546\u54c1\u4fdd\u8d28\u671f\u53d1\u5e03\u89c4\u8303\u300b\u7b2c\u4e8c\u6761 \u7279\u6b8a\u7c7b\u76ee</li></ul>' },
+      { title: '天猫国际入库效期管理', severity: 'critical', severityText: '强制', date: '2026-01-20', tags: ['天猫国际'], link: 'https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630', body: '<ul><li>婴幼儿奶粉：入库须 &gt; <span class="num">180天</span>；临期 = 剩余 &lt; 30%且至少<span class="num">180天</span>；禁售 = 剩余 &lt; <span class="num">100天</span></li><li>母婴（非奶粉）/宠物/其他效期品：入库须 &gt; <span class="num">180天</span>；临期 = 剩余 &lt; 30%且至少<span class="num">120天</span>；禁售 = 剩余 &lt; 10%且至少<span class="num">60天</span></li><li>美妆/个护：入库须 &gt; <span class="num">180天</span>；临期 = 剩余 &lt; 30%且至少<span class="num">365天</span>；禁售 = 剩余 &lt; 10%且至少<span class="num">180天</span></li><li>食品/保健品：入库须 &gt; <span class="num">180天</span>；临期 = 剩余 &lt; 30%且至少<span class="num">100~120天</span>；禁售 = 剩余 &lt; 10%且至少<span class="num">60天</span></li><li>临保商品须在标题注明<span class="highlight">[临期]</span>，详情页顶部展示"临期商品"（醒目位置）</li><li>2026年1月新增：暗码效期解码规则错误导致买家损失，按"出售不合格品"处理</li><li>来源：《天猫国际商品效期管理规范》(2026年1月20日最新修订)</li></ul>' },
+      { title: '\u8fc7\u671f\u5546\u54c1\u7981\u552e\u4e0e\u8fdd\u89c4\u5904\u7406', severity: 'critical', severityText: '\u5f3a\u5236', date: '2023-04-03', tags: ['\u5168\u7c7b\u76ee'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005', body: '<ul><li>\u5546\u54c1\u4fdd\u8d28\u671f\u5269\u4f59\u65f6\u95f4\u4f4e\u4e8e\u89c4\u8303\u8981\u6c42\u7684 <span class="highlight">\u4e0d\u53ef\u9500\u552e</span></li><li>\u53d1\u5e03\u4e0d\u7b26\u5408\u6548\u671f\u8981\u6c42\u7684\u5546\u54c1\uff1a\u6309\u300a\u5929\u732b\u56fd\u9645\u5e02\u573a\u7ba1\u7406\u89c4\u5219\u300b\u201c\u6ee5\u53d1\u4fe1\u606f\u201d\u5904\u7406</li><li>\u5b9e\u9645\u51fa\u552e\u4e0d\u7b26\u5408\u6548\u671f\u8981\u6c42\uff1a\u6309\u201c\u63cf\u8ff0\u4e0d\u7b26\u201d\u5904\u7406</li><li>\u4fdd\u8d28\u671f\u4fe1\u606f\u4e0d\u6e05\u6670/\u7be1\u6539/\u624b\u5199\uff1a\u6309\u300a\u5929\u732b\u56fd\u9645\u5546\u54c1\u62bd\u68c0\u884c\u4e3a\u89c4\u8303\u603b\u5219\u300b\u5904\u7406</li><li>\u6765\u6e90\uff1a\u300a\u5929\u732b\u5546\u54c1\u4fdd\u8d28\u671f\u53d1\u5e03\u89c4\u8303\u300b+\u300a\u5929\u732b\u56fd\u9645\u5546\u54c1\u6548\u671f\u7ba1\u7406\u89c4\u8303\u300b</li></ul>' },
+      { title: '\u4fdd\u8d28\u671f\u89c4\u8303\u6765\u6e90\u4e0e\u67e5\u8be2', severity: 'normal', severityText: '\u901a\u77e5', date: '2023-04-03', tags: ['\u89c4\u8303\u67e5\u8be2'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005', body: '<ul><li>\u300a\u5929\u732b\u5546\u54c1\u4fdd\u8d28\u671f\u53d1\u5e03\u89c4\u8303\u300b 2023\u5e744\u67083\u65e5\u751f\u6548\uff0c\u4f4d\u4e8e\u89c4\u5219\u8f9e\u5178 > <span class="highlight">\u5546\u54c1\u7ba1\u7406 > \u5546\u54c1\u53d1\u5e03\u89c4\u8303</span></li><li>\u89c4\u5219ID\uff1a<span class="num">20002796</span>\uff0c\u53ef\u5728\u5929\u732b\u89c4\u5219\u4e2d\u5fc3\u641c\u7d22\u201c\u4fdd\u8d28\u671f\u201d\u67e5\u770b</li><li>\u300a\u5929\u732b\u56fd\u9645\u5546\u54c1\u6548\u671f\u7ba1\u7406\u89c4\u8303\u300b 2026\u5e741\u670820\u65e5\u6700\u65b0\u4fee\u8ba2\uff0c\u9002\u7528\u8de8\u5883\u5546\u54c1\uff08\u89c4\u5219ID: 11005234\uff09</li><li>\u5404\u884c\u4e1a\u53d1\u5e03\u89c4\u8303\u53ef\u80fd\u6709\u7279\u6b8a\u8981\u6c42\uff0c\u4ee5\u884c\u4e1a\u89c4\u8303\u4e3a\u51c6</li></ul>' }
+    ]
+  },
+  score: {
+    tag: 'EXPERIENCE SCORE',
+    title: '店铺真实体验分',
+    desc: '基于《淘宝平台店铺真实体验分规范》，涵盖宝贝质量、物流速度、服务保障三大维度，直接影响搜索排序、活动准入及流量分配。2026年3月16日起执行最新调整。',
+    cards: [
+      { title: '真实体验分定义与评分区间', severity: 'critical', severityText: '强制', date: '2026-03-16', tags: ['基础定义', '真实体验分'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li>真实体验分 = 综合反映店铺 <span class="highlight">商品与服务</span> 的指标体系</li><li>满分 <span class="num">5分</span>，最低 <span class="num">3分</span></li><li>计算前提：近30天支付订单量 ≥ <span class="num">30笔</span>，否则不展示分值</li><li>更新频率：<span class="highlight">每天更新</span>，基于近30天滚动数据</li><li>三大维度：<span class="highlight">宝贝质量</span> + <span class="highlight">物流速度</span> + <span class="highlight">服务保障</span></li><li>公示日期：<span class="num">2026-02-24</span>｜生效：<span class="num">2026-03-05</span>｜执行：<span class="num">2026-03-16</span></li></ul>' },
+      { title: '宝贝质量指标（2026.3新规）', severity: 'critical', severityText: '新规', date: '2026-03-16', tags: ['宝贝质量', '指标升级'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li><span class="highlight">新指标 ①</span> 商品负反馈率 = 品质退款笔数 ÷ 支付订单量</li><li>替代旧指标"首次品退率"与"商品差评率"</li><li><span class="highlight">新指标 ②</span> 商品好评率 = 好评数 ÷ (好评+差评+自然好评) × 100%</li><li>好评率为 <span class="highlight">新增指标</span>，纳入宝贝质量维度计算</li><li>负反馈率越低越好，好评率越高越好</li><li>指标排名对比同行：各指标分 = <span class="num">3 + 2×排名百分位</span></li></ul>' },
+      { title: '物流速度指标（2026.3新规）', severity: 'critical', severityText: '新规', date: '2026-03-16', tags: ['物流速度', '指标升级'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li><span class="highlight">48小时揽收及时率</span> = 48h内揽收订单数 ÷ 应揽收订单数</li><li><span class="highlight">物流到货时长</span> = 支付到签收的平均时间（小时）</li><li>部分类目含 <span class="highlight">物流差评率</span> = 物流差评数 ÷ 评价总数</li><li><span class="highlight">新增</span>：取消"当日达/次日达覆盖率"和"特色服务达标占比"</li><li>物流轨迹异常将纳入 <span class="highlight">违规降分</span> 场景</li><li>揽收及时率、到货时长越优 → 分数越高</li></ul>' },
+      { title: '服务保障指标', severity: 'warning', severityText: '核心', date: '2026-03-16', tags: ['服务保障', '考核指标'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li><span class="highlight">旺旺3分钟人工响应率</span>：8:00-23:00期间，3分钟内人工回复的比率</li><li><span class="highlight">旺旺满意度</span> = 满意评价量 ÷ 参评量</li><li><span class="highlight">退款处理时长</span>：商家首次处理退款的平均耗时（小时）</li><li><span class="highlight">平台求助率</span> = 求助平台介入的订单 ÷ 支付订单量</li><li>以上四项指标均按同行排名换算体验分</li></ul>' },
+      { title: '计算公式与权重', severity: 'warning', severityText: '核心', date: '2026-03-16', tags: ['计算方式', '权重'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li>总分 = <span class="highlight">宝贝质量×权重 + 物流速度×权重 + 服务保障×权重 + 附加分</span></li><li>各维度权重因 <span class="highlight">一级类目不同</span> 而异，具体以平台公示为准</li><li>各指标分 = <span class="num">3 + 2 × 排名百分位</span>（同行对比）</li><li>维度分 = 该维度下各指标分的加权平均</li><li><span class="highlight">附加分</span>（新）：特色服务加分，替代旧版当日/次日达加分</li><li>最终分值 = min(max(总分, <span class="num">3</span>), <span class="num">5</span>)，保留2位小数</li></ul>' },
+      { title: '应用场景', severity: 'info', severityText: '参考', date: '2026-03-16', tags: ['应用场景', '流量影响'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li><span class="highlight">搜索排序</span>：体验分影响商品在搜索结果中的排名权重</li><li><span class="highlight">活动提报</span>：天猫大促、新风潮等活动设有体验分准入门槛</li><li><span class="highlight">首页推荐</span>：体验分用于首页推荐等导购场景</li><li><span class="highlight">阿里妈妈</span>：部分推广资源对体验分有要求</li><li><span class="highlight">优质店铺标</span>：达到类目体验分标准可获得优质标识</li><li>2026年4月天猫新风潮：体验分以 <span class="num">2026年3月</span> 数据为准</li></ul>' },
+      { title: '违规降分与处罚', severity: 'critical', severityText: '严重', date: '2026-03-16', tags: ['违规处罚', '降分'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395', body: '<ul><li><span class="highlight">假冒商品</span>：每被处罚1次，各维度分 <span class="num">−0.5分</span></li><li><span class="highlight">描述不符</span>：每被处罚1次，宝贝质量维度 <span class="num">−0.5分</span></li><li><span class="highlight">混淆商品/误导消费</span>：每次宝贝质量 <span class="num">−0.3分</span></li><li><span class="highlight">物流轨迹异常</span>（新增）：每次物流速度维度 <span class="num">−0.3分</span></li><li>降分次数上限 = 30天内被处罚的次数（含虚拟单等场景）</li><li>降分后分值最低降至 <span class="num">3分</span></li></ul>' },
+      { title: '2025年商家考核标准', severity: 'critical', severityText: '强制', date: '2025-01-01', tags: ['年度考核', '持续经营'], body: '<ul><li>《2025年天猫商家考核标准》<span class="num">2025年1月1日</span> 正式生效</li><li>店铺综合体验分须超过对应类目目标，每月 <span class="highlight">最后一天</span> 考核</li><li>考核周期内未通过月数需低于上限，否则 <span class="highlight">无法继续经营</span></li><li>试考期：持续无经营不超过 <span class="num">3个月</span>，正式期不超过 <span class="num">6个月</span></li><li>须同时满足销售额目标（试考期第3/6/9/12个月末考核）</li></ul>' }
+    ]
+  },
+  ship: {
+    tag: 'SHIPPING TIMELINE',
+    title: '发货时效',
+    desc: '依据《天猫物流时效管理规范》（2025年9月5日最新修订），规定商家发货时间、物流揽收及轨迹更新的时效性要求。',
+    cards: [
+      { title: '发货时效规定（第五条）', severity: 'critical', severityText: '强制', date: '2025-09-05', tags: ['基础规范'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>普通商品：付款后 <span class="num">48小时</span> 内发货</li><li>全款预售/定金预售/定制商品：按设定或约定的发货时间</li><li>周期购商品：约定发货日期的 <span class="num">23:59:59</span> 前</li><li>可使用协商发货工具与买家约定新的发货时间</li></ul>' },
+      { title: '发货时间认定标准（第六条）', severity: 'info', severityText: '定义', date: '2025-09-05', tags: ['认定标准'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>物流公司回传"<span class="highlight">已揽收/揽件</span>"等已发货状态</li><li>菜鸟服务订单：包裹出库后显示"正在发往分拨中心"等状态</li><li>大件商品无物流节点回传的，以物流公司底单发货时间为准</li></ul>' },
+      { title: '物流轨迹超时认定（第十条）', severity: 'warning', severityText: '时效', date: '2025-09-05', tags: ['轨迹超时'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>揽收后 <span class="num">24小时</span> 内无任何物流更新记录</li><li>同区域（京津冀/江浙沪皖/同省）：停滞超 <span class="num">48小时</span></li><li>跨省（非偏远）：停滞超 <span class="num">72小时</span></li><li>偏远地区（新疆/西藏/内蒙古/甘肃/青海/宁夏）：停滞超 <span class="num">120小时</span></li><li>港澳台地区除外</li></ul>' },
+      { title: '物流轨迹异常认定（第十一条）', severity: 'critical', severityText: '严重', date: '2025-09-05', tags: ['轨迹异常'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>揽收后 <span class="num">72小时</span> 内无任何物流更新</li><li>同区域/同省停滞 ≥ <span class="num">96小时</span>；跨省 ≥ <span class="num">120小时</span>；偏远 ≥ <span class="num">168小时</span></li><li>物流轨迹与收货地址不符 / 未经同意退回包裹</li><li>非真实物流轨迹或轨迹造假</li></ul>' },
+      { title: '特殊情形免责（第十四条）', severity: 'info', severityText: '提醒', date: '2025-09-05', tags: ['免责条款'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>消费者"滥用会员权利" / 非生活消费所需购买</li><li>不可抗力因素（自然灾害等），可通过营商保发起报备</li><li>买家收货地址或信息无效/不准确</li><li>商品信息符合《标错类事件处理标准》</li><li>商品涉嫌违法违规，天猫要求停止发货</li></ul>' }
+    ]
+  },
+  penalty: {
+    tag: 'VIOLATIONS & PENALTIES',
+    title: '发货违规及处罚',
+    desc: '依据《天猫物流时效管理规范》第三章，对延迟发货、虚假发货、缺货及物流轨迹违规的认定标准与赔付规则。',
+    cards: [
+      { title: '延迟发货（第七条）', severity: 'warning', severityText: '处罚', date: '2025-09-05', tags: ['延迟发货'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li><span class="highlight">认定：</span>订单未在承诺发货时间内完成发货（普通商品为付款后48小时）</li><li>普通商品/周期购/定制≤48h：交易金额的 <span class="num">5%</span>（<span class="num">5-50元</span>）</li><li>全款预售/定金预售>48h/定制>48h：交易金额的 <span class="num">10%</span>（<span class="num">5-50元</span>）</li><li>情节严重且投诉成立未主动赔付：每次扣 <span class="num">1分</span>（30天内累计不超过6分）</li></ul>' },
+      { title: '缺货（第八条）', severity: 'critical', severityText: '严重', date: '2025-09-05', tags: ['缺货违规'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li><span class="highlight">认定①：</span>延迟发货后 <span class="num">72小时</span> 仍未发货</li><li><span class="highlight">认定②：</span>商家自主承认缺货 / 拒绝发货 / 要求加价发货</li><li><span class="highlight">认定③：</span>物流轨迹超时或异常后 <span class="num">5天</span> 内消费者仍未收到商品</li><li><span class="highlight">认定④：</span>其他异常情形</li><li>承诺 ≤48h 发货：交易金额的 <span class="num">10%</span>（<span class="num">5-500元</span>）</li><li>承诺 >48h 发货：交易金额的 <span class="num">15%</span>（<span class="num">5-500元</span>）</li></ul>' },
+      { title: '虚假发货（第九条）', severity: 'critical', severityText: '严重', date: '2025-09-05', tags: ['虚假发货'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li><span class="highlight">认定①：</span>上传物流单号后 <span class="num">24小时</span> 内平台仍无揽收记录</li><li><span class="highlight">认定②：</span>实际发货商品与消费者所购无关联、空包裹等</li><li><span class="highlight">认定③：</span>物流单号在物流公司官网存在异常、重复物流信息</li><li><span class="highlight">认定④：</span>其他异常情形</li><li>情形①赔付：交易金额的 <span class="num">5%</span>（<span class="num">5-100元</span>）</li><li>情形②③赔付：交易金额的 <span class="num">30%</span>（<span class="num">5-500元</span>）</li><li>情形②商品维度处罚：1次违规下架商品；2次及以上下架 <span class="num">3天</span>；多次违规可删除/限制发布</li></ul>' },
+      { title: '物流轨迹超时（第十条）', severity: 'warning', severityText: '赔付', date: '2025-09-05', tags: ['轨迹超时'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li><span class="highlight">认定①：</span>揽收后 <span class="num">24小时</span> 内无任何物流更新记录</li><li><span class="highlight">认定②：</span>物流流转中停滞超时 — 同区域(京津冀/江浙沪皖)/同省超 <span class="num">48小时</span>；跨省超 <span class="num">72小时</span>；偏远地区(新疆/西藏/内蒙古/甘肃/青海/宁夏)超 <span class="num">120小时</span></li><li>赔付：交易金额的 <span class="num">5%</span>（<span class="num">5-50元</span>）</li></ul>' },
+      { title: '物流轨迹异常（第十一条）', severity: 'critical', severityText: '赔付', date: '2025-09-05', tags: ['轨迹异常'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li><span class="highlight">认定①：</span>揽收后 <span class="num">72小时</span> 内无任何物流更新</li><li><span class="highlight">认定②：</span>物流流转中严重停滞 — 同区域/同省 ≥ <span class="num">96小时</span>；跨省 ≥ <span class="num">120小时</span>；偏远地区 ≥ <span class="num">168小时</span></li><li><span class="highlight">认定③：</span>物流轨迹与收货地址不符</li><li><span class="highlight">认定④：</span>未经消费者同意包裹退回</li><li><span class="highlight">认定⑤：</span>轨迹流转时长远超同线路合理周期</li><li><span class="highlight">认定⑥：</span>非真实物流轨迹或轨迹造假（节点/时间高度相似等）</li><li>赔付：交易金额的 <span class="num">20%</span>（<span class="num">5-100元</span>）</li><li>可采取快递网点限制取号、延长自动确认收货时长等措施</li></ul>' },
+      { title: '赔付上限与其他措施（第十二~十三条）', severity: 'info', severityText: '通知', date: '2025-09-05', tags: ['赔付上限'], link: 'https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391', body: '<ul><li>同一买卖双方同日多笔交易：赔付合并最高 <span class="num">500元</span></li><li>轨迹超时 + 轨迹异常：赔付比例合并不超过 <span class="num">20%</span>，金额不超过 <span class="num">100元</span></li><li>情节严重可执行：商品下架/删除、限制预售权限、提升保证金、限制营销活动、管控支付账户、监管店铺</li></ul>' }
+    ]
+  }
+};
+
+const TIMELINE_DATA = [
+  { date: '03-06', text: '关于变更《天猫在营资质标准》、《天猫分品类旗舰店开放类目》的调整公示', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009571&cId=396#/rule/detail?ruleId=20009571&cId=396' },
+  { date: '03-05', text: '关于变更《天猫在营资质标准》、《天猫商家考核标准》的调整公示', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009563&cId=396#/rule/detail?ruleId=20009563&cId=396' },
+  { date: '02-24', text: '关于变更《淘宝平台店铺真实体验分规范》的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { date: '02-12', text: '关于变更《天猫市场管理规范》及其相关规则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009500&cId=395#/rule/detail?ruleId=20009500&cId=395' },
+  { date: '02-09', text: '关于天猫特色服务"宠医问诊"更名为"爱宠顾问"的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009480&cId=395#/rule/detail?ruleId=20009480&cId=395' },
+  { date: '02-06', text: '关于新增《天猫商家安装服务管理规范》及变更相关规则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009476&cId=395#/rule/detail?ruleId=20009476&cId=395' },
+  { date: '02-06', text: '关于新增《天猫海鲜水产行业管理规范》、变更及下线相关生鲜规则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009477&cId=395#/rule/detail?ruleId=20009477&cId=395' },
+  { date: '02-04', text: '关于变更《天猫在营资质标准》、《天猫商家考核标准》、《天猫店铺命名规范》等规则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009401&cId=396#/rule/detail?ruleId=20009401&cId=396' },
+  { date: '02-04', text: '关于下线《天猫家装家居送货入户并安装服务规范》等服务标准的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009438&cId=395#/rule/detail?ruleId=20009438&cId=395' },
+  { date: '01-27', text: '关于变更《天猫交易时效规定》特殊商品付款时效细则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009348&cId=395#/rule/detail?ruleId=20009348&cId=395' },
+];
+
+const SCORE_CHANGES = [
+  { type: 'new', title: '新增「商品负反馈率」指标', detail: '商品负反馈率 = 品质退款笔数 ÷ 支付订单量。<span class="new-val">替代原「首次品退率」</span>，统一以品质退款为口径，更准确反映商品质量问题。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'new', title: '新增「商品好评率」指标', detail: '商品好评率 = 好评数 ÷ (好评 + 差评 + 自然好评) × 100%。<span class="new-val">全新指标</span>，纳入宝贝质量维度参与体验分计算。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'remove', title: '移除「首次品退率」与「商品差评率」', detail: '旧指标 <span class="old">首次品退率</span> 与 <span class="old">商品差评率</span> 不再作为宝贝质量维度的计算指标，已被「商品负反馈率」与「商品好评率」替代。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'new', title: '新增「物流轨迹异常」违规降分', detail: '物流轨迹异常每被处罚1次，物流速度维度 <span class="new-val">−0.3分</span>。此前版本无此降分场景。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'modify', title: '附加分计算方式调整', detail: '旧版附加分由 <span class="old">当日达/次日达覆盖率</span> + <span class="old">特色服务达标占比</span> 两项组成 → 新版调整为 <span class="new-val">特色服务加分</span> 单项附加分。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'remove', title: '移除「当日达/次日达覆盖率」', detail: '物流速度维度中 <span class="old">当日达/次日达覆盖率</span> 不再作为独立指标，相关服务考核合并至附加分模块。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
+  { type: 'modify', title: '评分公示与执行时间节点', detail: '本次调整于 <span class="new-val">2026-02-24</span> 公示，<span class="new-val">2026-03-05</span> 正式生效，<span class="new-val">2026-03-16</span> 全面执行。商家需在执行日前完成运营策略调整。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' }
+];
+
+const SCORE_IMPACT = [
+  { level: 'high', title: '品质退款成为核心杠杆', desc: '「商品负反馈率」以品质退款为唯一口径，品质退款每增加1笔直接拉低分数。<span class="warn">高退货率类目（服装/鞋靴）受冲击最大</span>，需重点关注品质退款占比。' },
+  { level: 'high', title: '好评率纳入计分，差评权重放大', desc: '好评率为全新指标，差评和自然好评均参与分母计算。<span class="warn">沉默用户不再"中性"</span>——未评价不计入好评率，只有主动好评才加分，差评的稀释难度增加。' },
+  { level: 'medium', title: '物流轨迹异常直接降分', desc: '新增物流轨迹异常每次 <span class="num">−0.3分</span> 的降分机制。使用代发、中转仓或偏远物流的商家面临<span class="warn">物流维度分被反复扣减</span>的风险，且降分累计上限按30天内处罚次数计。' },
+  { level: 'medium', title: '附加分结构缩窄', desc: '当日/次日达覆盖率被移除，附加分只剩「特色服务加分」单项。此前依靠时效服务拉高分数的商家<span class="warn">将失去这部分加分优势</span>，总分可能出现下滑。' },
+  { level: 'low', title: '搜索与活动准入门槛联动', desc: '体验分直接影响搜索排序、大促活动提报、首页推荐等场景。分值下降 → <span class="warn">流量减少 → 转化降低</span>，形成负向循环。4月天猫新风潮将以3月分值为准入依据。' }
+];
+
+const SCORE_STRATEGY = [
+  { level: 'action', title: '严控品质退款，建立售前拦截机制', desc: '商品详情页增加实物对比图、尺码参考表，<span class="good">将品退率降低在同行前30%</span>。对高品退SKU设置预警，考虑主动下架或优化描述。' },
+  { level: 'action', title: '主动引导好评，提升好评率', desc: '签收后通过旺旺/短信引导满意用户评价，提供<span class="good">售后关怀卡片</span>。避免刷评风险，重点在真实满意度驱动。目标：好评率超过类目 <span class="num">75%</span> 分位。' },
+  { level: 'action', title: '优化物流链路，消灭轨迹异常', desc: '选择揽收及时率高的快递公司，<span class="good">确保48h内揽收并有首条轨迹更新</span>。对代发/中转订单重点监控，设置物流停滞预警（>12h无更新立即介入）。' },
+  { level: 'action', title: '强化客服响应，拉高服务维度', desc: '8:00-23:00旺旺3分钟人工响应率目标 <span class="num">≥95%</span>，配置智能客服兜底。退款处理时长控制在 <span class="num">12h</span> 以内，<span class="good">降低平台求助率至同行前20%</span>。' },
+  { level: 'action', title: '每日监控分值，提前应对大促准入', desc: '体验分每日更新，建议<span class="good">每天查看三大维度分值趋势</span>。4月新风潮以3月数据为准，需在3月中旬前将分值稳定在类目目标线以上。' }
+];
+
+// === EMBEDDED FETCHED DATA ===
+let backendStatus = {
+  lastFetchTime: null, fetchCount: 0, totalRules: 0, newRulesCount: 0,
+  sources: {
+    "天猫规则中心": { status: "unknown", lastCheck: null },
+    "淘宝大学": { status: "unknown", lastCheck: null },
+    "天猫国际": { status: "unknown", lastCheck: null }
+  }
+};
+
+let fetchedRulesData = {
+  categorized: {
+    shelf: [],
+    score: [],
+    ship: [],
+    penalty: [],
+    general: []
+  }
+};
+
+let timelineDataLive = null;
+
+async function loadExternalData() {
+  var basePath = './data/';
+  try {
+    var results = await Promise.allSettled([
+      fetch('/api/status'),
+      fetch('/api/rules'),
+      fetch(basePath + 'timeline.json'),
+      fetch(basePath + 'status.json'),
+      fetch(basePath + 'scraped.json')
+    ]);
+
+    var statusLoaded = false;
+    if (results[0].status === 'fulfilled' && results[0].value.ok) {
+      var apiStatus = await results[0].value.json();
+      if (apiStatus && (apiStatus.lastFetchTime || typeof apiStatus.fetchCount === 'number')) {
+        backendStatus = Object.assign({}, backendStatus, apiStatus);
+        statusLoaded = true;
+      }
+    }
+
+    var rulesLoaded = false;
+    if (results[1].status === 'fulfilled' && results[1].value.ok) {
+      var apiRules = await results[1].value.json();
+      if (apiRules && apiRules.categorized) {
+        fetchedRulesData = apiRules;
+        rulesLoaded = true;
+        backendStatus = Object.assign({}, backendStatus, {
+          lastFetchTime: apiRules.lastFetchTime || backendStatus.lastFetchTime,
+          fetchCount: typeof apiRules.fetchCount === 'number' ? apiRules.fetchCount : backendStatus.fetchCount,
+          newRulesCount: typeof apiRules.newRulesCount === 'number' ? apiRules.newRulesCount : backendStatus.newRulesCount,
+          sources: apiRules.sources || backendStatus.sources
+        });
+      }
+    }
+
+    if (!statusLoaded && results[3].status === 'fulfilled' && results[3].value.ok) {
+      var localStatus = await results[3].value.json();
+      if (localStatus && (localStatus.lastFetchTime || typeof localStatus.fetchCount === 'number')) {
+        backendStatus = Object.assign({}, backendStatus, localStatus);
+      }
+    }
+
+    if (!rulesLoaded && results[4].status === 'fulfilled' && results[4].value.ok) {
+      var localRules = await results[4].value.json();
+      if (localRules && localRules.categorized) {
+        fetchedRulesData = localRules;
+      }
+    }
+
+    if (results[2].status === 'fulfilled' && results[2].value.ok) {
+      var d = await results[2].value.json();
+      if (d && d.items && d.items.length > 0) timelineDataLive = d.items;
+    }
+  } catch (e) {
+    console.warn('External data load failed, using embedded defaults:', e);
+  }
+}
+
+// === RENDER FUNCTIONS ===
+function renderFetchPanel() {
+  const s = backendStatus;
+  const lastTime = s && s.lastFetchTime ? new Date(s.lastFetchTime).toLocaleString('zh-CN') : '尚未抓取';
+  const totalFetched = s ? s.totalRules : 0;
+  const fetchCount = s ? s.fetchCount : 0;
+  const newCount = s ? s.newRulesCount : 0;
+
+  let sourcesHtml = '';
+  const sourceNames = ['天猫规则页', '天猫规则中心', '淘宝大学-规则动态', '真实体验分规范'];
+  sourceNames.forEach(name => {
+    const status = s && s.sources && s.sources[name] ? s.sources[name].status : 'unknown';
+    const dotClass = status === 'online' ? 'online' : (status === 'error' ? 'error' : 'unknown');
+    sourcesHtml += '<span class="source-chip"><span class="chip-dot ' + dotClass + '"></span>' + name + '</span>';
+  });
+
+  return '<div class="fetch-panel">' +
+    '<div class="fetch-panel-title">后端抓取状态</div>' +
+    '<div class="fetch-stats">' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">最近抓取</span><span class="fetch-stat-value">' + lastTime + '</span></div>' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">抓取次数</span><span class="fetch-stat-value">' + fetchCount + '</span></div>' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">已发现规则</span><span class="fetch-stat-value">' + totalFetched + '</span></div>' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">最近新增</span><span class="fetch-stat-value ' + (newCount > 0 ? '' : 'pending') + '">' + newCount + '</span></div>' +
+    '</div>' +
+    '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()">立即抓取</button>' +
+    '<div class="source-status-row">' + sourcesHtml + '</div>' +
+    '<div class="cron-info">cron: 0 9 * * * (每天09:00自动执行)</div>' +
+  '</div>';
+}
+
+function renderFetchedRules(category) {
+  if (!fetchedRulesData || !fetchedRulesData.categorized) return '';
+  const items = fetchedRulesData.categorized[category] || [];
+  if (items.length === 0) return '';
+
+  let html = '<div class="fetched-section"><div class="fetched-section-header">自动抓取发现的相关规则 <span class="badge">' + items.length + ' 条</span></div>';
+  items.slice(0, 20).forEach(function(item) {
+    const dateStr = item.effectiveDate || '';
+    var titleHtml = item.url ? '<a class="fetched-rule-link" href="' + item.url + '" target="_blank" rel="noopener">' + item.title + ' ↗</a>' : item.title;
+    html += '<div class="fetched-rule-item">' +
+      '<div class="fetched-cat-dot ' + item.category + '"></div>' +
+      '<div class="fetched-rule-content">' +
+        '<div class="fetched-rule-title">' + titleHtml + '</div>' +
+        '<div class="fetched-rule-meta"><span>来源: ' + (item.source || '未知') + '</span>' + (dateStr ? '<span>生效时间: ' + dateStr + '</span>' : '') + '</div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderScoreChanges() {
+  const typeLabels = { 'new': '新增', 'modify': '变更', 'remove': '移除' };
+  let itemsHtml = '';
+  SCORE_CHANGES.forEach(function(c) {
+    const linkHtml = c.link ? '<a class="change-link" href="' + c.link + '" target="_blank" rel="noopener">查看规则原文 ↗</a>' : '';
+    itemsHtml += '<div class="change-item type-' + c.type + '">' +
+      '<span class="change-type-tag ' + c.type + '">' + typeLabels[c.type] + '</span>' +
+      '<div class="change-content">' +
+        '<div class="change-title">' + c.title + '</div>' +
+        '<div class="change-detail">' + c.detail + '</div>' +
+        '<div class="change-date">' + c.date + ' ' + linkHtml + '</div>' +
+      '</div></div>';
+  });
+
+  let impactHtml = '';
+  SCORE_IMPACT.forEach(function(item) {
+    impactHtml += '<div class="analysis-item"><div class="analysis-bullet ' + item.level + '"></div>' +
+      '<div class="analysis-item-content"><div class="analysis-item-title">' + item.title + '</div>' +
+      '<div class="analysis-item-desc">' + item.desc + '</div></div></div>';
+  });
+
+  let strategyHtml = '';
+  SCORE_STRATEGY.forEach(function(item) {
+    strategyHtml += '<div class="analysis-item"><div class="analysis-bullet ' + item.level + '"></div>' +
+      '<div class="analysis-item-content"><div class="analysis-item-title">' + item.title + '</div>' +
+      '<div class="analysis-item-desc">' + item.desc + '</div></div></div>';
+  });
+
+  return '<div class="changes-panel">' +
+    '<div class="changes-panel-header">' +
+      '<div class="changes-panel-icon">&#916;</div>' +
+      '<div><div class="changes-panel-title">规则变更记录</div>' +
+      '<div class="changes-panel-sub">2026年3月真实体验分规范调整详情</div></div>' +
+      '<span class="changes-panel-badge">' + SCORE_CHANGES.length + ' 项变更</span>' +
+    '</div>' +
+    '<div class="changes-list">' + itemsHtml + '</div></div>' +
+    '<div class="analysis-row">' +
+      '<div class="analysis-card"><div class="analysis-card-header impact">' +
+        '<div class="analysis-card-icon impact">⚡</div>' +
+        '<div class="analysis-card-title">对商家的影响</div></div>' +
+        '<div class="analysis-card-body">' + impactHtml + '</div></div>' +
+      '<div class="analysis-card"><div class="analysis-card-header strategy">' +
+        '<div class="analysis-card-icon strategy">✦</div>' +
+        '<div class="analysis-card-title">优化策略建议</div></div>' +
+        '<div class="analysis-card-body">' + strategyHtml + '</div></div>' +
+    '</div>';
+}
+
+function renderTimeline() {
+  var data = timelineDataLive || TIMELINE_DATA;
+  let html = '<div class="timeline-section"><div class="timeline-header">规则公告<a href="https://rulechannel.tmall.com/" target="_blank" rel="noopener" style="float:right;font-size:12px;color:var(--text-muted);font-weight:400;text-decoration:none;opacity:.6">来源: 天猫规则中心</a></div><div class="timeline">';
+  data.forEach(function(item) {
+    var inner = item.link
+      ? '<a href="' + item.link + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:flex;align-items:baseline;gap:12px;width:100%"><div class="timeline-date">' + item.date + '</div><div class="timeline-text">' + item.text + '</div></a>'
+      : '<div class="timeline-date">' + item.date + '</div><div class="timeline-text">' + item.text + '</div>';
+    html += '<div class="timeline-item">' + inner + '</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function renderHome() {
+  var totalCards = 0;
+  var catKeys = ['shelf', 'score', 'ship', 'penalty'];
+  catKeys.forEach(function(k) { totalCards += RULES_DATA[k].cards.length; });
+  var fetchedTotal = backendStatus ? backendStatus.totalRules : 0;
+  var tlData = timelineDataLive || TIMELINE_DATA;
+  var latestDate = '--';
+  // Use the most recent date from 规则公告 (timeline)
+  if (tlData.length > 0 && tlData[0].date) {
+    latestDate = new Date().getFullYear() + '-' + tlData[0].date;
+  }
+
+  var catIcons = { shelf: '⏱', score: '★', ship: '⇢', penalty: '⚠' };
+  var catColors = { shelf: 'var(--amber)', score: 'var(--blue)', ship: 'var(--green)', penalty: 'var(--red)' };
+  var catBgs = { shelf: 'rgba(255,184,0,0.12)', score: 'rgba(59,130,246,0.12)', ship: 'rgba(0,232,123,0.12)', penalty: 'rgba(255,0,54,0.12)' };
+
+  var html = '<div class="content-section active">' +
+    '<div class="section-header">' +
+      '<div class="section-tag">OVERVIEW</div>' +
+      '<h1 class="section-title">首页</h1>' +
+      '<p class="section-desc">天猫规则监控中心总览，汇总所有规则分类、最新动态与抓取状态。</p>' +
+    '</div>';
+
+  // Stats cards
+  html += '<div class="home-stats">' +
+    '<div class="home-stat-card" style="--card-color:var(--text-primary)">' +
+      '<div class="home-stat-label">规则分类</div>' +
+      '<div class="home-stat-value" style="color:var(--text-primary)">' + catKeys.length + '</div>' +
+      '<div class="home-stat-sub">shelf / score / ship / penalty</div>' +
+    '</div>' +
+    '<div class="home-stat-card" style="--card-color:var(--red)">' +
+      '<div class="home-stat-label">基础规则</div>' +
+      '<div class="home-stat-value" style="color:var(--red)">' + totalCards + '</div>' +
+      '<div class="home-stat-sub">人工整理的核心规则卡片</div>' +
+    '</div>' +
+    '<div class="home-stat-card" style="--card-color:var(--green)">' +
+      '<div class="home-stat-label">抓取规则</div>' +
+      '<div class="home-stat-value" style="color:var(--green)">' + fetchedTotal + '</div>' +
+      '<div class="home-stat-sub">后端自动抓取发现</div>' +
+    '</div>' +
+    '<div class="home-stat-card" style="--card-color:var(--amber)">' +
+      '<div class="home-stat-label">最近更新</div>' +
+      '<div class="home-stat-value" style="color:var(--amber);font-size:18px">' + latestDate + '</div>' +
+      '<div class="home-stat-sub">最新规则变更日期</div>' +
+    '</div>' +
+  '</div>';
+
+  // Fetch panel
+  html += renderFetchPanel();
+
+  // Category list
+  html += '<div class="home-section-title">规则分类索引</div>' +
+    '<div class="home-category-list">';
+  catKeys.forEach(function(k) {
+    var d = RULES_DATA[k];
+    html += '<div class="home-category-item" onclick="showTab(\'' + k + '\')">' +
+      '<div class="cat-icon" style="background:' + catBgs[k] + ';color:' + catColors[k] + '">' + catIcons[k] + '</div>' +
+      '<div class="cat-info"><div class="cat-name">' + d.title + '</div>' +
+      '<div class="cat-desc">' + d.desc + '</div></div>' +
+      '<div class="cat-count">' + d.cards.length + '</div>' +
+      '<span class="cat-arrow">→</span>' +
+    '</div>';
+  });
+  html += '</div>';
+
+  // Timeline
+  html += renderTimeline();
+
+  html += '</div>';
+  return html;
+}
+
+function renderSection(key) {
+  const data = RULES_DATA[key];
+  let html = '<div class="content-section active" id="section-' + key + '">' +
+    '<div class="section-header">' +
+      '<div class="section-tag">' + data.tag + '</div>' +
+      '<h1 class="section-title">' + data.title + '</h1>' +
+      '<p class="section-desc">' + data.desc + '</p>' +
+    '</div>' +
+    '<div class="rules-grid">';
+
+  data.cards.forEach(function(card) {
+    html += '<div class="rule-card" data-search="' + card.title + ' ' + card.body.replace(/<[^>]*>/g, '') + '">' +
+      '<div class="card-top"><div class="card-title">' + card.title + '</div>' +
+      '<span class="severity-badge ' + card.severity + '">' + card.severityText + '</span></div>' +
+      '<div class="card-body">' + card.body + '</div>' +
+      '<div class="card-footer"><span class="date-badge">' + card.date + '</span>' +
+      card.tags.map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('') +
+      (card.link ? '<a class="card-link" href="' + card.link + '" target="_blank" rel="noopener">查看原文 ↗</a>' : '') +
+      '</div></div>';
+  });
+  html += '</div>';
+
+  if (key === 'score') html += renderScoreChanges();
+  html += renderFetchedRules(key);
+
+  html += '</div>';
+  return html;
+}
+
+// === INTERACTION ===
+const mainContent = document.getElementById('mainContent');
+let currentTab = 'home';
+
+function showTab(key) {
+  currentTab = key;
+  const searchVal = document.getElementById('searchInput').value.trim().toLowerCase();
+
+  if (key === 'home') {
+    mainContent.innerHTML = renderHome();
+  } else {
+    mainContent.innerHTML = renderSection(key);
+    if (searchVal) filterCards(searchVal);
+  }
+
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelector('.nav-tab[data-tab="' + key + '"]').classList.add('active');
+
+  if (typeof gsap !== 'undefined') {
+    gsap.fromTo('.home-stat-card', { opacity: 0, y: 15 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out' });
+    gsap.fromTo('.home-category-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.2 });
+    gsap.fromTo('.timeline-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out', delay: 0.4 });
+    gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.15 });
+    gsap.fromTo('.rule-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.4, ease: 'power2.out' });
+    gsap.fromTo('.timeline-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out', delay: 0.3 });
+    gsap.fromTo('.fetched-rule-item', { opacity: 0, x: -8 }, { opacity: 1, x: 0, stagger: 0.04, duration: 0.3, ease: 'power2.out', delay: 0.2 });
+    gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+    gsap.fromTo('.changes-panel', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.25 });
+    gsap.fromTo('.change-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.4 });
+    gsap.fromTo('.analysis-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.5, ease: 'power2.out', delay: 0.6 });
+    gsap.fromTo('.analysis-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.8 });
+  }
+}
+
+document.getElementById('navTabs').addEventListener('click', function(e) {
+  const tab = e.target.closest('.nav-tab');
+  if (tab) showTab(tab.dataset.tab);
+});
+
+function filterCards(query) {
+  const cards = document.querySelectorAll('.rule-card');
+  let visible = 0;
+  cards.forEach(function(card) {
+    const text = card.getAttribute('data-search').toLowerCase();
+    if (text.includes(query)) { card.style.display = ''; visible++; }
+    else { card.style.display = 'none'; }
+  });
+  let noRes = document.querySelector('.no-results');
+  if (visible === 0 && !noRes) {
+    const div = document.createElement('div');
+    div.className = 'no-results';
+    div.innerHTML = '<div class="no-results-icon">⌕</div><div class="no-results-text">未找到匹配的规则</div><div class="no-results-sub">尝试更换关键词或切换分类</div>';
+    document.querySelector('.rules-grid').after(div);
+  } else if (visible > 0 && noRes) { noRes.remove(); }
+}
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  const val = e.target.value.trim().toLowerCase();
+  if (!val) { showTab(currentTab); return; }
+  filterCards(val);
+});
+
+function setFetchActive(active) {
+  var indicator = document.getElementById('fetchIndicator');
+  var spinner = document.getElementById('fetchSpinner');
+  var text = document.getElementById('fetchText');
+  if (!indicator || !spinner || !text) return;
+  if (active) {
+    indicator.classList.remove('idle');
+    spinner.classList.remove('idle');
+    text.textContent = '正在抓取规则...';
+  } else {
+    indicator.classList.add('idle');
+    spinner.classList.add('idle');
+    var count = backendStatus ? backendStatus.fetchCount : 0;
+    text.textContent = '规则自动抓取中 · 已执行' + count + '次';
+  }
+}
+
+async function triggerManualFetch() {
+  const btn = document.getElementById('manualFetchBtn');
+  if (!btn) return;
+  btn.classList.add('loading');
+  btn.textContent = '抓取中...';
+  setFetchActive(true);
+  try {
+    const response = await fetch('/api/crawl', { method: 'POST' });
+    if (!response.ok) throw new Error('crawl failed');
+    const result = await response.json();
+
+    backendStatus = Object.assign({}, backendStatus, {
+      lastFetchTime: result.timestamp || new Date().toISOString(),
+      fetchCount: typeof result.fetchCount === 'number' ? result.fetchCount : ((backendStatus && backendStatus.fetchCount) || 0) + 1,
+      newRulesCount: typeof result.newRulesCount === 'number' ? result.newRulesCount : 0,
+      totalRules: typeof result.stored === 'number' ? result.stored : backendStatus.totalRules
+    });
+
+    await loadExternalData();
+    showTab(currentTab);
+    updateStatusBar();
+    btn.textContent = '完成! +' + (result.newRulesCount || 0) + '条';
+  } catch (e) {
+    btn.textContent = '抓取失败';
+  } finally {
+    btn.classList.remove('loading');
+    setFetchActive(false);
+    setTimeout(function() {
+      var b = document.getElementById('manualFetchBtn');
+      if (b) b.textContent = '立即抓取';
+    }, 3000);
+  }
+}
+
+function updateStatusBar() {
+  if (backendStatus && backendStatus.lastFetchTime) {
+    var t = new Date(backendStatus.lastFetchTime);
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    var str = t.getFullYear() + '-' + pad(t.getMonth()+1) + '-' + pad(t.getDate()) + ' ' + pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
+    document.getElementById('statusTime').textContent = '最近抓取: ' + str;
+  }
+  var total = 0;
+  Object.values(RULES_DATA).forEach(function(s) { total += s.cards.length; });
+  var fetched = backendStatus ? backendStatus.totalRules : 0;
+  document.getElementById('ruleCount').textContent = '已收录: ' + total + '条基础 + ' + fetched + '条抓取';
+  setFetchActive(false);
+}
+
+function updateClock() {
+  var now = new Date();
+  var pad = function(n) { return String(n).padStart(2, '0'); };
+  if (!backendStatus) {
+    var str = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+    document.getElementById('statusTime').textContent = '当前时间: ' + str;
+    var total = 0;
+    Object.values(RULES_DATA).forEach(function(s) { total += s.cards.length; });
+    document.getElementById('ruleCount').textContent = '已收录规则: ' + total + '条';
+  }
+}
+
+// === BOOT ===
+function bootComplete() {
+  var overlay = document.getElementById('initOverlay');
+  overlay.style.display = 'none';
+  showTab('home');
+  updateStatusBar();
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+function boot() {
+  var fill = document.getElementById('initBarFill');
+  var overlay = document.getElementById('initOverlay');
+  var dataReady = loadExternalData();
+
+  if (typeof gsap !== 'undefined') {
+    gsap.to(fill, {
+      width: '100%', duration: 1.2, ease: 'power2.inOut',
+      onComplete: function() {
+        dataReady.then(function() {
+          gsap.to(overlay, {
+            opacity: 0, duration: 0.4,
+            onComplete: bootComplete
+          });
+        });
+      }
+    });
+  } else {
+    // GSAP not loaded — skip animation, show content immediately
+    fill.style.width = '100%';
+    dataReady.then(function() {
+      setTimeout(function() {
+        overlay.style.transition = 'opacity 0.3s';
+        overlay.style.opacity = '0';
+        setTimeout(bootComplete, 350);
+      }, 400);
+    });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', boot);
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"75124c326cb447fe934cde04713ae013","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

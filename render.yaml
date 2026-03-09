@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: tmall-rule-tracker
+    env: node
+    plan: starter
+    region: singapore
+    autoDeploy: true
+    numInstances: 1
+    buildCommand: npm install
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TZ
+        value: Asia/Shanghai
+      - key: ENABLE_INTERNAL_CRON
+        value: "true"
+    disk:
+      name: data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1

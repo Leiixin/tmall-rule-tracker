@@ -1,0 +1,20 @@
+{
+  "name": "tmall-rule-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "autostart:install": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-autostart.ps1",
+    "autostart:remove": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/uninstall-autostart.ps1"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "cheerio": "^1.1.2",
+    "dayjs": "^1.11.18",
+    "express": "^4.21.2",
+    "node-cron": "^4.2.1",
+    "xlsx": "^0.18.5"
+  }
+}
