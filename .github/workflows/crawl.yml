@@ -1,0 +1,48 @@
+name: Crawl Tmall Rules
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 09:00 Asia/Shanghai == 01:00 UTC
+    - cron: "0 1 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crawl-tmall-rules
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Crawl And Generate data/*.json
+        run: node scripts/gh-crawl.mjs
+        env:
+          TZ: Asia/Shanghai
+          DATA_DIR: data
+
+      - name: Commit Updated Data
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/*.json
+            git commit -m "chore(data): update rules data"
+            git push
+          else
+            echo "No changes."
+          fi
+

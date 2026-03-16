@@ -665,17 +665,31 @@ let timelineDataLive = null;
 async function loadExternalData() {
   var basePath = './data/';
   try {
-    var results = await Promise.allSettled([
-      fetch('/api/status'),
-      fetch('/api/rules'),
-      fetch(basePath + 'timeline.json'),
-      fetch(basePath + 'status.json'),
-      fetch(basePath + 'scraped.json')
-    ]);
+    // Static hosting (GitHub Pages) has no backend API. Prefer local JSON there.
+    var preferApi = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+    var requests = preferApi
+      ? [
+          fetch('/api/status'),
+          fetch('/api/rules'),
+          fetch(basePath + 'timeline.json'),
+          fetch(basePath + 'status.json'),
+          fetch(basePath + 'scraped.json')
+        ]
+      : [
+          fetch(basePath + 'status.json'),
+          fetch(basePath + 'scraped.json'),
+          fetch(basePath + 'timeline.json'),
+          fetch('/api/status'),
+          fetch('/api/rules')
+        ];
+    var idx = preferApi
+      ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, localRules: 4 }
+      : { localStatus: 0, localRules: 1, timeline: 2, apiStatus: 3, apiRules: 4 };
+    var results = await Promise.allSettled(requests);
 
     var statusLoaded = false;
-    if (results[0].status === 'fulfilled' && results[0].value.ok) {
-      var apiStatus = await results[0].value.json();
+    if (results[idx.apiStatus].status === 'fulfilled' && results[idx.apiStatus].value.ok) {
+      var apiStatus = await results[idx.apiStatus].value.json();
       if (apiStatus && (apiStatus.lastFetchTime || typeof apiStatus.fetchCount === 'number')) {
         backendStatus = Object.assign({}, backendStatus, apiStatus);
         statusLoaded = true;
@@ -683,8 +697,8 @@ async function loadExternalData() {
     }
 
     var rulesLoaded = false;
-    if (results[1].status === 'fulfilled' && results[1].value.ok) {
-      var apiRules = await results[1].value.json();
+    if (results[idx.apiRules].status === 'fulfilled' && results[idx.apiRules].value.ok) {
+      var apiRules = await results[idx.apiRules].value.json();
       if (apiRules && apiRules.categorized) {
         fetchedRulesData = apiRules;
         rulesLoaded = true;
@@ -697,22 +711,22 @@ async function loadExternalData() {
       }
     }
 
-    if (!statusLoaded && results[3].status === 'fulfilled' && results[3].value.ok) {
-      var localStatus = await results[3].value.json();
+    if (!statusLoaded && results[idx.localStatus].status === 'fulfilled' && results[idx.localStatus].value.ok) {
+      var localStatus = await results[idx.localStatus].value.json();
       if (localStatus && (localStatus.lastFetchTime || typeof localStatus.fetchCount === 'number')) {
         backendStatus = Object.assign({}, backendStatus, localStatus);
       }
     }
 
-    if (!rulesLoaded && results[4].status === 'fulfilled' && results[4].value.ok) {
-      var localRules = await results[4].value.json();
+    if (!rulesLoaded && results[idx.localRules].status === 'fulfilled' && results[idx.localRules].value.ok) {
+      var localRules = await results[idx.localRules].value.json();
       if (localRules && localRules.categorized) {
         fetchedRulesData = localRules;
       }
     }
 
-    if (results[2].status === 'fulfilled' && results[2].value.ok) {
-      var d = await results[2].value.json();
+    if (results[idx.timeline].status === 'fulfilled' && results[idx.timeline].value.ok) {
+      var d = await results[idx.timeline].value.json();
       if (d && d.items && d.items.length > 0) timelineDataLive = d.items;
     }
   } catch (e) {

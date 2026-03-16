@@ -1,27 +1,24 @@
-{
-  "lastFetchTime": "2026-03-09T11:23:52.565Z",
-  "fetchCount": 3,
-  "totalRules": 5,
-  "newRulesCount": 1,
+﻿{
+  "lastFetchTime": "2026-03-16T04:43:25.800Z",
+  "fetchCount": 5,
+  "totalRules": 123,
+  "newRulesCount": 0,
   "sources": {
+    "天猫规则页": {
+      "status": "online",
+      "lastCheck": "2026-03-16T04:43:25.800Z"
+    },
     "天猫规则中心": {
       "status": "online",
-      "lastCheck": "2026-03-09T11:23:52.565Z"
+      "lastCheck": "2026-03-16T04:43:25.800Z"
     },
-    "淘宝大学": {
+    "淘宝大学-规则动态": {
       "status": "online",
-      "lastCheck": "2026-03-09T11:23:52.565Z"
+      "lastCheck": "2026-03-16T04:43:25.800Z"
     },
-    "天猫国际": {
+    "真实体验分规范": {
       "status": "online",
-      "lastCheck": "2026-03-09T11:23:52.565Z"
+      "lastCheck": "2026-03-16T04:43:25.800Z"
     }
-  },
-  "errors": [
-    {
-      "url": "https://rulechannel.tmall.com/",
-      "message": "No timeline items found",
-      "timestamp": "2026-03-09T11:23:52.565Z"
-    }
-  ]
+  }
 }
