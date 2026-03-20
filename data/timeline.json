@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-03-19T03:41:25.883Z",
+  "lastUpdated": "2026-03-20T03:31:05.764Z",
   "items": [
+    {
+      "date": "03-19",
+      "text": "test",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009001&cId=1097"
+    },
     {
       "date": "03-13",
       "text": "2026年天猫商家考核标准（各类目考核明细）",
@@ -75,11 +80,6 @@
       "date": "02-14",
       "text": "天猫生鲜虹鳟发布规范",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=11002245&cId=45005"
-    },
-    {
-      "date": "02-14",
-      "text": "天猫海鲜水产行业管理规范",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009514&cId=384"
     }
   ]
 }
