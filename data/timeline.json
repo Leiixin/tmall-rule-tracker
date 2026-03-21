@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-03-20T03:31:05.764Z",
+  "lastUpdated": "2026-03-21T03:23:18.869Z",
   "items": [
+    {
+      "date": "03-20",
+      "text": "关于变更《天猫在营资质标准》、《天猫经营大类一览表》等规则的调整公示",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009657&cId=396"
+    },
     {
       "date": "03-19",
       "text": "test",
@@ -75,11 +80,6 @@
       "date": "02-14",
       "text": "天猫生鲜行业管理规范",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20005940&cId=384"
-    },
-    {
-      "date": "02-14",
-      "text": "天猫生鲜虹鳟发布规范",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=11002245&cId=45005"
     }
   ]
 }
