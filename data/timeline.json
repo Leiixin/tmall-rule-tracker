@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-04-07T03:49:58.058Z",
+  "lastUpdated": "2026-04-08T03:52:00.174Z",
   "items": [
+    {
+      "date": "04-07",
+      "text": "关于新增《AI软件及应用类商品发布规范》的 公示通知",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009862&cId=395"
+    },
     {
       "date": "04-02",
       "text": "关于变更《天猫物流时效管理规范》的公示通知",
@@ -75,11 +80,6 @@
       "date": "03-19",
       "text": "test",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009001&cId=1097"
-    },
-    {
-      "date": "03-09",
-      "text": "天猫商家安装服务管理规范",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009590&cId=391"
     }
   ]
 }
