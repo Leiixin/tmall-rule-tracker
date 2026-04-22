@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-04-21T04:12:39.714Z",
+  "lastUpdated": "2026-04-22T04:09:01.796Z",
   "items": [
+    {
+      "date": "04-21",
+      "text": "关于变更《淘宝网&天猫平台闪购服务规范》、《淘宝网&天猫平台门店管理规范》、《天猫市场管理规范》、《无货源店铺的规则及实施细则》的公示通知",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009952&cId=395"
+    },
     {
       "date": "04-15",
       "text": "关于变更《天猫赠品管理规范》的公示通知",
@@ -75,11 +80,6 @@
       "date": "03-27",
       "text": "天猫在营店铺申请新增类目细则",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9258&cId=380"
-    },
-    {
-      "date": "03-27",
-      "text": "天猫在营商家资质标准",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9090&cId=378"
     }
   ]
 }
