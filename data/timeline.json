@@ -1,6 +1,16 @@
 ﻿{
-  "lastUpdated": "2026-04-22T04:09:01.796Z",
+  "lastUpdated": "2026-04-23T04:13:45.503Z",
   "items": [
+    {
+      "date": "04-22",
+      "text": "天猫允许跨类目经营的商品列表",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9256&cId=380"
+    },
+    {
+      "date": "04-22",
+      "text": "天猫在营商家资质标准",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9090&cId=378"
+    },
     {
       "date": "04-21",
       "text": "关于变更《淘宝网&天猫平台闪购服务规范》、《淘宝网&天猫平台门店管理规范》、《天猫市场管理规范》、《无货源店铺的规则及实施细则》的公示通知",
@@ -70,16 +80,6 @@
       "date": "03-27",
       "text": "珠宝饰品产品发布规范",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=11002261&cId=45005"
-    },
-    {
-      "date": "03-27",
-      "text": "天猫经营大类一览表",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9252&cId=378"
-    },
-    {
-      "date": "03-27",
-      "text": "天猫在营店铺申请新增类目细则",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9258&cId=380"
     }
   ]
 }
