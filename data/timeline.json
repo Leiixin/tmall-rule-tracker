@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-04-23T04:13:45.503Z",
+  "lastUpdated": "2026-04-24T04:18:16.407Z",
   "items": [
+    {
+      "date": "04-23",
+      "text": "天猫赠品管理规范",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=5340&cId=43504"
+    },
     {
       "date": "04-22",
       "text": "天猫允许跨类目经营的商品列表",
@@ -75,11 +80,6 @@
       "date": "03-27",
       "text": "天猫鲜花园艺行业管理规范",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20008357&cId=384"
-    },
-    {
-      "date": "03-27",
-      "text": "珠宝饰品产品发布规范",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=11002261&cId=45005"
     }
   ]
 }
