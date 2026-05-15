@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-05-14T04:46:08.990Z",
+  "lastUpdated": "2026-05-15T04:52:35.495Z",
   "items": [
+    {
+      "date": "05-15",
+      "text": "天猫普通食品发布规范",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=11002244&cId=45005"
+    },
     {
       "date": "05-12",
       "text": "关于新增《天猫“贴坏包赔”服务规范》的公示通知",
@@ -75,11 +80,6 @@
       "date": "04-15",
       "text": "关于变更《天猫赠品管理规范》的公示通知",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009851&cId=395"
-    },
-    {
-      "date": "04-15",
-      "text": "关于变更《天猫在营商家资质标准》等规则的调整公示",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20009912&cId=395"
     }
   ]
 }
