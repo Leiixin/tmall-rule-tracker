@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-05-18T05:07:44.455Z",
+  "lastUpdated": "2026-05-19T05:03:34.226Z",
   "items": [
+    {
+      "date": "05-18",
+      "text": "关于变更《天猫“送装一体”服务规范》的公示通知",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20010145&cId=395"
+    },
     {
       "date": "05-15",
       "text": "天猫生鲜行业管理规范",
@@ -75,11 +80,6 @@
       "date": "04-22",
       "text": "天猫允许跨类目经营的商品列表",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9256&cId=380"
-    },
-    {
-      "date": "04-22",
-      "text": "天猫在营商家资质标准",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9090&cId=378"
     }
   ]
 }
