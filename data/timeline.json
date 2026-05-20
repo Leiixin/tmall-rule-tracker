@@ -1,6 +1,16 @@
 ﻿{
-  "lastUpdated": "2026-05-19T05:03:34.226Z",
+  "lastUpdated": "2026-05-20T05:07:00.395Z",
   "items": [
+    {
+      "date": "05-19",
+      "text": "天猫“贴坏包赔”服务规范",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20010162&cId=393"
+    },
+    {
+      "date": "05-19",
+      "text": "关于变更《天猫新品规则》中部分类目新品期时长的通知",
+      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20010114&cId=395"
+    },
     {
       "date": "05-18",
       "text": "关于变更《天猫“送装一体”服务规范》的公示通知",
@@ -25,11 +35,6 @@
       "date": "05-12",
       "text": "关于新增《天猫“贴坏包赔”服务规范》的公示通知",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20010115&cId=395"
-    },
-    {
-      "date": "05-12",
-      "text": "关于变更《天猫新品规则》中部分类目新品期时长的通知",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=20010114&cId=395"
     },
     {
       "date": "05-10",
@@ -75,11 +80,6 @@
       "date": "04-23",
       "text": "天猫赠品管理规范",
       "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=5340&cId=43504"
-    },
-    {
-      "date": "04-22",
-      "text": "天猫允许跨类目经营的商品列表",
-      "link": "https://rulechannel.tmall.com/tmall/?type=detail&ruleId=9256&cId=380"
     }
   ]
 }
