@@ -43,7 +43,8 @@ jobs:
           TZ: Asia/Shanghai
           DATA_DIR: data
           ENABLE_LLM_SUMMARY: "true"
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          # 仓库 Secret 可命名为 DEEPSEEK_API_KEY 或 DEEPSEEK（你当前是 DEEPSEEK）
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
           LLM_BASE_URL: https://api.deepseek.com
           LLM_MODEL: deepseek-chat
 
