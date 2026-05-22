@@ -848,7 +848,15 @@ let fetchedRulesData = {
 };
 
 let timelineDataLive = null;
+let rulesJsonCache = null;
 let weeklyReportData = { range: { label: '' }, total: 0, items: [] };
+
+function getDataBasePath() {
+  if (location.pathname.indexOf('/tmall-rule-tracker') !== -1) {
+    return '/tmall-rule-tracker/data/';
+  }
+  return './data/';
+}
 
 var WEEKLY_TAG_LABELS = {
   effectivePeriod: '效期',
@@ -958,7 +966,9 @@ function buildWeeklyActionsClient(rule) {
 function buildWeeklyReportClient(rules) {
   var range = getLastWeekRangeClient();
   var items = (Array.isArray(rules) ? rules : [])
-    .filter(function (r) { return isInLastWeekClient(r.publishedAt || r.lastSeenAt, range); })
+    .filter(function (r) {
+      return isInLastWeekClient(r.publishedAt, range) || isInLastWeekClient(r.lastSeenAt, range);
+    })
     .sort(function (a, b) {
       return new Date(b.publishedAt || b.lastSeenAt || 0) - new Date(a.publishedAt || a.lastSeenAt || 0);
     })
@@ -988,26 +998,36 @@ function updateWeeklyTabCount() {
 }
 
 async function loadWeeklyReport() {
-  try {
-    var res = await fetch('/api/weekly');
-    if (res.ok) {
-      var data = await res.json();
-      if (data && Array.isArray(data.items)) {
-        weeklyReportData = data;
-        if (!weeklyReportData.range || !weeklyReportData.range.label) {
-          var r = getLastWeekRangeClient();
-          weeklyReportData.range = { label: formatWeeklyRangeLabel(r) };
+  var preferApi = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+  if (preferApi) {
+    try {
+      var res = await fetch('/api/weekly');
+      if (res.ok) {
+        var data = await res.json();
+        if (data && Array.isArray(data.items)) {
+          weeklyReportData = data;
+          if (!weeklyReportData.range || !weeklyReportData.range.label) {
+            var r = getLastWeekRangeClient();
+            weeklyReportData.range = { label: formatWeeklyRangeLabel(r) };
+          }
+          updateWeeklyTabCount();
+          return;
         }
-        updateWeeklyTabCount();
-        return;
+      }
+    } catch (e) { /* fallback */ }
+  }
+  try {
+    var rules = rulesJsonCache;
+    if (!rules) {
+      var base = getDataBasePath();
+      var rulesRes = await fetch(base + 'rules.json');
+      if (!rulesRes.ok) rulesRes = await fetch('./data/rules.json');
+      if (rulesRes.ok) {
+        rules = await rulesRes.json();
+        rulesJsonCache = rules;
       }
     }
-  } catch (e) { /* fallback */ }
-  try {
-    var rulesRes = await fetch('./data/rules.json');
-    if (!rulesRes.ok) rulesRes = await fetch('/data/rules.json');
-    if (rulesRes.ok) {
-      var rules = await rulesRes.json();
+    if (Array.isArray(rules)) {
       weeklyReportData = buildWeeklyReportClient(rules);
       updateWeeklyTabCount();
     }
@@ -1034,7 +1054,7 @@ function mergeBackendStatus(primary, secondary) {
 }
 
 async function loadExternalData() {
-  var basePath = './data/';
+  var basePath = getDataBasePath();
   try {
     // Static hosting (GitHub Pages) has no backend API. Prefer local JSON there.
     var preferApi = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
@@ -1044,18 +1064,20 @@ async function loadExternalData() {
           fetch('/api/rules'),
           fetch(basePath + 'timeline.json'),
           fetch(basePath + 'status.json'),
-          fetch(basePath + 'scraped.json')
+          fetch(basePath + 'scraped.json'),
+          fetch(basePath + 'rules.json')
         ]
       : [
           fetch(basePath + 'status.json'),
           fetch(basePath + 'scraped.json'),
           fetch(basePath + 'timeline.json'),
+          fetch(basePath + 'rules.json'),
           fetch('/api/status'),
           fetch('/api/rules')
         ];
     var idx = preferApi
-      ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, localRules: 4 }
-      : { localStatus: 0, localRules: 1, timeline: 2, apiStatus: 3, apiRules: 4 };
+      ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, localRules: 4, rulesJson: 5 }
+      : { localStatus: 0, localRules: 1, timeline: 2, rulesJson: 3, apiStatus: 4, apiRules: 5 };
     var results = await Promise.allSettled(requests);
 
     var apiStatus = null;
@@ -1099,6 +1121,11 @@ async function loadExternalData() {
     if (results[idx.timeline].status === 'fulfilled' && results[idx.timeline].value.ok) {
       var d = await results[idx.timeline].value.json();
       if (d && d.items && d.items.length > 0) timelineDataLive = d.items;
+    }
+
+    if (results[idx.rulesJson].status === 'fulfilled' && results[idx.rulesJson].value.ok) {
+      var rulesArr = await results[idx.rulesJson].value.json();
+      if (Array.isArray(rulesArr)) rulesJsonCache = rulesArr;
     }
 
     await loadWeeklyReport();

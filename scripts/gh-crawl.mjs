@@ -125,6 +125,8 @@ async function main() {
   const statusPath = path.join(dataDir, "status.json");
   const scrapedPath = path.join(dataDir, "scraped.json");
   const timelinePath = path.join(dataDir, "timeline.json");
+  const rulesPath = path.join(dataDir, "rules.json");
+  const publicRulesPath = path.join(process.cwd(), "public", "data", "rules.json");
 
   const prevStatus = await readJson(statusPath, {});
   const prevFetchCount = Number(prevStatus.fetchCount || 0);
@@ -191,6 +193,12 @@ async function main() {
   await writeJson(statusPath, statusJson);
   await writeJson(scrapedPath, scrapedJson);
   await writeJson(timelinePath, timelineJson);
+  await writeJson(rulesPath, merged);
+  try {
+    await writeJson(publicRulesPath, merged);
+  } catch {
+    // public/data may not exist in minimal checkouts
+  }
 
   // Helpful for Actions logs.
   // eslint-disable-next-line no-console

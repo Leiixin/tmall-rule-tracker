@@ -121,7 +121,10 @@ export function buildWeeklyReport(rules, reference = new Date()) {
   );
 
   const items = classified
-    .filter((rule) => inLastWeek(rule.publishedAt || rule.lastSeenAt, range))
+    .filter(
+      (rule) =>
+        inLastWeek(rule.publishedAt, range) || inLastWeek(rule.lastSeenAt, range)
+    )
     .sort((a, b) => {
       const aTime = dayjs(a.publishedAt || a.lastSeenAt || 0).valueOf();
       const bTime = dayjs(b.publishedAt || b.lastSeenAt || 0).valueOf();
