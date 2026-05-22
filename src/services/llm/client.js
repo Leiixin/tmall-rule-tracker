@@ -3,7 +3,9 @@ import axios from "axios";
 import {
   ACTION_TEAM_PREFIXES,
   HIGHLIGHT_PREFIXES,
-  IMPACT_PREFIXES
+  HIGHLIGHT_SECTION_KEYS,
+  IMPACT_PREFIXES,
+  flattenHighlightsStructured
 } from "./prompts.js";
 
 const DEFAULT_BASE_URL = "https://api.deepseek.com";
@@ -77,6 +79,7 @@ function dedupeByPrefix(lines, prefixes, max) {
 function normalizeCore(text) {
   return String(text || "")
     .replace(/^(核心变化|适用范围|生效时间|对商家有利|对商家不利|中性（合规成本）|中性|运营组|客服组|物流组)[：:]\s*/u, "")
+    .replace(/^\d+[.、．]\s*/, "")
     .replace(/\s+/g, "")
     .toLowerCase();
 }
@@ -97,25 +100,75 @@ function dropImpactsOverlappingActions(impacts, actions) {
   });
 }
 
-function normalizeHighlights(parsed) {
-  let lines = [];
-  if (Array.isArray(parsed?.highlights)) {
-    lines = parsed.highlights.map((s) => String(s).trim()).filter(Boolean);
-  } else if (parsed?.highlight) {
-    lines = [String(parsed.highlight).trim()].filter(Boolean);
+function stripEnumPrefix(text) {
+  return String(text || "")
+    .replace(/^\d+[.、．]\s*/, "")
+    .trim()
+    .slice(0, 120);
+}
+
+function migrateFlatHighlightsToStructured(lines) {
+  const structured = {};
+  for (const line of lines) {
+    const raw = String(line || "").trim();
+    if (!raw) {
+      continue;
+    }
+    for (const key of HIGHLIGHT_SECTION_KEYS) {
+      const prefix = `${key}：`;
+      if (raw.startsWith(prefix)) {
+        const body = stripEnumPrefix(raw.slice(prefix.length));
+        if (body) {
+          if (!structured[key]) {
+            structured[key] = [];
+          }
+          if (structured[key].length < 3) {
+            structured[key].push(body);
+          }
+        }
+        break;
+      }
+    }
+  }
+  return structured;
+}
+
+export function normalizeHighlightsStructured(parsed) {
+  const structured = {};
+
+  if (parsed?.highlightsStructured && typeof parsed.highlightsStructured === "object") {
+    for (const key of HIGHLIGHT_SECTION_KEYS) {
+      const arr = parsed.highlightsStructured[key];
+      if (!Array.isArray(arr)) {
+        continue;
+      }
+      const points = arr
+        .map((p) => stripEnumPrefix(p))
+        .filter(Boolean)
+        .slice(0, 3);
+      if (points.length) {
+        structured[key] = points;
+      }
+    }
   }
 
-  const prefixed = lines.filter((line) => hasPrefix(line, HIGHLIGHT_PREFIXES));
-  const merged = dedupeByPrefix(
-    prefixed.length ? prefixed : lines,
-    HIGHLIGHT_PREFIXES,
-    3
-  );
-
-  if (!merged.length && lines.length) {
-    return [`核心变化：${lines[0].slice(0, 200)}`];
+  if (!Object.keys(structured).length) {
+    let lines = [];
+    if (Array.isArray(parsed?.highlights)) {
+      lines = parsed.highlights.map((s) => String(s).trim()).filter(Boolean);
+    } else if (parsed?.highlight) {
+      lines = [String(parsed.highlight).trim()];
+    }
+    Object.assign(structured, migrateFlatHighlightsToStructured(lines));
   }
-  return merged.map((line) => line.slice(0, 200));
+
+  if (!Object.keys(structured).length && parsed?.highlight) {
+    structured["核心变化"] = [
+      stripEnumPrefix(String(parsed.highlight).slice(0, 240))
+    ].filter(Boolean);
+  }
+
+  return structured;
 }
 
 function normalizeImpacts(parsed, actions) {
@@ -163,16 +216,17 @@ function normalizeActions(parsed, impacts) {
 function normalizeSummaryPayload(parsed) {
   const actions = normalizeActions(parsed, []);
   const impacts = normalizeImpacts(parsed, actions);
-  const highlights = normalizeHighlights(parsed);
+  const highlightsStructured = normalizeHighlightsStructured(parsed);
+  const highlights = flattenHighlightsStructured(highlightsStructured);
 
-  if (!highlights.length) {
-    throw new Error("LLM summary missing highlights");
+  if (!Object.keys(highlightsStructured).length) {
+    throw new Error("LLM summary missing highlightsStructured");
   }
   if (!impacts.length) {
     impacts.push("中性（合规成本）：需结合经营类目评估规则影响，建议查阅原文。");
   }
 
-  return { highlights, impacts, actions };
+  return { highlightsStructured, highlights, impacts, actions };
 }
 
 export async function chatJson({ system, user }) {

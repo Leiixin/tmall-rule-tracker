@@ -628,6 +628,13 @@ table.weekly-table {
   color: var(--text-secondary);
 }
 .weekly-cell-list li { margin: 2px 0; }
+.weekly-highlight-block { margin-bottom: 8px; }
+.weekly-highlight-block:last-child { margin-bottom: 0; }
+.weekly-highlight-label {
+  font-weight: 600; font-size: 11px; color: var(--text-primary);
+  margin-bottom: 2px; line-height: 1.4;
+}
+.weekly-highlight-block .weekly-cell-list { padding-left: 1.25em; }
 @media (max-width: 900px) {
   .sidebar { width: 56px; }
   .sidebar-header, .search-box, .sidebar-footer, .tab-label, .tab-count, .logo-sub { display: none; }
@@ -905,17 +912,88 @@ function isInLastWeekClient(iso, range) {
   return t >= range.start && t <= range.end;
 }
 
-function pickWeeklyHighlightsClient(rule) {
+var HIGHLIGHT_SECTION_KEYS = ['核心变化', '适用范围', '生效时间'];
+
+function migrateHighlightsFromFlat(lines) {
+  var structured = {};
+  (lines || []).forEach(function (line) {
+    var raw = String(line || '').trim();
+    if (!raw) return;
+    for (var i = 0; i < HIGHLIGHT_SECTION_KEYS.length; i++) {
+      var key = HIGHLIGHT_SECTION_KEYS[i];
+      var prefix = key + '：';
+      if (raw.indexOf(prefix) === 0) {
+        var body = raw.slice(prefix.length).replace(/^\d+[.、．]\s*/, '').trim();
+        if (body) {
+          if (!structured[key]) structured[key] = [];
+          if (structured[key].length < 3) structured[key].push(body.slice(0, 120));
+        }
+        break;
+      }
+    }
+  });
+  return structured;
+}
+
+function pickWeeklyHighlightsStructured(rule) {
   var ai = rule.aiSummary;
-  if (ai && Array.isArray(ai.highlights) && ai.highlights.length) return ai.highlights;
-  if (ai && ai.highlight) return ['核心变化：' + String(ai.highlight).slice(0, 240)];
-  if (rule.snippet) return ['核心变化：' + rule.snippet.slice(0, 240)];
-  var s = rule.summary || {};
-  var keys = ['effectivePeriod', 'shopExperienceScore', 'shippingTimeliness', 'shippingViolationPenalty'];
-  for (var i = 0; i < keys.length; i++) {
-    if (s[keys[i]] && s[keys[i]] !== '未识别到明确描述') return ['核心变化：' + s[keys[i]].slice(0, 240)];
+  if (ai && ai.highlightsStructured && typeof ai.highlightsStructured === 'object') {
+    if (Object.keys(ai.highlightsStructured).length) return ai.highlightsStructured;
   }
-  return ['核心变化：' + (rule.title || '规则更新') + '，请查阅原文了解变更要点与生效安排。'];
+  if (ai && Array.isArray(ai.highlights) && ai.highlights.length) {
+    return migrateHighlightsFromFlat(ai.highlights);
+  }
+  if (ai && ai.highlight) {
+    return { '核心变化': [String(ai.highlight).slice(0, 240)] };
+  }
+  var structured = {};
+  if (rule.snippet) {
+    structured['核心变化'] = [rule.snippet.slice(0, 240)];
+  } else {
+    var s = rule.summary || {};
+    var keys = ['effectivePeriod', 'shopExperienceScore', 'shippingTimeliness', 'shippingViolationPenalty'];
+    for (var i = 0; i < keys.length; i++) {
+      if (s[keys[i]] && s[keys[i]] !== '未识别到明确描述') {
+        structured['核心变化'] = [s[keys[i]].slice(0, 240)];
+        break;
+      }
+    }
+  }
+  if (!structured['核心变化']) {
+    structured['核心变化'] = [(rule.title || '规则更新') + '，请查阅原文了解变更要点与生效安排。'];
+  }
+  var tags = rule.tags || [];
+  if (tags.length) {
+    structured['适用范围'] = [tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }).join('、')];
+  }
+  var pub = rule.publishedAt || rule.lastSeenAt;
+  if (pub) {
+    var t = new Date(pub);
+    if (!isNaN(t.getTime())) {
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      structured['生效时间'] = [t.getFullYear() + '年' + t.getMonth() + 1 + '月' + t.getDate() + '日（以原文为准）'];
+    }
+  }
+  return structured;
+}
+
+function formatWeeklyHighlights(structured) {
+  if (!structured || typeof structured !== 'object') {
+    return '<span class="weekly-cell-text">—</span>';
+  }
+  var html = '';
+  HIGHLIGHT_SECTION_KEYS.forEach(function (key) {
+    var items = structured[key];
+    if (!items || !items.length) return;
+    html += '<div class="weekly-highlight-block">' +
+      '<div class="weekly-highlight-label">' + escapeHtml(key) + '：</div>' +
+      '<ol class="weekly-cell-list">';
+    items.forEach(function (point) {
+      html += '<li>' + escapeHtml(point) + '</li>';
+    });
+    html += '</ol></div>';
+  });
+  return html || '<span class="weekly-cell-text">—</span>';
 }
 
 function buildWeeklyImpactClient(rule) {
@@ -973,16 +1051,18 @@ function buildWeeklyReportClient(rules) {
     })
     .map(function (rule) {
       var tags = rule.tags || [];
+      var highlightsStructured = pickWeeklyHighlightsStructured(rule);
       return {
         title: rule.title || '未命名规则',
         url: rule.url || '',
         publishedAt: rule.publishedAt || rule.lastSeenAt || null,
         tagLabels: tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }),
-        highlights: pickWeeklyHighlightsClient(rule),
+        highlightsStructured: highlightsStructured,
         impacts: buildWeeklyImpactClient(rule),
         actions: buildWeeklyActionsClient(rule),
         aiGenerated: Boolean(
           rule.aiSummary && (
+            (rule.aiSummary.highlightsStructured && Object.keys(rule.aiSummary.highlightsStructured).length) ||
             (Array.isArray(rule.aiSummary.highlights) && rule.aiSummary.highlights.length) ||
             rule.aiSummary.highlight
           )
@@ -1429,7 +1509,7 @@ function renderWeekly() {
         '<td class="weekly-col-date">' + formatWeeklyDate(item.publishedAt) + '</td>' +
         '<td class="weekly-col-title">' + titleHtml + linkHtml + '</td>' +
         '<td>' + tagsHtml + '</td>' +
-        '<td>' + formatWeeklyCellList(item.highlights || (item.highlight ? [item.highlight] : [])) + '</td>' +
+        '<td>' + formatWeeklyHighlights(item.highlightsStructured || migrateHighlightsFromFlat(item.highlights || (item.highlight ? [item.highlight] : []))) + '</td>' +
         '<td>' + formatWeeklyCellList(item.impacts) + '</td>' +
         '<td>' + formatWeeklyCellList(item.actions) + '</td>' +
       '</tr>';

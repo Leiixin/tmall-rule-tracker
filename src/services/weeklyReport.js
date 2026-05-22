@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { CATEGORY_LABELS } from "../config.js";
 import { classifyRule } from "./classifier.js";
+import { normalizeHighlightsStructured } from "./llm/client.js";
+import { flattenHighlightsStructured } from "./llm/prompts.js";
 
 /** 上周一 00:00:00 — 上周日 23:59:59（本地时区） */
 export function getLastWeekRange(reference = new Date()) {
@@ -13,27 +15,57 @@ export function getLastWeekRange(reference = new Date()) {
   return { start: lastMonday, end: lastSunday };
 }
 
-function pickHighlights(rule) {
+function pickHighlightsStructured(rule) {
   const ai = rule.aiSummary;
+  if (
+    ai?.highlightsStructured &&
+    typeof ai.highlightsStructured === "object" &&
+    Object.keys(ai.highlightsStructured).length
+  ) {
+    return ai.highlightsStructured;
+  }
   if (Array.isArray(ai?.highlights) && ai.highlights.length) {
-    return ai.highlights;
+    return normalizeHighlightsStructured({ highlights: ai.highlights });
   }
   if (ai?.highlight) {
-    return [`核心变化：${String(ai.highlight).slice(0, 240)}`];
+    return normalizeHighlightsStructured({ highlight: ai.highlight });
   }
+
+  const structured = {};
   if (rule.snippet) {
-    return [`核心变化：${rule.snippet.slice(0, 240)}`];
-  }
-  const summary = rule.summary || {};
-  for (const key of Object.keys(CATEGORY_LABELS)) {
-    const line = summary[key];
-    if (line && line !== "未识别到明确描述") {
-      return [`核心变化：${line.slice(0, 240)}`];
+    structured["核心变化"] = [rule.snippet.slice(0, 240)];
+  } else {
+    const summary = rule.summary || {};
+    for (const key of Object.keys(CATEGORY_LABELS)) {
+      const line = summary[key];
+      if (line && line !== "未识别到明确描述") {
+        structured["核心变化"] = [line.slice(0, 240)];
+        break;
+      }
     }
   }
-  return [
-    `核心变化：${rule.title || "规则更新"}，请查阅原文了解变更要点与生效安排。`
-  ];
+  if (!structured["核心变化"]) {
+    structured["核心变化"] = [
+      `${rule.title || "规则更新"}，请查阅原文了解变更要点与生效安排。`
+    ];
+  }
+
+  const tags = Array.isArray(rule.tags) ? rule.tags : [];
+  if (tags.length) {
+    structured["适用范围"] = [
+      tags.map((t) => CATEGORY_LABELS[t] || t).join("、")
+    ];
+  }
+
+  const pub = rule.publishedAt || rule.lastSeenAt;
+  if (pub) {
+    const t = dayjs(pub);
+    if (t.isValid()) {
+      structured["生效时间"] = [t.format("YYYY年M月D日") + " 起适用/生效（以原文为准）"];
+    }
+  }
+
+  return structured;
 }
 
 function buildImpact(rule) {
@@ -133,22 +165,28 @@ export function buildWeeklyReport(rules, reference = new Date()) {
       const bTime = dayjs(b.publishedAt || b.lastSeenAt || 0).valueOf();
       return bTime - aTime;
     })
-    .map((rule) => ({
+    .map((rule) => {
+      const highlightsStructured = pickHighlightsStructured(rule);
+      return {
       title: rule.title || "未命名规则",
       url: rule.url || "",
       publishedAt: rule.publishedAt || rule.lastSeenAt || null,
       source: rule.source || "天猫规则中心",
       tags: rule.tags || [],
       tagLabels: (rule.tags || []).map((t) => CATEGORY_LABELS[t] || t),
-      highlights: pickHighlights(rule),
+      highlightsStructured,
+      highlights: flattenHighlightsStructured(highlightsStructured),
       impacts: buildImpact(rule),
       actions: buildActions(rule),
       aiGenerated: Boolean(
-        (Array.isArray(rule.aiSummary?.highlights) &&
-          rule.aiSummary.highlights.length) ||
+        (rule.aiSummary?.highlightsStructured &&
+          Object.keys(rule.aiSummary.highlightsStructured).length) ||
+          (Array.isArray(rule.aiSummary?.highlights) &&
+            rule.aiSummary.highlights.length) ||
           rule.aiSummary?.highlight
       )
-    }));
+    };
+    });
 
   return {
     range: {

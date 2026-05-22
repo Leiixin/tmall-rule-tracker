@@ -24,7 +24,12 @@ export function needsAiSummary(rule, previousRule = null) {
   }
   const hash = contentHash(rule);
   const existing = rule.aiSummary;
+  const hasStructured =
+    existing?.highlightsStructured &&
+    typeof existing.highlightsStructured === "object" &&
+    Object.keys(existing.highlightsStructured).length > 0;
   const hasSummary =
+    hasStructured ||
     (Array.isArray(existing?.highlights) && existing.highlights.length > 0) ||
     Boolean(existing?.highlight);
   if (!hasSummary) {
