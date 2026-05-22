@@ -1,24 +1,24 @@
 ﻿{
-  "lastFetchTime": "2026-05-22T09:26:25.856Z",
-  "fetchCount": 77,
+  "lastFetchTime": "2026-05-22T10:27:13.563Z",
+  "fetchCount": 78,
   "totalRules": 120,
   "newRulesCount": 120,
   "sources": {
     "天猫规则页": {
       "status": "online",
-      "lastCheck": "2026-05-22T09:26:25.856Z"
+      "lastCheck": "2026-05-22T10:27:13.563Z"
     },
     "天猫规则中心": {
       "status": "online",
-      "lastCheck": "2026-05-22T09:26:25.856Z"
+      "lastCheck": "2026-05-22T10:27:13.563Z"
     },
     "淘宝大学-规则动态": {
       "status": "online",
-      "lastCheck": "2026-05-22T09:26:25.856Z"
+      "lastCheck": "2026-05-22T10:27:13.563Z"
     },
     "真实体验分规范": {
       "status": "online",
-      "lastCheck": "2026-05-22T09:26:25.856Z"
+      "lastCheck": "2026-05-22T10:27:13.563Z"
     }
   }
 }
