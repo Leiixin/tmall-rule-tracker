@@ -913,26 +913,67 @@ function isInLastWeekClient(iso, range) {
 }
 
 var HIGHLIGHT_SECTION_KEYS = ['核心变化', '适用范围', '生效时间'];
+var IMPACT_SECTION_KEYS = ['不利', '有利', '中性'];
+var ACTION_SECTION_KEYS = ['运营组', '客服组', '物流组'];
 
-function migrateHighlightsFromFlat(lines) {
+var IMPACT_LEGACY = [
+  { key: '不利', prefixes: ['对商家不利：', '不利：'] },
+  { key: '有利', prefixes: ['对商家有利：', '有利：'] },
+  { key: '中性', prefixes: ['中性（合规成本）：', '中性：'] }
+];
+
+function migrateFlatByLegacy(lines, legacyMap) {
   var structured = {};
   (lines || []).forEach(function (line) {
     var raw = String(line || '').trim();
     if (!raw) return;
-    for (var i = 0; i < HIGHLIGHT_SECTION_KEYS.length; i++) {
-      var key = HIGHLIGHT_SECTION_KEYS[i];
-      var prefix = key + '：';
-      if (raw.indexOf(prefix) === 0) {
-        var body = raw.slice(prefix.length).replace(/^\d+[.、．]\s*/, '').trim();
-        if (body) {
-          if (!structured[key]) structured[key] = [];
-          if (structured[key].length < 3) structured[key].push(body.slice(0, 120));
+    for (var i = 0; i < legacyMap.length; i++) {
+      var entry = legacyMap[i];
+      for (var j = 0; j < entry.prefixes.length; j++) {
+        var prefix = entry.prefixes[j];
+        if (raw.indexOf(prefix) === 0) {
+          var body = raw.slice(prefix.length).replace(/^\d+[.、．]\s*/, '').trim();
+          if (body) {
+            if (!structured[entry.key]) structured[entry.key] = [];
+            if (structured[entry.key].length < 3) structured[entry.key].push(body.slice(0, 120));
+          }
+          break;
         }
-        break;
       }
     }
   });
   return structured;
+}
+
+function migrateHighlightsFromFlat(lines) {
+  return migrateFlatByLegacy(
+    (lines || []).map(function (line) {
+      var raw = String(line || '').trim();
+      if (!raw) return '';
+      for (var i = 0; i < HIGHLIGHT_SECTION_KEYS.length; i++) {
+        var key = HIGHLIGHT_SECTION_KEYS[i];
+        var prefix = key + '：';
+        if (raw.indexOf(prefix) === 0) return raw;
+      }
+      return raw;
+    }).filter(Boolean),
+    HIGHLIGHT_SECTION_KEYS.map(function (key) {
+      return { key: key, prefixes: [key + '：'] };
+    })
+  );
+}
+
+function migrateImpactsFromFlat(lines) {
+  return migrateFlatByLegacy(lines, IMPACT_LEGACY);
+}
+
+function migrateActionsFromFlat(lines) {
+  return migrateFlatByLegacy(
+    lines,
+    ACTION_SECTION_KEYS.map(function (key) {
+      return { key: key, prefixes: [key + '：'] };
+    })
+  );
 }
 
 function pickWeeklyHighlightsStructured(rule) {
@@ -977,12 +1018,12 @@ function pickWeeklyHighlightsStructured(rule) {
   return structured;
 }
 
-function formatWeeklyHighlights(structured) {
+function formatWeeklyStructuredBlocks(sectionKeys, structured) {
   if (!structured || typeof structured !== 'object') {
     return '<span class="weekly-cell-text">—</span>';
   }
   var html = '';
-  HIGHLIGHT_SECTION_KEYS.forEach(function (key) {
+  sectionKeys.forEach(function (key) {
     var items = structured[key];
     if (!items || !items.length) return;
     html += '<div class="weekly-highlight-block">' +
@@ -996,48 +1037,67 @@ function formatWeeklyHighlights(structured) {
   return html || '<span class="weekly-cell-text">—</span>';
 }
 
-function buildWeeklyImpactClient(rule) {
-  var ai = rule.aiSummary;
-  if (ai && Array.isArray(ai.impacts) && ai.impacts.length) return ai.impacts.slice(0, 3);
-  var tags = rule.tags || [];
-  var impacts = [];
-  if (tags.indexOf('effectivePeriod') >= 0) impacts.push('对商家不利：涉及效期与上架展示，可能影响 SKU 标注、下架与活动报名。');
-  if (tags.indexOf('shopExperienceScore') >= 0) impacts.push('对商家不利：体验分关联搜索与活动资源，波动将影响流量与转化。');
-  if (tags.indexOf('shippingTimeliness') >= 0) impacts.push('对商家不利：发货揽收超时可能触发体验分降权、赔付与投诉。');
-  if (tags.indexOf('shippingViolationPenalty') >= 0) impacts.push('对商家不利：违规与赔付标准明确，增加售后成本与处罚风险。');
-  if (!impacts.length) impacts.push('中性（合规成本）：需结合类目评估履约与合规成本，建议查阅原文。');
-  return impacts.slice(0, 3);
+function formatWeeklyHighlights(structured) {
+  return formatWeeklyStructuredBlocks(HIGHLIGHT_SECTION_KEYS, structured);
 }
 
-function buildWeeklyActionsClient(rule) {
+function pickWeeklyImpactsStructured(rule) {
   var ai = rule.aiSummary;
-  if (ai && Array.isArray(ai.actions) && ai.actions.length) return ai.actions.slice(0, 3);
+  if (ai && ai.impactsStructured && typeof ai.impactsStructured === 'object') {
+    if (Object.keys(ai.impactsStructured).length) return ai.impactsStructured;
+  }
+  if (ai && Array.isArray(ai.impacts) && ai.impacts.length) {
+    return migrateImpactsFromFlat(ai.impacts);
+  }
   var tags = rule.tags || [];
-  var actions = [];
+  var structured = {};
   if (tags.indexOf('effectivePeriod') >= 0) {
-    actions.push('运营组：维护「未来30天生效规则」日历，生效前完成详情页与库存复核。');
+    structured['不利'] = (structured['不利'] || []).concat(['涉及效期与上架展示，可能影响 SKU 标注、下架与活动报名。']);
   }
   if (tags.indexOf('shopExperienceScore') >= 0) {
-    actions.push('运营组：建立体验分周报，拆解质量/物流/服务改进项。');
-    actions.push('客服组：压降响应、退款处理时长等高权重指标。');
+    structured['不利'] = (structured['不利'] || []).concat(['体验分关联搜索与活动资源，波动将影响流量与转化。']);
   }
   if (tags.indexOf('shippingTimeliness') >= 0) {
-    actions.push('物流组：更新发货模板与揽收 SLA，设置轨迹停滞预警。');
+    structured['不利'] = (structured['不利'] || []).concat(['发货揽收超时可能触发体验分降权、赔付与投诉。']);
   }
   if (tags.indexOf('shippingViolationPenalty') >= 0) {
-    actions.push('客服组：梳理赔付场景，更新话术与自动同意策略。');
-    actions.push('运营组：对高投诉 SKU 建立熔断，避免重复违规。');
+    structured['不利'] = (structured['不利'] || []).concat(['违规与赔付标准明确，增加售后成本与处罚风险。']);
   }
-  if (!actions.length) {
-    actions.push('运营组：组织共读原文并形成内部变更纪要。');
-    actions.push('客服组：生效当周按日复盘投诉、超时与赔付。');
+  if (!Object.keys(structured).length) {
+    structured['中性'] = ['需结合类目评估履约与合规成本，建议查阅原文。'];
   }
-  var seen = {};
-  return actions.filter(function (a) {
-    if (seen[a]) return false;
-    seen[a] = true;
-    return true;
-  }).slice(0, 3);
+  return structured;
+}
+
+function pickWeeklyActionsStructured(rule) {
+  var ai = rule.aiSummary;
+  if (ai && ai.actionsStructured && typeof ai.actionsStructured === 'object') {
+    if (Object.keys(ai.actionsStructured).length) return ai.actionsStructured;
+  }
+  if (ai && Array.isArray(ai.actions) && ai.actions.length) {
+    return migrateActionsFromFlat(ai.actions);
+  }
+  var tags = rule.tags || [];
+  var structured = {};
+  if (tags.indexOf('effectivePeriod') >= 0) {
+    structured['运营组'] = ['维护「未来30天生效规则」日历，生效前完成详情页与库存复核。'];
+  }
+  if (tags.indexOf('shopExperienceScore') >= 0) {
+    structured['运营组'] = (structured['运营组'] || []).concat(['建立体验分周报，拆解质量/物流/服务改进项。']);
+    structured['客服组'] = ['压降响应、退款处理时长等高权重指标。'];
+  }
+  if (tags.indexOf('shippingTimeliness') >= 0) {
+    structured['物流组'] = ['更新发货模板与揽收 SLA，设置轨迹停滞预警。'];
+  }
+  if (tags.indexOf('shippingViolationPenalty') >= 0) {
+    structured['客服组'] = ['梳理赔付场景，更新话术与自动同意策略。'];
+    structured['运营组'] = (structured['运营组'] || []).concat(['对高投诉 SKU 建立熔断，避免重复违规。']);
+  }
+  if (!Object.keys(structured).length) {
+    structured['运营组'] = ['组织共读原文并形成内部变更纪要。'];
+    structured['客服组'] = ['生效当周按日复盘投诉、超时与赔付。'];
+  }
+  return structured;
 }
 
 function buildWeeklyReportClient(rules) {
@@ -1052,18 +1112,24 @@ function buildWeeklyReportClient(rules) {
     .map(function (rule) {
       var tags = rule.tags || [];
       var highlightsStructured = pickWeeklyHighlightsStructured(rule);
+      var impactsStructured = pickWeeklyImpactsStructured(rule);
+      var actionsStructured = pickWeeklyActionsStructured(rule);
       return {
         title: rule.title || '未命名规则',
         url: rule.url || '',
         publishedAt: rule.publishedAt || rule.lastSeenAt || null,
         tagLabels: tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }),
         highlightsStructured: highlightsStructured,
-        impacts: buildWeeklyImpactClient(rule),
-        actions: buildWeeklyActionsClient(rule),
+        impactsStructured: impactsStructured,
+        actionsStructured: actionsStructured,
         aiGenerated: Boolean(
           rule.aiSummary && (
             (rule.aiSummary.highlightsStructured && Object.keys(rule.aiSummary.highlightsStructured).length) ||
+            (rule.aiSummary.impactsStructured && Object.keys(rule.aiSummary.impactsStructured).length) ||
+            (rule.aiSummary.actionsStructured && Object.keys(rule.aiSummary.actionsStructured).length) ||
             (Array.isArray(rule.aiSummary.highlights) && rule.aiSummary.highlights.length) ||
+            (Array.isArray(rule.aiSummary.impacts) && rule.aiSummary.impacts.length) ||
+            (Array.isArray(rule.aiSummary.actions) && rule.aiSummary.actions.length) ||
             rule.aiSummary.highlight
           )
         )
@@ -1442,13 +1508,6 @@ function formatWeeklyDate(iso) {
   return t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
 }
 
-function formatWeeklyCellList(lines) {
-  if (!lines || !lines.length) return '<span class="weekly-cell-text">—</span>';
-  return '<ol class="weekly-cell-list">' + lines.map(function (line) {
-    return '<li>' + escapeHtml(line) + '</li>';
-  }).join('') + '</ol>';
-}
-
 function renderWeekly() {
   var report = weeklyReportData || { range: { label: '' }, total: 0, items: [] };
   var rangeLabel = report.range && report.range.label ? report.range.label : formatWeeklyRangeLabel(getLastWeekRangeClient());
@@ -1510,8 +1569,8 @@ function renderWeekly() {
         '<td class="weekly-col-title">' + titleHtml + linkHtml + '</td>' +
         '<td>' + tagsHtml + '</td>' +
         '<td>' + formatWeeklyHighlights(item.highlightsStructured || migrateHighlightsFromFlat(item.highlights || (item.highlight ? [item.highlight] : []))) + '</td>' +
-        '<td>' + formatWeeklyCellList(item.impacts) + '</td>' +
-        '<td>' + formatWeeklyCellList(item.actions) + '</td>' +
+        '<td>' + formatWeeklyStructuredBlocks(IMPACT_SECTION_KEYS, item.impactsStructured || migrateImpactsFromFlat(item.impacts || [])) + '</td>' +
+        '<td>' + formatWeeklyStructuredBlocks(ACTION_SECTION_KEYS, item.actionsStructured || migrateActionsFromFlat(item.actions || [])) + '</td>' +
       '</tr>';
     });
 

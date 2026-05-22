@@ -1,8 +1,16 @@
 import dayjs from "dayjs";
 import { CATEGORY_LABELS } from "../config.js";
 import { classifyRule } from "./classifier.js";
-import { normalizeHighlightsStructured } from "./llm/client.js";
-import { flattenHighlightsStructured } from "./llm/prompts.js";
+import {
+  normalizeActionsStructured,
+  normalizeHighlightsStructured,
+  normalizeImpactsStructured
+} from "./llm/client.js";
+import {
+  flattenActionsStructured,
+  flattenHighlightsStructured,
+  flattenImpactsStructured
+} from "./llm/prompts.js";
 
 /** 上周一 00:00:00 — 上周日 23:59:59（本地时区） */
 export function getLastWeekRange(reference = new Date()) {
@@ -68,71 +76,97 @@ function pickHighlightsStructured(rule) {
   return structured;
 }
 
-function buildImpact(rule) {
+function pickImpactsStructured(rule) {
   const ai = rule.aiSummary;
+  if (
+    ai?.impactsStructured &&
+    typeof ai.impactsStructured === "object" &&
+    Object.keys(ai.impactsStructured).length
+  ) {
+    return ai.impactsStructured;
+  }
   if (Array.isArray(ai?.impacts) && ai.impacts.length) {
-    return ai.impacts.slice(0, 3);
+    return normalizeImpactsStructured({ impacts: ai.impacts });
   }
 
   const tags = Array.isArray(rule.tags) ? rule.tags : [];
-  const impacts = [];
+  const structured = {};
 
   if (tags.includes("effectivePeriod")) {
-    impacts.push(
-      "对商家不利：涉及效期与上架展示要求，可能影响 SKU 标注、下架与活动报名资格。"
-    );
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "涉及效期与上架展示要求，可能影响 SKU 标注、下架与活动报名资格。"
+    ];
   }
   if (tags.includes("shopExperienceScore")) {
-    impacts.push(
-      "对商家不利：体验分与搜索、活动资源位挂钩，指标波动将直接影响流量与转化。"
-    );
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "体验分与搜索、活动资源位挂钩，指标波动将直接影响流量与转化。"
+    ];
   }
   if (tags.includes("shippingTimeliness")) {
-    impacts.push(
-      "对商家不利：发货揽收时效不达标可能触发体验分降权、赔付与投诉上升。"
-    );
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "发货揽收时效不达标可能触发体验分降权、赔付与投诉上升。"
+    ];
   }
   if (tags.includes("shippingViolationPenalty")) {
-    impacts.push(
-      "对商家不利：违规与赔付标准明确，直接增加售后成本与账户处罚风险。"
-    );
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "违规与赔付标准明确，直接增加售后成本与账户处罚风险。"
+    ];
   }
-  if (!impacts.length) {
-    impacts.push(
-      "中性（合规成本）：规则可能调整履约或售后要求，需结合类目评估合规与成本。"
-    );
+  if (!Object.keys(structured).length) {
+    structured["中性"] = [
+      "规则可能调整履约或售后要求，需结合类目评估合规与成本。"
+    ];
   }
-  return impacts.slice(0, 3);
+  return structured;
 }
 
-function buildActions(rule) {
+function pickActionsStructured(rule) {
   const ai = rule.aiSummary;
+  if (
+    ai?.actionsStructured &&
+    typeof ai.actionsStructured === "object" &&
+    Object.keys(ai.actionsStructured).length
+  ) {
+    return ai.actionsStructured;
+  }
   if (Array.isArray(ai?.actions) && ai.actions.length) {
-    return ai.actions.slice(0, 3);
+    return normalizeActionsStructured({ actions: ai.actions });
   }
 
   const tags = Array.isArray(rule.tags) ? rule.tags : [];
-  const actions = [];
+  const structured = {};
 
   if (tags.includes("effectivePeriod")) {
-    actions.push("运营组：维护「未来30天生效规则」日历，生效前完成详情页与库存复核。");
+    structured["运营组"] = [
+      "维护「未来30天生效规则」日历，生效前完成详情页与库存复核。"
+    ];
   }
   if (tags.includes("shopExperienceScore")) {
-    actions.push("运营组：建立体验分周报，拆解宝贝质量/物流/服务改进项。");
-    actions.push("客服组：优先压降响应、退款处理时长等高权重服务指标。");
+    structured["运营组"] = [
+      ...(structured["运营组"] || []),
+      "建立体验分周报，拆解宝贝质量/物流/服务改进项。"
+    ];
+    structured["客服组"] = ["优先压降响应、退款处理时长等高权重服务指标。"];
   }
   if (tags.includes("shippingTimeliness")) {
-    actions.push("物流组：更新发货模板与揽收 SLA，设置轨迹停滞预警。");
+    structured["物流组"] = ["更新发货模板与揽收 SLA，设置轨迹停滞预警。"];
   }
   if (tags.includes("shippingViolationPenalty")) {
-    actions.push("客服组：梳理赔付场景，更新话术与自动同意策略。");
-    actions.push("运营组：对高投诉 SKU 建立熔断，避免重复违规。");
+    structured["客服组"] = ["梳理赔付场景，更新话术与自动同意策略。"];
+    structured["运营组"] = [
+      ...(structured["运营组"] || []),
+      "对高投诉 SKU 建立熔断，避免重复违规。"
+    ];
   }
-  if (!actions.length) {
-    actions.push("运营组：组织共读原文并形成内部变更纪要。");
-    actions.push("客服组：生效当周按日复盘投诉、超时与赔付指标。");
+  if (!Object.keys(structured).length) {
+    structured["运营组"] = ["组织共读原文并形成内部变更纪要。"];
+    structured["客服组"] = ["生效当周按日复盘投诉、超时与赔付指标。"];
   }
-  return [...new Set(actions)].slice(0, 3);
+  return structured;
 }
 
 function inLastWeek(iso, range) {
@@ -167,25 +201,38 @@ export function buildWeeklyReport(rules, reference = new Date()) {
     })
     .map((rule) => {
       const highlightsStructured = pickHighlightsStructured(rule);
+      const impactsStructured = pickImpactsStructured(rule);
+      const actionsStructured = pickActionsStructured(rule);
       return {
-      title: rule.title || "未命名规则",
-      url: rule.url || "",
-      publishedAt: rule.publishedAt || rule.lastSeenAt || null,
-      source: rule.source || "天猫规则中心",
-      tags: rule.tags || [],
-      tagLabels: (rule.tags || []).map((t) => CATEGORY_LABELS[t] || t),
-      highlightsStructured,
-      highlights: flattenHighlightsStructured(highlightsStructured),
-      impacts: buildImpact(rule),
-      actions: buildActions(rule),
-      aiGenerated: Boolean(
-        (rule.aiSummary?.highlightsStructured &&
-          Object.keys(rule.aiSummary.highlightsStructured).length) ||
-          (Array.isArray(rule.aiSummary?.highlights) &&
-            rule.aiSummary.highlights.length) ||
-          rule.aiSummary?.highlight
-      )
-    };
+        title: rule.title || "未命名规则",
+        url: rule.url || "",
+        publishedAt: rule.publishedAt || rule.lastSeenAt || null,
+        source: rule.source || "天猫规则中心",
+        tags: rule.tags || [],
+        tagLabels: (rule.tags || []).map((t) => CATEGORY_LABELS[t] || t),
+        highlightsStructured,
+        highlights: flattenHighlightsStructured(highlightsStructured),
+        impactsStructured,
+        impacts: flattenImpactsStructured(impactsStructured),
+        actionsStructured,
+        actions: flattenActionsStructured(actionsStructured),
+        aiGenerated: Boolean(
+          rule.aiSummary &&
+            ((rule.aiSummary.highlightsStructured &&
+              Object.keys(rule.aiSummary.highlightsStructured).length) ||
+              (rule.aiSummary.impactsStructured &&
+                Object.keys(rule.aiSummary.impactsStructured).length) ||
+              (rule.aiSummary.actionsStructured &&
+                Object.keys(rule.aiSummary.actionsStructured).length) ||
+              (Array.isArray(rule.aiSummary.highlights) &&
+                rule.aiSummary.highlights.length) ||
+              (Array.isArray(rule.aiSummary.impacts) &&
+                rule.aiSummary.impacts.length) ||
+              (Array.isArray(rule.aiSummary.actions) &&
+                rule.aiSummary.actions.length) ||
+              rule.aiSummary.highlight)
+        )
+      };
     });
 
   return {

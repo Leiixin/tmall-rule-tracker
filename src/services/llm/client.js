@@ -1,15 +1,24 @@
 import axios from "axios";
 
 import {
-  ACTION_TEAM_PREFIXES,
+  ACTION_LEGACY_PREFIXES,
+  ACTION_SECTION_KEYS,
   HIGHLIGHT_PREFIXES,
   HIGHLIGHT_SECTION_KEYS,
-  IMPACT_PREFIXES,
-  flattenHighlightsStructured
+  IMPACT_LEGACY_PREFIXES,
+  IMPACT_SECTION_KEYS,
+  flattenActionsStructured,
+  flattenHighlightsStructured,
+  flattenImpactsStructured
 } from "./prompts.js";
 
 const DEFAULT_BASE_URL = "https://api.deepseek.com";
 const DEFAULT_MODEL = "deepseek-chat";
+
+const HIGHLIGHT_LEGACY_MAP = HIGHLIGHT_SECTION_KEYS.map((key) => ({
+  key,
+  prefixes: [`${key}：`]
+}));
 
 export function getLlmConfig() {
   const apiKey = process.env.DEEPSEEK_API_KEY || process.env.LLM_API_KEY || "";
@@ -54,50 +63,15 @@ function extractJsonObject(text) {
   }
 }
 
-function hasPrefix(line, prefixes) {
-  return prefixes.some((p) => line.startsWith(p));
-}
-
-function dedupeByPrefix(lines, prefixes, max) {
-  const seen = new Set();
-  const out = [];
-  for (const line of lines) {
-    const prefix = prefixes.find((p) => line.startsWith(p));
-    const key = prefix || line.slice(0, 24);
-    if (seen.has(key)) {
-      continue;
-    }
-    seen.add(key);
-    out.push(line);
-    if (out.length >= max) {
-      break;
-    }
-  }
-  return out;
-}
-
 function normalizeCore(text) {
   return String(text || "")
-    .replace(/^(核心变化|适用范围|生效时间|对商家有利|对商家不利|中性（合规成本）|中性|运营组|客服组|物流组)[：:]\s*/u, "")
+    .replace(
+      /^(核心变化|适用范围|生效时间|对商家有利|对商家不利|有利|不利|中性（合规成本）|中性|运营组|客服组|物流组)[：:]\s*/u,
+      ""
+    )
     .replace(/^\d+[.、．]\s*/, "")
     .replace(/\s+/g, "")
     .toLowerCase();
-}
-
-function dropImpactsOverlappingActions(impacts, actions) {
-  if (!actions.length) {
-    return impacts;
-  }
-  const actionCores = actions.map((a) => normalizeCore(a));
-  return impacts.filter((impact) => {
-    const core = normalizeCore(impact);
-    if (core.length < 8) {
-      return true;
-    }
-    return !actionCores.some(
-      (ac) => ac.includes(core) || core.includes(ac)
-    );
-  });
 }
 
 function stripEnumPrefix(text) {
@@ -107,17 +81,17 @@ function stripEnumPrefix(text) {
     .slice(0, 120);
 }
 
-function migrateFlatHighlightsToStructured(lines) {
+function migrateFlatToStructured(lines, legacyMap) {
   const structured = {};
   for (const line of lines) {
     const raw = String(line || "").trim();
     if (!raw) {
       continue;
     }
-    for (const key of HIGHLIGHT_SECTION_KEYS) {
-      const prefix = `${key}：`;
-      if (raw.startsWith(prefix)) {
-        const body = stripEnumPrefix(raw.slice(prefix.length));
+    for (const { key, prefixes } of legacyMap) {
+      const matched = prefixes.find((p) => raw.startsWith(p));
+      if (matched) {
+        const body = stripEnumPrefix(raw.slice(matched.length));
         if (body) {
           if (!structured[key]) {
             structured[key] = [];
@@ -133,12 +107,18 @@ function migrateFlatHighlightsToStructured(lines) {
   return structured;
 }
 
-export function normalizeHighlightsStructured(parsed) {
+function normalizeStructuredFromParsed(
+  parsed,
+  fieldName,
+  sectionKeys,
+  legacyMap,
+  flatFields
+) {
   const structured = {};
 
-  if (parsed?.highlightsStructured && typeof parsed.highlightsStructured === "object") {
-    for (const key of HIGHLIGHT_SECTION_KEYS) {
-      const arr = parsed.highlightsStructured[key];
+  if (parsed?.[fieldName] && typeof parsed[fieldName] === "object") {
+    for (const key of sectionKeys) {
+      const arr = parsed[fieldName][key];
       if (!Array.isArray(arr)) {
         continue;
       }
@@ -153,14 +133,30 @@ export function normalizeHighlightsStructured(parsed) {
   }
 
   if (!Object.keys(structured).length) {
-    let lines = [];
-    if (Array.isArray(parsed?.highlights)) {
-      lines = parsed.highlights.map((s) => String(s).trim()).filter(Boolean);
-    } else if (parsed?.highlight) {
-      lines = [String(parsed.highlight).trim()];
+    for (const flatField of flatFields) {
+      if (Array.isArray(parsed?.[flatField])) {
+        Object.assign(
+          structured,
+          migrateFlatToStructured(
+            parsed[flatField].map((s) => String(s).trim()).filter(Boolean),
+            legacyMap
+          )
+        );
+      }
     }
-    Object.assign(structured, migrateFlatHighlightsToStructured(lines));
   }
+
+  return structured;
+}
+
+export function normalizeHighlightsStructured(parsed) {
+  const structured = normalizeStructuredFromParsed(
+    parsed,
+    "highlightsStructured",
+    HIGHLIGHT_SECTION_KEYS,
+    HIGHLIGHT_LEGACY_MAP,
+    ["highlights"]
+  );
 
   if (!Object.keys(structured).length && parsed?.highlight) {
     structured["核心变化"] = [
@@ -171,62 +167,71 @@ export function normalizeHighlightsStructured(parsed) {
   return structured;
 }
 
-function normalizeImpacts(parsed, actions) {
-  let lines = Array.isArray(parsed?.impacts)
-    ? parsed.impacts.map((s) => String(s).trim()).filter(Boolean)
-    : [];
-
-  lines = lines.filter((line) => !hasPrefix(line, ACTION_TEAM_PREFIXES));
-
-  const prefixed = lines.filter((line) => hasPrefix(line, IMPACT_PREFIXES));
-  let merged = dedupeByPrefix(
-    prefixed.length ? prefixed : lines,
-    IMPACT_PREFIXES,
-    3
-  ).map((line) => line.slice(0, 220));
-
-  merged = dropImpactsOverlappingActions(merged, actions);
-  return merged.slice(0, 3);
+export function normalizeImpactsStructured(parsed) {
+  return normalizeStructuredFromParsed(
+    parsed,
+    "impactsStructured",
+    IMPACT_SECTION_KEYS,
+    IMPACT_LEGACY_PREFIXES,
+    ["impacts"]
+  );
 }
 
-function normalizeActions(parsed, impacts) {
-  let lines = Array.isArray(parsed?.actions)
-    ? parsed.actions.map((s) => String(s).trim()).filter(Boolean)
-    : [];
+export function normalizeActionsStructured(parsed) {
+  const structured = normalizeStructuredFromParsed(
+    parsed,
+    "actionsStructured",
+    ACTION_SECTION_KEYS,
+    ACTION_LEGACY_PREFIXES,
+    ["actions"]
+  );
 
-  const prefixed = lines.filter((line) => hasPrefix(line, ACTION_TEAM_PREFIXES));
-  let merged = dedupeByPrefix(
-    prefixed.length ? prefixed : lines,
-    ACTION_TEAM_PREFIXES,
-    3
-  ).map((line) => line.slice(0, 220));
+  const impactsFlat = flattenImpactsStructured(
+    normalizeImpactsStructured(parsed)
+  );
+  const impactCores = impactsFlat.map((line) => normalizeCore(line));
 
-  const impactCores = impacts.map((i) => normalizeCore(i));
-  merged = merged.filter((action) => {
-    const core = normalizeCore(action);
-    if (core.length < 8) {
-      return true;
+  for (const key of ACTION_SECTION_KEYS) {
+    if (!Array.isArray(structured[key])) {
+      continue;
     }
-    return !impactCores.some((ic) => ic.includes(core) || core.includes(ic));
-  });
+    structured[key] = structured[key].filter((point) => {
+      const core = normalizeCore(point);
+      if (core.length < 8) {
+        return true;
+      }
+      return !impactCores.some((ic) => ic.includes(core) || core.includes(ic));
+    });
+    if (!structured[key].length) {
+      delete structured[key];
+    }
+  }
 
-  return merged.slice(0, 3);
+  return structured;
 }
 
 function normalizeSummaryPayload(parsed) {
-  const actions = normalizeActions(parsed, []);
-  const impacts = normalizeImpacts(parsed, actions);
   const highlightsStructured = normalizeHighlightsStructured(parsed);
-  const highlights = flattenHighlightsStructured(highlightsStructured);
+  let impactsStructured = normalizeImpactsStructured(parsed);
+  let actionsStructured = normalizeActionsStructured(parsed);
 
   if (!Object.keys(highlightsStructured).length) {
     throw new Error("LLM summary missing highlightsStructured");
   }
-  if (!impacts.length) {
-    impacts.push("中性（合规成本）：需结合经营类目评估规则影响，建议查阅原文。");
+  if (!Object.keys(impactsStructured).length) {
+    impactsStructured = {
+      中性: ["需结合经营类目评估规则影响，建议查阅原文。"]
+    };
   }
 
-  return { highlightsStructured, highlights, impacts, actions };
+  return {
+    highlightsStructured,
+    highlights: flattenHighlightsStructured(highlightsStructured),
+    impactsStructured,
+    impacts: flattenImpactsStructured(impactsStructured),
+    actionsStructured,
+    actions: flattenActionsStructured(actionsStructured)
+  };
 }
 
 export async function chatJson({ system, user }) {

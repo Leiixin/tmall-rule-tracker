@@ -46,11 +46,13 @@ http://localhost:3000
 
 周度规则表格中的「重点内容 / 商家影响 / 流程建议」可接入 [DeepSeek](https://platform.deepseek.com/)（OpenAI 兼容 API）。摘要写入 `data/rules.json` 的 `aiSummary` 字段，正文未变时自动复用缓存。
 
-输出格式（`promptVersion: 4`）：
+输出格式（`promptVersion: 5`）：
 
-- **highlightsStructured**：`核心变化` / `适用范围` / `生效时间` 三维度结构相同，每维下 1～3 条要点（页面渲染为「标题 + 1.2.3.」）
-- **impacts**：`对商家有利：` / `对商家不利：` / `中性（合规成本）：`（经营后果判断，不写具体动作）
-- **actions**：`运营组：` / `客服组：` / `物流组：`（可执行措施，不与 impacts 重复）
+- **highlightsStructured**：`核心变化` / `适用范围` / `生效时间`
+- **impactsStructured**：`不利` / `有利` / `中性`（经营后果判断，不写各组动作）
+- **actionsStructured**：`运营组` / `客服组` / `物流组`（可执行措施，不与 impacts 重复）
+
+三列均在页面渲染为「小标题 + 1.2.3. 分条」。旧版扁平 `impacts` / `actions` 数组会自动迁移为结构化展示。
 
 修改提示词或升级 `PROMPT_VERSION` 后，需重跑 `npm run crawl` / `npm run summarize` 或 GitHub Actions 才会刷新旧摘要。
 
