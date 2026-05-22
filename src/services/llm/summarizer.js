@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { saveRules } from "../storage.js";
 import { getLastWeekRange } from "../weeklyReport.js";
 import {
+  PROMPT_VERSION,
   RULE_SUMMARY_SYSTEM_PROMPT,
   buildRuleSummaryUserPrompt
 } from "./prompts.js";
@@ -23,7 +24,13 @@ export function needsAiSummary(rule, previousRule = null) {
   }
   const hash = contentHash(rule);
   const existing = rule.aiSummary;
-  if (!existing?.highlight) {
+  const hasSummary =
+    (Array.isArray(existing?.highlights) && existing.highlights.length > 0) ||
+    Boolean(existing?.highlight);
+  if (!hasSummary) {
+    return true;
+  }
+  if (existing.promptVersion !== PROMPT_VERSION) {
     return true;
   }
   if (existing.contentHash !== hash) {
@@ -52,6 +59,7 @@ export async function summarizeRule(rule) {
     ...parsed,
     contentHash: contentHash(rule),
     model,
+    promptVersion: PROMPT_VERSION,
     generatedAt: new Date().toISOString()
   };
 }

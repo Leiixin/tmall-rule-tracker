@@ -13,28 +13,33 @@ export function getLastWeekRange(reference = new Date()) {
   return { start: lastMonday, end: lastSunday };
 }
 
-function pickHighlight(rule) {
+function pickHighlights(rule) {
   const ai = rule.aiSummary;
+  if (Array.isArray(ai?.highlights) && ai.highlights.length) {
+    return ai.highlights;
+  }
   if (ai?.highlight) {
-    return String(ai.highlight).slice(0, 280);
+    return [`核心变化：${String(ai.highlight).slice(0, 240)}`];
   }
   if (rule.snippet) {
-    return rule.snippet.slice(0, 240);
+    return [`核心变化：${rule.snippet.slice(0, 240)}`];
   }
   const summary = rule.summary || {};
   for (const key of Object.keys(CATEGORY_LABELS)) {
     const line = summary[key];
     if (line && line !== "未识别到明确描述") {
-      return line.slice(0, 240);
+      return [`核心变化：${line.slice(0, 240)}`];
     }
   }
-  return `${rule.title || "规则更新"}：请查阅原文了解变更要点与生效安排。`;
+  return [
+    `核心变化：${rule.title || "规则更新"}，请查阅原文了解变更要点与生效安排。`
+  ];
 }
 
 function buildImpact(rule) {
   const ai = rule.aiSummary;
   if (Array.isArray(ai?.impacts) && ai.impacts.length) {
-    return ai.impacts;
+    return ai.impacts.slice(0, 3);
   }
 
   const tags = Array.isArray(rule.tags) ? rule.tags : [];
@@ -42,62 +47,60 @@ function buildImpact(rule) {
 
   if (tags.includes("effectivePeriod")) {
     impacts.push(
-      "涉及商品效期、生效时间与上架展示要求，可能影响在售 SKU 的标注、下架与活动报名资格。"
+      "对商家不利：涉及效期与上架展示要求，可能影响 SKU 标注、下架与活动报名资格。"
     );
   }
   if (tags.includes("shopExperienceScore")) {
     impacts.push(
-      "与店铺真实体验分及搜索排序、活动提报等资源位相关，指标波动将直接影响流量与转化。"
+      "对商家不利：体验分与搜索、活动资源位挂钩，指标波动将直接影响流量与转化。"
     );
   }
   if (tags.includes("shippingTimeliness")) {
     impacts.push(
-      "约束发货、揽收与物流轨迹时效，超时可能触发体验分降权、赔付或消费者投诉。"
+      "对商家不利：发货揽收时效不达标可能触发体验分降权、赔付与投诉上升。"
     );
   }
   if (tags.includes("shippingViolationPenalty")) {
     impacts.push(
-      "明确违规场景、违约金或赔付标准，直接关联售后成本、账户处罚与申诉压力。"
+      "对商家不利：违规与赔付标准明确，直接增加售后成本与账户处罚风险。"
     );
   }
   if (!impacts.length) {
     impacts.push(
-      "规则变更可能调整履约、展示或售后处理要求，需结合经营类目评估合规与成本影响。"
+      "中性（合规成本）：规则可能调整履约或售后要求，需结合类目评估合规与成本。"
     );
   }
-  return impacts;
+  return impacts.slice(0, 3);
 }
 
 function buildActions(rule) {
   const ai = rule.aiSummary;
   if (Array.isArray(ai?.actions) && ai.actions.length) {
-    return ai.actions.slice(0, 5);
+    return ai.actions.slice(0, 3);
   }
 
   const tags = Array.isArray(rule.tags) ? rule.tags : [];
   const actions = [];
 
   if (tags.includes("effectivePeriod")) {
-    actions.push("维护「未来30天生效规则」日历，按生效日拆分负责人。");
-    actions.push("公示期内完成效期标注、详情页与库存批次筛查，生效前3天完成配置复核。");
+    actions.push("运营组：维护「未来30天生效规则」日历，生效前完成详情页与库存复核。");
   }
   if (tags.includes("shopExperienceScore")) {
-    actions.push("建立体验分周报，按宝贝质量 / 物流速度 / 服务保障拆解改进项。");
-    actions.push("优先压降48小时揽收、3分钟响应、退款处理时长等高权重指标。");
+    actions.push("运营组：建立体验分周报，拆解宝贝质量/物流/服务改进项。");
+    actions.push("客服组：优先压降响应、退款处理时长等高权重服务指标。");
   }
   if (tags.includes("shippingTimeliness")) {
-    actions.push("更新发货模板与揽收 SLA，对代发/中转订单设置轨迹停滞预警。");
-    actions.push("大促前完成仓配产能测算，避免集中爆单导致揽收超时。");
+    actions.push("物流组：更新发货模板与揽收 SLA，设置轨迹停滞预警。");
   }
   if (tags.includes("shippingViolationPenalty")) {
-    actions.push("梳理违约/赔付场景，更新客服话术与自动同意策略，降低判责率。");
-    actions.push("对高投诉 SKU 建立熔断机制，避免重复违规扣分。");
+    actions.push("客服组：梳理赔付场景，更新话术与自动同意策略。");
+    actions.push("运营组：对高投诉 SKU 建立熔断，避免重复违规。");
   }
   if (!actions.length) {
-    actions.push("组织运营、客服、仓储共读原文，形成内部变更纪要。");
-    actions.push("生效当周按日复盘相关指标（投诉、超时、品退、赔付）。");
+    actions.push("运营组：组织共读原文并形成内部变更纪要。");
+    actions.push("客服组：生效当周按日复盘投诉、超时与赔付指标。");
   }
-  return [...new Set(actions)].slice(0, 4);
+  return [...new Set(actions)].slice(0, 3);
 }
 
 function inLastWeek(iso, range) {
@@ -137,10 +140,14 @@ export function buildWeeklyReport(rules, reference = new Date()) {
       source: rule.source || "天猫规则中心",
       tags: rule.tags || [],
       tagLabels: (rule.tags || []).map((t) => CATEGORY_LABELS[t] || t),
-      highlight: pickHighlight(rule),
+      highlights: pickHighlights(rule),
       impacts: buildImpact(rule),
       actions: buildActions(rule),
-      aiGenerated: Boolean(rule.aiSummary?.highlight)
+      aiGenerated: Boolean(
+        (Array.isArray(rule.aiSummary?.highlights) &&
+          rule.aiSummary.highlights.length) ||
+          rule.aiSummary?.highlight
+      )
     }));
 
   return {
