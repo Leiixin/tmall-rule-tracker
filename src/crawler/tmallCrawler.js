@@ -14,6 +14,7 @@ import {
   RULE_KEYWORDS,
   TMALL_SOURCES
 } from "../config.js";
+import { buildRuleDetailUrl } from "../utils/ruleDetailUrl.js";
 
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36";
@@ -115,17 +116,6 @@ function isMtopTokenError(payload) {
     ret.includes("FAIL_SYS_SESSION_EXOIRED") ||
     ret.includes("FAIL_SYS_ILLEGAL_ACCESS")
   );
-}
-
-function buildDetailUrl(ruleId, categoryId) {
-  const params = new URLSearchParams({
-    type: "detail",
-    ruleId: String(ruleId || "")
-  });
-  if (categoryId) {
-    params.set("cId", String(categoryId));
-  }
-  return `https://rulechannel.tmall.com/tmall/?${params.toString()}`;
 }
 
 async function mapLimit(items, limit, mapper) {
@@ -308,7 +298,7 @@ async function crawlByMtop() {
 
     return {
       title: normalizeText(model.ruleTitle || item.ruleTitle || ""),
-      url: buildDetailUrl(model.ruleId || item.ruleId, model.lastCategoryId),
+      url: buildRuleDetailUrl(model.ruleId || item.ruleId, model.lastCategoryId),
       source: "Tmall Rule Center (MTOP)",
       publishedAt,
       content: content.slice(0, 12000),

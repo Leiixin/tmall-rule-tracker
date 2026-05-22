@@ -4,7 +4,9 @@ import dayjs from "dayjs";
 
 import { crawlAllSources } from "../src/crawler/tmallCrawler.js";
 import { classifyRules } from "../src/services/classifier.js";
+import { enrichRulesWithAiSummary } from "../src/services/llm/summarizer.js";
 import { loadRules, upsertRules } from "../src/services/storage.js";
+import { normalizeRuleDetailUrl } from "../src/utils/ruleDetailUrl.js";
 
 function safeJsonParse(text, fallback) {
   try {
@@ -58,7 +60,7 @@ function buildCategorized(processedRules, timestamp) {
     const discoveredAt = rule.lastSeenAt || rule.publishedAt || timestamp;
     return {
       title: rule.title || "未命名规则",
-      url: rule.url || "",
+      url: normalizeRuleDetailUrl(rule.url || ""),
       source: rule.source || "未知来源",
       category,
       discoveredAt,
@@ -108,7 +110,7 @@ function buildTimeline(rules, timestamp, limit = 16) {
     return {
       date: d.isValid() ? d.format("MM-DD") : "--",
       text: rule.title || "未命名规则",
-      link: rule.url || ""
+      link: normalizeRuleDetailUrl(rule.url || "")
     };
   });
 
@@ -136,10 +138,26 @@ async function main() {
   const beforeRules = await loadRules();
   const beforeCount = beforeRules.length;
 
+  let llmResult = null;
+
   try {
     crawled = await crawlAllSources();
     const classified = classifyRules(crawled);
     merged = await upsertRules(classified);
+
+    if (merged.length) {
+      const enrich = await enrichRulesWithAiSummary(merged, {
+        previousRules: beforeRules,
+        persist: true
+      });
+      merged = enrich.rules;
+      llmResult = {
+        summarized: enrich.summarized,
+        skipped: enrich.skipped,
+        errors: enrich.errors,
+        disabled: enrich.disabled
+      };
+    }
   } catch (err) {
     errorMessage = err instanceof Error ? err.message : "crawl failed";
     // Keep previous data intact when crawl fails.
@@ -184,7 +202,8 @@ async function main() {
         stored: merged.length,
         fetchCount,
         newRulesCount,
-        errorMessage
+        errorMessage,
+        llm: llmResult
       },
       null,
       2

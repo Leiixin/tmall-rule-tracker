@@ -42,9 +42,34 @@ http://localhost:3000
 
 页面刷新后会重新读取最新内容。
 
+## DeepSeek 周度解读（可选）
+
+周度规则表格中的「重点内容 / 商家影响 / 流程建议」可接入 [DeepSeek](https://platform.deepseek.com/)（OpenAI 兼容 API）。摘要写入 `data/rules.json` 的 `aiSummary` 字段，正文未变时自动复用缓存。
+
+1. 复制环境变量模板并填写 Key：
+```bash
+cp .env.example .env
+# 编辑 .env：DEEPSEEK_API_KEY、ENABLE_LLM_SUMMARY=true
+```
+
+2. 本地仅补全已有规则摘要（不重新爬站）：
+```bash
+npm run summarize
+```
+
+3. 抓取时会顺带总结（每次最多 `LLM_MAX_RULES_PER_RUN` 条，默认 20）：
+```bash
+npm run crawl
+```
+
+4. GitHub Actions：在 **Settings → Secrets and variables → Actions** 添加 `DEEPSEEK_API_KEY` 后，在 **Actions** 页手动运行 **Crawl Tmall Rules**，或等待每日定时任务；成功后 `data/rules.json` 会出现 `aiSummary`。
+
+未配置 Key 时行为与原先一致（snippet / 分类模板），不影响抓取。
+
 ## 常用命令
 - 启动：`npm run start`
 - 开发模式：`npm run dev`
+- AI 补摘要：`npm run summarize`
 - 安装开机自启动（Windows）：`npm run autostart:install`
 - 移除开机自启动（Windows）：`npm run autostart:remove`
 

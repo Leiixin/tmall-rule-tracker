@@ -1,6 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('tmall-theme');
+    if (t !== 'light' && t !== 'dark') t = 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>天猫规则监控中心</title>
@@ -11,6 +22,13 @@
 :root {
   --red: #FF0036;
   --red-dim: #cc002b;
+  --logo-accent: #ff3366;
+  --sidebar-w: 260px;
+  --header-h: 56px;
+  --statusbar-h: 40px;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
   --red-glow: rgba(255, 0, 54, 0.15);
   --red-glow-strong: rgba(255, 0, 54, 0.35);
   --bg-deep: #08090d;
@@ -25,9 +43,103 @@
   --green: #00e87b;
   --amber: #ffb800;
   --blue: #3b82f6;
-  --sidebar-w: 260px;
-  --header-h: 56px;
-  --statusbar-h: 40px;
+  --blue-hover: #6ba6ff;
+  --status-bar-bg: linear-gradient(90deg, #0a0c12 0%, #101320 50%, #0a0c12 100%);
+  --scanline: rgba(0, 0, 0, 0.03);
+  --logo-text-start: #fff;
+  --logo-text-end: #ccc;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --home-card-shadow: rgba(0, 0, 0, 0.25);
+  --tab-icon-home-bg: rgba(255, 255, 255, 0.08);
+  --tab-icon-shelf-bg: rgba(255, 184, 0, 0.12);
+  --tab-icon-score-bg: rgba(59, 130, 246, 0.12);
+  --tab-icon-ship-bg: rgba(0, 232, 123, 0.12);
+  --tab-icon-penalty-bg: rgba(255, 0, 54, 0.12);
+  --tab-icon-weekly-bg: rgba(168, 85, 247, 0.14);
+  --severity-critical-bg: rgba(255, 0, 54, 0.15);
+  --severity-critical-border: rgba(255, 0, 54, 0.3);
+  --severity-warning-bg: rgba(255, 184, 0, 0.12);
+  --severity-warning-border: rgba(255, 184, 0, 0.25);
+  --severity-info-bg: rgba(59, 130, 246, 0.12);
+  --severity-info-border: rgba(59, 130, 246, 0.25);
+  --severity-normal-bg: rgba(0, 232, 123, 0.1);
+  --severity-normal-border: rgba(0, 232, 123, 0.2);
+  --card-tag-bg: rgba(255, 255, 255, 0.04);
+  --card-link-bg: rgba(59, 130, 246, 0.06);
+  --card-link-border: rgba(59, 130, 246, 0.2);
+  --card-link-hover-bg: rgba(59, 130, 246, 0.15);
+  --card-link-hover-border: rgba(59, 130, 246, 0.4);
+  --changes-panel-border: rgba(255, 0, 54, 0.25);
+  --changes-panel-bg: linear-gradient(135deg, rgba(255, 0, 54, 0.04) 0%, rgba(59, 130, 246, 0.03) 100%);
+  --changes-header-bg: rgba(255, 0, 54, 0.06);
+  --change-type-new-bg: rgba(0, 232, 123, 0.15);
+  --change-type-modify-bg: rgba(255, 184, 0, 0.15);
+  --change-type-remove-bg: rgba(255, 0, 54, 0.15);
+  --change-old-bg: rgba(255, 0, 54, 0.08);
+  --change-new-bg: rgba(0, 232, 123, 0.08);
+  --analysis-impact-header: linear-gradient(135deg, rgba(255, 184, 0, 0.06) 0%, rgba(255, 0, 54, 0.04) 100%);
+  --analysis-strategy-header: linear-gradient(135deg, rgba(0, 232, 123, 0.06) 0%, rgba(59, 130, 246, 0.04) 100%);
+  --analysis-impact-icon-bg: rgba(255, 184, 0, 0.2);
+  --analysis-strategy-icon-bg: rgba(0, 232, 123, 0.2);
+  --analysis-item-border: rgba(30, 34, 51, 0.6);
+  --analysis-bullet-action-glow: rgba(0, 232, 123, 0.3);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --red-glow: rgba(255, 0, 54, 0.08);
+  --red-glow-strong: rgba(255, 0, 54, 0.18);
+  --bg-deep: #f5f6fa;
+  --bg-panel: #ffffff;
+  --bg-card: #f0f2f8;
+  --bg-card-hover: #e8ebf3;
+  --border: #e2e6ef;
+  --border-light: #d0d6e4;
+  --text-primary: #1a1d26;
+  --text-secondary: #5c6378;
+  --text-dim: #8b92a8;
+  --green: #0a9b55;
+  --amber: #c98a00;
+  --blue: #2563eb;
+  --blue-hover: #1d4ed8;
+  --status-bar-bg: linear-gradient(90deg, #eef0f5 0%, #ffffff 50%, #eef0f5 100%);
+  --scanline: transparent;
+  --logo-text-start: #1a1d26;
+  --logo-text-end: #5c6378;
+  --card-shadow: rgba(26, 29, 38, 0.08);
+  --home-card-shadow: rgba(26, 29, 38, 0.06);
+  --tab-icon-home-bg: rgba(26, 29, 38, 0.06);
+  --tab-icon-shelf-bg: rgba(201, 138, 0, 0.14);
+  --tab-icon-score-bg: rgba(37, 99, 235, 0.12);
+  --tab-icon-ship-bg: rgba(10, 155, 85, 0.12);
+  --tab-icon-penalty-bg: rgba(255, 0, 54, 0.1);
+  --tab-icon-weekly-bg: rgba(124, 58, 237, 0.12);
+  --severity-critical-bg: rgba(255, 0, 54, 0.1);
+  --severity-critical-border: rgba(255, 0, 54, 0.25);
+  --severity-warning-bg: rgba(201, 138, 0, 0.12);
+  --severity-warning-border: rgba(201, 138, 0, 0.28);
+  --severity-info-bg: rgba(37, 99, 235, 0.1);
+  --severity-info-border: rgba(37, 99, 235, 0.22);
+  --severity-normal-bg: rgba(10, 155, 85, 0.1);
+  --severity-normal-border: rgba(10, 155, 85, 0.22);
+  --card-tag-bg: rgba(26, 29, 38, 0.04);
+  --card-link-bg: rgba(37, 99, 235, 0.08);
+  --card-link-border: rgba(37, 99, 235, 0.22);
+  --card-link-hover-bg: rgba(37, 99, 235, 0.14);
+  --card-link-hover-border: rgba(37, 99, 235, 0.35);
+  --changes-panel-border: rgba(255, 0, 54, 0.2);
+  --changes-panel-bg: linear-gradient(135deg, rgba(255, 0, 54, 0.04) 0%, rgba(37, 99, 235, 0.04) 100%);
+  --changes-header-bg: rgba(255, 0, 54, 0.05);
+  --change-type-new-bg: rgba(10, 155, 85, 0.12);
+  --change-type-modify-bg: rgba(201, 138, 0, 0.12);
+  --change-type-remove-bg: rgba(255, 0, 54, 0.1);
+  --change-old-bg: rgba(255, 0, 54, 0.06);
+  --change-new-bg: rgba(10, 155, 85, 0.08);
+  --analysis-impact-header: linear-gradient(135deg, rgba(201, 138, 0, 0.08) 0%, rgba(255, 0, 54, 0.04) 100%);
+  --analysis-strategy-header: linear-gradient(135deg, rgba(10, 155, 85, 0.08) 0%, rgba(37, 99, 235, 0.05) 100%);
+  --analysis-impact-icon-bg: rgba(201, 138, 0, 0.18);
+  --analysis-strategy-icon-bg: rgba(10, 155, 85, 0.18);
+  --analysis-item-border: rgba(208, 214, 228, 0.9);
+  --analysis-bullet-action-glow: rgba(10, 155, 85, 0.25);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 14px; -webkit-font-smoothing: antialiased; }
@@ -42,13 +154,13 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--scanline) 2px, var(--scanline) 4px);
   pointer-events: none;
   z-index: 9999;
 }
 .status-bar {
   height: var(--statusbar-h);
-  background: linear-gradient(90deg, #0a0c12 0%, #101320 50%, #0a0c12 100%);
+  background: var(--status-bar-bg);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -81,7 +193,19 @@ body::after {
 .fetch-text { letter-spacing: 0.5px; }
 .status-divider { width: 1px; height: 16px; background: var(--border-light); }
 .status-time { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-.status-sources { display: flex; gap: 12px; margin-left: auto; }
+.status-bar-right { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+.theme-toggle-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--bg-card); color: var(--text-secondary);
+  font-size: 11px; font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.theme-toggle-btn:hover {
+  background: var(--bg-card-hover); border-color: var(--border-light); color: var(--text-primary);
+}
+.status-sources { display: flex; gap: 12px; }
 .source-dot { display: flex; align-items: center; gap: 5px; color: var(--text-dim); font-size: 11px; }
 .source-dot::before {
   content: '';
@@ -111,7 +235,7 @@ body::after {
 .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 .logo-icon {
   width: 36px; height: 36px;
-  background: linear-gradient(135deg, var(--red), #ff3366);
+  background: linear-gradient(135deg, var(--red), var(--logo-accent));
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 900; color: white;
@@ -119,7 +243,7 @@ body::after {
 }
 .logo-text {
   font-size: 16px; font-weight: 700; letter-spacing: 1px;
-  background: linear-gradient(135deg, #fff, #ccc);
+  background: linear-gradient(135deg, var(--logo-text-start), var(--logo-text-end));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .logo-sub {
@@ -169,11 +293,13 @@ body::after {
   display: flex; align-items: center; justify-content: center;
   font-size: 15px; flex-shrink: 0;
 }
-.tab-icon.home { background: rgba(255, 255, 255, 0.08); color: var(--text-primary); }
-.tab-icon.shelf { background: rgba(255, 184, 0, 0.12); color: var(--amber); }
-.tab-icon.score { background: rgba(59, 130, 246, 0.12); color: var(--blue); }
-.tab-icon.ship { background: rgba(0, 232, 123, 0.12); color: var(--green); }
-.tab-icon.penalty { background: rgba(255, 0, 54, 0.12); color: var(--red); }
+.tab-icon.home { background: var(--tab-icon-home-bg); color: var(--text-primary); }
+.tab-icon.shelf { background: var(--tab-icon-shelf-bg); color: var(--amber); }
+.tab-icon.score { background: var(--tab-icon-score-bg); color: var(--blue); }
+.tab-icon.ship { background: var(--tab-icon-ship-bg); color: var(--green); }
+.tab-icon.penalty { background: var(--tab-icon-penalty-bg); color: var(--red); }
+.tab-icon.weekly { background: var(--tab-icon-weekly-bg); color: #a855f7; }
+[data-theme="light"] .tab-icon.weekly { color: #7c3aed; }
 .tab-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
 .nav-tab.active .tab-label { color: var(--text-primary); }
 .tab-count {
@@ -218,16 +344,16 @@ body::after {
   border-color: var(--border-light);
   background: var(--bg-card-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px var(--card-shadow);
 }
 .rule-card:hover::before { opacity: 1; }
 .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
 .card-title { font-size: 15px; font-weight: 700; line-height: 1.4; flex: 1; margin-right: 12px; }
 .severity-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; letter-spacing: 1px; white-space: nowrap; flex-shrink: 0; }
-.severity-badge.critical { background: rgba(255,0,54,0.15); color: var(--red); border: 1px solid rgba(255,0,54,0.3); }
-.severity-badge.warning { background: rgba(255,184,0,0.12); color: var(--amber); border: 1px solid rgba(255,184,0,0.25); }
-.severity-badge.info { background: rgba(59,130,246,0.12); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
-.severity-badge.normal { background: rgba(0,232,123,0.10); color: var(--green); border: 1px solid rgba(0,232,123,0.2); }
+.severity-badge.critical { background: var(--severity-critical-bg); color: var(--red); border: 1px solid var(--severity-critical-border); }
+.severity-badge.warning { background: var(--severity-warning-bg); color: var(--amber); border: 1px solid var(--severity-warning-border); }
+.severity-badge.info { background: var(--severity-info-bg); color: var(--blue); border: 1px solid var(--severity-info-border); }
+.severity-badge.normal { background: var(--severity-normal-bg); color: var(--green); border: 1px solid var(--severity-normal-border); }
 .card-body { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
 .card-body ul { list-style: none; padding: 0; }
 .card-body li { padding: 3px 0; padding-left: 16px; position: relative; }
@@ -236,24 +362,24 @@ body::after {
 .card-body .num { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-weight: 500; }
 .card-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
 .date-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
-.card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(255,255,255,0.04); color: var(--text-dim); border: 1px solid var(--border); }
+.card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--card-tag-bg); color: var(--text-dim); border: 1px solid var(--border); }
 .card-link {
   font-size: 10px; font-family: 'JetBrains Mono', monospace;
   color: var(--blue); text-decoration: none;
   padding: 3px 8px; border-radius: 4px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid var(--card-link-border);
+  background: var(--card-link-bg);
   margin-left: auto; white-space: nowrap;
   transition: all 0.2s; display: inline-flex; align-items: center; gap: 4px;
 }
-.card-link:hover { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); color: #6ba6ff; }
+.card-link:hover { background: var(--card-link-hover-bg); border-color: var(--card-link-hover-border); color: var(--blue-hover); }
 .change-link {
   font-size: 10px; font-family: 'JetBrains Mono', monospace;
   color: var(--blue); text-decoration: none;
   display: inline-flex; align-items: center; gap: 3px;
   margin-top: 4px; transition: color 0.2s;
 }
-.change-link:hover { color: #6ba6ff; }
+.change-link:hover { color: var(--blue-hover); }
 .timeline-section { margin-top: 8px; }
 .timeline-header { font-size: 15px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
 .timeline-header::before { content: ''; width: 14px; height: 2px; background: var(--red); }
@@ -324,15 +450,15 @@ body::after {
 .fetched-section { margin-top: 28px; }
 .changes-panel {
   margin-top: 32px;
-  border: 1px solid rgba(255, 0, 54, 0.25);
+  border: 1px solid var(--changes-panel-border);
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 0, 54, 0.04) 0%, rgba(59, 130, 246, 0.03) 100%);
+  background: var(--changes-panel-bg);
   overflow: hidden;
 }
 .changes-panel-header {
   display: flex; align-items: center; gap: 12px;
   padding: 16px 20px; border-bottom: 1px solid var(--border);
-  background: rgba(255, 0, 54, 0.06);
+  background: var(--changes-header-bg);
 }
 .changes-panel-icon {
   width: 32px; height: 32px; border-radius: 8px;
@@ -361,33 +487,33 @@ body::after {
 .change-item.type-modify::before { background: var(--amber); }
 .change-item.type-remove::before { background: var(--red); }
 .change-type-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 3px; white-space: nowrap; height: fit-content; margin-top: 2px; }
-.change-type-tag.new { background: rgba(0, 232, 123, 0.15); color: var(--green); }
-.change-type-tag.modify { background: rgba(255, 184, 0, 0.15); color: var(--amber); }
-.change-type-tag.remove { background: rgba(255, 0, 54, 0.15); color: var(--red); }
+.change-type-tag.new { background: var(--change-type-new-bg); color: var(--green); }
+.change-type-tag.modify { background: var(--change-type-modify-bg); color: var(--amber); }
+.change-type-tag.remove { background: var(--change-type-remove-bg); color: var(--red); }
 .change-content { flex: 1; min-width: 0; }
 .change-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
 .change-detail { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
-.change-detail .old { text-decoration: line-through; color: var(--text-dim); background: rgba(255, 0, 54, 0.08); padding: 1px 4px; border-radius: 2px; }
-.change-detail .new-val { color: var(--green); background: rgba(0, 232, 123, 0.08); padding: 1px 4px; border-radius: 2px; font-weight: 500; }
+.change-detail .old { text-decoration: line-through; color: var(--text-dim); background: var(--change-old-bg); padding: 1px 4px; border-radius: 2px; }
+.change-detail .new-val { color: var(--green); background: var(--change-new-bg); padding: 1px 4px; border-radius: 2px; font-weight: 500; }
 .change-date { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); margin-top: 8px; }
 .analysis-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
 .analysis-card { border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); overflow: hidden; transition: border-color 0.2s; }
 .analysis-card:hover { border-color: var(--border-light); }
 .analysis-card-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
-.analysis-card-header.impact { background: linear-gradient(135deg, rgba(255, 184, 0, 0.06) 0%, rgba(255, 0, 54, 0.04) 100%); }
-.analysis-card-header.strategy { background: linear-gradient(135deg, rgba(0, 232, 123, 0.06) 0%, rgba(59, 130, 246, 0.04) 100%); }
+.analysis-card-header.impact { background: var(--analysis-impact-header); }
+.analysis-card-header.strategy { background: var(--analysis-strategy-header); }
 .analysis-card-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.analysis-card-icon.impact { background: rgba(255, 184, 0, 0.2); }
-.analysis-card-icon.strategy { background: rgba(0, 232, 123, 0.2); }
+.analysis-card-icon.impact { background: var(--analysis-impact-icon-bg); }
+.analysis-card-icon.strategy { background: var(--analysis-strategy-icon-bg); }
 .analysis-card-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
 .analysis-card-body { padding: 16px 18px; }
-.analysis-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(30, 34, 51, 0.6); }
+.analysis-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--analysis-item-border); }
 .analysis-item:last-child { border-bottom: none; padding-bottom: 4px; }
 .analysis-bullet { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
 .analysis-bullet.high { background: var(--red); box-shadow: 0 0 6px var(--red-glow); }
 .analysis-bullet.medium { background: var(--amber); }
 .analysis-bullet.low { background: var(--blue); }
-.analysis-bullet.action { background: var(--green); box-shadow: 0 0 6px rgba(0, 232, 123, 0.3); }
+.analysis-bullet.action { background: var(--green); box-shadow: 0 0 6px var(--analysis-bullet-action-glow); }
 .analysis-item-content { flex: 1; min-width: 0; }
 .analysis-item-title { font-size: 12.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
 .analysis-item-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.65; }
@@ -425,7 +551,7 @@ body::after {
   content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
   background: linear-gradient(90deg, transparent, var(--card-color, var(--red)), transparent); opacity: 0.6;
 }
-.home-stat-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+.home-stat-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 8px 24px var(--home-card-shadow); }
 .home-stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
 .home-stat-value { font-size: 28px; font-weight: 900; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
 .home-stat-sub { font-size: 11px; color: var(--text-secondary); }
@@ -451,6 +577,57 @@ body::after {
 .home-recent-date { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); white-space: nowrap; padding-top: 2px; min-width: 80px; }
 .home-recent-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 .home-recent-text strong { color: var(--text-primary); font-weight: 500; }
+/* Weekly rules */
+.weekly-range-banner {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  padding: 14px 18px; margin-bottom: 24px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+}
+.weekly-range-label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.weekly-range-value { font-size: 15px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+.weekly-range-count { font-size: 12px; color: var(--text-secondary); }
+.weekly-table-wrap {
+  width: 100%; overflow-x: hidden;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+}
+table.weekly-table {
+  width: 100%; table-layout: fixed; border-collapse: collapse;
+}
+.weekly-table th,
+.weekly-table td {
+  padding: 8px 10px; font-size: 12px; line-height: 1.55;
+  vertical-align: top; text-align: left;
+  border-bottom: 1px solid var(--border);
+  word-wrap: break-word; overflow-wrap: anywhere;
+  color: var(--text-secondary);
+}
+.weekly-table th {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--bg-panel); color: var(--text-primary);
+  font-weight: 600; font-size: 11px; letter-spacing: 0.3px;
+  white-space: normal;
+}
+.weekly-table tbody tr:hover td { background: var(--bg-card-hover); }
+.weekly-table tbody tr:last-child td { border-bottom: none; }
+.weekly-col-date { white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
+.weekly-col-title { font-weight: 600; color: var(--text-primary); line-height: 1.45; }
+.weekly-col-title a { color: var(--text-primary); text-decoration: none; }
+.weekly-col-title a:hover { color: var(--blue); }
+.weekly-cell-link { margin-top: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+.weekly-cell-link a { color: var(--blue); text-decoration: none; }
+.weekly-cell-link a:hover { color: var(--blue-hover); }
+.weekly-tags-cell { display: flex; flex-wrap: wrap; gap: 4px; }
+.weekly-tag {
+  font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  background: var(--card-tag-bg); color: var(--text-dim); border: 1px solid var(--border);
+  line-height: 1.4;
+}
+.weekly-cell-text { font-size: 12px; color: var(--text-secondary); }
+.weekly-cell-list {
+  margin: 0; padding-left: 1.15em; font-size: 11px; line-height: 1.5;
+  color: var(--text-secondary);
+}
+.weekly-cell-list li { margin: 2px 0; }
 @media (max-width: 900px) {
   .sidebar { width: 56px; }
   .sidebar-header, .search-box, .sidebar-footer, .tab-label, .tab-count, .logo-sub { display: none; }
@@ -463,6 +640,8 @@ body::after {
   .status-sources { display: none; }
   .analysis-row { grid-template-columns: 1fr; }
   .home-stats { grid-template-columns: repeat(2, 1fr); }
+  .weekly-table th, .weekly-table td { padding: 6px 6px; font-size: 11px; }
+  .weekly-cell-list { font-size: 10px; }
 }
 </style>
 </head>
@@ -485,10 +664,13 @@ body::after {
   <div class="status-time" id="ruleCount">已收录规则: --</div>
   <div class="status-divider"></div>
   <div class="status-time" id="cronInfo">定时抓取: 每天09:00</div>
-  <div class="status-sources">
-    <span class="source-dot">天猫规则中心</span>
-    <span class="source-dot">淘宝大学</span>
-    <span class="source-dot">天猫国际</span>
+  <div class="status-bar-right">
+    <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="切换白天/黑夜模式">🌙 黑夜</button>
+    <div class="status-sources">
+      <span class="source-dot">天猫规则中心</span>
+      <span class="source-dot">淘宝大学</span>
+      <span class="source-dot">天猫国际</span>
+    </div>
   </div>
 </div>
 <!-- APP LAYOUT -->
@@ -512,6 +694,11 @@ body::after {
         <div class="tab-icon home">⌂</div>
         <span class="tab-label">首页</span>
         <span class="tab-count"></span>
+      </div>
+      <div class="nav-tab" data-tab="weekly">
+        <div class="tab-icon weekly">周</div>
+        <span class="tab-label">周度规则</span>
+        <span class="tab-count" id="weeklyTabCount">0</span>
       </div>
       <div class="nav-tab" data-tab="shelf">
         <div class="tab-icon shelf">⏱</div>
@@ -661,6 +848,190 @@ let fetchedRulesData = {
 };
 
 let timelineDataLive = null;
+let weeklyReportData = { range: { label: '' }, total: 0, items: [] };
+
+var WEEKLY_TAG_LABELS = {
+  effectivePeriod: '效期',
+  shopExperienceScore: '店铺体验分',
+  shippingTimeliness: '发货时效',
+  shippingViolationPenalty: '发货违规及处罚'
+};
+
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function getLastWeekRangeClient(ref) {
+  var d = ref ? new Date(ref) : new Date();
+  var day = d.getDay();
+  var daysFromMonday = day === 0 ? 6 : day - 1;
+  var thisMonday = new Date(d);
+  thisMonday.setHours(0, 0, 0, 0);
+  thisMonday.setDate(d.getDate() - daysFromMonday);
+  var lastMonday = new Date(thisMonday);
+  lastMonday.setDate(thisMonday.getDate() - 7);
+  var lastSunday = new Date(lastMonday);
+  lastSunday.setDate(lastMonday.getDate() + 6);
+  lastSunday.setHours(23, 59, 59, 999);
+  return { start: lastMonday, end: lastSunday };
+}
+
+function formatWeeklyRangeLabel(range) {
+  function fmt(dt, withYear) {
+    var y = dt.getFullYear();
+    var m = dt.getMonth() + 1;
+    var day = dt.getDate();
+    return withYear ? y + '年' + m + '月' + day + '日' : m + '月' + day + '日';
+  }
+  return fmt(range.start, true) + ' — ' + fmt(range.end, false) + '（周一至周日）';
+}
+
+function isInLastWeekClient(iso, range) {
+  if (!iso) return false;
+  var t = new Date(iso);
+  if (isNaN(t.getTime())) return false;
+  return t >= range.start && t <= range.end;
+}
+
+function pickWeeklyHighlightClient(rule) {
+  var ai = rule.aiSummary;
+  if (ai && ai.highlight) return String(ai.highlight).slice(0, 280);
+  if (rule.snippet) return rule.snippet.slice(0, 240);
+  var s = rule.summary || {};
+  var keys = ['effectivePeriod', 'shopExperienceScore', 'shippingTimeliness', 'shippingViolationPenalty'];
+  for (var i = 0; i < keys.length; i++) {
+    if (s[keys[i]] && s[keys[i]] !== '未识别到明确描述') return s[keys[i]].slice(0, 240);
+  }
+  return (rule.title || '规则更新') + '：请查阅原文了解变更要点与生效安排。';
+}
+
+function buildWeeklyImpactClient(rule) {
+  var ai = rule.aiSummary;
+  if (ai && Array.isArray(ai.impacts) && ai.impacts.length) return ai.impacts;
+  var tags = rule.tags || [];
+  var impacts = [];
+  if (tags.indexOf('effectivePeriod') >= 0) impacts.push('涉及商品效期、生效时间与上架展示要求，可能影响在售 SKU 的标注、下架与活动报名资格。');
+  if (tags.indexOf('shopExperienceScore') >= 0) impacts.push('与店铺真实体验分及搜索排序、活动提报等资源位相关，指标波动将直接影响流量与转化。');
+  if (tags.indexOf('shippingTimeliness') >= 0) impacts.push('约束发货、揽收与物流轨迹时效，超时可能触发体验分降权、赔付或消费者投诉。');
+  if (tags.indexOf('shippingViolationPenalty') >= 0) impacts.push('明确违规场景、违约金或赔付标准，直接关联售后成本、账户处罚与申诉压力。');
+  if (!impacts.length) impacts.push('规则变更可能调整履约、展示或售后处理要求，需结合经营类目评估合规与成本影响。');
+  return impacts;
+}
+
+function buildWeeklyActionsClient(rule) {
+  var ai = rule.aiSummary;
+  if (ai && Array.isArray(ai.actions) && ai.actions.length) return ai.actions.slice(0, 5);
+  var tags = rule.tags || [];
+  var actions = [];
+  if (tags.indexOf('effectivePeriod') >= 0) {
+    actions.push('维护「未来30天生效规则」日历，按生效日拆分负责人。');
+    actions.push('公示期内完成效期标注、详情页与库存批次筛查，生效前3天完成配置复核。');
+  }
+  if (tags.indexOf('shopExperienceScore') >= 0) {
+    actions.push('建立体验分周报，按宝贝质量 / 物流速度 / 服务保障拆解改进项。');
+    actions.push('优先压降48小时揽收、3分钟响应、退款处理时长等高权重指标。');
+  }
+  if (tags.indexOf('shippingTimeliness') >= 0) {
+    actions.push('更新发货模板与揽收 SLA，对代发/中转订单设置轨迹停滞预警。');
+    actions.push('大促前完成仓配产能测算，避免集中爆单导致揽收超时。');
+  }
+  if (tags.indexOf('shippingViolationPenalty') >= 0) {
+    actions.push('梳理违约/赔付场景，更新客服话术与自动同意策略，降低判责率。');
+    actions.push('对高投诉 SKU 建立熔断机制，避免重复违规扣分。');
+  }
+  if (!actions.length) {
+    actions.push('组织运营、客服、仓储共读原文，形成内部变更纪要。');
+    actions.push('生效当周按日复盘相关指标（投诉、超时、品退、赔付）。');
+  }
+  var seen = {};
+  return actions.filter(function (a) {
+    if (seen[a]) return false;
+    seen[a] = true;
+    return true;
+  }).slice(0, 4);
+}
+
+function buildWeeklyReportClient(rules) {
+  var range = getLastWeekRangeClient();
+  var items = (Array.isArray(rules) ? rules : [])
+    .filter(function (r) { return isInLastWeekClient(r.publishedAt || r.lastSeenAt, range); })
+    .sort(function (a, b) {
+      return new Date(b.publishedAt || b.lastSeenAt || 0) - new Date(a.publishedAt || a.lastSeenAt || 0);
+    })
+    .map(function (rule) {
+      var tags = rule.tags || [];
+      return {
+        title: rule.title || '未命名规则',
+        url: rule.url || '',
+        publishedAt: rule.publishedAt || rule.lastSeenAt || null,
+        tagLabels: tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }),
+        highlight: pickWeeklyHighlightClient(rule),
+        impacts: buildWeeklyImpactClient(rule),
+        actions: buildWeeklyActionsClient(rule),
+        aiGenerated: Boolean(rule.aiSummary && rule.aiSummary.highlight)
+      };
+    });
+  return {
+    range: { label: formatWeeklyRangeLabel(range) },
+    total: items.length,
+    items: items
+  };
+}
+
+function updateWeeklyTabCount() {
+  var el = document.getElementById('weeklyTabCount');
+  if (el) el.textContent = String(weeklyReportData.total || 0);
+}
+
+async function loadWeeklyReport() {
+  try {
+    var res = await fetch('/api/weekly');
+    if (res.ok) {
+      var data = await res.json();
+      if (data && Array.isArray(data.items)) {
+        weeklyReportData = data;
+        if (!weeklyReportData.range || !weeklyReportData.range.label) {
+          var r = getLastWeekRangeClient();
+          weeklyReportData.range = { label: formatWeeklyRangeLabel(r) };
+        }
+        updateWeeklyTabCount();
+        return;
+      }
+    }
+  } catch (e) { /* fallback */ }
+  try {
+    var rulesRes = await fetch('./data/rules.json');
+    if (!rulesRes.ok) rulesRes = await fetch('/data/rules.json');
+    if (rulesRes.ok) {
+      var rules = await rulesRes.json();
+      weeklyReportData = buildWeeklyReportClient(rules);
+      updateWeeklyTabCount();
+    }
+  } catch (e2) {
+    console.warn('Weekly report load failed:', e2);
+  }
+}
+
+function statusTimeValue(s) {
+  if (!s || !s.lastFetchTime) return 0;
+  var t = new Date(s.lastFetchTime).getTime();
+  return isNaN(t) ? 0 : t;
+}
+
+function mergeBackendStatus(primary, secondary) {
+  var a = primary || {};
+  var b = secondary || {};
+  var pick = statusTimeValue(a) >= statusTimeValue(b) ? a : b;
+  var other = pick === a ? b : a;
+  return Object.assign({}, backendStatus, other, pick, {
+    fetchCount: Math.max(Number(a.fetchCount) || 0, Number(b.fetchCount) || 0),
+    totalRules: Math.max(Number(a.totalRules) || 0, Number(b.totalRules) || 0)
+  });
+}
 
 async function loadExternalData() {
   var basePath = './data/';
@@ -687,13 +1058,19 @@ async function loadExternalData() {
       : { localStatus: 0, localRules: 1, timeline: 2, apiStatus: 3, apiRules: 4 };
     var results = await Promise.allSettled(requests);
 
-    var statusLoaded = false;
+    var apiStatus = null;
+    var localStatus = null;
+
     if (results[idx.apiStatus].status === 'fulfilled' && results[idx.apiStatus].value.ok) {
-      var apiStatus = await results[idx.apiStatus].value.json();
-      if (apiStatus && (apiStatus.lastFetchTime || typeof apiStatus.fetchCount === 'number')) {
-        backendStatus = Object.assign({}, backendStatus, apiStatus);
-        statusLoaded = true;
-      }
+      apiStatus = await results[idx.apiStatus].value.json();
+    }
+
+    if (results[idx.localStatus].status === 'fulfilled' && results[idx.localStatus].value.ok) {
+      localStatus = await results[idx.localStatus].value.json();
+    }
+
+    if (apiStatus || localStatus) {
+      backendStatus = mergeBackendStatus(apiStatus, localStatus);
     }
 
     var rulesLoaded = false;
@@ -702,19 +1079,13 @@ async function loadExternalData() {
       if (apiRules && apiRules.categorized) {
         fetchedRulesData = apiRules;
         rulesLoaded = true;
-        backendStatus = Object.assign({}, backendStatus, {
-          lastFetchTime: apiRules.lastFetchTime || backendStatus.lastFetchTime,
-          fetchCount: typeof apiRules.fetchCount === 'number' ? apiRules.fetchCount : backendStatus.fetchCount,
-          newRulesCount: typeof apiRules.newRulesCount === 'number' ? apiRules.newRulesCount : backendStatus.newRulesCount,
-          sources: apiRules.sources || backendStatus.sources
+        backendStatus = mergeBackendStatus(backendStatus, {
+          lastFetchTime: apiRules.lastFetchTime,
+          fetchCount: apiRules.fetchCount,
+          newRulesCount: apiRules.newRulesCount,
+          totalRules: apiRules.totalRules,
+          sources: apiRules.sources
         });
-      }
-    }
-
-    if (!statusLoaded && results[idx.localStatus].status === 'fulfilled' && results[idx.localStatus].value.ok) {
-      var localStatus = await results[idx.localStatus].value.json();
-      if (localStatus && (localStatus.lastFetchTime || typeof localStatus.fetchCount === 'number')) {
-        backendStatus = Object.assign({}, backendStatus, localStatus);
       }
     }
 
@@ -729,8 +1100,40 @@ async function loadExternalData() {
       var d = await results[idx.timeline].value.json();
       if (d && d.items && d.items.length > 0) timelineDataLive = d.items;
     }
+
+    await loadWeeklyReport();
   } catch (e) {
     console.warn('External data load failed, using embedded defaults:', e);
+    await loadWeeklyReport();
+  }
+}
+
+// === RULE DETAIL LINKS（公告/抓取链接须带 #/rule/detail，否则会落到规则首页）===
+function normalizeRuleDetailLink(raw) {
+  if (!raw || typeof raw !== 'string') return '';
+  var s = raw.trim();
+  if (!s) return '';
+  if (s.indexOf('#/rule/detail') !== -1) return s;
+  try {
+    var u = new URL(s);
+    if (u.hostname.indexOf('rulechannel.tmall.com') === -1) return s;
+    var ruleId = u.searchParams.get('ruleId') || '';
+    var cId = u.searchParams.get('cId') || '';
+    if (!ruleId && u.hash) {
+      var hashBody = u.hash.replace(/^#\/?/, '');
+      var qIdx = hashBody.indexOf('?');
+      var hashQuery = qIdx >= 0 ? hashBody.slice(qIdx + 1) : '';
+      var hp = new URLSearchParams(hashQuery);
+      ruleId = hp.get('ruleId') || ruleId;
+      cId = hp.get('cId') || cId;
+    }
+    if (!ruleId) return s;
+    var params = new URLSearchParams({ type: 'detail', ruleId: ruleId });
+    if (cId) params.set('cId', cId);
+    var qs = params.toString();
+    return 'https://rulechannel.tmall.com/?' + qs + '#/rule/detail?' + qs;
+  } catch (e1) {
+    return s;
   }
 }
 
@@ -772,7 +1175,8 @@ function renderFetchedRules(category) {
   let html = '<div class="fetched-section"><div class="fetched-section-header">自动抓取发现的相关规则 <span class="badge">' + items.length + ' 条</span></div>';
   items.slice(0, 20).forEach(function(item) {
     const dateStr = item.effectiveDate || '';
-    var titleHtml = item.url ? '<a class="fetched-rule-link" href="' + item.url + '" target="_blank" rel="noopener">' + item.title + ' ↗</a>' : item.title;
+    var detailUrl = item.url ? normalizeRuleDetailLink(item.url) : '';
+    var titleHtml = detailUrl ? '<a class="fetched-rule-link" href="' + detailUrl + '" target="_blank" rel="noopener">' + item.title + ' ↗</a>' : item.title;
     html += '<div class="fetched-rule-item">' +
       '<div class="fetched-cat-dot ' + item.category + '"></div>' +
       '<div class="fetched-rule-content">' +
@@ -788,7 +1192,8 @@ function renderScoreChanges() {
   const typeLabels = { 'new': '新增', 'modify': '变更', 'remove': '移除' };
   let itemsHtml = '';
   SCORE_CHANGES.forEach(function(c) {
-    const linkHtml = c.link ? '<a class="change-link" href="' + c.link + '" target="_blank" rel="noopener">查看规则原文 ↗</a>' : '';
+    const changeUrl = c.link ? normalizeRuleDetailLink(c.link) : '';
+    const linkHtml = changeUrl ? '<a class="change-link" href="' + changeUrl + '" target="_blank" rel="noopener">查看规则原文 ↗</a>' : '';
     itemsHtml += '<div class="change-item type-' + c.type + '">' +
       '<span class="change-type-tag ' + c.type + '">' + typeLabels[c.type] + '</span>' +
       '<div class="change-content">' +
@@ -836,8 +1241,9 @@ function renderTimeline() {
   var data = timelineDataLive || TIMELINE_DATA;
   let html = '<div class="timeline-section"><div class="timeline-header">规则公告<a href="https://rulechannel.tmall.com/" target="_blank" rel="noopener" style="float:right;font-size:12px;color:var(--text-muted);font-weight:400;text-decoration:none;opacity:.6">来源: 天猫规则中心</a></div><div class="timeline">';
   data.forEach(function(item) {
-    var inner = item.link
-      ? '<a href="' + item.link + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:flex;align-items:baseline;gap:12px;width:100%"><div class="timeline-date">' + item.date + '</div><div class="timeline-text">' + item.text + '</div></a>'
+    var detailLink = item.link ? normalizeRuleDetailLink(item.link) : '';
+    var inner = detailLink
+      ? '<a href="' + detailLink + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:flex;align-items:baseline;gap:12px;width:100%"><div class="timeline-date">' + item.date + '</div><div class="timeline-text">' + item.text + '</div></a>'
       : '<div class="timeline-date">' + item.date + '</div><div class="timeline-text">' + item.text + '</div>';
     html += '<div class="timeline-item">' + inner + '</div>';
   });
@@ -917,6 +1323,98 @@ function renderHome() {
   return html;
 }
 
+function formatWeeklyDate(iso) {
+  if (!iso) return '--';
+  var t = new Date(iso);
+  if (isNaN(t.getTime())) return '--';
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  return t.getFullYear() + '-' + pad(t.getMonth() + 1) + '-' + pad(t.getDate());
+}
+
+function formatWeeklyCellList(lines) {
+  if (!lines || !lines.length) return '<span class="weekly-cell-text">—</span>';
+  return '<ol class="weekly-cell-list">' + lines.map(function (line) {
+    return '<li>' + escapeHtml(line) + '</li>';
+  }).join('') + '</ol>';
+}
+
+function renderWeekly() {
+  var report = weeklyReportData || { range: { label: '' }, total: 0, items: [] };
+  var rangeLabel = report.range && report.range.label ? report.range.label : formatWeeklyRangeLabel(getLastWeekRangeClient());
+
+  var html = '<div class="content-section active" id="section-weekly">' +
+    '<div class="section-header">' +
+      '<div class="section-tag">WEEKLY</div>' +
+      '<h1 class="section-title">周度规则</h1>' +
+      '<p class="section-desc">汇总<strong>上周一至上周日</strong>期间发布或更新的天猫规则，提炼重点、商家影响与后续流程调整建议。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。</p>' +
+    '</div>' +
+    '<div class="weekly-range-banner">' +
+      '<div><div class="weekly-range-label">统计周期</div>' +
+      '<div class="weekly-range-value">' + escapeHtml(rangeLabel) + '</div></div>' +
+      '<div class="weekly-range-count">共 <strong style="color:var(--red)">' + (report.total || 0) + '</strong> 条规则</div>' +
+    '</div>';
+
+  if (!report.items || report.items.length === 0) {
+    html += '<div class="no-results">' +
+      '<div class="no-results-icon">周</div>' +
+      '<div class="no-results-text">上周暂无新收录规则</div>' +
+      '<div class="no-results-sub">可点击「立即抓取」更新数据，或下周再来查看</div>' +
+    '</div>';
+  } else {
+    html += '<div class="weekly-table-wrap">' +
+      '<table class="weekly-table">' +
+      '<colgroup>' +
+        '<col style="width:9%">' +
+        '<col style="width:16%">' +
+        '<col style="width:9%">' +
+        '<col style="width:22%">' +
+        '<col style="width:22%">' +
+        '<col style="width:22%">' +
+      '</colgroup>' +
+      '<thead><tr>' +
+        '<th>发布日期</th>' +
+        '<th>规则名称</th>' +
+        '<th>分类</th>' +
+        '<th>重点内容</th>' +
+        '<th>商家影响</th>' +
+        '<th>流程建议</th>' +
+      '</tr></thead><tbody>';
+
+    report.items.forEach(function (item) {
+      var url = item.url ? normalizeRuleDetailLink(item.url) : '';
+      var titleHtml = url
+        ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">' + escapeHtml(item.title) + '</a>'
+        : escapeHtml(item.title);
+      var linkHtml = url
+        ? '<div class="weekly-cell-link"><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">原文 ↗</a></div>'
+        : '';
+      var tagsHtml = (item.tagLabels || []).length
+        ? '<div class="weekly-tags-cell">' + (item.tagLabels || []).map(function (lbl) {
+            return '<span class="weekly-tag">' + escapeHtml(lbl) + '</span>';
+          }).join('') + '</div>'
+        : '<span class="weekly-cell-text">—</span>';
+
+      html += '<tr>' +
+        '<td class="weekly-col-date">' + formatWeeklyDate(item.publishedAt) + '</td>' +
+        '<td class="weekly-col-title">' + titleHtml + linkHtml + '</td>' +
+        '<td>' + tagsHtml + '</td>' +
+        '<td class="weekly-cell-text">' + escapeHtml(item.highlight || '—') + '</td>' +
+        '<td>' + formatWeeklyCellList(item.impacts) + '</td>' +
+        '<td>' + formatWeeklyCellList(item.actions) + '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    var aiCount = report.items.filter(function (it) { return it.aiGenerated; }).length;
+    if (aiCount > 0) {
+      html += '<p class="weekly-footnote">其中 ' + aiCount + ' 条已使用 DeepSeek 生成解读（抓取或 <code>npm run summarize</code> 后写入 <code>rules.json</code>）。</p>';
+    }
+  }
+
+  html += '</div>';
+  return html;
+}
+
 function renderSection(key) {
   const data = RULES_DATA[key];
   let html = '<div class="content-section active" id="section-' + key + '">' +
@@ -934,7 +1432,7 @@ function renderSection(key) {
       '<div class="card-body">' + card.body + '</div>' +
       '<div class="card-footer"><span class="date-badge">' + card.date + '</span>' +
       card.tags.map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('') +
-      (card.link ? '<a class="card-link" href="' + card.link + '" target="_blank" rel="noopener">查看原文 ↗</a>' : '') +
+      (card.link ? '<a class="card-link" href="' + normalizeRuleDetailLink(card.link) + '" target="_blank" rel="noopener">查看原文 ↗</a>' : '') +
       '</div></div>';
   });
   html += '</div>';
@@ -956,6 +1454,8 @@ function showTab(key) {
 
   if (key === 'home') {
     mainContent.innerHTML = renderHome();
+  } else if (key === 'weekly') {
+    mainContent.innerHTML = renderWeekly();
   } else {
     mainContent.innerHTML = renderSection(key);
     if (searchVal) filterCards(searchVal);
@@ -966,6 +1466,7 @@ function showTab(key) {
 
   if (typeof gsap !== 'undefined') {
     gsap.fromTo('.home-stat-card', { opacity: 0, y: 15 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out' });
+    gsap.fromTo('.weekly-table tbody tr', { opacity: 0, y: 10 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.35, ease: 'power2.out' });
     gsap.fromTo('.home-category-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.2 });
     gsap.fromTo('.timeline-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out', delay: 0.4 });
     gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.15 });
@@ -1044,6 +1545,7 @@ async function triggerManualFetch() {
     });
 
     await loadExternalData();
+    await loadWeeklyReport();
     showTab(currentTab);
     updateStatusBar();
     btn.textContent = '完成! +' + (result.newRulesCount || 0) + '条';
@@ -1083,6 +1585,41 @@ function updateClock() {
     Object.values(RULES_DATA).forEach(function(s) { total += s.cards.length; });
     document.getElementById('ruleCount').textContent = '已收录规则: ' + total + '条';
   }
+}
+
+// === THEME ===
+var THEME_STORAGE_KEY = 'tmall-theme';
+
+function getTheme() {
+  var t = document.documentElement.getAttribute('data-theme');
+  return t === 'light' ? 'light' : 'dark';
+}
+
+function updateThemeToggleLabel() {
+  var btn = document.getElementById('themeToggleBtn');
+  if (!btn) return;
+  var isLight = getTheme() === 'light';
+  btn.textContent = isLight ? '☀ 白天' : '🌙 黑夜';
+  btn.setAttribute('aria-label', isLight ? '当前为白天模式，点击切换为黑夜' : '当前为黑夜模式，点击切换为白天');
+}
+
+function applyTheme(theme) {
+  var next = theme === 'light' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, next);
+  } catch (e) { /* ignore */ }
+  updateThemeToggleLabel();
+}
+
+function toggleTheme() {
+  applyTheme(getTheme() === 'light' ? 'dark' : 'light');
+}
+
+function initThemeToggle() {
+  updateThemeToggleLabel();
+  var btn = document.getElementById('themeToggleBtn');
+  if (btn) btn.addEventListener('click', toggleTheme);
 }
 
 // === BOOT ===
@@ -1125,7 +1662,10 @@ function boot() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', boot);
+window.addEventListener('DOMContentLoaded', function () {
+  initThemeToggle();
+  boot();
+});
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"75124c326cb447fe934cde04713ae013","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>

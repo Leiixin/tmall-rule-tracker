@@ -33,6 +33,10 @@ jobs:
         env:
           TZ: Asia/Shanghai
           DATA_DIR: data
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
 
       - name: Commit Updated Data
         run: |

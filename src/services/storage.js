@@ -1,5 +1,7 @@
 ﻿import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { normalizeRuleDetailUrl } from "../utils/ruleDetailUrl.js";
+import { contentHash } from "./llm/summarizer.js";
 
 const dataDir = process.env.DATA_DIR
   ? path.resolve(process.env.DATA_DIR)
@@ -32,10 +34,18 @@ export async function saveRules(rules) {
 }
 
 function ruleKey(rule) {
-  if (rule.url) {
-    return rule.url;
+  const url = rule.url ? normalizeRuleDetailUrl(rule.url) : "";
+  if (url) {
+    return url;
   }
   return `${rule.title || ""}|${rule.source || ""}|${rule.publishedAt || ""}`;
+}
+
+function withNormalizedUrl(rule) {
+  if (!rule?.url) {
+    return rule;
+  }
+  return { ...rule, url: normalizeRuleDetailUrl(rule.url) || rule.url };
 }
 
 export async function upsertRules(incomingRules) {
@@ -43,12 +53,19 @@ export async function upsertRules(incomingRules) {
   const map = new Map(current.map((rule) => [ruleKey(rule), rule]));
 
   for (const rule of incomingRules) {
-    const key = ruleKey(rule);
+    const normalized = withNormalizedUrl(rule);
+    const key = ruleKey(normalized);
     const existing = map.get(key);
+
+    const nextHash = contentHash(normalized);
+    const keepAiSummary =
+      existing?.aiSummary?.contentHash &&
+      existing.aiSummary.contentHash === nextHash;
 
     map.set(key, {
       ...existing,
-      ...rule,
+      ...normalized,
+      aiSummary: keepAiSummary ? existing.aiSummary : normalized.aiSummary,
       firstSeenAt: existing?.firstSeenAt || new Date().toISOString(),
       lastSeenAt: new Date().toISOString()
     });

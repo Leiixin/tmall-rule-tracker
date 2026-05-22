@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -10,6 +10,7 @@ import {
 import { buildSheetPresentation } from "./services/presentation.js";
 import { getLastRunStatus, refreshRules, startScheduler } from "./services/scheduler.js";
 import { ensureDataFile, loadRules } from "./services/storage.js";
+import { buildWeeklyReport } from "./services/weeklyReport.js";
 
 const PORT = Number(process.env.PORT || 3000);
 const ENABLE_INTERNAL_CRON = process.env.ENABLE_INTERNAL_CRON !== "false";
@@ -36,8 +37,12 @@ const legacyCategoryMap = {
 };
 
 function buildSourceStatus(status) {
-  const sourceStatus = status?.timestamp ? "online" : "unknown";
-  const lastCheck = status?.timestamp || null;
+  if (status?.sources && typeof status.sources === "object") {
+    return status.sources;
+  }
+
+  const lastCheck = status?.timestamp || status?.lastRun || null;
+  const sourceStatus = lastCheck ? "online" : "unknown";
 
   return {
     天猫规则页: { status: sourceStatus, lastCheck },
@@ -101,9 +106,10 @@ function buildLegacyRulesPayload(rules, status) {
       ...categorized.general
     ],
     fetchCount: status?.fetchCount || 0,
+    totalRules: status?.totalRules || status?.stored || 0,
     sources: buildSourceStatus(status),
     categorized,
-    lastFetchTime: status?.timestamp || null,
+    lastFetchTime: status?.timestamp || status?.lastRun || null,
     newRulesCount: status?.newRulesCount || 0
   };
 }
@@ -119,13 +125,13 @@ app.get("/api/health", async (_req, res) => {
 
 app.get("/api/status", async (_req, res) => {
   const rules = await loadRules();
-  const scheduler = getLastRunStatus();
+  const scheduler = await getLastRunStatus();
 
   res.json({
     scheduler,
-    totalRules: rules.length,
+    totalRules: scheduler.totalRules || rules.length,
     now: new Date().toISOString(),
-    lastFetchTime: scheduler.timestamp || null,
+    lastFetchTime: scheduler.timestamp || scheduler.lastRun || null,
     fetchCount: scheduler.fetchCount || 0,
     newRulesCount: scheduler.newRulesCount || 0,
     sources: buildSourceStatus(scheduler)
@@ -134,7 +140,7 @@ app.get("/api/status", async (_req, res) => {
 
 app.get("/api/rules", async (req, res) => {
   const processed = await getProcessedRules();
-  const scheduler = getLastRunStatus();
+  const scheduler = await getLastRunStatus();
   const hasCategoryParam = Object.prototype.hasOwnProperty.call(req.query, "category");
   const hasLimitParam = Object.prototype.hasOwnProperty.call(req.query, "limit");
 
@@ -168,6 +174,11 @@ app.get("/api/conclusions", async (_req, res) => {
 app.get("/api/presentation", async (_req, res) => {
   const processed = await getProcessedRules();
   res.json(buildSheetPresentation(processed));
+});
+
+app.get("/api/weekly", async (_req, res) => {
+  const rules = await loadRules();
+  res.json(buildWeeklyReport(rules));
 });
 
 app.post("/api/crawl", async (_req, res) => {

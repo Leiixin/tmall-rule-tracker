@@ -7,7 +7,10 @@
     "start": "node src/server.js",
     "dev": "node src/server.js",
     "autostart:install": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-autostart.ps1",
-    "autostart:remove": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/uninstall-autostart.ps1"
+    "autostart:remove": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/uninstall-autostart.ps1",
+    "migrate:urls": "node scripts/migrate-rule-urls.mjs",
+    "crawl": "node scripts/gh-crawl.mjs",
+    "summarize": "node scripts/summarize-rules.mjs"
   },
   "dependencies": {
     "axios": "^1.12.2",
