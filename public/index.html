@@ -1118,7 +1118,6 @@ function buildWeeklyReportClient(rules) {
         title: rule.title || '未命名规则',
         url: rule.url || '',
         publishedAt: rule.publishedAt || rule.lastSeenAt || null,
-        tagLabels: tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }),
         highlightsStructured: highlightsStructured,
         impactsStructured: impactsStructured,
         actionsStructured: actionsStructured,
@@ -1534,17 +1533,15 @@ function renderWeekly() {
     html += '<div class="weekly-table-wrap">' +
       '<table class="weekly-table">' +
       '<colgroup>' +
-        '<col style="width:9%">' +
-        '<col style="width:16%">' +
-        '<col style="width:9%">' +
-        '<col style="width:22%">' +
-        '<col style="width:22%">' +
-        '<col style="width:22%">' +
+        '<col style="width:10%">' +
+        '<col style="width:18%">' +
+        '<col style="width:24%">' +
+        '<col style="width:24%">' +
+        '<col style="width:24%">' +
       '</colgroup>' +
       '<thead><tr>' +
         '<th>发布日期</th>' +
         '<th>规则名称</th>' +
-        '<th>分类</th>' +
         '<th>重点内容</th>' +
         '<th>商家影响</th>' +
         '<th>流程建议</th>' +
@@ -1558,16 +1555,9 @@ function renderWeekly() {
       var linkHtml = url
         ? '<div class="weekly-cell-link"><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">原文 ↗</a></div>'
         : '';
-      var tagsHtml = (item.tagLabels || []).length
-        ? '<div class="weekly-tags-cell">' + (item.tagLabels || []).map(function (lbl) {
-            return '<span class="weekly-tag">' + escapeHtml(lbl) + '</span>';
-          }).join('') + '</div>'
-        : '<span class="weekly-cell-text">—</span>';
-
       html += '<tr>' +
         '<td class="weekly-col-date">' + formatWeeklyDate(item.publishedAt) + '</td>' +
         '<td class="weekly-col-title">' + titleHtml + linkHtml + '</td>' +
-        '<td>' + tagsHtml + '</td>' +
         '<td>' + formatWeeklyHighlights(item.highlightsStructured || migrateHighlightsFromFlat(item.highlights || (item.highlight ? [item.highlight] : []))) + '</td>' +
         '<td>' + formatWeeklyStructuredBlocks(IMPACT_SECTION_KEYS, item.impactsStructured || migrateImpactsFromFlat(item.impacts || [])) + '</td>' +
         '<td>' + formatWeeklyStructuredBlocks(ACTION_SECTION_KEYS, item.actionsStructured || migrateActionsFromFlat(item.actions || [])) + '</td>' +

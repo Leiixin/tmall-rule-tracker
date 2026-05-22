@@ -208,8 +208,6 @@ export function buildWeeklyReport(rules, reference = new Date()) {
         url: rule.url || "",
         publishedAt: rule.publishedAt || rule.lastSeenAt || null,
         source: rule.source || "天猫规则中心",
-        tags: rule.tags || [],
-        tagLabels: (rule.tags || []).map((t) => CATEGORY_LABELS[t] || t),
         highlightsStructured,
         highlights: flattenHighlightsStructured(highlightsStructured),
         impactsStructured,
