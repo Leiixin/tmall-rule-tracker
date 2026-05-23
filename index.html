@@ -447,7 +447,6 @@ body::after {
 .source-chip .chip-dot.online { background: var(--green); box-shadow: 0 0 4px var(--green); }
 .source-chip .chip-dot.error { background: var(--red); box-shadow: 0 0 4px var(--red); }
 .source-chip .chip-dot.unknown { background: var(--text-dim); }
-.fetched-section { margin-top: 28px; }
 .changes-panel {
   margin-top: 32px;
   border: 1px solid var(--changes-panel-border);
@@ -520,26 +519,6 @@ body::after {
 .analysis-item-desc .warn { color: var(--amber); font-weight: 500; }
 .analysis-item-desc .good { color: var(--green); font-weight: 500; }
 .analysis-item-desc .num { font-family: 'JetBrains Mono', monospace; color: var(--blue); }
-.fetched-section-header { font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.fetched-section-header .badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; background: var(--red-glow); color: var(--red); padding: 2px 8px; border-radius: 4px; }
-.fetched-rule-item {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 12px 16px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: 8px;
-  margin-bottom: 8px; transition: all 0.2s;
-}
-.fetched-rule-item:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
-.fetched-cat-dot { width: 8px; height: 8px; border-radius: 2px; margin-top: 6px; flex-shrink: 0; }
-.fetched-cat-dot.shelf { background: var(--amber); }
-.fetched-cat-dot.score { background: var(--blue); }
-.fetched-cat-dot.ship { background: var(--green); }
-.fetched-cat-dot.penalty { background: var(--red); }
-.fetched-cat-dot.general { background: var(--text-dim); }
-.fetched-rule-content { flex: 1; min-width: 0; }
-.fetched-rule-title { font-size: 13px; color: var(--text-primary); line-height: 1.5; word-break: break-all; }
-.fetched-rule-link { color: var(--text-primary); text-decoration: none; transition: color 0.2s; }
-.fetched-rule-link:hover { color: var(--blue); }
-.fetched-rule-meta { font-size: 11px; color: var(--text-dim); margin-top: 4px; display: flex; gap: 12px; }
 .cron-info { font-size: 11px; color: var(--text-dim); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
 /* Home page */
 .home-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
@@ -839,16 +818,6 @@ let backendStatus = {
     "天猫规则中心": { status: "unknown", lastCheck: null },
     "淘宝大学": { status: "unknown", lastCheck: null },
     "天猫国际": { status: "unknown", lastCheck: null }
-  }
-};
-
-let fetchedRulesData = {
-  categorized: {
-    shelf: [],
-    score: [],
-    ship: [],
-    penalty: [],
-    general: []
   }
 };
 
@@ -1211,20 +1180,18 @@ async function loadExternalData() {
           fetch('/api/rules'),
           fetch(basePath + 'timeline.json'),
           fetch(basePath + 'status.json'),
-          fetch(basePath + 'scraped.json'),
           fetch(basePath + 'rules.json')
         ]
       : [
           fetch(basePath + 'status.json'),
-          fetch(basePath + 'scraped.json'),
           fetch(basePath + 'timeline.json'),
           fetch(basePath + 'rules.json'),
           fetch('/api/status'),
           fetch('/api/rules')
         ];
     var idx = preferApi
-      ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, localRules: 4, rulesJson: 5 }
-      : { localStatus: 0, localRules: 1, timeline: 2, rulesJson: 3, apiStatus: 4, apiRules: 5 };
+      ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, rulesJson: 4 }
+      : { localStatus: 0, timeline: 1, rulesJson: 2, apiStatus: 3, apiRules: 4 };
     var results = await Promise.allSettled(requests);
 
     var apiStatus = null;
@@ -1242,12 +1209,9 @@ async function loadExternalData() {
       backendStatus = mergeBackendStatus(apiStatus, localStatus);
     }
 
-    var rulesLoaded = false;
     if (results[idx.apiRules].status === 'fulfilled' && results[idx.apiRules].value.ok) {
       var apiRules = await results[idx.apiRules].value.json();
-      if (apiRules && apiRules.categorized) {
-        fetchedRulesData = apiRules;
-        rulesLoaded = true;
+      if (apiRules) {
         backendStatus = mergeBackendStatus(backendStatus, {
           lastFetchTime: apiRules.lastFetchTime,
           fetchCount: apiRules.fetchCount,
@@ -1255,13 +1219,6 @@ async function loadExternalData() {
           totalRules: apiRules.totalRules,
           sources: apiRules.sources
         });
-      }
-    }
-
-    if (!rulesLoaded && results[idx.localRules].status === 'fulfilled' && results[idx.localRules].value.ok) {
-      var localRules = await results[idx.localRules].value.json();
-      if (localRules && localRules.categorized) {
-        fetchedRulesData = localRules;
       }
     }
 
@@ -1434,27 +1391,6 @@ async function loadCuratedData(basePath) {
   } catch (e) {
     console.warn('Curated data load failed:', e);
   }
-}
-
-function renderFetchedRules(category) {
-  if (!fetchedRulesData || !fetchedRulesData.categorized) return '';
-  const items = fetchedRulesData.categorized[category] || [];
-  if (items.length === 0) return '';
-
-  let html = '<div class="fetched-section"><div class="fetched-section-header">自动抓取发现的相关规则 <span class="badge">' + items.length + ' 条</span></div>';
-  items.slice(0, 20).forEach(function(item) {
-    const dateStr = item.effectiveDate || '';
-    var detailUrl = item.url ? normalizeRuleDetailLink(item.url) : '';
-    var titleHtml = detailUrl ? '<a class="fetched-rule-link" href="' + detailUrl + '" target="_blank" rel="noopener">' + item.title + ' ↗</a>' : item.title;
-    html += '<div class="fetched-rule-item">' +
-      '<div class="fetched-cat-dot ' + item.category + '"></div>' +
-      '<div class="fetched-rule-content">' +
-        '<div class="fetched-rule-title">' + titleHtml + '</div>' +
-        '<div class="fetched-rule-meta"><span>来源: ' + (item.source || '未知') + '</span>' + (dateStr ? '<span>生效时间: ' + dateStr + '</span>' : '') + '</div>' +
-      '</div></div>';
-  });
-  html += '</div>';
-  return html;
 }
 
 function renderScoreChanges() {
@@ -1696,7 +1632,6 @@ function renderSection(key) {
   html += '</div>';
 
   if (key === 'score') html += renderScoreChanges();
-  html += renderFetchedRules(key);
 
   html += '</div>';
   return html;
@@ -1730,7 +1665,6 @@ function showTab(key) {
     gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.15 });
     gsap.fromTo('.rule-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.4, ease: 'power2.out' });
     gsap.fromTo('.timeline-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out', delay: 0.3 });
-    gsap.fromTo('.fetched-rule-item', { opacity: 0, x: -8 }, { opacity: 1, x: 0, stagger: 0.04, duration: 0.3, ease: 'power2.out', delay: 0.2 });
     gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
     gsap.fromTo('.changes-panel', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.25 });
     gsap.fromTo('.change-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.4 });
