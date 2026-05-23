@@ -1337,7 +1337,7 @@ function renderCuratedAlertBanner() {
   if (pub && pub.at) {
     return '<div class="curated-alert-banner synced">' +
       '引用规则已于 ' + escapeHtml(formatCuratedDateTime(pub.at)) + ' 自动同步展示（' +
-      escapeHtml(pub.label || pub.sourceId || '') + '）。' +
+      escapeHtml(pub.ruleTitle || pub.label || pub.sourceId || '') + '）。' +
       (curatedWatchData.lastCheckedAt ? ' 最近检测：' + escapeHtml(formatCuratedDateTime(curatedWatchData.lastCheckedAt)) + '。' : '') +
       '</div>';
   }
@@ -1364,7 +1364,7 @@ function renderCuratedSourcesPanel(categoryKey) {
       : '—';
     return '<tr>' +
       '<td><span class="curated-status-dot ' + escapeHtml(status) + '"></span>' + escapeHtml(curatedStatusLabel(status)) + '</td>' +
-      '<td>' + escapeHtml(source.label || source.ruleId || source.id) + '</td>' +
+      '<td>' + escapeHtml(source.ruleTitle || watch.ruleTitle || source.label || source.ruleId || source.id) + '</td>' +
       '<td>' + linkHtml + '</td>' +
       '<td>' + escapeHtml(formatCuratedDateTime(watch.platformModifiedAt)) + '</td>' +
       '<td>' + escapeHtml(formatCuratedDateTime(watch.lastSyncedAt)) + '</td>' +

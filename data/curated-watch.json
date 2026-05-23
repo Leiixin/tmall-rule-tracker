@@ -1,12 +1,57 @@
-{
-  "lastCheckedAt": null,
+﻿{
+  "lastCheckedAt": "2026-05-23T08:41:23.701Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
-  "sources": {},
+  "sources": {
+    "rule-20002796": {
+      "status": "changed",
+      "message": "platform content or revision changed",
+      "ruleTitle": "天猫商品保质期发布规范",
+      "platformModifiedAt": "2023-04-03T03:04:50.000Z",
+      "contentHash": "fe220e1fc25eaeea",
+      "lastSyncedAt": null,
+      "detectedAt": "2026-05-23T08:41:23.701Z"
+    },
+    "rule-11002181": {
+      "status": "changed",
+      "message": "platform content or revision changed",
+      "ruleTitle": "天猫化妆品发布规范",
+      "platformModifiedAt": "2020-03-30T08:18:16.000Z",
+      "contentHash": "9a189fe3eea8ae65",
+      "lastSyncedAt": null,
+      "detectedAt": "2026-05-23T08:41:23.701Z"
+    },
+    "rule-11005234": {
+      "status": "error",
+      "message": "MTOP detail fetch failed",
+      "ruleTitle": "",
+      "platformModifiedAt": null,
+      "contentHash": "",
+      "lastSyncedAt": null
+    },
+    "rule-20009524": {
+      "status": "changed",
+      "message": "platform content or revision changed",
+      "ruleTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "platformModifiedAt": "2026-02-24T02:26:56.000Z",
+      "contentHash": "ceaf17bc842ee9ab",
+      "lastSyncedAt": null,
+      "detectedAt": "2026-05-23T08:41:23.701Z"
+    },
+    "rule-11000266": {
+      "status": "changed",
+      "message": "platform content or revision changed",
+      "ruleTitle": "天猫物流时效管理规范",
+      "platformModifiedAt": "2024-09-12T08:00:00.000Z",
+      "contentHash": "7aac85535e932bc3",
+      "lastSyncedAt": null,
+      "detectedAt": "2026-05-23T08:41:23.701Z"
+    }
+  },
   "summary": {
-    "checked": 0,
-    "changed": 0,
-    "errors": 0,
+    "checked": 5,
+    "changed": 4,
+    "errors": 1,
     "published": 0,
     "synced": 0
   }

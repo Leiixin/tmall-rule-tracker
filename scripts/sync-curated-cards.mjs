@@ -29,6 +29,17 @@ async function writeJson(filePath, value) {
   await writeFile(filePath, `\uFEFF${JSON.stringify(value, null, 2)}`, "utf8");
 }
 
+function applyRuleTitle(source, detail) {
+  const title = String(detail?.title || "").trim();
+  if (title) {
+    source.ruleTitle = title;
+  }
+}
+
+function resolveRuleTitle(source, prev) {
+  return source.ruleTitle || prev.ruleTitle || "";
+}
+
 function mergeCardsForSource(cards, category, sourceId, newCards) {
   const kept = (cards || []).filter((c) => c.sourceId !== sourceId);
   const merged = [...kept, ...newCards];
@@ -120,6 +131,7 @@ async function main() {
       watch.sources[source.id] = {
         status: "ok",
         message: "local card without ruleId",
+        ruleTitle: resolveRuleTitle(source, prev),
         platformModifiedAt: prev.platformModifiedAt || null,
         contentHash: prev.contentHash || "",
         lastSyncedAt: prev.lastSyncedAt || null
@@ -133,6 +145,7 @@ async function main() {
         watch.sources[source.id] = {
           status: "error",
           message: "MTOP detail fetch failed",
+          ruleTitle: resolveRuleTitle(source, prev),
           platformModifiedAt: prev.platformModifiedAt || null,
           contentHash: prev.contentHash || "",
           lastSyncedAt: prev.lastSyncedAt || null
@@ -140,6 +153,9 @@ async function main() {
         watch.summary.errors += 1;
         continue;
       }
+
+      applyRuleTitle(source, detail);
+      const ruleTitle = resolveRuleTitle(source, prev);
 
       const hash = contentHash(detail.content);
       const platformModifiedAt = detail.publishedAt;
@@ -153,6 +169,7 @@ async function main() {
         watch.sources[source.id] = {
           status: "changed",
           message: "platform content or revision changed",
+          ruleTitle,
           platformModifiedAt,
           contentHash: hash,
           lastSyncedAt: prev.lastSyncedAt || null,
@@ -164,6 +181,7 @@ async function main() {
         watch.sources[source.id] = {
           status: "ok",
           message: "no change",
+          ruleTitle,
           platformModifiedAt,
           contentHash: hash,
           lastSyncedAt: prev.lastSyncedAt || null
@@ -173,6 +191,7 @@ async function main() {
       watch.sources[source.id] = {
         status: "error",
         message: err instanceof Error ? err.message : String(err),
+        ruleTitle: resolveRuleTitle(source, prev),
         platformModifiedAt: prev.platformModifiedAt || null,
         contentHash: prev.contentHash || "",
         lastSyncedAt: prev.lastSyncedAt || null
@@ -213,15 +232,18 @@ async function main() {
         watch.summary.published += 1;
         watch.summary.synced += 1;
         watch.autoPublishVersion += 1;
+        const displayTitle = source.ruleTitle || source.label || source.id;
         watch.recentAutoPublish = {
           at: timestamp,
           sourceId: source.id,
-          label: source.label,
+          ruleTitle: displayTitle,
+          label: displayTitle,
           categories: source.categories
         };
         watch.sources[source.id] = {
           status: "synced",
           message: `auto-published ${publishedCategories} categor(ies)`,
+          ruleTitle: resolveRuleTitle(source, prevWatch.sources?.[source.id] || {}),
           platformModifiedAt,
           contentHash: hash,
           lastSyncedAt: timestamp
@@ -230,12 +252,14 @@ async function main() {
         curatedCards.autoPublishVersion = watch.autoPublishVersion;
       }
     } catch (err) {
+      const prevEntry = prevWatch.sources?.[source.id] || {};
       watch.sources[source.id] = {
         status: "changed",
         message: `LLM publish failed: ${err instanceof Error ? err.message : err}`,
+        ruleTitle: resolveRuleTitle(source, prevEntry),
         platformModifiedAt,
         contentHash: hash,
-        lastSyncedAt: prevWatch.sources?.[source.id]?.lastSyncedAt || null,
+        lastSyncedAt: prevEntry.lastSyncedAt || null,
         detectedAt: timestamp
       };
       watch.summary.errors += 1;

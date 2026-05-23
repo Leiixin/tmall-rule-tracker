@@ -17,7 +17,8 @@
         "shelf:2",
         "shelf:4",
         "shelf:5"
-      ]
+      ],
+      "ruleTitle": "天猫商品保质期发布规范"
     },
     {
       "id": "rule-11002181",
@@ -30,7 +31,8 @@
       ],
       "cardIds": [
         "shelf:1"
-      ]
+      ],
+      "ruleTitle": "天猫化妆品发布规范"
     },
     {
       "id": "rule-11005234",
@@ -62,7 +64,8 @@
         "score:4",
         "score:5",
         "score:6"
-      ]
+      ],
+      "ruleTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知"
     },
     {
       "id": "rule-11000266",
@@ -86,7 +89,8 @@
         "penalty:3",
         "penalty:4",
         "penalty:5"
-      ]
+      ],
+      "ruleTitle": "天猫物流时效管理规范"
     }
   ]
 }

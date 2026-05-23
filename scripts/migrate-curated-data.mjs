@@ -69,7 +69,8 @@ async function main() {
           ruleId: ruleId || "",
           cId: cId || "",
           url: link || (ruleId ? buildRuleDetailUrl(ruleId, cId) : ""),
-          label: card.title || section.title || category,
+          label: ruleId || "",
+          ruleTitle: "",
           categories: [],
           cardIds: []
         });
@@ -80,9 +81,6 @@ async function main() {
         entry.categories.push(category);
       }
       entry.cardIds.push(cardId);
-      if (card.title && entry.label === section.title) {
-        entry.label = card.title;
-      }
 
       return { ...card, sourceId, cardId };
     });
