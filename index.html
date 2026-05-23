@@ -625,7 +625,7 @@ table.weekly-table {
   background: rgba(0, 232, 123, 0.08); border-color: rgba(0, 232, 123, 0.35); color: var(--text-secondary);
 }
 .curated-sources-panel {
-  margin-bottom: 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-panel);
+  margin-top: 28px; margin-bottom: 0; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-panel);
 }
 .curated-sources-panel summary {
   cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 13px; color: var(--text-primary);
@@ -1616,7 +1616,6 @@ function renderSection(key) {
       '<p class="section-desc">' + data.desc + '</p>' +
     '</div>' +
     renderCuratedAlertBanner() +
-    renderCuratedSourcesPanel(key) +
     '<div class="rules-grid">';
 
   data.cards.forEach(function(card) {
@@ -1632,6 +1631,8 @@ function renderSection(key) {
   html += '</div>';
 
   if (key === 'score') html += renderScoreChanges();
+
+  html += renderCuratedSourcesPanel(key);
 
   html += '</div>';
   return html;
