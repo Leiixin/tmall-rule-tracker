@@ -22,12 +22,10 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Sync main before crawl
-        run: |
-          set -euo pipefail
-          git checkout main
-          git pull origin main
+      - name: Sync latest main
+        run: git pull --ff-only origin main
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -62,8 +60,11 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
 
       - name: Commit Updated Data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes."
             exit 0
