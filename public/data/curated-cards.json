@@ -189,19 +189,6 @@
         "body": "<ul><li><span class=\"highlight\">假冒商品</span>：每被处罚1次，各维度分 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">描述不符</span>：每被处罚1次，宝贝质量维度 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">混淆商品/误导消费</span>：每次宝贝质量 <span class=\"num\">−0.3分</span></li><li><span class=\"highlight\">物流轨迹异常</span>（新增）：每次物流速度维度 <span class=\"num\">−0.3分</span></li><li>降分次数上限 = 30天内被处罚的次数（含虚拟单等场景）</li><li>降分后分值最低降至 <span class=\"num\">3分</span></li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:6"
-      },
-      {
-        "title": "2025年商家考核标准",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2025-01-01",
-        "tags": [
-          "年度考核",
-          "持续经营"
-        ],
-        "body": "<ul><li>《2025年天猫商家考核标准》<span class=\"num\">2025年1月1日</span> 正式生效</li><li>店铺综合体验分须超过对应类目目标，每月 <span class=\"highlight\">最后一天</span> 考核</li><li>考核周期内未通过月数需低于上限，否则 <span class=\"highlight\">无法继续经营</span></li><li>试考期：持续无经营不超过 <span class=\"num\">3个月</span>，正式期不超过 <span class=\"num\">6个月</span></li><li>须同时满足销售额目标（试考期第3/6/9/12个月末考核）</li></ul>",
-        "sourceId": "local-score-7",
-        "cardId": "score:7"
       }
     ]
   },

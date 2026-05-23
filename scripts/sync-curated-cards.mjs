@@ -109,6 +109,10 @@ async function main() {
   const changedQueue = [];
 
   for (const source of curatedSources.sources || []) {
+    if (!String(source.url || "").trim()) {
+      continue;
+    }
+
     watch.summary.checked += 1;
     const prev = prevWatch.sources?.[source.id] || {};
 

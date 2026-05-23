@@ -6,6 +6,10 @@ import { buildRuleDetailUrl, normalizeRuleDetailUrl } from "../src/utils/ruleDet
 
 const CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
 
+function hasCuratedLink(url) {
+  return Boolean(String(url || "").trim());
+}
+
 function parseRuleIdFromUrl(url) {
   const normalized = normalizeRuleDetailUrl(url || "");
   if (!normalized) {
@@ -51,7 +55,8 @@ async function main() {
     if (!section?.cards) {
       continue;
     }
-    section.cards = section.cards.map((card, index) => {
+    const linkedCards = section.cards.filter((card) => hasCuratedLink(card.link));
+    section.cards = linkedCards.map((card, index) => {
       const cardId = `${category}:${index}`;
       const link = card.link || "";
       const { ruleId, cId } = parseRuleIdFromUrl(link);
@@ -95,7 +100,7 @@ async function main() {
     updatedAt: new Date().toISOString(),
     repoEditUrl:
       "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/curated-sources.json",
-    sources: [...sourceMap.values()]
+    sources: [...sourceMap.values()].filter((s) => hasCuratedLink(s.url))
   };
 
   const dataDir = path.join(root, "data");

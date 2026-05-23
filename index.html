@@ -758,16 +758,28 @@ const RULES_DATA_FALLBACK = {
   penalty: { tag: 'VIOLATIONS & PENALTIES', title: '发货违规及处罚', desc: '正在加载规则卡片…', cards: [] }
 };
 
+function hasCuratedLink(url) {
+  return String(url || '').trim().length > 0;
+}
+
+function filterCuratedSection(section, fallback) {
+  var base = section || fallback;
+  var cards = (base.cards || []).filter(function (c) {
+    return hasCuratedLink(c.link);
+  });
+  return Object.assign({}, base, { cards: cards });
+}
+
 function applyCuratedCardsPayload(data) {
   if (!data) {
     RULES_DATA = RULES_DATA_FALLBACK;
     return;
   }
   RULES_DATA = {
-    shelf: data.shelf || RULES_DATA_FALLBACK.shelf,
-    score: data.score || RULES_DATA_FALLBACK.score,
-    ship: data.ship || RULES_DATA_FALLBACK.ship,
-    penalty: data.penalty || RULES_DATA_FALLBACK.penalty
+    shelf: filterCuratedSection(data.shelf, RULES_DATA_FALLBACK.shelf),
+    score: filterCuratedSection(data.score, RULES_DATA_FALLBACK.score),
+    ship: filterCuratedSection(data.ship, RULES_DATA_FALLBACK.ship),
+    penalty: filterCuratedSection(data.penalty, RULES_DATA_FALLBACK.penalty)
   };
 }
 applyCuratedCardsPayload(null);
@@ -1339,7 +1351,7 @@ function renderCuratedAlertBanner() {
 
 function renderCuratedSourcesPanel(categoryKey) {
   var sources = (curatedSourcesData.sources || []).filter(function (s) {
-    return (s.categories || []).indexOf(categoryKey) >= 0;
+    return (s.categories || []).indexOf(categoryKey) >= 0 && hasCuratedLink(s.url);
   });
   if (!sources.length) return '';
   var editUrl = curatedSourcesData.repoEditUrl || 'https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/curated-sources.json';

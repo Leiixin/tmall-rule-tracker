@@ -65,19 +65,6 @@
       ]
     },
     {
-      "id": "local-score-7",
-      "ruleId": "",
-      "cId": "",
-      "url": "",
-      "label": "2025年商家考核标准",
-      "categories": [
-        "score"
-      ],
-      "cardIds": [
-        "score:7"
-      ]
-    },
-    {
       "id": "rule-11000266",
       "ruleId": "11000266",
       "cId": "391",
