@@ -1,0 +1,365 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-05-23T06:10:25.079Z",
+  "autoPublishVersion": 0,
+  "shelf": {
+    "tag": "SHELF-LIFE RULES",
+    "title": "商品效期要求",
+    "desc": "天猫平台对在售商品的保质期、效期管理的强制性规范，适用于食品、保健品、美妆等类目。依据《天猫商品保质期发布规范》及《天猫国际商品效期管理规范》。",
+    "cards": [
+      {
+        "title": "临期商品定义与标注要求",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2023-04-03",
+        "tags": [
+          "全类目"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
+        "body": "<ul><li>临期商品必须在标题或详情页最上方展示 <span class=\"highlight\">“临期商品”</span> 或 “X年X月到期” 字样</li><li>保质期 ≥ <span class=\"num\">1080天</span>：临保期 = <span class=\"num\">180天</span></li><li>保质期 730～1080天：临保期 = <span class=\"num\">150天</span></li><li>保质期 365～730天：临保期 = <span class=\"num\">90天</span></li><li>保质期 180～365天：临保期 = <span class=\"num\">60天</span></li><li>保质期 90～180天：临保期 = 1/3保质期（至多40天）</li><li>保质期 30～90天：临保期 = 1/3保质期（至多20天）</li><li>来源：《天猫商品保质期发布规范》第一条/第二条</li></ul>",
+        "sourceId": "rule-20002796",
+        "cardId": "shelf:0"
+      },
+      {
+        "title": "化妆品保质期/货架期要求",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2020-03-30",
+        "tags": [
+          "化妆品类目"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11002181&cId=45005#/rule/detail?ruleId=11002181&cId=45005",
+        "body": "<ul><li>保质期 ≥ <span class=\"num\">3年</span> 的化妆品：剩余 &lt; <span class=\"num\">1年</span> 必须如实说明；剩余 &lt; <span class=\"num\">180天</span> <span class=\"highlight\">禁止销售</span></li><li>保质期 &lt; <span class=\"num\">3年</span> 的化妆品：剩余 &lt; 保质期的 <span class=\"num\">1/3</span> 必须如实说明；剩余 &lt; 保质期的 <span class=\"num\">1/6</span> <span class=\"highlight\">禁止销售</span></li><li>临期商品须在详情页 <span class=\"highlight\">醒目位置</span> 展示剩余保质期信息</li><li>有效期不可写\"详见产品外包装\"，必须具体展示（如\"保质期x个月\"）</li><li>适用类目：彩妆/香水、美容护肤/美体/精油、美发护发、母婴洗护、孕产妇用品、洗护清洁剂等</li><li>来源：《天猫化妆品发布规范》第2.1.4条 产品描述规范</li></ul>",
+        "sourceId": "rule-11002181",
+        "cardId": "shelf:1"
+      },
+      {
+        "title": "医疗保健/隐形眼镜禁售标准",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2023-04-03",
+        "tags": [
+          "医疗保健"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
+        "body": "<ul><li>隐形眼镜/彩色隐形眼镜：剩余保质期 &lt; <span class=\"num\">180天</span>，且不低于正常使用周期 → 禁售</li><li>护理液：剩余保质期 &lt; <span class=\"num\">180天</span> 禁售</li><li>保健用品：剩余保质期 &lt; 保质期的 <span class=\"num\">1/10</span> 禁售</li><li>处方药(中药饮片除外)及OTC：剩余保质期 &lt; <span class=\"num\">90天</span> 禁售</li><li>保健食品/膳食营养补充食品：剩余 &lt; 保质期的 <span class=\"num\">1/5</span> 禁售</li><li>血糖试纸：剩余 &lt; 保质期的 <span class=\"num\">1/8</span> 禁售</li><li>来源：《天猫商品保质期发布规范》第二条 特殊类目</li></ul>",
+        "sourceId": "rule-20002796",
+        "cardId": "shelf:2"
+      },
+      {
+        "title": "天猫国际入库效期管理",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-01-20",
+        "tags": [
+          "天猫国际"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+        "body": "<ul><li>婴幼儿奶粉：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">180天</span>；禁售 = 剩余 &lt; <span class=\"num\">100天</span></li><li>母婴（非奶粉）/宠物/其他效期品：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">120天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">60天</span></li><li>美妆/个护：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">365天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">180天</span></li><li>食品/保健品：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">100~120天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">60天</span></li><li>临保商品须在标题注明<span class=\"highlight\">[临期]</span>，详情页顶部展示\"临期商品\"（醒目位置）</li><li>2026年1月新增：暗码效期解码规则错误导致买家损失，按\"出售不合格品\"处理</li><li>来源：《天猫国际商品效期管理规范》(2026年1月20日最新修订)</li></ul>",
+        "sourceId": "rule-11005234",
+        "cardId": "shelf:3"
+      },
+      {
+        "title": "过期商品禁售与违规处理",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2023-04-03",
+        "tags": [
+          "全类目"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
+        "body": "<ul><li>商品保质期剩余时间低于规范要求的 <span class=\"highlight\">不可销售</span></li><li>发布不符合效期要求的商品：按《天猫国际市场管理规则》“滥发信息”处理</li><li>实际出售不符合效期要求：按“描述不符”处理</li><li>保质期信息不清晰/篡改/手写：按《天猫国际商品抽检行为规范总则》处理</li><li>来源：《天猫商品保质期发布规范》+《天猫国际商品效期管理规范》</li></ul>",
+        "sourceId": "rule-20002796",
+        "cardId": "shelf:4"
+      },
+      {
+        "title": "保质期规范来源与查询",
+        "severity": "normal",
+        "severityText": "通知",
+        "date": "2023-04-03",
+        "tags": [
+          "规范查询"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
+        "body": "<ul><li>《天猫商品保质期发布规范》 2023年4月3日生效，位于规则辞典 > <span class=\"highlight\">商品管理 > 商品发布规范</span></li><li>规则ID：<span class=\"num\">20002796</span>，可在天猫规则中心搜索“保质期”查看</li><li>《天猫国际商品效期管理规范》 2026年1月20日最新修订，适用跨境商品（规则ID: 11005234）</li><li>各行业发布规范可能有特殊要求，以行业规范为准</li></ul>",
+        "sourceId": "rule-20002796",
+        "cardId": "shelf:5"
+      }
+    ]
+  },
+  "score": {
+    "tag": "EXPERIENCE SCORE",
+    "title": "店铺真实体验分",
+    "desc": "基于《淘宝平台店铺真实体验分规范》，涵盖宝贝质量、物流速度、服务保障三大维度，直接影响搜索排序、活动准入及流量分配。2026年3月16日起执行最新调整。",
+    "cards": [
+      {
+        "title": "真实体验分定义与评分区间",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-03-16",
+        "tags": [
+          "基础定义",
+          "真实体验分"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li>真实体验分 = 综合反映店铺 <span class=\"highlight\">商品与服务</span> 的指标体系</li><li>满分 <span class=\"num\">5分</span>，最低 <span class=\"num\">3分</span></li><li>计算前提：近30天支付订单量 ≥ <span class=\"num\">30笔</span>，否则不展示分值</li><li>更新频率：<span class=\"highlight\">每天更新</span>，基于近30天滚动数据</li><li>三大维度：<span class=\"highlight\">宝贝质量</span> + <span class=\"highlight\">物流速度</span> + <span class=\"highlight\">服务保障</span></li><li>公示日期：<span class=\"num\">2026-02-24</span>｜生效：<span class=\"num\">2026-03-05</span>｜执行：<span class=\"num\">2026-03-16</span></li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:0"
+      },
+      {
+        "title": "宝贝质量指标（2026.3新规）",
+        "severity": "critical",
+        "severityText": "新规",
+        "date": "2026-03-16",
+        "tags": [
+          "宝贝质量",
+          "指标升级"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li><span class=\"highlight\">新指标 ①</span> 商品负反馈率 = 品质退款笔数 ÷ 支付订单量</li><li>替代旧指标\"首次品退率\"与\"商品差评率\"</li><li><span class=\"highlight\">新指标 ②</span> 商品好评率 = 好评数 ÷ (好评+差评+自然好评) × 100%</li><li>好评率为 <span class=\"highlight\">新增指标</span>，纳入宝贝质量维度计算</li><li>负反馈率越低越好，好评率越高越好</li><li>指标排名对比同行：各指标分 = <span class=\"num\">3 + 2×排名百分位</span></li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:1"
+      },
+      {
+        "title": "物流速度指标（2026.3新规）",
+        "severity": "critical",
+        "severityText": "新规",
+        "date": "2026-03-16",
+        "tags": [
+          "物流速度",
+          "指标升级"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li><span class=\"highlight\">48小时揽收及时率</span> = 48h内揽收订单数 ÷ 应揽收订单数</li><li><span class=\"highlight\">物流到货时长</span> = 支付到签收的平均时间（小时）</li><li>部分类目含 <span class=\"highlight\">物流差评率</span> = 物流差评数 ÷ 评价总数</li><li><span class=\"highlight\">新增</span>：取消\"当日达/次日达覆盖率\"和\"特色服务达标占比\"</li><li>物流轨迹异常将纳入 <span class=\"highlight\">违规降分</span> 场景</li><li>揽收及时率、到货时长越优 → 分数越高</li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:2"
+      },
+      {
+        "title": "服务保障指标",
+        "severity": "warning",
+        "severityText": "核心",
+        "date": "2026-03-16",
+        "tags": [
+          "服务保障",
+          "考核指标"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li><span class=\"highlight\">旺旺3分钟人工响应率</span>：8:00-23:00期间，3分钟内人工回复的比率</li><li><span class=\"highlight\">旺旺满意度</span> = 满意评价量 ÷ 参评量</li><li><span class=\"highlight\">退款处理时长</span>：商家首次处理退款的平均耗时（小时）</li><li><span class=\"highlight\">平台求助率</span> = 求助平台介入的订单 ÷ 支付订单量</li><li>以上四项指标均按同行排名换算体验分</li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:3"
+      },
+      {
+        "title": "计算公式与权重",
+        "severity": "warning",
+        "severityText": "核心",
+        "date": "2026-03-16",
+        "tags": [
+          "计算方式",
+          "权重"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li>总分 = <span class=\"highlight\">宝贝质量×权重 + 物流速度×权重 + 服务保障×权重 + 附加分</span></li><li>各维度权重因 <span class=\"highlight\">一级类目不同</span> 而异，具体以平台公示为准</li><li>各指标分 = <span class=\"num\">3 + 2 × 排名百分位</span>（同行对比）</li><li>维度分 = 该维度下各指标分的加权平均</li><li><span class=\"highlight\">附加分</span>（新）：特色服务加分，替代旧版当日/次日达加分</li><li>最终分值 = min(max(总分, <span class=\"num\">3</span>), <span class=\"num\">5</span>)，保留2位小数</li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:4"
+      },
+      {
+        "title": "应用场景",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2026-03-16",
+        "tags": [
+          "应用场景",
+          "流量影响"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li><span class=\"highlight\">搜索排序</span>：体验分影响商品在搜索结果中的排名权重</li><li><span class=\"highlight\">活动提报</span>：天猫大促、新风潮等活动设有体验分准入门槛</li><li><span class=\"highlight\">首页推荐</span>：体验分用于首页推荐等导购场景</li><li><span class=\"highlight\">阿里妈妈</span>：部分推广资源对体验分有要求</li><li><span class=\"highlight\">优质店铺标</span>：达到类目体验分标准可获得优质标识</li><li>2026年4月天猫新风潮：体验分以 <span class=\"num\">2026年3月</span> 数据为准</li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:5"
+      },
+      {
+        "title": "违规降分与处罚",
+        "severity": "critical",
+        "severityText": "严重",
+        "date": "2026-03-16",
+        "tags": [
+          "违规处罚",
+          "降分"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+        "body": "<ul><li><span class=\"highlight\">假冒商品</span>：每被处罚1次，各维度分 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">描述不符</span>：每被处罚1次，宝贝质量维度 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">混淆商品/误导消费</span>：每次宝贝质量 <span class=\"num\">−0.3分</span></li><li><span class=\"highlight\">物流轨迹异常</span>（新增）：每次物流速度维度 <span class=\"num\">−0.3分</span></li><li>降分次数上限 = 30天内被处罚的次数（含虚拟单等场景）</li><li>降分后分值最低降至 <span class=\"num\">3分</span></li></ul>",
+        "sourceId": "rule-20009524",
+        "cardId": "score:6"
+      },
+      {
+        "title": "2025年商家考核标准",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-01-01",
+        "tags": [
+          "年度考核",
+          "持续经营"
+        ],
+        "body": "<ul><li>《2025年天猫商家考核标准》<span class=\"num\">2025年1月1日</span> 正式生效</li><li>店铺综合体验分须超过对应类目目标，每月 <span class=\"highlight\">最后一天</span> 考核</li><li>考核周期内未通过月数需低于上限，否则 <span class=\"highlight\">无法继续经营</span></li><li>试考期：持续无经营不超过 <span class=\"num\">3个月</span>，正式期不超过 <span class=\"num\">6个月</span></li><li>须同时满足销售额目标（试考期第3/6/9/12个月末考核）</li></ul>",
+        "sourceId": "local-score-7",
+        "cardId": "score:7"
+      }
+    ]
+  },
+  "ship": {
+    "tag": "SHIPPING TIMELINE",
+    "title": "发货时效",
+    "desc": "依据《天猫物流时效管理规范》（2025年9月5日最新修订），规定商家发货时间、物流揽收及轨迹更新的时效性要求。",
+    "cards": [
+      {
+        "title": "发货时效规定（第五条）",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-09-05",
+        "tags": [
+          "基础规范"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>普通商品：付款后 <span class=\"num\">48小时</span> 内发货</li><li>全款预售/定金预售/定制商品：按设定或约定的发货时间</li><li>周期购商品：约定发货日期的 <span class=\"num\">23:59:59</span> 前</li><li>可使用协商发货工具与买家约定新的发货时间</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "ship:0"
+      },
+      {
+        "title": "发货时间认定标准（第六条）",
+        "severity": "info",
+        "severityText": "定义",
+        "date": "2025-09-05",
+        "tags": [
+          "认定标准"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>物流公司回传\"<span class=\"highlight\">已揽收/揽件</span>\"等已发货状态</li><li>菜鸟服务订单：包裹出库后显示\"正在发往分拨中心\"等状态</li><li>大件商品无物流节点回传的，以物流公司底单发货时间为准</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "ship:1"
+      },
+      {
+        "title": "物流轨迹超时认定（第十条）",
+        "severity": "warning",
+        "severityText": "时效",
+        "date": "2025-09-05",
+        "tags": [
+          "轨迹超时"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>揽收后 <span class=\"num\">24小时</span> 内无任何物流更新记录</li><li>同区域（京津冀/江浙沪皖/同省）：停滞超 <span class=\"num\">48小时</span></li><li>跨省（非偏远）：停滞超 <span class=\"num\">72小时</span></li><li>偏远地区（新疆/西藏/内蒙古/甘肃/青海/宁夏）：停滞超 <span class=\"num\">120小时</span></li><li>港澳台地区除外</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "ship:2"
+      },
+      {
+        "title": "物流轨迹异常认定（第十一条）",
+        "severity": "critical",
+        "severityText": "严重",
+        "date": "2025-09-05",
+        "tags": [
+          "轨迹异常"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>揽收后 <span class=\"num\">72小时</span> 内无任何物流更新</li><li>同区域/同省停滞 ≥ <span class=\"num\">96小时</span>；跨省 ≥ <span class=\"num\">120小时</span>；偏远 ≥ <span class=\"num\">168小时</span></li><li>物流轨迹与收货地址不符 / 未经同意退回包裹</li><li>非真实物流轨迹或轨迹造假</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "ship:3"
+      },
+      {
+        "title": "特殊情形免责（第十四条）",
+        "severity": "info",
+        "severityText": "提醒",
+        "date": "2025-09-05",
+        "tags": [
+          "免责条款"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>消费者\"滥用会员权利\" / 非生活消费所需购买</li><li>不可抗力因素（自然灾害等），可通过营商保发起报备</li><li>买家收货地址或信息无效/不准确</li><li>商品信息符合《标错类事件处理标准》</li><li>商品涉嫌违法违规，天猫要求停止发货</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "ship:4"
+      }
+    ]
+  },
+  "penalty": {
+    "tag": "VIOLATIONS & PENALTIES",
+    "title": "发货违规及处罚",
+    "desc": "依据《天猫物流时效管理规范》第三章，对延迟发货、虚假发货、缺货及物流轨迹违规的认定标准与赔付规则。",
+    "cards": [
+      {
+        "title": "延迟发货（第七条）",
+        "severity": "warning",
+        "severityText": "处罚",
+        "date": "2025-09-05",
+        "tags": [
+          "延迟发货"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>订单未在承诺发货时间内完成发货（普通商品为付款后48小时）</li><li>普通商品/周期购/定制≤48h：交易金额的 <span class=\"num\">5%</span>（<span class=\"num\">5-50元</span>）</li><li>全款预售/定金预售>48h/定制>48h：交易金额的 <span class=\"num\">10%</span>（<span class=\"num\">5-50元</span>）</li><li>情节严重且投诉成立未主动赔付：每次扣 <span class=\"num\">1分</span>（30天内累计不超过6分）</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:0"
+      },
+      {
+        "title": "缺货（第八条）",
+        "severity": "critical",
+        "severityText": "严重",
+        "date": "2025-09-05",
+        "tags": [
+          "缺货违规"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li><span class=\"highlight\">认定①：</span>延迟发货后 <span class=\"num\">72小时</span> 仍未发货</li><li><span class=\"highlight\">认定②：</span>商家自主承认缺货 / 拒绝发货 / 要求加价发货</li><li><span class=\"highlight\">认定③：</span>物流轨迹超时或异常后 <span class=\"num\">5天</span> 内消费者仍未收到商品</li><li><span class=\"highlight\">认定④：</span>其他异常情形</li><li>承诺 ≤48h 发货：交易金额的 <span class=\"num\">10%</span>（<span class=\"num\">5-500元</span>）</li><li>承诺 >48h 发货：交易金额的 <span class=\"num\">15%</span>（<span class=\"num\">5-500元</span>）</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:1"
+      },
+      {
+        "title": "虚假发货（第九条）",
+        "severity": "critical",
+        "severityText": "严重",
+        "date": "2025-09-05",
+        "tags": [
+          "虚假发货"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li><span class=\"highlight\">认定①：</span>上传物流单号后 <span class=\"num\">24小时</span> 内平台仍无揽收记录</li><li><span class=\"highlight\">认定②：</span>实际发货商品与消费者所购无关联、空包裹等</li><li><span class=\"highlight\">认定③：</span>物流单号在物流公司官网存在异常、重复物流信息</li><li><span class=\"highlight\">认定④：</span>其他异常情形</li><li>情形①赔付：交易金额的 <span class=\"num\">5%</span>（<span class=\"num\">5-100元</span>）</li><li>情形②③赔付：交易金额的 <span class=\"num\">30%</span>（<span class=\"num\">5-500元</span>）</li><li>情形②商品维度处罚：1次违规下架商品；2次及以上下架 <span class=\"num\">3天</span>；多次违规可删除/限制发布</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:2"
+      },
+      {
+        "title": "物流轨迹超时（第十条）",
+        "severity": "warning",
+        "severityText": "赔付",
+        "date": "2025-09-05",
+        "tags": [
+          "轨迹超时"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li><span class=\"highlight\">认定①：</span>揽收后 <span class=\"num\">24小时</span> 内无任何物流更新记录</li><li><span class=\"highlight\">认定②：</span>物流流转中停滞超时 — 同区域(京津冀/江浙沪皖)/同省超 <span class=\"num\">48小时</span>；跨省超 <span class=\"num\">72小时</span>；偏远地区(新疆/西藏/内蒙古/甘肃/青海/宁夏)超 <span class=\"num\">120小时</span></li><li>赔付：交易金额的 <span class=\"num\">5%</span>（<span class=\"num\">5-50元</span>）</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:3"
+      },
+      {
+        "title": "物流轨迹异常（第十一条）",
+        "severity": "critical",
+        "severityText": "赔付",
+        "date": "2025-09-05",
+        "tags": [
+          "轨迹异常"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li><span class=\"highlight\">认定①：</span>揽收后 <span class=\"num\">72小时</span> 内无任何物流更新</li><li><span class=\"highlight\">认定②：</span>物流流转中严重停滞 — 同区域/同省 ≥ <span class=\"num\">96小时</span>；跨省 ≥ <span class=\"num\">120小时</span>；偏远地区 ≥ <span class=\"num\">168小时</span></li><li><span class=\"highlight\">认定③：</span>物流轨迹与收货地址不符</li><li><span class=\"highlight\">认定④：</span>未经消费者同意包裹退回</li><li><span class=\"highlight\">认定⑤：</span>轨迹流转时长远超同线路合理周期</li><li><span class=\"highlight\">认定⑥：</span>非真实物流轨迹或轨迹造假（节点/时间高度相似等）</li><li>赔付：交易金额的 <span class=\"num\">20%</span>（<span class=\"num\">5-100元</span>）</li><li>可采取快递网点限制取号、延长自动确认收货时长等措施</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:4"
+      },
+      {
+        "title": "赔付上限与其他措施（第十二~十三条）",
+        "severity": "info",
+        "severityText": "通知",
+        "date": "2025-09-05",
+        "tags": [
+          "赔付上限"
+        ],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+        "body": "<ul><li>同一买卖双方同日多笔交易：赔付合并最高 <span class=\"num\">500元</span></li><li>轨迹超时 + 轨迹异常：赔付比例合并不超过 <span class=\"num\">20%</span>，金额不超过 <span class=\"num\">100元</span></li><li>情节严重可执行：商品下架/删除、限制预售权限、提升保证金、限制营销活动、管控支付账户、监管店铺</li></ul>",
+        "sourceId": "rule-11000266",
+        "cardId": "penalty:5"
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-05-23T06:10:25.088Z",
+  "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/curated-sources.json",
+  "sources": [
+    {
+      "id": "rule-20002796",
+      "ruleId": "20002796",
+      "cId": "45005",
+      "url": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
+      "label": "临期商品定义与标注要求",
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:0",
+        "shelf:2",
+        "shelf:4",
+        "shelf:5"
+      ]
+    },
+    {
+      "id": "rule-11002181",
+      "ruleId": "11002181",
+      "cId": "45005",
+      "url": "https://rulechannel.tmall.com/?type=detail&ruleId=11002181&cId=45005#/rule/detail?ruleId=11002181&cId=45005",
+      "label": "化妆品保质期/货架期要求",
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:1"
+      ]
+    },
+    {
+      "id": "rule-11005234",
+      "ruleId": "11005234",
+      "cId": "630",
+      "url": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+      "label": "天猫国际入库效期管理",
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:3"
+      ]
+    },
+    {
+      "id": "rule-20009524",
+      "ruleId": "20009524",
+      "cId": "395",
+      "url": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+      "label": "真实体验分定义与评分区间",
+      "categories": [
+        "score"
+      ],
+      "cardIds": [
+        "score:0",
+        "score:1",
+        "score:2",
+        "score:3",
+        "score:4",
+        "score:5",
+        "score:6"
+      ]
+    },
+    {
+      "id": "local-score-7",
+      "ruleId": "",
+      "cId": "",
+      "url": "",
+      "label": "2025年商家考核标准",
+      "categories": [
+        "score"
+      ],
+      "cardIds": [
+        "score:7"
+      ]
+    },
+    {
+      "id": "rule-11000266",
+      "ruleId": "11000266",
+      "cId": "391",
+      "url": "https://rulechannel.tmall.com/?type=detail&ruleId=11000266&cId=391#/rule/detail?ruleId=11000266&cId=391",
+      "label": "发货时效规定（第五条）",
+      "categories": [
+        "ship",
+        "penalty"
+      ],
+      "cardIds": [
+        "ship:0",
+        "ship:1",
+        "ship:2",
+        "ship:3",
+        "ship:4",
+        "penalty:0",
+        "penalty:1",
+        "penalty:2",
+        "penalty:3",
+        "penalty:4",
+        "penalty:5"
+      ]
+    }
+  ]
+}

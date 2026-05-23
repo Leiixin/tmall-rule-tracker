@@ -42,11 +42,24 @@ jobs:
         env:
           TZ: Asia/Shanghai
           DATA_DIR: data
-          ENABLE_LLM_SUMMARY: "true"
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
           # 仓库 Secret 可命名为 DEEPSEEK_API_KEY 或 DEEPSEEK（你当前是 DEEPSEEK）
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
           LLM_BASE_URL: https://api.deepseek.com
           LLM_MODEL: deepseek-chat
+
+      - name: Sync Curated Category Cards
+        run: node scripts/sync-curated-cards.mjs
+        env:
+          TZ: Asia/Shanghai
+          DATA_DIR: data
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          ENABLE_CURATED_AUTO_PUBLISH: "true"
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+          LLM_MAX_CURATED_SOURCES_PER_RUN: "2"
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
 
       - name: Commit Updated Data
         run: |
@@ -57,8 +70,8 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/*.json public/data/*.json 2>/dev/null || git add data/*.json
-          git commit -m "chore(data): update rules data"
+          git add data/*.json public/data/curated-*.json
+          git commit -m "chore(data): update rules and curated category cards"
           for attempt in 1 2 3 4 5; do
             echo "Push attempt ${attempt}..."
             git fetch origin main

@@ -41,7 +41,7 @@ export function isLlmEnabled() {
   return Boolean(getLlmConfig().apiKey);
 }
 
-function extractJsonObject(text) {
+export function extractJsonObject(text) {
   const raw = String(text || "").trim();
   if (!raw) {
     throw new Error("empty LLM response");
@@ -234,7 +234,7 @@ function normalizeSummaryPayload(parsed) {
   };
 }
 
-export async function chatJson({ system, user }) {
+async function postChatJson({ system, user }) {
   const { apiKey, baseUrl, model, timeoutMs } = getLlmConfig();
   if (!apiKey) {
     throw new Error("DEEPSEEK_API_KEY is not set");
@@ -262,5 +262,13 @@ export async function chatJson({ system, user }) {
   });
 
   const content = response.data?.choices?.[0]?.message?.content;
-  return normalizeSummaryPayload(extractJsonObject(content));
+  return extractJsonObject(content);
+}
+
+export async function chatJsonRaw({ system, user }) {
+  return postChatJson({ system, user });
+}
+
+export async function chatJson({ system, user }) {
+  return normalizeSummaryPayload(await postChatJson({ system, user }));
 }

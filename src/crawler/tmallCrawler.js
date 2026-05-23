@@ -443,3 +443,35 @@ export async function crawlAllSources() {
 
   return [...deduped.values()];
 }
+
+/** 按 ruleId 拉取单条规则详情（供分类页引用来源监测使用） */
+export async function fetchRuleDetailByRuleId(ruleId) {
+  if (!ruleId) {
+    return null;
+  }
+
+  const mtop = new MtopRuleClient();
+  const payload = await mtop.call(MTOP_APIS.detail, { ruleId: String(ruleId) });
+  if (!isMtopSuccess(payload) || !payload?.data?.model) {
+    return null;
+  }
+
+  const model = payload.data.model;
+  const content = htmlToText(model.ruleHtmlPcDetail || model.ruleAslContent || "");
+  if (!content) {
+    return null;
+  }
+
+  const publishedAt =
+    parseDateTime(model.modifiedTime) || new Date().toISOString();
+
+  return {
+    ruleId: String(model.ruleId || ruleId),
+    cId: model.lastCategoryId != null ? String(model.lastCategoryId) : "",
+    title: normalizeText(model.ruleTitle || ""),
+    url: buildRuleDetailUrl(model.ruleId || ruleId, model.lastCategoryId),
+    publishedAt,
+    content: content.slice(0, 12000),
+    crawledAt: new Date().toISOString()
+  };
+}

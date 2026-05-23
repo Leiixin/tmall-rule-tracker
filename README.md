@@ -76,10 +76,37 @@ npm run crawl
 
 未配置 Key 时行为与原先一致（snippet / 分类模板），不影响抓取。
 
+## 分类页引用来源监控 + 自动更新卡片
+
+四个分类 Tab（效期 / 体验分 / 发货时效 / 违规处罚）的**规则卡片**已外置到：
+
+- `data/curated-cards.json`：页面展示用的卡片正文
+- `data/curated-sources.json`：引用的天猫规则链接（按 `ruleId` 登记，可在 GitHub 编辑）
+- `data/curated-watch.json`：定时任务写入的监测状态（平台修订时间、内容哈希、是否已自动同步）
+
+页面每个分类下有 **「引用来源维护」** 面板；若检测到原文变更，首页与分类页会显示横幅。配置 `DEEPSEEK_API_KEY` 后，GitHub Actions 会在变更时用 DeepSeek **自动重写**对应分类卡片并提交仓库（每次最多 `LLM_MAX_CURATED_SOURCES_PER_RUN` 条，默认 2）。
+
+```bash
+# 首次从旧版内嵌数据导出（一般只需一次）
+npm run migrate:curated
+
+# 本地手动检测 + 可选自动发布
+ENABLE_LLM_SUMMARY=true npm run sync:curated
+```
+
+可选环境变量：
+
+- `ENABLE_CURATED_AUTO_PUBLISH`：默认 `true`；设为 `false` 时仅标记 `changed`，不覆盖卡片
+- `NOTIFY_WEBHOOK_URL`：变更后 POST JSON（预留钉钉/企业微信等）
+- `LLM_MAX_CURATED_SOURCES_PER_RUN`：单次 Actions 最多自动发布几条来源
+
+回滚展示：在 Git 历史中恢复 `data/curated-cards.json` 的上一版即可。
+
 ## 常用命令
 - 启动：`npm run start`
 - 开发模式：`npm run dev`
 - AI 补摘要：`npm run summarize`
+- 分类页来源同步：`npm run sync:curated`
 - 安装开机自启动（Windows）：`npm run autostart:install`
 - 移除开机自启动（Windows）：`npm run autostart:remove`
 
