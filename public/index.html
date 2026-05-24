@@ -1430,27 +1430,55 @@ function renderCuratedSourcesPanel(categoryKey) {
   '</details>';
 }
 
+async function parseJsonFromResponse(res) {
+  var text = await res.text();
+  return JSON.parse(text.replace(/^\uFEFF/, ''));
+}
+
+var CURATED_CATEGORY_KEYS = ['shelf', 'score', 'ship', 'penalty'];
+
+function refreshCuratedTabIfActive() {
+  if (CURATED_CATEGORY_KEYS.indexOf(currentTab) >= 0) {
+    showTab(currentTab);
+  }
+}
+
 async function loadCuratedData(basePath) {
   try {
     var cardsRes = await fetch(basePath + 'curated-cards.json');
     if (cardsRes.ok) {
-      applyCuratedCardsPayload(await cardsRes.json());
-    }
-    var srcRes = await fetch(basePath + 'curated-sources.json');
-    if (srcRes.ok) {
-      curatedSourcesData = await srcRes.json();
-    }
-    var watchRes = await fetch(basePath + 'curated-watch.json');
-    if (watchRes.ok) {
-      curatedWatchData = await watchRes.json();
-    }
-    var insightsRes = await fetch(basePath + 'curated-category-insights.json');
-    if (insightsRes.ok) {
-      curatedInsightsData = await insightsRes.json();
+      applyCuratedCardsPayload(await parseJsonFromResponse(cardsRes));
     }
   } catch (e) {
-    console.warn('Curated data load failed:', e);
+    console.warn('curated-cards.json load failed:', e);
   }
+  try {
+    var srcRes = await fetch(basePath + 'curated-sources.json');
+    if (srcRes.ok) {
+      curatedSourcesData = await parseJsonFromResponse(srcRes);
+    }
+  } catch (e) {
+    console.warn('curated-sources.json load failed:', e);
+  }
+  try {
+    var watchRes = await fetch(basePath + 'curated-watch.json');
+    if (watchRes.ok) {
+      curatedWatchData = await parseJsonFromResponse(watchRes);
+    }
+  } catch (e) {
+    console.warn('curated-watch.json load failed:', e);
+  }
+  try {
+    var insightsRes = await fetch(basePath + 'curated-category-insights.json');
+    if (insightsRes.ok) {
+      curatedInsightsData = await parseJsonFromResponse(insightsRes);
+    } else {
+      console.warn('curated-category-insights.json HTTP', insightsRes.status);
+    }
+  } catch (e) {
+    console.warn('curated-category-insights.json load failed:', e);
+  }
+  refreshCuratedTabIfActive();
 }
 
 function getCategoryInsightsBlock(key) {
@@ -1759,10 +1787,13 @@ function showTab(key) {
     gsap.fromTo('.rule-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.06, duration: 0.4, ease: 'power2.out' });
     gsap.fromTo('.timeline-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.3, ease: 'power2.out', delay: 0.3 });
     gsap.fromTo('.fetch-panel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
-    gsap.fromTo('.changes-panel', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.25 });
-    gsap.fromTo('.change-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.4 });
-    gsap.fromTo('.analysis-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.5, ease: 'power2.out', delay: 0.6 });
-    gsap.fromTo('.analysis-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.8 });
+    var changePanels = document.querySelectorAll('.changes-panel');
+    if (changePanels.length) {
+      gsap.fromTo('.changes-panel', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.25 });
+      gsap.fromTo('.change-item', { opacity: 0, x: -12 }, { opacity: 1, x: 0, stagger: 0.06, duration: 0.35, ease: 'power2.out', delay: 0.4 });
+      gsap.fromTo('.analysis-card', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.15, duration: 0.5, ease: 'power2.out', delay: 0.6 });
+      gsap.fromTo('.analysis-item', { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.8 });
+    }
   }
 }
 

@@ -27,7 +27,7 @@ async function readJson(filePath, fallback) {
 
 async function writeJson(filePath, value) {
   await mkdir(path.dirname(filePath), { recursive: true });
-  await writeFile(filePath, `\uFEFF${JSON.stringify(value, null, 2)}`, "utf8");
+  await writeFile(filePath, JSON.stringify(value, null, 2), "utf8");
 }
 
 function applyRuleTitle(source, detail) {
