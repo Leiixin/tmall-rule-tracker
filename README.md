@@ -5,6 +5,8 @@
 
 `http://localhost:3000`
 
+线上 GitHub Pages 顶栏会显示 **总访问（PV）** 与 **独立访客（UV）**，由 [不蒜子兼容 API](https://bsz.saop.cc/) 免费统计（按浏览器会话上报一次）。
+
 当前页面会优先读取本地 JSON 数据进行展示：
 
 - `data/status.json`
