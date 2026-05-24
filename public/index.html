@@ -423,6 +423,19 @@ body::after {
 .fetch-stat-value { font-size: 13px; font-family: 'JetBrains Mono', monospace; color: var(--green); }
 .fetch-stat-value.error { color: var(--red); }
 .fetch-stat-value.pending { color: var(--amber); }
+.fetch-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.fetch-btn-hint {
+  font-size: 10px;
+  color: var(--text-dim);
+  line-height: 1.2;
+  white-space: nowrap;
+}
 .fetch-btn {
   padding: 8px 20px;
   background: linear-gradient(135deg, var(--red), var(--red-dim));
@@ -752,6 +765,7 @@ table.weekly-table {
 let RULES_DATA = null;
 let curatedSourcesData = { version: 1, sources: [], repoEditUrl: 'https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/curated-sources.json' };
 let curatedWatchData = null;
+let curatedInsightsData = null;
 
 const RULES_DATA_FALLBACK = {
   shelf: { tag: 'SHELF-LIFE RULES', title: '商品效期要求', desc: '正在加载规则卡片…', cards: [] },
@@ -797,32 +811,6 @@ const TIMELINE_DATA = [
   { date: '02-04', text: '关于变更《天猫在营资质标准》、《天猫商家考核标准》、《天猫店铺命名规范》等规则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009401&cId=396#/rule/detail?ruleId=20009401&cId=396' },
   { date: '02-04', text: '关于下线《天猫家装家居送货入户并安装服务规范》等服务标准的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009438&cId=395#/rule/detail?ruleId=20009438&cId=395' },
   { date: '01-27', text: '关于变更《天猫交易时效规定》特殊商品付款时效细则的公示通知', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009348&cId=395#/rule/detail?ruleId=20009348&cId=395' },
-];
-
-const SCORE_CHANGES = [
-  { type: 'new', title: '新增「商品负反馈率」指标', detail: '商品负反馈率 = 品质退款笔数 ÷ 支付订单量。<span class="new-val">替代原「首次品退率」</span>，统一以品质退款为口径，更准确反映商品质量问题。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'new', title: '新增「商品好评率」指标', detail: '商品好评率 = 好评数 ÷ (好评 + 差评 + 自然好评) × 100%。<span class="new-val">全新指标</span>，纳入宝贝质量维度参与体验分计算。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'remove', title: '移除「首次品退率」与「商品差评率」', detail: '旧指标 <span class="old">首次品退率</span> 与 <span class="old">商品差评率</span> 不再作为宝贝质量维度的计算指标，已被「商品负反馈率」与「商品好评率」替代。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'new', title: '新增「物流轨迹异常」违规降分', detail: '物流轨迹异常每被处罚1次，物流速度维度 <span class="new-val">−0.3分</span>。此前版本无此降分场景。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'modify', title: '附加分计算方式调整', detail: '旧版附加分由 <span class="old">当日达/次日达覆盖率</span> + <span class="old">特色服务达标占比</span> 两项组成 → 新版调整为 <span class="new-val">特色服务加分</span> 单项附加分。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'remove', title: '移除「当日达/次日达覆盖率」', detail: '物流速度维度中 <span class="old">当日达/次日达覆盖率</span> 不再作为独立指标，相关服务考核合并至附加分模块。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' },
-  { type: 'modify', title: '评分公示与执行时间节点', detail: '本次调整于 <span class="new-val">2026-02-24</span> 公示，<span class="new-val">2026-03-05</span> 正式生效，<span class="new-val">2026-03-16</span> 全面执行。商家需在执行日前完成运营策略调整。', date: '2026-03-16', link: 'https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395' }
-];
-
-const SCORE_IMPACT = [
-  { level: 'high', title: '品质退款成为核心杠杆', desc: '「商品负反馈率」以品质退款为唯一口径，品质退款每增加1笔直接拉低分数。<span class="warn">高退货率类目（服装/鞋靴）受冲击最大</span>，需重点关注品质退款占比。' },
-  { level: 'high', title: '好评率纳入计分，差评权重放大', desc: '好评率为全新指标，差评和自然好评均参与分母计算。<span class="warn">沉默用户不再"中性"</span>——未评价不计入好评率，只有主动好评才加分，差评的稀释难度增加。' },
-  { level: 'medium', title: '物流轨迹异常直接降分', desc: '新增物流轨迹异常每次 <span class="num">−0.3分</span> 的降分机制。使用代发、中转仓或偏远物流的商家面临<span class="warn">物流维度分被反复扣减</span>的风险，且降分累计上限按30天内处罚次数计。' },
-  { level: 'medium', title: '附加分结构缩窄', desc: '当日/次日达覆盖率被移除，附加分只剩「特色服务加分」单项。此前依靠时效服务拉高分数的商家<span class="warn">将失去这部分加分优势</span>，总分可能出现下滑。' },
-  { level: 'low', title: '搜索与活动准入门槛联动', desc: '体验分直接影响搜索排序、大促活动提报、首页推荐等场景。分值下降 → <span class="warn">流量减少 → 转化降低</span>，形成负向循环。4月天猫新风潮将以3月分值为准入依据。' }
-];
-
-const SCORE_STRATEGY = [
-  { level: 'action', title: '严控品质退款，建立售前拦截机制', desc: '商品详情页增加实物对比图、尺码参考表，<span class="good">将品退率降低在同行前30%</span>。对高品退SKU设置预警，考虑主动下架或优化描述。' },
-  { level: 'action', title: '主动引导好评，提升好评率', desc: '签收后通过旺旺/短信引导满意用户评价，提供<span class="good">售后关怀卡片</span>。避免刷评风险，重点在真实满意度驱动。目标：好评率超过类目 <span class="num">75%</span> 分位。' },
-  { level: 'action', title: '优化物流链路，消灭轨迹异常', desc: '选择揽收及时率高的快递公司，<span class="good">确保48h内揽收并有首条轨迹更新</span>。对代发/中转订单重点监控，设置物流停滞预警（>12h无更新立即介入）。' },
-  { level: 'action', title: '强化客服响应，拉高服务维度', desc: '8:00-23:00旺旺3分钟人工响应率目标 <span class="num">≥95%</span>，配置智能客服兜底。退款处理时长控制在 <span class="num">12h</span> 以内，<span class="good">降低平台求助率至同行前20%</span>。' },
-  { level: 'action', title: '每日监控分值，提前应对大促准入', desc: '体验分每日更新，建议<span class="good">每天查看三大维度分值趋势</span>。4月新风潮以3月数据为准，需在3月中旬前将分值稳定在类目目标线以上。' }
 ];
 
 // === EMBEDDED FETCHED DATA ===
@@ -1358,7 +1346,10 @@ function renderFetchPanel() {
       '<div class="fetch-stat"><span class="fetch-stat-label">总访问 PV</span><span class="fetch-stat-value">' + sitePv + '</span></div>' +
       '<div class="fetch-stat"><span class="fetch-stat-label">独立访客 UV</span><span class="fetch-stat-value">' + siteUv + '</span></div>' +
     '</div>' +
-    '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()" title="打开 GitHub Actions，在页面中点击 Run workflow 触发云端抓取">立即抓取</button>' +
+    '<div class="fetch-btn-wrap">' +
+      '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()" title="打开 GitHub Actions，在页面中点击 Run workflow 触发云端抓取">立即抓取</button>' +
+      '<span class="fetch-btn-hint">（仅管理员）</span>' +
+    '</div>' +
     '<div class="source-status-row">' + sourcesHtml + '</div>' +
     '<div class="cron-info">cron: 0 9 * * * (每天09:00自动执行)</div>' +
   '</div>';
@@ -1395,7 +1386,8 @@ function renderCuratedAlertBanner() {
   }
   if (changed > 0) {
     return '<div class="curated-alert-banner warning">' +
-      '检测到 <strong>' + changed + '</strong> 条引用规则原文有更新，等待下次定时任务自动重写卡片（或本地运行 <code>npm run sync:curated</code>）。' +
+      '检测到 <strong>' + changed + '</strong> 条引用规则原文有更新，等待下次定时任务自动重写卡片与变更分析（或本地运行 <code>npm run sync:curated</code>）。' +
+      ' 规则变更三栏解读需配置 <code>DEEPSEEK_API_KEY</code>（受 <code>LLM_MAX_INSIGHTS_PER_RUN</code> 预算限制）。' +
       '</div>';
   }
   return '';
@@ -1452,16 +1444,50 @@ async function loadCuratedData(basePath) {
     if (watchRes.ok) {
       curatedWatchData = await watchRes.json();
     }
+    var insightsRes = await fetch(basePath + 'curated-category-insights.json');
+    if (insightsRes.ok) {
+      curatedInsightsData = await insightsRes.json();
+    }
   } catch (e) {
     console.warn('Curated data load failed:', e);
   }
 }
 
-function renderScoreChanges() {
+function getCategoryInsightsBlock(key) {
+  if (!curatedInsightsData || !curatedInsightsData.categories) return null;
+  return curatedInsightsData.categories[key] || null;
+}
+
+function categoryHasWatchChange(key) {
+  var sources = (curatedSourcesData.sources || []).filter(function (s) {
+    return (s.categories || []).indexOf(key) >= 0;
+  });
+  return sources.some(function (s) {
+    var w = getCuratedWatchEntry(s.id);
+    return w && (w.status === 'changed' || w.status === 'synced');
+  });
+}
+
+function hasNonEmptyCategoryInsights(block) {
+  return block && Array.isArray(block.changes) && block.changes.length > 0;
+}
+
+function shouldShowCategoryInsights(key) {
+  var block = getCategoryInsightsBlock(key);
+  if (!hasNonEmptyCategoryInsights(block)) return false;
+  if (block.pinned) return true;
+  return categoryHasWatchChange(key);
+}
+
+function renderCategoryInsights(key) {
+  var block = getCategoryInsightsBlock(key);
+  if (!hasNonEmptyCategoryInsights(block)) return '';
+
   const typeLabels = { 'new': '新增', 'modify': '变更', 'remove': '移除' };
+  const defaultLink = block.link || '';
   let itemsHtml = '';
-  SCORE_CHANGES.forEach(function(c) {
-    const changeUrl = c.link ? normalizeRuleDetailLink(c.link) : '';
+  block.changes.forEach(function(c) {
+    const changeUrl = c.link ? normalizeRuleDetailLink(c.link) : (defaultLink ? normalizeRuleDetailLink(defaultLink) : '');
     const linkHtml = changeUrl ? '<a class="change-link" href="' + changeUrl + '" target="_blank" rel="noopener">查看规则原文 ↗</a>' : '';
     itemsHtml += '<div class="change-item type-' + c.type + '">' +
       '<span class="change-type-tag ' + c.type + '">' + typeLabels[c.type] + '</span>' +
@@ -1473,25 +1499,27 @@ function renderScoreChanges() {
   });
 
   let impactHtml = '';
-  SCORE_IMPACT.forEach(function(item) {
+  (block.impacts || []).forEach(function(item) {
     impactHtml += '<div class="analysis-item"><div class="analysis-bullet ' + item.level + '"></div>' +
       '<div class="analysis-item-content"><div class="analysis-item-title">' + item.title + '</div>' +
       '<div class="analysis-item-desc">' + item.desc + '</div></div></div>';
   });
 
   let strategyHtml = '';
-  SCORE_STRATEGY.forEach(function(item) {
+  (block.strategies || []).forEach(function(item) {
     strategyHtml += '<div class="analysis-item"><div class="analysis-bullet ' + item.level + '"></div>' +
       '<div class="analysis-item-content"><div class="analysis-item-title">' + item.title + '</div>' +
       '<div class="analysis-item-desc">' + item.desc + '</div></div></div>';
   });
 
+  const subtitle = block.panelSubtitle || block.ruleTitle || '';
+
   return '<div class="changes-panel">' +
     '<div class="changes-panel-header">' +
       '<div class="changes-panel-icon">&#916;</div>' +
       '<div><div class="changes-panel-title">规则变更记录</div>' +
-      '<div class="changes-panel-sub">2026年3月真实体验分规范调整详情</div></div>' +
-      '<span class="changes-panel-badge">' + SCORE_CHANGES.length + ' 项变更</span>' +
+      '<div class="changes-panel-sub">' + subtitle + '</div></div>' +
+      '<span class="changes-panel-badge">' + block.changes.length + ' 项变更</span>' +
     '</div>' +
     '<div class="changes-list">' + itemsHtml + '</div></div>' +
     '<div class="analysis-row">' +
@@ -1694,7 +1722,7 @@ function renderSection(key) {
   });
   html += '</div>';
 
-  if (key === 'score') html += renderScoreChanges();
+  if (shouldShowCategoryInsights(key)) html += renderCategoryInsights(key);
 
   html += renderCuratedSourcesPanel(key);
 

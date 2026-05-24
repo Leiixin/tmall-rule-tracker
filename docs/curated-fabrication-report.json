@@ -1,0 +1,894 @@
+﻿{
+  "generatedAt": "2026-05-24T13:11:56.544Z",
+  "summary": {
+    "cards": 23,
+    "liCount": 118,
+    "supported": 109,
+    "simplified": 6,
+    "fabricated": 3,
+    "sourceUnavailableLi": 0,
+    "cardsFabricated": 2,
+    "cardsSimplified": 5,
+    "cardsSupported": 16,
+    "sourcesFailed": []
+  },
+  "sources": [
+    {
+      "id": "rule-20002796",
+      "ruleId": "20002796",
+      "label": "临期商品定义与标注要求",
+      "contentLength": 1066,
+      "origin": "mtop",
+      "error": null
+    },
+    {
+      "id": "rule-11002181",
+      "ruleId": "11002181",
+      "label": "化妆品保质期/货架期要求",
+      "contentLength": 2523,
+      "origin": "mtop",
+      "error": null
+    },
+    {
+      "id": "rule-20009524",
+      "ruleId": "20009524",
+      "label": "真实体验分定义与评分区间",
+      "contentLength": 2658,
+      "origin": "rules.json",
+      "error": null
+    },
+    {
+      "id": "rule-11000266",
+      "ruleId": "11000266",
+      "label": "发货时效规定（第五条）",
+      "contentLength": 7278,
+      "origin": "mtop",
+      "error": null
+    }
+  ],
+  "cards": [
+    {
+      "category": "shelf",
+      "cardId": "shelf:0",
+      "title": "临期商品定义与标注要求",
+      "sourceId": "rule-20002796",
+      "sourceTitle": "天猫商品保质期发布规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "临期商品必须在标题或详情页最上方展示 “临期商品” 或 “X年X月到期” 字样",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 ≥ 1080天 ：临保期 = 180天",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 730～1080天：临保期 = 150天",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 365～730天：临保期 = 90天",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 180～365天：临保期 = 60天",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 90～180天：临保期 = 1/3保质期（至多40天）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 30～90天：临保期 = 1/3保质期（至多20天）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "来源：《天猫商品保质期发布规范》第一条/第二条",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "shelf",
+      "cardId": "shelf:1",
+      "title": "化妆品保质期/货架期要求",
+      "sourceId": "rule-11002181",
+      "sourceTitle": "天猫化妆品发布规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "保质期 ≥ 3年 的化妆品：剩余 < 1年 必须如实说明；剩余 < 180天 禁止销售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保质期 < 3年 的化妆品：剩余 < 保质期的 1/3 必须如实说明；剩余 < 保质期的 1/6 禁止销售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "临期商品须在详情页 醒目位置 展示剩余保质期信息",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "有效期不可写\"详见产品外包装\"，必须具体展示（如\"保质期x个月\"）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "适用类目：彩妆/香水、美容护肤/美体/精油、美发护发、母婴洗护、孕产妇用品、洗护清洁剂等",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "来源：《天猫化妆品发布规范》第2.1.4条 产品描述规范",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "shelf",
+      "cardId": "shelf:2",
+      "title": "医疗保健/隐形眼镜禁售标准",
+      "sourceId": "rule-20002796",
+      "sourceTitle": "天猫商品保质期发布规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "隐形眼镜/彩色隐形眼镜：剩余保质期 < 180天 ，且不低于正常使用周期 → 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "护理液：剩余保质期 < 180天 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保健用品：剩余保质期 < 保质期的 1/10 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "处方药(中药饮片除外)及OTC：剩余保质期 < 90天 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "保健食品/膳食营养补充食品：剩余 < 保质期的 1/5 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "血糖试纸：剩余 < 保质期的 1/8 禁售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "来源：《天猫商品保质期发布规范》第二条 特殊类目",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "shelf",
+      "cardId": "shelf:3",
+      "title": "过期商品禁售与违规处理",
+      "sourceId": "rule-20002796",
+      "sourceTitle": "天猫商品保质期发布规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "simplified",
+      "li": [
+        {
+          "text": "商品保质期剩余时间低于规范要求的 不可销售",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "发布或出售不符合效期要求的商品，按平台相关违规规则处理",
+          "verdict": "simplified",
+          "reason": "表述简化，建议对照原文核对"
+        },
+        {
+          "text": "保质期信息不清晰、篡改或手写的，按平台商品质量相关规范处理",
+          "verdict": "simplified",
+          "reason": "表述简化，建议对照原文核对"
+        },
+        {
+          "text": "来源：《天猫商品保质期发布规范》",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "shelf",
+      "cardId": "shelf:4",
+      "title": "保质期规范来源与查询",
+      "sourceId": "rule-20002796",
+      "sourceTitle": "天猫商品保质期发布规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "fabricated",
+      "li": [
+        {
+          "text": "《天猫商品保质期发布规范》 2023年4月3日生效，位于规则辞典 > 商品管理 > 商品发布规范",
+          "verdict": "fabricated",
+          "reason": "数字 2023 未在规则正文中出现"
+        },
+        {
+          "text": "规则ID： 20002796 ，可在天猫规则中心搜索“保质期”查看",
+          "verdict": "fabricated",
+          "reason": "数字 20002796 未在规则正文中出现"
+        },
+        {
+          "text": "各行业发布规范可能有特殊要求，以行业规范为准",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:0",
+      "title": "真实体验分定义与评分区间",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "simplified",
+      "li": [
+        {
+          "text": "真实体验分 = 综合反映店铺 商品与服务 的指标体系",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "满分 5分 ，最低 3分",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "计算前提：近30天支付订单量 ≥ 30笔 ，否则不展示分值",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "更新频率： 每天更新 ，基于近30天滚动数据",
+          "verdict": "simplified",
+          "reason": "表述简化，建议对照原文核对"
+        },
+        {
+          "text": "三大维度： 宝贝质量 + 物流速度 + 服务保障",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "公示日期： 2026-02-24 ｜生效： 2026-03-05 ｜执行： 2026-03-16",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:1",
+      "title": "宝贝质量指标（2026.3新规）",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "商品负反馈率 = 近30天物流签收订单中，因商品品质退款或描述相符1～2星评价的订单笔数 ÷ 近30天物流签收订单笔数",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "商品好评率 = 近30天描述相符4～5星评价次数 ÷ 近30天描述相符被评价数",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "宝贝质量维度由「首次品退率」「商品差评率」升级为上述两项（2026年3月16日起执行）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "单项指标得分按卖家 主营类目得分档位标准 计算，具体以产品页面/千牛后台为准",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:2",
+      "title": "物流速度指标（2026.3新规）",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "simplified",
+      "li": [
+        {
+          "text": "48小时揽收及时率 = 48h内揽收订单数 ÷ 应揽收订单数",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "物流到货时长 = 支付到签收的平均时间（小时）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "部分类目含 物流差评率 = 物流差评数 ÷ 评价总数",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "新增 ：取消\"当日达/次日达覆盖率\"和\"特色服务达标占比\"",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "物流轨迹异常将纳入 违规降分 场景",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "揽收及时率、到货时长越优 → 分数越高",
+          "verdict": "simplified",
+          "reason": "运营解读性表述"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:3",
+      "title": "服务保障指标",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "fabricated",
+      "li": [
+        {
+          "text": "旺旺3分钟人工响应率 ：8:00-23:00期间，3分钟内人工回复的比率",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "旺旺满意度 = 满意评价量 ÷ 参评量",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "退款处理时长 ：商家首次处理退款的平均耗时（小时）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "平台求助率 = 求助平台介入的订单 ÷ 支付订单量",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "以上四项指标均按同行排名换算体验分",
+          "verdict": "fabricated",
+          "reason": "正文为得分档位标准，非同行排名"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:4",
+      "title": "计算公式与权重",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "店铺真实体验分 = 宝贝质量得分×权重 + 物流速度得分×权重 + 服务保障得分×权重 + 附加分（如有）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "近30天有效支付订单数 ≥ 30 才计算并展示；部分类目统计周期为近90天，以产品页面为准",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "各维度得分来自单项指标，单项得分按 主营类目得分档位标准 计算",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "含附加分在内，体验分总分不超过 5 分；分值区间为 3～5 分",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "「当日/次日达订单占比」「特色服务达标占比」已下线，按行业增加 特色服务加分 （以产品页面显示为准）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "权重占比、分档位标准可在【千牛后台-店铺-真实体验分】查看",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:5",
+      "title": "应用场景",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "simplified",
+      "li": [
+        {
+          "text": "商品搜索排序 ：体验分越高，在其他因素相同时搜索排序相对越好",
+          "verdict": "simplified",
+          "reason": "运营解读性表述"
+        },
+        {
+          "text": "营销活动提报 ：达到平台设定门槛可报名特定营销活动",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "首页推荐商品入池 ：达到门槛方可进入淘宝首页推荐商品池",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "阿里妈妈营销推广 ：达到门槛可通过阿里妈妈营销产品付费推广",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "优质店铺评选 ：达到门槛可报名参选平台特定优质店铺",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "具体门槛与路径：【千牛后台-店铺-真实体验分-应用场景】",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "score",
+      "cardId": "score:6",
+      "title": "违规降分与处罚",
+      "sourceId": "rule-20009524",
+      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "sourceOrigin": "rules.json",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "店铺存在违法违规等 严重影响消费者体验 的行为时，平台可对真实体验分 降分处理",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "降分涉及的指标、程度及周期因行为不同而异， 具体以产品页面显示为准",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "违规行为包括但不限于：出售假冒商品；描述或品质不符；发布混淆商品； 物流轨迹异常 （2026年3月新规纳入）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "物流速度维度不再考核「物流异常率」，改为对物流轨迹异常等情形作降分处理",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "刷分、虚构交易等干扰考核的行为，按第十条及相关细则处理（含剔除数据、停算停展示等）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "ship",
+      "cardId": "ship:0",
+      "title": "发货时效规定（第五条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "普通商品：付款后 48小时 内发货",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "全款预售/定金预售/定制商品：按设定或约定的发货时间",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "周期购商品：约定发货日期的 23:59:59 前",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "可使用协商发货工具与买家约定新的发货时间",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "ship",
+      "cardId": "ship:1",
+      "title": "发货时间认定标准（第六条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "物流公司回传\" 已揽收/揽件 \"等已发货状态",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "菜鸟服务订单：包裹出库后显示\"正在发往分拨中心\"等状态",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "大件商品无物流节点回传的，以物流公司底单发货时间为准",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "ship",
+      "cardId": "ship:2",
+      "title": "物流轨迹超时认定（第十条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "simplified",
+      "li": [
+        {
+          "text": "揽收后 24小时 内无任何物流更新记录",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "同区域（京津冀/江浙沪皖/同省）：停滞超 48小时",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "跨省（非偏远）：停滞超 72小时",
+          "verdict": "simplified",
+          "reason": "表述简化，建议对照原文核对"
+        },
+        {
+          "text": "偏远地区（新疆/西藏/内蒙古/甘肃/青海/宁夏）：停滞超 120小时",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "港澳台地区除外",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "ship",
+      "cardId": "ship:3",
+      "title": "物流轨迹异常认定（第十一条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "揽收后 72小时 内无任何物流更新",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "同区域/同省停滞 ≥ 96小时 ；跨省 ≥ 120小时 ；偏远 ≥ 168小时",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "物流轨迹与收货地址不符 / 未经同意退回包裹",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "非真实物流轨迹或轨迹造假",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "ship",
+      "cardId": "ship:4",
+      "title": "特殊情形免责（第十四条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "消费者\"滥用会员权利\" / 非生活消费所需购买",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "不可抗力因素（自然灾害等），可通过营商保发起报备",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "买家收货地址或信息无效/不准确",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "商品信息符合《标错类事件处理标准》",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "商品涉嫌违法违规，天猫要求停止发货",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:0",
+      "title": "延迟发货（第七条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "认定： 订单未在承诺发货时间内完成发货（普通商品为付款后48小时）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "普通商品/周期购/定制≤48h：交易金额的 5% （ 5-50元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "全款预售/定金预售>48h/定制>48h：交易金额的 10% （ 5-50元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "情节严重且投诉成立未主动赔付：每次扣 1分 （30天内累计不超过6分）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:1",
+      "title": "缺货（第八条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "认定①： 延迟发货后 72小时 仍未发货",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定②： 商家自主承认缺货 / 拒绝发货 / 要求加价发货",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定③： 物流轨迹超时或异常后 5天 内消费者仍未收到商品",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定④： 其他异常情形",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "承诺 ≤48h 发货：交易金额的 10% （ 5-500元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "承诺 >48h 发货：交易金额的 15% （ 5-500元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:2",
+      "title": "虚假发货（第九条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "认定①： 上传物流单号后 24小时 内平台仍无揽收记录",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定②： 实际发货商品与消费者所购无关联、空包裹等",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定③： 物流单号在物流公司官网存在异常、重复物流信息",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定④： 其他异常情形",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "情形①赔付：交易金额的 5% （ 5-100元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "情形②③赔付：交易金额的 30% （ 5-500元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "情形②商品维度处罚：1次违规下架商品；2次及以上下架 3天 ；多次违规可删除/限制发布",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:3",
+      "title": "物流轨迹超时（第十条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "认定①： 揽收后 24小时 内无任何物流更新记录",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定②： 物流流转中停滞超时 — 同区域(京津冀/江浙沪皖)/同省超 48小时 ；跨省超 72小时 ；偏远地区(新疆/西藏/内蒙古/甘肃/青海/宁夏)超 120小时",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "赔付：交易金额的 5% （ 5-50元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:4",
+      "title": "物流轨迹异常（第十一条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "认定①： 揽收后 72小时 内无任何物流更新",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定②： 物流流转中严重停滞 — 同区域/同省 ≥ 96小时 ；跨省 ≥ 120小时 ；偏远地区 ≥ 168小时",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定③： 物流轨迹与收货地址不符",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定④： 未经消费者同意包裹退回",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定⑤： 轨迹流转时长远超同线路合理周期",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "认定⑥： 非真实物流轨迹或轨迹造假（节点/时间高度相似等）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "赔付：交易金额的 20% （ 5-100元 ）",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "可采取快递网点限制取号、延长自动确认收货时长等措施",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    },
+    {
+      "category": "penalty",
+      "cardId": "penalty:5",
+      "title": "赔付上限与其他措施（第十二~十三条）",
+      "sourceId": "rule-11000266",
+      "sourceTitle": "天猫物流时效管理规范",
+      "sourceOrigin": "mtop",
+      "cardVerdict": "supported",
+      "li": [
+        {
+          "text": "同一买卖双方同日多笔交易：赔付合并最高 500元",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "轨迹超时 + 轨迹异常：赔付比例合并不超过 20% ，金额不超过 100元",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        },
+        {
+          "text": "情节严重可执行：商品下架/删除、限制预售权限、提升保证金、限制营销活动、管控支付账户、监管店铺",
+          "verdict": "supported",
+          "reason": "要点可在规则正文中找到依据"
+        }
+      ]
+    }
+  ]
+}

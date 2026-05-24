@@ -4,6 +4,7 @@ import path from "node:path";
 
 import { fetchRuleDetailByRuleId } from "../src/crawler/tmallCrawler.js";
 import { generateCuratedCardsForCategory } from "../src/services/llm/curatedCardsGenerator.js";
+import { generateCategoryInsights } from "../src/services/llm/curatedCategoryInsightsGenerator.js";
 import { isLlmEnabled } from "../src/services/llm/client.js";
 
 const CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
@@ -49,6 +50,20 @@ function mergeCardsForSource(cards, category, sourceId, newCards) {
   return merged;
 }
 
+function updateSourceCache(cache, sourceId, detail) {
+  if (!cache.sources) {
+    cache.sources = {};
+  }
+  cache.sources[sourceId] = {
+    ruleId: detail.ruleId,
+    title: detail.title,
+    content: detail.content,
+    fetchedAt: detail.crawledAt || new Date().toISOString(),
+    origin: "mtop"
+  };
+  cache.updatedAt = new Date().toISOString();
+}
+
 async function notifyIfChanged(watch) {
   const url = process.env.NOTIFY_WEBHOOK_URL || "";
   if (!url) {
@@ -92,10 +107,17 @@ async function main() {
   const cardsPath = path.join(dataDir, "curated-cards.json");
   const sourcesPath = path.join(dataDir, "curated-sources.json");
   const watchPath = path.join(dataDir, "curated-watch.json");
+  const insightsPath = path.join(dataDir, "curated-category-insights.json");
+  const cachePath = path.join(dataDir, "curated-source-cache.json");
 
   const curatedCards = await readJson(cardsPath, null);
   const curatedSources = await readJson(sourcesPath, { sources: [] });
   const prevWatch = await readJson(watchPath, {});
+  const curatedInsights = await readJson(insightsPath, {
+    version: 1,
+    categories: {}
+  });
+  const sourceCache = await readJson(cachePath, { version: 1, sources: {} });
 
   if (!curatedCards) {
     throw new Error("curated-cards.json missing; run node scripts/migrate-curated-data.mjs");
@@ -103,6 +125,7 @@ async function main() {
 
   const timestamp = new Date().toISOString();
   const maxPublish = Number(process.env.LLM_MAX_CURATED_SOURCES_PER_RUN || 2);
+  const maxInsights = Number(process.env.LLM_MAX_INSIGHTS_PER_RUN || 2);
   const llmOn = isLlmEnabled();
   const autoPublish =
     String(process.env.ENABLE_CURATED_AUTO_PUBLISH || "true").toLowerCase() !==
@@ -113,10 +136,18 @@ async function main() {
     autoPublishVersion: Number(prevWatch.autoPublishVersion || 0),
     recentAutoPublish: prevWatch.recentAutoPublish || null,
     sources: {},
-    summary: { checked: 0, changed: 0, errors: 0, published: 0, synced: 0 }
+    summary: {
+      checked: 0,
+      changed: 0,
+      errors: 0,
+      published: 0,
+      synced: 0,
+      insightsGenerated: 0
+    }
   };
 
   let publishBudget = maxPublish;
+  let insightsBudget = maxInsights;
   const changedQueue = [];
 
   for (const source of curatedSources.sources || []) {
@@ -126,6 +157,7 @@ async function main() {
 
     watch.summary.checked += 1;
     const prev = prevWatch.sources?.[source.id] || {};
+    const previousContent = sourceCache.sources?.[source.id]?.content || "";
 
     if (!source.ruleId) {
       watch.sources[source.id] = {
@@ -154,6 +186,8 @@ async function main() {
         continue;
       }
 
+      updateSourceCache(sourceCache, source.id, detail);
+
       applyRuleTitle(source, detail);
       const ruleTitle = resolveRuleTitle(source, prev);
 
@@ -176,7 +210,13 @@ async function main() {
           detectedAt: timestamp
         };
         watch.summary.changed += 1;
-        changedQueue.push({ source, detail, hash, platformModifiedAt });
+        changedQueue.push({
+          source,
+          detail,
+          hash,
+          platformModifiedAt,
+          previousContent
+        });
       } else {
         watch.sources[source.id] = {
           status: "ok",
@@ -197,6 +237,52 @@ async function main() {
         lastSyncedAt: prev.lastSyncedAt || null
       };
       watch.summary.errors += 1;
+    }
+  }
+
+  for (const item of changedQueue) {
+    if (llmOn && insightsBudget > 0) {
+      const { source, detail, platformModifiedAt, previousContent } = item;
+      let generatedForSource = 0;
+
+      for (const category of source.categories || []) {
+        if (!CATEGORY_KEYS.includes(category)) {
+          continue;
+        }
+        const existing = curatedInsights.categories?.[category];
+        if (existing?.pinned) {
+          continue;
+        }
+        try {
+          const { block } = await generateCategoryInsights({
+            category,
+            detail,
+            source,
+            previousContent
+          });
+          if (!curatedInsights.categories) {
+            curatedInsights.categories = {};
+          }
+          curatedInsights.categories[category] = block;
+          generatedForSource += 1;
+          watch.summary.insightsGenerated += 1;
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `[curated] insights failed ${category}/${source.id}:`,
+            err instanceof Error ? err.message : err
+          );
+        }
+      }
+
+      if (generatedForSource > 0) {
+        insightsBudget -= 1;
+        const entry = watch.sources[source.id] || {};
+        watch.sources[source.id] = {
+          ...entry,
+          insightsGeneratedAt: timestamp
+        };
+      }
     }
   }
 
@@ -246,7 +332,9 @@ async function main() {
           ruleTitle: resolveRuleTitle(source, prevWatch.sources?.[source.id] || {}),
           platformModifiedAt,
           contentHash: hash,
-          lastSyncedAt: timestamp
+          lastSyncedAt: timestamp,
+          insightsGeneratedAt:
+            watch.sources[source.id]?.insightsGeneratedAt || timestamp
         };
         curatedCards.updatedAt = timestamp;
         curatedCards.autoPublishVersion = watch.autoPublishVersion;
@@ -260,22 +348,31 @@ async function main() {
         platformModifiedAt,
         contentHash: hash,
         lastSyncedAt: prevEntry.lastSyncedAt || null,
-        detectedAt: timestamp
+        detectedAt: timestamp,
+        insightsGeneratedAt: prevEntry.insightsGeneratedAt || null
       };
       watch.summary.errors += 1;
     }
   }
 
   curatedCards.updatedAt = curatedCards.updatedAt || timestamp;
+  curatedInsights.version = 1;
+  curatedInsights.updatedAt = timestamp;
 
   await writeJson(cardsPath, curatedCards);
   await writeJson(sourcesPath, curatedSources);
   await writeJson(watchPath, watch);
+  await writeJson(insightsPath, curatedInsights);
+  await writeJson(cachePath, sourceCache);
 
   await mkdir(publicDataDir, { recursive: true });
   await writeJson(path.join(publicDataDir, "curated-cards.json"), curatedCards);
   await writeJson(path.join(publicDataDir, "curated-sources.json"), curatedSources);
   await writeJson(path.join(publicDataDir, "curated-watch.json"), watch);
+  await writeJson(
+    path.join(publicDataDir, "curated-category-insights.json"),
+    curatedInsights
+  );
 
   await notifyIfChanged(watch);
 

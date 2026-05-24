@@ -1,11 +1,11 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-05-23T06:10:25.079Z",
+  "updatedAt": "2026-05-24T13:30:00.000Z",
   "autoPublishVersion": 0,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
-    "desc": "天猫平台对在售商品的保质期、效期管理的强制性规范，适用于食品、保健品、美妆等类目。依据《天猫商品保质期发布规范》及《天猫国际商品效期管理规范》。",
+    "desc": "天猫平台对在售商品的保质期、效期管理的强制性规范，适用于食品、保健品、美妆等类目。依据《天猫商品保质期发布规范》。",
     "cards": [
       {
         "title": "临期商品定义与标注要求",
@@ -47,19 +47,6 @@
         "cardId": "shelf:2"
       },
       {
-        "title": "天猫国际入库效期管理",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2026-01-20",
-        "tags": [
-          "天猫国际"
-        ],
-        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
-        "body": "<ul><li>婴幼儿奶粉：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">180天</span>；禁售 = 剩余 &lt; <span class=\"num\">100天</span></li><li>母婴（非奶粉）/宠物/其他效期品：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">120天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">60天</span></li><li>美妆/个护：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">365天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">180天</span></li><li>食品/保健品：入库须 &gt; <span class=\"num\">180天</span>；临期 = 剩余 &lt; 30%且至少<span class=\"num\">100~120天</span>；禁售 = 剩余 &lt; 10%且至少<span class=\"num\">60天</span></li><li>临保商品须在标题注明<span class=\"highlight\">[临期]</span>，详情页顶部展示\"临期商品\"（醒目位置）</li><li>2026年1月新增：暗码效期解码规则错误导致买家损失，按\"出售不合格品\"处理</li><li>来源：《天猫国际商品效期管理规范》(2026年1月20日最新修订)</li></ul>",
-        "sourceId": "rule-11005234",
-        "cardId": "shelf:3"
-      },
-      {
         "title": "过期商品禁售与违规处理",
         "severity": "critical",
         "severityText": "强制",
@@ -68,22 +55,9 @@
           "全类目"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
-        "body": "<ul><li>商品保质期剩余时间低于规范要求的 <span class=\"highlight\">不可销售</span></li><li>发布不符合效期要求的商品：按《天猫国际市场管理规则》“滥发信息”处理</li><li>实际出售不符合效期要求：按“描述不符”处理</li><li>保质期信息不清晰/篡改/手写：按《天猫国际商品抽检行为规范总则》处理</li><li>来源：《天猫商品保质期发布规范》+《天猫国际商品效期管理规范》</li></ul>",
+        "body": "<ul><li>商品保质期剩余时间低于规范要求的 <span class=\"highlight\">不可销售</span></li><li>发布或出售不符合效期要求的商品，按平台相关违规规则处理</li><li>保质期信息不清晰、篡改或手写的，按平台商品质量相关规范处理</li><li>来源：《天猫商品保质期发布规范》</li></ul>",
         "sourceId": "rule-20002796",
-        "cardId": "shelf:4"
-      },
-      {
-        "title": "保质期规范来源与查询",
-        "severity": "normal",
-        "severityText": "通知",
-        "date": "2023-04-03",
-        "tags": [
-          "规范查询"
-        ],
-        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
-        "body": "<ul><li>《天猫商品保质期发布规范》 2023年4月3日生效，位于规则辞典 > <span class=\"highlight\">商品管理 > 商品发布规范</span></li><li>规则ID：<span class=\"num\">20002796</span>，可在天猫规则中心搜索“保质期”查看</li><li>《天猫国际商品效期管理规范》 2026年1月20日最新修订，适用跨境商品（规则ID: 11005234）</li><li>各行业发布规范可能有特殊要求，以行业规范为准</li></ul>",
-        "sourceId": "rule-20002796",
-        "cardId": "shelf:5"
+        "cardId": "shelf:3"
       }
     ]
   },
@@ -116,7 +90,7 @@
           "指标升级"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">新指标 ①</span> 商品负反馈率 = 品质退款笔数 ÷ 支付订单量</li><li>替代旧指标\"首次品退率\"与\"商品差评率\"</li><li><span class=\"highlight\">新指标 ②</span> 商品好评率 = 好评数 ÷ (好评+差评+自然好评) × 100%</li><li>好评率为 <span class=\"highlight\">新增指标</span>，纳入宝贝质量维度计算</li><li>负反馈率越低越好，好评率越高越好</li><li>指标排名对比同行：各指标分 = <span class=\"num\">3 + 2×排名百分位</span></li></ul>",
+        "body": "<ul><li><span class=\"highlight\">商品负反馈率</span> = 近30天物流签收订单中，因商品品质退款或描述相符1～2星评价的订单笔数 ÷ 近30天物流签收订单笔数</li><li><span class=\"highlight\">商品好评率</span> = 近30天描述相符4～5星评价次数 ÷ 近30天描述相符被评价数</li><li>宝贝质量维度由「首次品退率」「商品差评率」升级为上述两项（2026年3月16日起执行）</li><li>单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准</li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:1"
       },
@@ -144,7 +118,7 @@
           "考核指标"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">旺旺3分钟人工响应率</span>：8:00-23:00期间，3分钟内人工回复的比率</li><li><span class=\"highlight\">旺旺满意度</span> = 满意评价量 ÷ 参评量</li><li><span class=\"highlight\">退款处理时长</span>：商家首次处理退款的平均耗时（小时）</li><li><span class=\"highlight\">平台求助率</span> = 求助平台介入的订单 ÷ 支付订单量</li><li>以上四项指标均按同行排名换算体验分</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">旺旺3分钟人工响应率</span> = 近30天8:00-23:00期间，买家提问后3分钟内人工回复的对话轮次 ÷ 该时段总对话轮次</li><li><span class=\"highlight\">旺旺满意度</span> = 近30天旺旺满意评价量（剔除未解决）÷ 近30天旺旺收到评价数</li><li><span class=\"highlight\">退款处理时长</span> = 近30天卖家处理退款总时长 ÷ 退款完结总笔数</li><li><span class=\"highlight\">平台求助率</span> =（近30天纠纷笔数+投诉笔数+咨询平台笔数）÷ 近30天支付订单笔数</li><li>单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准</li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:3"
       },
@@ -158,7 +132,7 @@
           "权重"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li>总分 = <span class=\"highlight\">宝贝质量×权重 + 物流速度×权重 + 服务保障×权重 + 附加分</span></li><li>各维度权重因 <span class=\"highlight\">一级类目不同</span> 而异，具体以平台公示为准</li><li>各指标分 = <span class=\"num\">3 + 2 × 排名百分位</span>（同行对比）</li><li>维度分 = 该维度下各指标分的加权平均</li><li><span class=\"highlight\">附加分</span>（新）：特色服务加分，替代旧版当日/次日达加分</li><li>最终分值 = min(max(总分, <span class=\"num\">3</span>), <span class=\"num\">5</span>)，保留2位小数</li></ul>",
+        "body": "<ul><li>店铺真实体验分 = <span class=\"highlight\">宝贝质量得分×权重 + 物流速度得分×权重 + 服务保障得分×权重 + 附加分（如有）</span></li><li>近30天有效支付订单数 ≥ <span class=\"num\">30</span> 才计算并展示；部分类目统计周期为近90天，以产品页面为准</li><li>各维度得分来自单项指标，单项得分按<span class=\"highlight\">主营类目得分档位标准</span>计算</li><li>含附加分在内，体验分总分不超过 <span class=\"num\">5</span> 分；分值区间为 <span class=\"num\">3～5</span> 分</li><li>「当日/次日达订单占比」「特色服务达标占比」已下线，按行业增加<span class=\"highlight\">特色服务加分</span>（以产品页面显示为准）</li><li>权重占比、分档位标准可在【千牛后台-店铺-真实体验分】查看</li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:4"
       },
@@ -172,7 +146,7 @@
           "流量影响"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">搜索排序</span>：体验分影响商品在搜索结果中的排名权重</li><li><span class=\"highlight\">活动提报</span>：天猫大促、新风潮等活动设有体验分准入门槛</li><li><span class=\"highlight\">首页推荐</span>：体验分用于首页推荐等导购场景</li><li><span class=\"highlight\">阿里妈妈</span>：部分推广资源对体验分有要求</li><li><span class=\"highlight\">优质店铺标</span>：达到类目体验分标准可获得优质标识</li><li>2026年4月天猫新风潮：体验分以 <span class=\"num\">2026年3月</span> 数据为准</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">商品搜索排序</span>：体验分越高，在其他因素相同时搜索排序相对越好</li><li><span class=\"highlight\">营销活动提报</span>：达到平台设定门槛可报名特定营销活动</li><li><span class=\"highlight\">首页推荐商品入池</span>：达到门槛方可进入淘宝首页推荐商品池</li><li><span class=\"highlight\">阿里妈妈营销推广</span>：达到门槛可通过阿里妈妈营销产品付费推广</li><li><span class=\"highlight\">优质店铺评选</span>：达到门槛可报名参选平台特定优质店铺</li><li>具体门槛与路径：【千牛后台-店铺-真实体验分-应用场景】</li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:5"
       },
@@ -186,7 +160,7 @@
           "降分"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">假冒商品</span>：每被处罚1次，各维度分 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">描述不符</span>：每被处罚1次，宝贝质量维度 <span class=\"num\">−0.5分</span></li><li><span class=\"highlight\">混淆商品/误导消费</span>：每次宝贝质量 <span class=\"num\">−0.3分</span></li><li><span class=\"highlight\">物流轨迹异常</span>（新增）：每次物流速度维度 <span class=\"num\">−0.3分</span></li><li>降分次数上限 = 30天内被处罚的次数（含虚拟单等场景）</li><li>降分后分值最低降至 <span class=\"num\">3分</span></li></ul>",
+        "body": "<ul><li>店铺存在违法违规等<span class=\"highlight\">严重影响消费者体验</span>的行为时，平台可对真实体验分<span class=\"highlight\">降分处理</span></li><li>降分涉及的指标、程度及周期因行为不同而异，<span class=\"highlight\">具体以产品页面显示为准</span></li><li>违规行为包括但不限于：出售假冒商品；描述或品质不符；发布混淆商品；<span class=\"highlight\">物流轨迹异常</span>（2026年3月新规纳入）</li><li>物流速度维度不再考核「物流异常率」，改为对物流轨迹异常等情形作降分处理</li><li>刷分、虚构交易等干扰考核的行为，按第十条及相关细则处理（含剔除数据、停算停展示等）</li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:6"
       }

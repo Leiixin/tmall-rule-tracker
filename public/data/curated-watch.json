@@ -19,14 +19,6 @@
       "contentHash": "9a189fe3eea8ae65",
       "lastSyncedAt": null
     },
-    "rule-11005234": {
-      "status": "error",
-      "message": "MTOP detail fetch failed",
-      "ruleTitle": "",
-      "platformModifiedAt": null,
-      "contentHash": "",
-      "lastSyncedAt": null
-    },
     "rule-20009524": {
       "status": "ok",
       "message": "no change",
@@ -45,9 +37,9 @@
     }
   },
   "summary": {
-    "checked": 5,
+    "checked": 4,
     "changed": 0,
-    "errors": 1,
+    "errors": 0,
     "published": 0,
     "synced": 0
   }

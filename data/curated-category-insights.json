@@ -1,0 +1,112 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-05-24T13:41:32.252Z",
+  "categories": {
+    "score": {
+      "pinned": true,
+      "sourceId": "rule-20009524",
+      "ruleTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
+      "panelSubtitle": "2026年3月真实体验分规范调整详情",
+      "generatedAt": "2026-05-24T14:00:00.000Z",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
+      "changes": [
+        {
+          "type": "new",
+          "title": "新增「商品负反馈率」指标",
+          "detail": "宝贝质量维度考核「商品负反馈率」：近30天物流签收订单中，因商品品质退款或描述相符1～2星相关订单占比。<span class=\"new-val\">替代原「首次品退率」与「商品差评率」</span>。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        },
+        {
+          "type": "new",
+          "title": "新增「商品好评率」指标",
+          "detail": "宝贝质量维度新增「商品好评率」= 近30天描述相符4～5星评价次数 ÷ 近30天描述相符被评价数。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        },
+        {
+          "type": "remove",
+          "title": "移除「首次品退率」与「商品差评率」",
+          "detail": "旧指标 <span class=\"old\">首次品退率</span> 与 <span class=\"old\">商品差评率</span> 不再作为宝贝质量维度计算指标。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        },
+        {
+          "type": "new",
+          "title": "新增「物流轨迹异常」违规降分",
+          "detail": "物流速度维度不再考核「物流异常率」，新增对 <span class=\"new-val\">物流轨迹异常</span> 等违规的降分处理，<span class=\"highlight\">具体幅度以产品页面显示为准</span>。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        },
+        {
+          "type": "modify",
+          "title": "附加分计算方式调整",
+          "detail": "下线「当日/次日达订单占比」「特色服务达标占比」，按行业增加 <span class=\"new-val\">特色服务加分</span>（以产品页面显示为准）。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        },
+        {
+          "type": "modify",
+          "title": "评分公示与执行时间节点",
+          "detail": "本次调整于 <span class=\"new-val\">2026-02-24</span> 公示，<span class=\"new-val\">2026-03-05</span> 生效，<span class=\"new-val\">2026-03-16</span> 起全面执行。",
+          "date": "2026-03-16",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "宝贝质量考核口径切换",
+          "desc": "负反馈率、好评率替代原品退/差评指标，<span class=\"warn\">商品品质与描述相符评价</span>对体验分影响更直接。"
+        },
+        {
+          "level": "high",
+          "title": "指标分按类目档位计算",
+          "desc": "各指标得分按 <span class=\"warn\">主营类目得分档位标准</span> 换算，需对照千牛后台类目分位与权重。"
+        },
+        {
+          "level": "medium",
+          "title": "物流违规纳入降分",
+          "desc": "物流轨迹异常等情形可触发降分，代发/轨迹更新滞后商家需关注物流维度表现。"
+        },
+        {
+          "level": "medium",
+          "title": "附加分结构变化",
+          "desc": "原有时效类附加分项下线，依赖特色服务加分的店铺需重新评估提分路径。"
+        },
+        {
+          "level": "low",
+          "title": "应用场景联动",
+          "desc": "体验分仍影响搜索排序、营销活动提报、首页推荐、阿里妈妈推广及优质店铺评选等，详见规则第九条。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "action",
+          "title": "降低品质相关退款与差评",
+          "desc": "优化详情页与质检，减少品质退款及1～2星描述相符评价，<span class=\"good\">控制商品负反馈率</span>。"
+        },
+        {
+          "level": "action",
+          "title": "提升真实好评占比",
+          "desc": "在合规前提下引导满意用户完成描述相符评价，<span class=\"good\">提高商品好评率</span>，避免违规刷评。"
+        },
+        {
+          "level": "action",
+          "title": "保障揽收与轨迹更新",
+          "desc": "选择揽收及时率高的快递，<span class=\"good\">48小时内揽收并回传轨迹</span>，降低物流轨迹异常风险。"
+        },
+        {
+          "level": "action",
+          "title": "强化服务保障指标",
+          "desc": "8:00-23:00 提升旺旺3分钟响应与满意度，<span class=\"good\">缩短退款处理时长</span>，降低平台求助率。"
+        },
+        {
+          "level": "action",
+          "title": "每日查看体验分后台",
+          "desc": "体验分每日更新，建议通过【千牛后台-店铺-真实体验分】查看维度分、档位与<span class=\"good\">诊断建议</span>。"
+        }
+      ]
+    }
+  }
+}

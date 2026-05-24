@@ -1,6 +1,6 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-05-23T06:10:25.088Z",
+  "updatedAt": "2026-05-24T13:30:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/curated-sources.json",
   "sources": [
     {
@@ -15,8 +15,7 @@
       "cardIds": [
         "shelf:0",
         "shelf:2",
-        "shelf:4",
-        "shelf:5"
+        "shelf:3"
       ],
       "ruleTitle": "天猫商品保质期发布规范"
     },
@@ -33,19 +32,6 @@
         "shelf:1"
       ],
       "ruleTitle": "天猫化妆品发布规范"
-    },
-    {
-      "id": "rule-11005234",
-      "ruleId": "11005234",
-      "cId": "630",
-      "url": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
-      "label": "天猫国际入库效期管理",
-      "categories": [
-        "shelf"
-      ],
-      "cardIds": [
-        "shelf:3"
-      ]
     },
     {
       "id": "rule-20009524",

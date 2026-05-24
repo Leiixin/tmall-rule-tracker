@@ -12,7 +12,9 @@
     "crawl": "node scripts/gh-crawl.mjs",
     "summarize": "node scripts/summarize-rules.mjs",
     "migrate:curated": "node scripts/migrate-curated-data.mjs",
-    "sync:curated": "node scripts/sync-curated-cards.mjs"
+    "migrate:score-insights": "node scripts/migrate-score-insights.mjs",
+    "sync:curated": "node scripts/sync-curated-cards.mjs",
+    "audit:fabrication": "node scripts/audit-curated-fabrication.mjs"
   },
   "dependencies": {
     "axios": "^1.12.2",
