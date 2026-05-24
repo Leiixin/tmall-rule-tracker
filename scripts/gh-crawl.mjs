@@ -126,7 +126,7 @@ async function main() {
   const scrapedPath = path.join(dataDir, "scraped.json");
   const timelinePath = path.join(dataDir, "timeline.json");
   const rulesPath = path.join(dataDir, "rules.json");
-  const publicRulesPath = path.join(process.cwd(), "public", "data", "rules.json");
+  const publicDataDir = path.join(process.cwd(), "public", "data");
 
   const prevStatus = await readJson(statusPath, {});
   const prevFetchCount = Number(prevStatus.fetchCount || 0);
@@ -194,8 +194,13 @@ async function main() {
   await writeJson(scrapedPath, scrapedJson);
   await writeJson(timelinePath, timelineJson);
   await writeJson(rulesPath, merged);
+
   try {
-    await writeJson(publicRulesPath, merged);
+    await mkdir(publicDataDir, { recursive: true });
+    await writeJson(path.join(publicDataDir, "status.json"), statusJson);
+    await writeJson(path.join(publicDataDir, "scraped.json"), scrapedJson);
+    await writeJson(path.join(publicDataDir, "timeline.json"), timelineJson);
+    await writeJson(path.join(publicDataDir, "rules.json"), merged);
   } catch {
     // public/data may not exist in minimal checkouts
   }

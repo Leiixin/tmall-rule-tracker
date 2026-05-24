@@ -76,7 +76,12 @@ jobs:
           for attempt in 1 2 3 4 5; do
             echo "Push attempt ${attempt}..."
             git fetch origin main
-            if ! git pull --rebase --autostash origin main; then
+            if [ -n "$(git status --porcelain)" ]; then
+              echo "Unstaged changes before rebase; discarding:"
+              git status --porcelain
+              git reset --hard HEAD
+            fi
+            if ! git rebase origin/main; then
               echo "Rebase failed on attempt ${attempt}."
               git rebase --abort 2>/dev/null || true
               sleep $((attempt * 3))
