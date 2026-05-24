@@ -835,6 +835,14 @@ let backendStatus = {
   }
 };
 
+const GITHUB_CRAWL_WORKFLOW_URL =
+  'https://github.com/Leiixin/tmall-rule-tracker/actions/workflows/crawl.yml';
+
+function isLocalDevHost() {
+  var h = location.hostname;
+  return h === 'localhost' || h === '127.0.0.1';
+}
+
 let timelineDataLive = null;
 let rulesJsonCache = null;
 let weeklyReportData = { range: { label: '' }, total: 0, items: [] };
@@ -1350,7 +1358,7 @@ function renderFetchPanel() {
       '<div class="fetch-stat"><span class="fetch-stat-label">总访问 PV</span><span class="fetch-stat-value">' + sitePv + '</span></div>' +
       '<div class="fetch-stat"><span class="fetch-stat-label">独立访客 UV</span><span class="fetch-stat-value">' + siteUv + '</span></div>' +
     '</div>' +
-    '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()">立即抓取</button>' +
+    '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()" title="打开 GitHub Actions，在页面中点击 Run workflow 触发云端抓取">立即抓取</button>' +
     '<div class="source-status-row">' + sourcesHtml + '</div>' +
     '<div class="cron-info">cron: 0 9 * * * (每天09:00自动执行)</div>' +
   '</div>';
@@ -1778,6 +1786,10 @@ function setFetchActive(active) {
 async function triggerManualFetch() {
   const btn = document.getElementById('manualFetchBtn');
   if (!btn) return;
+  if (!isLocalDevHost()) {
+    window.open(GITHUB_CRAWL_WORKFLOW_URL, '_blank', 'noopener,noreferrer');
+    return;
+  }
   btn.classList.add('loading');
   btn.textContent = '抓取中...';
   setFetchActive(true);
