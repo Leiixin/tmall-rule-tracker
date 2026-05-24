@@ -678,6 +678,8 @@ table.weekly-table {
   <div class="status-divider"></div>
   <div class="status-time" id="ruleCount">已收录规则: --</div>
   <div class="status-divider"></div>
+  <div class="status-time" id="visitStats">总访问: -- · 访客: --</div>
+  <div class="status-divider"></div>
   <div class="status-time" id="cronInfo">定时抓取: 每天09:00</div>
   <div class="status-bar-right">
     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="切换白天/黑夜模式">🌙 黑夜</button>
@@ -836,6 +838,44 @@ let backendStatus = {
 let timelineDataLive = null;
 let rulesJsonCache = null;
 let weeklyReportData = { range: { label: '' }, total: 0, items: [] };
+var visitStatsCache = { sitePv: null, siteUv: null };
+var BSZ_API = 'https://bsz.saop.cc/api';
+var VISIT_SESSION_KEY = 'tmall-bsz-visit-recorded';
+
+function formatVisitCount(n) {
+  if (n == null || n === '' || isNaN(Number(n))) return '--';
+  return String(n);
+}
+
+function updateVisitStatsDisplay(pv, uv) {
+  visitStatsCache.sitePv = pv;
+  visitStatsCache.siteUv = uv;
+  var el = document.getElementById('visitStats');
+  if (el) {
+    el.textContent = '总访问: ' + formatVisitCount(pv) + ' · 访客: ' + formatVisitCount(uv);
+  }
+}
+
+async function loadVisitStats() {
+  var recorded = sessionStorage.getItem(VISIT_SESSION_KEY);
+  var method = recorded ? 'GET' : 'POST';
+  try {
+    var res = await fetch(BSZ_API, {
+      method: method,
+      credentials: 'include',
+      headers: { 'x-bsz-referer': location.href }
+    });
+    if (!res.ok) return;
+    var json = await res.json();
+    if (!json || !json.success || !json.data) return;
+    if (!recorded && method === 'POST') {
+      sessionStorage.setItem(VISIT_SESSION_KEY, '1');
+    }
+    updateVisitStatsDisplay(json.data.site_pv, json.data.site_uv);
+  } catch (e) {
+    console.warn('Visit stats load failed:', e);
+  }
+}
 
 function getDataBasePath() {
   if (location.pathname.indexOf('/tmall-rule-tracker') !== -1) {
@@ -1289,6 +1329,8 @@ function renderFetchPanel() {
   const totalFetched = s ? s.totalRules : 0;
   const fetchCount = s ? s.fetchCount : 0;
   const newCount = s ? s.newRulesCount : 0;
+  const sitePv = formatVisitCount(visitStatsCache.sitePv);
+  const siteUv = formatVisitCount(visitStatsCache.siteUv);
 
   let sourcesHtml = '';
   const sourceNames = ['天猫规则页', '天猫规则中心', '淘宝大学-规则动态', '真实体验分规范'];
@@ -1305,6 +1347,8 @@ function renderFetchPanel() {
       '<div class="fetch-stat"><span class="fetch-stat-label">抓取次数</span><span class="fetch-stat-value">' + fetchCount + '</span></div>' +
       '<div class="fetch-stat"><span class="fetch-stat-label">已发现规则</span><span class="fetch-stat-value">' + totalFetched + '</span></div>' +
       '<div class="fetch-stat"><span class="fetch-stat-label">最近新增</span><span class="fetch-stat-value ' + (newCount > 0 ? '' : 'pending') + '">' + newCount + '</span></div>' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">总访问 PV</span><span class="fetch-stat-value">' + sitePv + '</span></div>' +
+      '<div class="fetch-stat"><span class="fetch-stat-label">独立访客 UV</span><span class="fetch-stat-value">' + siteUv + '</span></div>' +
     '</div>' +
     '<button class="fetch-btn" id="manualFetchBtn" onclick="triggerManualFetch()">立即抓取</button>' +
     '<div class="source-status-row">' + sourcesHtml + '</div>' +
@@ -1840,7 +1884,7 @@ function bootComplete() {
 function boot() {
   var fill = document.getElementById('initBarFill');
   var overlay = document.getElementById('initOverlay');
-  var dataReady = loadExternalData();
+  var dataReady = Promise.all([loadExternalData(), loadVisitStats()]);
 
   if (typeof gsap !== 'undefined') {
     gsap.to(fill, {
