@@ -627,6 +627,14 @@ table.weekly-table {
   margin-bottom: 2px; line-height: 1.4;
 }
 .weekly-highlight-block .weekly-cell-list { padding-left: 1.25em; }
+.weekly-cell-list .highlight { color: var(--red); font-weight: 500; }
+.weekly-cell-list .num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--amber); font-weight: 500;
+}
+.weekly-table th.weekly-col-highlights { border-left: 3px solid var(--amber); }
+.weekly-table th.weekly-col-impact { border-left: 3px solid var(--red); }
+.weekly-table th.weekly-col-actions { border-left: 3px solid var(--green); }
 .curated-alert-banner {
   margin-bottom: 16px; padding: 10px 14px; border-radius: 8px; font-size: 12px; line-height: 1.5;
   border: 1px solid var(--border);
@@ -931,6 +939,57 @@ var HIGHLIGHT_SECTION_KEYS = ['核心变化', '适用范围', '生效时间'];
 var IMPACT_SECTION_KEYS = ['不利', '有利', '中性'];
 var ACTION_SECTION_KEYS = ['运营组', '客服组', '物流组'];
 
+var WEEKLY_RISK_WORDS = [
+  '赔付', '处罚', '违规', '降分', '下架', '禁售', '扣分', '限制', '冻结',
+  '封店', '缺货', '虚假发货', '延迟发货', '轨迹异常', '降权', '投诉'
+];
+
+var WEEKLY_CN_DATE_PATTERNS = [
+  /\d{4}年\d{1,2}月\d{1,2}日/g,
+  /\d{4}年\d{1,2}月/g,
+  /\d{1,2}月\d{1,2}日/g
+];
+
+function isInsideHtmlSpan(whole, offset) {
+  var before = whole.slice(0, offset);
+  return before.lastIndexOf('<span') > before.lastIndexOf('</span>');
+}
+
+function wrapWeeklyNum(m) {
+  return '<span class="num">' + m + '</span>';
+}
+
+function formatWeeklyPointHtml(text) {
+  var safe = escapeHtml(String(text || ''));
+  if (!safe) return '';
+
+  WEEKLY_CN_DATE_PATTERNS.forEach(function (re) {
+    safe = safe.replace(re, function (m) {
+      return wrapWeeklyNum(m);
+    });
+  });
+
+  safe = safe.replace(
+    /\d+(?:\.\d+)?(?:%|％|分|天|小时|h|元|笔|次)?/g,
+    function (m, offset, whole) {
+      if (isInsideHtmlSpan(whole, offset)) return m;
+      return wrapWeeklyNum(m);
+    }
+  );
+
+  var riskRe = new RegExp(
+    '(' + WEEKLY_RISK_WORDS.map(function (w) {
+      return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }).join('|') + ')',
+    'g'
+  );
+  safe = safe.replace(riskRe, function (m, _g1, offset, whole) {
+    if (isInsideHtmlSpan(whole, offset)) return m;
+    return '<span class="highlight">' + m + '</span>';
+  });
+  return safe;
+}
+
 var IMPACT_LEGACY = [
   { key: '不利', prefixes: ['对商家不利：', '不利：'] },
   { key: '有利', prefixes: ['对商家有利：', '有利：'] },
@@ -1045,7 +1104,7 @@ function formatWeeklyStructuredBlocks(sectionKeys, structured) {
       '<div class="weekly-highlight-label">' + escapeHtml(key) + '：</div>' +
       '<ol class="weekly-cell-list">';
     items.forEach(function (point) {
-      html += '<li>' + escapeHtml(point) + '</li>';
+      html += '<li>' + formatWeeklyPointHtml(point) + '</li>';
     });
     html += '</ol></div>';
   });
@@ -1694,9 +1753,9 @@ function renderWeekly() {
       '<thead><tr>' +
         '<th>发布日期</th>' +
         '<th>规则名称</th>' +
-        '<th>重点内容</th>' +
-        '<th>商家影响</th>' +
-        '<th>流程建议</th>' +
+        '<th class="weekly-col-highlights">重点内容</th>' +
+        '<th class="weekly-col-impact">商家影响</th>' +
+        '<th class="weekly-col-actions">流程建议</th>' +
       '</tr></thead><tbody>';
 
     report.items.forEach(function (item) {
@@ -1710,9 +1769,9 @@ function renderWeekly() {
       html += '<tr>' +
         '<td class="weekly-col-date">' + formatWeeklyDate(item.publishedAt) + '</td>' +
         '<td class="weekly-col-title">' + titleHtml + linkHtml + '</td>' +
-        '<td>' + formatWeeklyHighlights(item.highlightsStructured || migrateHighlightsFromFlat(item.highlights || (item.highlight ? [item.highlight] : []))) + '</td>' +
-        '<td>' + formatWeeklyStructuredBlocks(IMPACT_SECTION_KEYS, item.impactsStructured || migrateImpactsFromFlat(item.impacts || [])) + '</td>' +
-        '<td>' + formatWeeklyStructuredBlocks(ACTION_SECTION_KEYS, item.actionsStructured || migrateActionsFromFlat(item.actions || [])) + '</td>' +
+        '<td class="weekly-col-highlights">' + formatWeeklyHighlights(item.highlightsStructured || migrateHighlightsFromFlat(item.highlights || (item.highlight ? [item.highlight] : []))) + '</td>' +
+        '<td class="weekly-col-impact">' + formatWeeklyStructuredBlocks(IMPACT_SECTION_KEYS, item.impactsStructured || migrateImpactsFromFlat(item.impacts || [])) + '</td>' +
+        '<td class="weekly-col-actions">' + formatWeeklyStructuredBlocks(ACTION_SECTION_KEYS, item.actionsStructured || migrateActionsFromFlat(item.actions || [])) + '</td>' +
       '</tr>';
     });
 
