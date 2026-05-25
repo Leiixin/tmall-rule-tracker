@@ -111,6 +111,18 @@ npm run migrate:score-insights
 
 回滚展示：在 Git 历史中恢复 `data/curated-cards.json` 的上一版即可。
 
+## 首页抓取源芯片（与真实爬虫对齐）
+
+首页「后端抓取状态」下的三个来源芯片，与 [`src/config.js`](src/config.js) 中的 `CRAWL_SOURCE_MANIFEST` 及爬虫分项报告一致：
+
+| 展示名 | 实际路径 |
+|--------|----------|
+| 天猫规则中心（MTOP） | rulechannel MTOP 列表/搜索/详情 API |
+| 天猫规则频道（网页） | `https://rulechannel.tmall.com/` HTML 兜底 |
+| 天猫规则中心（网页） | `https://rule.tmall.com/` HTML 兜底 |
+
+当 MTOP 单次抓取 ≥20 条时，两条网页源标记为 `skipped`（未执行）；状态写入 `data/status.json` 的 `sources` 字段。与 `platforms.json` 的 `dataSources`（平台元数据）无关。
+
 ## 多平台（侧栏下拉 + platforms.json）
 
 平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用。`planning: true` 仅在下拉文案后追加「（规划中）」；`enabled: false` 的平台（抖音、小红书、快手、拼多多、微信小店、得物、京东）同样显示「规划中」且不可选。天猫国际为 `enabled: true` + `planning: true`：可点击进入，文案带括号。

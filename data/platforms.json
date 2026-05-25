@@ -13,7 +13,7 @@
       "homeDesc": "天猫规则监控中心总览，汇总所有规则分类、最新动态与抓取状态。",
       "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的天猫平台规则（含联合公告中的天猫部分），提炼重点、商家影响与后续流程调整建议。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。",
       "homeSubtitle": "shelf / score / ship / penalty",
-      "dataSources": ["天猫规则中心", "淘宝大学"],
+      "dataSources": ["天猫规则中心"],
       "ruleHosts": ["rulechannel.tmall.com"],
       "weeklyMatchers": {
         "titlePatterns": [],

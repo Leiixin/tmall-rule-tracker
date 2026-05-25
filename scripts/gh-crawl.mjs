@@ -7,6 +7,10 @@ import { classifyRules } from "../src/services/classifier.js";
 import { enrichRulesWithAiSummary } from "../src/services/llm/summarizer.js";
 import { loadRules, upsertRules } from "../src/services/storage.js";
 import { normalizeRuleDetailUrl } from "../src/utils/ruleDetailUrl.js";
+import {
+  buildErrorReport,
+  buildSourcesFromReport
+} from "../src/utils/crawlSourceStatus.js";
 
 function safeJsonParse(text, fallback) {
   try {
@@ -34,17 +38,6 @@ async function writeJson(filePath, value) {
 function toYmd(iso) {
   const t = dayjs(iso);
   return t.isValid() ? t.format("YYYY-MM-DD") : "";
-}
-
-function buildSources(timestamp, status = "online", message = null) {
-  const base = { status, lastCheck: timestamp };
-  const extra = message ? { message } : {};
-  return {
-    "天猫规则页": { ...base, ...extra },
-    "天猫规则中心": { ...base, ...extra },
-    "淘宝大学-规则动态": { ...base, ...extra },
-    "真实体验分规范": { ...base, ...extra }
-  };
 }
 
 function buildCategorized(processedRules, timestamp) {
@@ -134,6 +127,7 @@ async function main() {
   const timestamp = new Date().toISOString();
 
   let crawled = [];
+  let crawlReport = [];
   let merged = [];
   let errorMessage = null;
 
@@ -143,7 +137,9 @@ async function main() {
   let llmResult = null;
 
   try {
-    crawled = await crawlAllSources();
+    const crawlResult = await crawlAllSources();
+    crawled = crawlResult.rules;
+    crawlReport = crawlResult.report;
     const classified = classifyRules(crawled);
     merged = await upsertRules(classified);
 
@@ -172,8 +168,8 @@ async function main() {
 
   const sources =
     errorMessage && crawled.length === 0
-      ? buildSources(timestamp, "error", errorMessage)
-      : buildSources(timestamp, "online");
+      ? buildSourcesFromReport(buildErrorReport(errorMessage), timestamp)
+      : buildSourcesFromReport(crawlReport, timestamp);
 
   const statusJson = {
     lastFetchTime: timestamp,

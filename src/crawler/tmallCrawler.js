@@ -12,6 +12,9 @@ import {
   MTOP_PAGE_SIZE,
   MTOP_SEARCH_KEYWORDS,
   RULE_KEYWORDS,
+  CRAWL_SOURCE_MANIFEST,
+  MTOP_HTML_SKIP_THRESHOLD,
+  MTOP_RULE_SOURCE_LABEL,
   TMALL_SOURCES
 } from "../config.js";
 import { buildRuleDetailUrl } from "../utils/ruleDetailUrl.js";
@@ -299,7 +302,7 @@ async function crawlByMtop() {
     return {
       title: normalizeText(model.ruleTitle || item.ruleTitle || ""),
       url: buildRuleDetailUrl(model.ruleId || item.ruleId, model.lastCategoryId),
-      source: "Tmall Rule Center (MTOP)",
+      source: MTOP_RULE_SOURCE_LABEL,
       publishedAt,
       content: content.slice(0, 12000),
       crawledAt: new Date().toISOString()
@@ -416,32 +419,76 @@ async function crawlHtmlSource(source) {
   }
 }
 
-async function crawlByHtmlFallback() {
-  const all = [];
-  for (const source of TMALL_SOURCES) {
-    const result = await crawlHtmlSource(source);
-    all.push(...result);
-  }
-  return all;
+const HTML_SKIP_MESSAGE = "MTOP 已满足阈值，本次未执行网页抓取";
+
+function manifestEntryById(id) {
+  return CRAWL_SOURCE_MANIFEST.find((entry) => entry.id === id);
 }
 
-export async function crawlAllSources() {
-  const mtopRules = await crawlByMtop();
-  if (mtopRules.length >= 20) {
-    return mtopRules;
-  }
-
-  const htmlRules = await crawlByHtmlFallback();
+function dedupeRules(rules) {
   const deduped = new Map();
-
-  for (const rule of [...mtopRules, ...htmlRules]) {
+  for (const rule of rules) {
     const key = rule.url || `${rule.title}|${rule.publishedAt}`;
     if (!deduped.has(key)) {
       deduped.set(key, rule);
     }
   }
-
   return [...deduped.values()];
+}
+
+export async function crawlAllSources() {
+  const report = [];
+  const mtopEntry = manifestEntryById("mtop");
+  const mtopRules = await crawlByMtop();
+
+  report.push({
+    id: "mtop",
+    label: mtopEntry.label,
+    status: mtopRules.length > 0 ? "online" : "error",
+    count: mtopRules.length,
+    message: mtopRules.length === 0 ? "未获取到规则" : undefined
+  });
+
+  const skipHtml = mtopRules.length >= MTOP_HTML_SKIP_THRESHOLD;
+  const htmlRules = [];
+
+  for (const entry of CRAWL_SOURCE_MANIFEST.filter((item) => item.type === "html")) {
+    if (skipHtml) {
+      report.push({
+        id: entry.id,
+        label: entry.label,
+        status: "skipped",
+        count: 0,
+        message: HTML_SKIP_MESSAGE
+      });
+      continue;
+    }
+
+    const source = TMALL_SOURCES.find((item) => item.url === entry.url);
+    if (!source) {
+      report.push({
+        id: entry.id,
+        label: entry.label,
+        status: "error",
+        count: 0,
+        message: "HTML 源配置缺失"
+      });
+      continue;
+    }
+
+    const result = await crawlHtmlSource(source);
+    htmlRules.push(...result);
+    report.push({
+      id: entry.id,
+      label: entry.label,
+      status: result.length > 0 ? "online" : "error",
+      count: result.length,
+      message: result.length === 0 ? "未获取到规则" : undefined
+    });
+  }
+
+  const rules = skipHtml ? mtopRules : dedupeRules([...mtopRules, ...htmlRules]);
+  return { rules, report };
 }
 
 /** 按 ruleId 拉取单条规则详情（供分类页引用来源监测使用） */

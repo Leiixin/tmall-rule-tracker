@@ -5,6 +5,7 @@ import { classifyRules } from "./classifier.js";
 import { enrichRulesWithAiSummary } from "./llm/summarizer.js";
 import { loadRules, upsertRules } from "./storage.js";
 import { loadStatusSnapshot, saveStatusSnapshot } from "./statusStore.js";
+import { buildSourcesFromReport } from "../utils/crawlSourceStatus.js";
 
 let lastRun = null;
 let fetchCount = 0;
@@ -35,21 +36,11 @@ async function ensureHydrated() {
   hydrated = true;
 }
 
-function buildSources(timestamp, status = "online", message = null) {
-  const base = { status, lastCheck: timestamp };
-  const extra = message ? { message } : {};
-  return {
-    "天猫规则页": { ...base, ...extra },
-    "天猫规则中心": { ...base, ...extra },
-    "淘宝大学-规则动态": { ...base, ...extra },
-    "真实体验分规范": { ...base, ...extra }
-  };
-}
-
 export async function refreshRules() {
   const beforeRules = await loadRules();
   const beforeCount = beforeRules.length;
-  const crawled = await crawlAllSources();
+  const crawlResult = await crawlAllSources();
+  const crawled = crawlResult.rules;
   const classified = classifyRules(crawled);
   let merged = await upsertRules(classified);
   const enrich = await enrichRulesWithAiSummary(merged, {
@@ -76,7 +67,7 @@ export async function refreshRules() {
     fetchCount,
     totalRules: merged.length,
     newRulesCount,
-    sources: buildSources(lastRun, "online")
+    sources: buildSourcesFromReport(crawlResult.report, lastRun)
   });
 
   return {

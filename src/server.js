@@ -14,6 +14,7 @@ import { buildSheetPresentation } from "./services/presentation.js";
 import { getLastRunStatus, refreshRules, startScheduler } from "./services/scheduler.js";
 import { ensureDataFile, loadRules } from "./services/storage.js";
 import { buildWeeklyReport } from "./services/weeklyReport.js";
+import { emptySourcesUnknown } from "./utils/crawlSourceStatus.js";
 
 const PORT = Number(process.env.PORT || 3000);
 const ENABLE_INTERNAL_CRON = process.env.ENABLE_INTERNAL_CRON !== "false";
@@ -64,15 +65,7 @@ function buildSourceStatus(status) {
     return status.sources;
   }
 
-  const lastCheck = status?.timestamp || status?.lastRun || null;
-  const sourceStatus = lastCheck ? "online" : "unknown";
-
-  return {
-    天猫规则页: { status: sourceStatus, lastCheck },
-    天猫规则中心: { status: sourceStatus, lastCheck },
-    "淘宝大学-规则动态": { status: sourceStatus, lastCheck },
-    真实体验分规范: { status: sourceStatus, lastCheck }
-  };
+  return emptySourcesUnknown();
 }
 
 function toLegacyRuleItem(rule, category) {

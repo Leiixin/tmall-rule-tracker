@@ -1,13 +1,30 @@
-﻿export const TMALL_SOURCES = [
+﻿/** 首页抓取源芯片 + 爬虫分项报告（单一数据源） */
+export const CRAWL_SOURCE_MANIFEST = [
+  { id: "mtop", label: "天猫规则中心（MTOP）", type: "mtop" },
   {
+    id: "rulechannel",
+    label: "天猫规则频道（网页）",
     name: "天猫规则频道",
+    type: "html",
     url: "https://rulechannel.tmall.com/"
   },
   {
+    id: "rule_tmall",
+    label: "天猫规则中心（网页）",
     name: "天猫规则中心",
+    type: "html",
     url: "https://rule.tmall.com/"
   }
 ];
+
+export const MTOP_RULE_SOURCE_LABEL = CRAWL_SOURCE_MANIFEST.find((s) => s.id === "mtop").label;
+
+export const MTOP_HTML_SKIP_THRESHOLD = 20;
+
+export const TMALL_SOURCES = CRAWL_SOURCE_MANIFEST.filter((s) => s.type === "html").map((s) => ({
+  name: s.name,
+  url: s.url
+}));
 
 export const RULE_KEYWORDS = [
   "规则",
