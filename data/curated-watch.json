@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-05-24T05:04:37.942Z",
+  "lastCheckedAt": "2026-05-25T05:24:01.404Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -41,6 +41,7 @@
     "changed": 0,
     "errors": 0,
     "published": 0,
-    "synced": 0
+    "synced": 0,
+    "insightsGenerated": 0
   }
 }
