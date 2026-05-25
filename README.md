@@ -113,7 +113,7 @@ npm run migrate:score-insights
 
 ## 多平台（侧栏下拉 + platforms.json）
 
-平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用，其余（抖音、小红书、快手、拼多多、微信小店、得物、京东）显示为「规划中」且不可选。
+平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用。`planning: true` 仅在下拉文案后追加「（规划中）」；`enabled: false` 的平台（抖音、小红书、快手、拼多多、微信小店、得物、京东）同样显示「规划中」且不可选。天猫国际为 `enabled: true` + `planning: true`：可点击进入，文案带括号。
 
 ### 数据目录约定
 

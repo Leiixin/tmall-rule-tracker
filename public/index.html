@@ -7,8 +7,12 @@
     var t = localStorage.getItem('tmall-theme');
     if (t !== 'light' && t !== 'dark') t = 'dark';
     document.documentElement.setAttribute('data-theme', t);
+    var d = localStorage.getItem('tmall-density');
+    if (d !== 'compact' && d !== 'comfortable') d = 'compact';
+    document.documentElement.setAttribute('data-density', d);
   } catch (e) {
     document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('data-density', 'compact');
   }
 })();
 </script>
@@ -216,13 +220,15 @@ body::after {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-.app-layout { display: flex; height: calc(100vh - var(--statusbar-h)); }
+.app-layout { display: flex; height: calc(100vh - var(--statusbar-h)); min-height: 0; }
 .sidebar {
   width: var(--sidebar-w);
   background: var(--bg-panel);
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column; flex-shrink: 0;
   position: relative;
+  min-height: 0;
+  overflow: hidden;
 }
 .sidebar::after {
   content: '';
@@ -231,7 +237,7 @@ body::after {
   background: linear-gradient(180deg, var(--red) 0%, transparent 50%, var(--red) 100%);
   opacity: 0.15;
 }
-.sidebar-header { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+.sidebar-header { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 .logo-icon {
   width: 36px; height: 36px;
@@ -251,7 +257,7 @@ body::after {
   letter-spacing: 2px; text-transform: uppercase;
   margin-top: 6px; padding-left: 48px;
 }
-.search-box { padding: 16px 20px; }
+.search-box { padding: 16px 20px; flex-shrink: 0; }
 .search-input-wrap { position: relative; }
 .search-input {
   width: 100%;
@@ -268,7 +274,14 @@ body::after {
 .search-input::placeholder { color: var(--text-dim); }
 .search-input:focus { border-color: var(--red); box-shadow: 0 0 0 3px var(--red-glow); }
 .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 13px; }
-.nav-tabs { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+.nav-tabs {
+  flex: 1; min-height: 0; padding: 8px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.nav-tabs::-webkit-scrollbar { width: 6px; }
+.nav-tabs::-webkit-scrollbar-track { background: transparent; }
+.nav-tabs::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
 .nav-tab {
   display: flex; align-items: center; gap: 12px;
   padding: 12px 14px; border-radius: 8px;
@@ -307,6 +320,7 @@ body::after {
   padding: 0 16px 12px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 4px;
+  flex-shrink: 0;
 }
 .platform-select-label {
   display: block;
@@ -346,11 +360,11 @@ body::after {
   color: var(--text-dim); background: var(--bg-deep);
   padding: 2px 8px; border-radius: 10px;
 }
-.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); flex-shrink: 0; }
 .data-sources-title { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
 .data-source-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 11px; color: var(--text-secondary); }
 .data-source-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 4px var(--green); }
-.main-content { flex: 1; overflow-y: auto; padding: 28px 32px; position: relative; }
+.main-content { flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; position: relative; }
 .main-content::-webkit-scrollbar { width: 6px; }
 .main-content::-webkit-scrollbar-track { background: transparent; }
 .main-content::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
@@ -702,9 +716,18 @@ table.weekly-table {
 .curated-status-dot.changed { background: var(--amber); }
 .curated-status-dot.synced { background: var(--blue); }
 .curated-status-dot.error { background: var(--red); }
+html[data-density="compact"] { font-size: 12px; }
+html[data-density="compact"] .sidebar-header { padding: 16px 16px 14px; }
+html[data-density="compact"] .search-box { padding: 10px 16px; }
+html[data-density="compact"] .search-input { padding: 8px 12px 8px 32px; }
+html[data-density="compact"] .platform-select-wrap { padding: 0 12px 8px; }
+html[data-density="compact"] .nav-tab { padding: 8px 10px; gap: 8px; }
+html[data-density="compact"] .tab-icon { width: 28px; height: 28px; font-size: 13px; }
+html[data-density="compact"] .sidebar-footer { padding: 12px 16px; }
 @media (max-width: 900px) {
   .sidebar { width: 56px; }
   .sidebar-header, .search-box, .sidebar-footer, .tab-label, .tab-count, .logo-sub { display: none; }
+  .platform-select-wrap { flex-shrink: 0; }
   .logo-area { justify-content: center; }
   .logo-icon { width: 32px; height: 32px; font-size: 14px; }
   .nav-tab { justify-content: center; padding: 12px 8px; }
@@ -741,6 +764,7 @@ table.weekly-table {
   <div class="status-divider"></div>
   <div class="status-time" id="cronInfo">定时抓取: 每天09:00</div>
   <div class="status-bar-right">
+    <button type="button" class="theme-toggle-btn" id="densityToggleBtn" aria-label="切换紧凑/舒适显示">紧凑</button>
     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="切换白天/黑夜模式">🌙 黑夜</button>
     <div class="status-sources">
       <span class="source-dot">天猫规则中心</span>
@@ -840,6 +864,7 @@ function buildPlatformRuntimeConfig(entry) {
     id: entry.id,
     label: entry.label,
     enabled: Boolean(entry.enabled),
+    planning: Boolean(entry.planning),
     dataPrefix: entry.dataPrefix || '',
     weeklyScope: entry.weeklyScope || entry.id,
     fallbacks: PLATFORM_FALLBACKS_BY_ID[entry.id] || {},
@@ -874,7 +899,7 @@ function applyInlinePlatformConfigFallback() {
       ]
     },
     {
-      id: 'intl', label: '天猫国际', enabled: true, priority: 90, dataPrefix: 'intl/', weeklyScope: 'intl',
+      id: 'intl', label: '天猫国际', enabled: true, planning: true, priority: 90, dataPrefix: 'intl/', weeklyScope: 'intl',
       brandSubTitle: 'Tmall Global Rules',
       homeDesc: '天猫国际规则监控总览，汇总效期、跨境物流、资质与违规等分类及监测状态。',
       weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>天猫国际相关</strong>规则。',
@@ -2222,6 +2247,16 @@ function initPlatformFromStorage() {
   renderSidebarDataSources();
 }
 
+function isPlatformPlanningLabel(entry) {
+  return entry.planning === true || !entry.enabled;
+}
+
+function getPlatformOptionLabel(entry) {
+  return isPlatformPlanningLabel(entry)
+    ? entry.label + '（规划中）'
+    : entry.label;
+}
+
 function renderPlatformSelect() {
   var sel = document.getElementById('platformSelect');
   if (!sel) return;
@@ -2229,7 +2264,7 @@ function renderPlatformSelect() {
   platformsManifestList.forEach(function (entry) {
     var opt = document.createElement('option');
     opt.value = entry.id;
-    opt.textContent = entry.enabled ? entry.label : entry.label + '（规划中）';
+    opt.textContent = getPlatformOptionLabel(entry);
     opt.disabled = !entry.enabled;
     sel.appendChild(opt);
   });
@@ -2350,6 +2385,41 @@ function initThemeToggle() {
   if (btn) btn.addEventListener('click', toggleTheme);
 }
 
+// === DENSITY ===
+var DENSITY_STORAGE_KEY = 'tmall-density';
+
+function getDensity() {
+  var d = document.documentElement.getAttribute('data-density');
+  return d === 'compact' ? 'compact' : 'comfortable';
+}
+
+function updateDensityToggleLabel() {
+  var btn = document.getElementById('densityToggleBtn');
+  if (!btn) return;
+  var isCompact = getDensity() === 'compact';
+  btn.textContent = isCompact ? '紧凑' : '舒适';
+  btn.setAttribute('aria-label', isCompact ? '当前为紧凑显示，点击切换为舒适' : '当前为舒适显示，点击切换为紧凑');
+}
+
+function applyDensity(density) {
+  var next = density === 'compact' ? 'compact' : 'comfortable';
+  document.documentElement.setAttribute('data-density', next);
+  try {
+    localStorage.setItem(DENSITY_STORAGE_KEY, next);
+  } catch (e) { /* ignore */ }
+  updateDensityToggleLabel();
+}
+
+function toggleDensity() {
+  applyDensity(getDensity() === 'compact' ? 'comfortable' : 'compact');
+}
+
+function initDensityToggle() {
+  updateDensityToggleLabel();
+  var btn = document.getElementById('densityToggleBtn');
+  if (btn) btn.addEventListener('click', toggleDensity);
+}
+
 // === BOOT ===
 function bootComplete() {
   var overlay = document.getElementById('initOverlay');
@@ -2401,6 +2471,7 @@ function boot() {
 window.addEventListener('DOMContentLoaded', function () {
   initPlatformSwitch();
   initThemeToggle();
+  initDensityToggle();
   boot();
 });
 </script>

@@ -30,6 +30,7 @@
       "id": "intl",
       "label": "天猫国际",
       "enabled": true,
+      "planning": true,
       "priority": 90,
       "dataPrefix": "intl/",
       "weeklyScope": "intl",
