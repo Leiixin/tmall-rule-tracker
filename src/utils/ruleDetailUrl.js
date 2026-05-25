@@ -1,8 +1,43 @@
 /**
- * 天猫规则中心详情页链接（hash 路由），避免 /tmall/?type=detail 仅打开首页。
- * 与页面内嵌 TIMELINE_DATA 链接格式一致。
+ * 规则详情页链接规范化（多平台 ruleHosts 白名单）。
  */
-export function buildRuleDetailUrl(ruleId, categoryId) {
+
+const DEFAULT_RULE_HOSTS = ["rulechannel.tmall.com", "rule.tmall.hk"];
+
+/** @type {string[]} */
+let registeredRuleHosts = [...DEFAULT_RULE_HOSTS];
+
+/**
+ * @param {string[]} hosts
+ */
+export function registerRuleHosts(hosts) {
+  const merged = new Set(DEFAULT_RULE_HOSTS);
+  for (const h of hosts || []) {
+    if (h && typeof h === "string") {
+      merged.add(h.trim());
+    }
+  }
+  registeredRuleHosts = [...merged];
+}
+
+/**
+ * @param {{ platforms?: Array<{ ruleHosts?: string[] }> }} manifest
+ */
+export function registerRuleHostsFromManifest(manifest) {
+  const hosts = [];
+  for (const p of manifest?.platforms || []) {
+    if (Array.isArray(p.ruleHosts)) {
+      hosts.push(...p.ruleHosts);
+    }
+  }
+  registerRuleHosts(hosts);
+}
+
+function hostMatchesRegistered(hostname) {
+  return registeredRuleHosts.some((h) => hostname.includes(h));
+}
+
+export function buildRuleDetailUrl(ruleId, categoryId, host = "rulechannel.tmall.com") {
   const params = new URLSearchParams({
     type: "detail",
     ruleId: String(ruleId || "")
@@ -11,6 +46,9 @@ export function buildRuleDetailUrl(ruleId, categoryId) {
     params.set("cId", String(categoryId));
   }
   const qs = params.toString();
+  if (host.includes("rule.tmall.hk")) {
+    return `https://rule.tmall.hk/?${qs}`;
+  }
   return `https://rulechannel.tmall.com/?${qs}#/rule/detail?${qs}`;
 }
 
@@ -29,7 +67,7 @@ export function normalizeRuleDetailUrl(raw) {
 
   try {
     const u = new URL(s);
-    if (!u.hostname.includes("rulechannel.tmall.com")) {
+    if (!hostMatchesRegistered(u.hostname)) {
       return s;
     }
 
@@ -49,7 +87,7 @@ export function normalizeRuleDetailUrl(raw) {
       return s;
     }
 
-    return buildRuleDetailUrl(ruleId, cId);
+    return buildRuleDetailUrl(ruleId, cId, u.hostname);
   } catch {
     return s;
   }

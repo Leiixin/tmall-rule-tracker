@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-22T10:00:00.000Z",
+  "platforms": [
+    {
+      "id": "tmall",
+      "label": "天猫平台",
+      "enabled": true,
+      "priority": 100,
+      "dataPrefix": "",
+      "weeklyScope": "tmall",
+      "brandSubTitle": "Tmall Rules Monitor",
+      "homeDesc": "天猫规则监控中心总览，汇总所有规则分类、最新动态与抓取状态。",
+      "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的天猫平台规则（含联合公告中的天猫部分），提炼重点、商家影响与后续流程调整建议。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。",
+      "homeSubtitle": "shelf / score / ship / penalty",
+      "dataSources": ["天猫规则中心", "淘宝大学"],
+      "ruleHosts": ["rulechannel.tmall.com"],
+      "weeklyMatchers": {
+        "titlePatterns": [],
+        "urlPatterns": []
+      },
+      "categories": [
+        { "key": "shelf", "label": "商品效期要求", "icon": "⏱", "iconClass": "shelf", "color": "var(--amber)", "bg": "rgba(255,184,0,0.12)" },
+        { "key": "score", "label": "店铺真实体验分", "icon": "★", "iconClass": "score", "color": "var(--blue)", "bg": "rgba(59,130,246,0.12)" },
+        { "key": "ship", "label": "发货时效", "icon": "⇢", "iconClass": "ship", "color": "var(--green)", "bg": "rgba(0,232,123,0.12)" },
+        { "key": "penalty", "label": "发货违规及处罚", "icon": "⚠", "iconClass": "penalty", "color": "var(--red)", "bg": "rgba(255,0,54,0.12)" }
+      ]
+    },
+    {
+      "id": "intl",
+      "label": "天猫国际",
+      "enabled": true,
+      "priority": 90,
+      "dataPrefix": "intl/",
+      "weeklyScope": "intl",
+      "brandSubTitle": "Tmall Global Rules",
+      "homeDesc": "天猫国际规则监控总览，汇总效期、跨境物流、资质与违规等分类及监测状态（curated 手工维护 + 周度抓取过滤）。",
+      "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>天猫国际相关</strong>规则（标题含「天猫国际」、链接为 rule.tmall.hk，或「天猫/天猫国际」联合公告），提炼重点、商家影响与流程建议。",
+      "homeSubtitle": "效期 / 物流 / 资质 / 违规",
+      "dataSources": ["天猫国际（rule.tmall.hk）"],
+      "ruleHosts": ["rule.tmall.hk", "rulechannel.tmall.com"],
+      "weeklyMatchers": {
+        "titlePatterns": ["天猫国际", "天猫/天猫国际"],
+        "urlPatterns": ["rule\\.tmall\\.hk"]
+      },
+      "categories": [
+        { "key": "intl_expiry", "label": "效期与效期管理", "icon": "⏱", "iconClass": "intl_expiry", "color": "var(--amber)", "bg": "rgba(255,184,0,0.12)" },
+        { "key": "intl_logistics", "label": "跨境物流与发货", "icon": "⇢", "iconClass": "intl_logistics", "color": "var(--green)", "bg": "rgba(0,232,123,0.12)" },
+        { "key": "intl_qual", "label": "资质与品牌", "icon": "✦", "iconClass": "intl_qual", "color": "var(--blue)", "bg": "rgba(59,130,246,0.12)" },
+        { "key": "intl_penalty", "label": "违规与处罚", "icon": "⚠", "iconClass": "intl_penalty", "color": "var(--red)", "bg": "rgba(255,0,54,0.12)" }
+      ]
+    },
+    {
+      "id": "douyin",
+      "label": "抖音",
+      "enabled": false,
+      "priority": 80,
+      "dataPrefix": "douyin/",
+      "weeklyScope": "douyin",
+      "brandSubTitle": "Douyin Rules",
+      "homeDesc": "抖音平台规则监控（规划中）。",
+      "weeklyDesc": "抖音相关规则周度汇总（规划中）。",
+      "homeSubtitle": "入驻 / 内容 / 交易 / 违规",
+      "dataSources": ["抖音电商规则中心（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": {
+        "titlePatterns": ["抖音"],
+        "urlPatterns": []
+      },
+      "categories": []
+    },
+    {
+      "id": "xhs",
+      "label": "小红书",
+      "enabled": false,
+      "priority": 70,
+      "dataPrefix": "xhs/",
+      "weeklyScope": "xhs",
+      "brandSubTitle": "Xiaohongshu Rules",
+      "homeDesc": "小红书平台规则监控（规划中）。",
+      "weeklyDesc": "小红书相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["小红书商家规则（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["小红书"], "urlPatterns": [] },
+      "categories": []
+    },
+    {
+      "id": "kuaishou",
+      "label": "快手",
+      "enabled": false,
+      "priority": 65,
+      "dataPrefix": "kuaishou/",
+      "weeklyScope": "kuaishou",
+      "brandSubTitle": "Kuaishou Rules",
+      "homeDesc": "快手平台规则监控（规划中）。",
+      "weeklyDesc": "快手相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["快手电商规则（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["快手"], "urlPatterns": [] },
+      "categories": []
+    },
+    {
+      "id": "pdd",
+      "label": "拼多多",
+      "enabled": false,
+      "priority": 60,
+      "dataPrefix": "pdd/",
+      "weeklyScope": "pdd",
+      "brandSubTitle": "Pinduoduo Rules",
+      "homeDesc": "拼多多平台规则监控（规划中）。",
+      "weeklyDesc": "拼多多相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["拼多多规则中心（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["拼多多"], "urlPatterns": [] },
+      "categories": []
+    },
+    {
+      "id": "wechat_shop",
+      "label": "微信小店",
+      "enabled": false,
+      "priority": 55,
+      "dataPrefix": "wechat_shop/",
+      "weeklyScope": "wechat_shop",
+      "brandSubTitle": "WeChat Shop Rules",
+      "homeDesc": "微信小店规则监控（规划中）。",
+      "weeklyDesc": "微信小店相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["微信小店运营规则（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["微信小店", "视频号小店"], "urlPatterns": [] },
+      "categories": []
+    },
+    {
+      "id": "dewu",
+      "label": "得物",
+      "enabled": false,
+      "priority": 50,
+      "dataPrefix": "dewu/",
+      "weeklyScope": "dewu",
+      "brandSubTitle": "Dewu Rules",
+      "homeDesc": "得物平台规则监控（规划中）。",
+      "weeklyDesc": "得物相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["得物商家规则（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["得物"], "urlPatterns": [] },
+      "categories": []
+    },
+    {
+      "id": "jd",
+      "label": "京东",
+      "enabled": false,
+      "priority": 45,
+      "dataPrefix": "jd/",
+      "weeklyScope": "jd",
+      "brandSubTitle": "JD Rules",
+      "homeDesc": "京东平台规则监控（规划中）。",
+      "weeklyDesc": "京东相关规则周度汇总（规划中）。",
+      "homeSubtitle": "待定义",
+      "dataSources": ["京东规则中心（待接入）"],
+      "ruleHosts": [],
+      "weeklyMatchers": { "titlePatterns": ["京东"], "urlPatterns": [] },
+      "categories": []
+    }
+  ]
+}

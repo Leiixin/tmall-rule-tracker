@@ -96,7 +96,7 @@ function migrateFlatToStructured(lines, legacyMap) {
           if (!structured[key]) {
             structured[key] = [];
           }
-          if (structured[key].length < 3) {
+          if (structured[key].length < 4) {
             structured[key].push(body);
           }
         }
@@ -125,7 +125,7 @@ function normalizeStructuredFromParsed(
       const points = arr
         .map((p) => stripEnumPrefix(p))
         .filter(Boolean)
-        .slice(0, 3);
+        .slice(0, 4);
       if (points.length) {
         structured[key] = points;
       }
@@ -234,7 +234,13 @@ function normalizeSummaryPayload(parsed) {
   };
 }
 
-async function postChatJson({ system, user }) {
+export {
+  highlightsMissBreachPromiseRule,
+  summaryMissRedPacketCompensation,
+  summaryNeedsQualityRetry
+} from "../../utils/summaryQuality.js";
+
+async function postChatJson({ system, user, temperature = 0.2 }) {
   const { apiKey, baseUrl, model, timeoutMs } = getLlmConfig();
   if (!apiKey) {
     throw new Error("DEEPSEEK_API_KEY is not set");
@@ -242,7 +248,7 @@ async function postChatJson({ system, user }) {
 
   const body = {
     model,
-    temperature: 0.2,
+    temperature,
     messages: [
       { role: "system", content: system },
       { role: "user", content: user }
@@ -265,10 +271,12 @@ async function postChatJson({ system, user }) {
   return extractJsonObject(content);
 }
 
-export async function chatJsonRaw({ system, user }) {
-  return postChatJson({ system, user });
+export async function chatJsonRaw({ system, user, temperature }) {
+  return postChatJson({ system, user, temperature });
 }
 
-export async function chatJson({ system, user }) {
-  return normalizeSummaryPayload(await postChatJson({ system, user }));
+export async function chatJson({ system, user, temperature }) {
+  return normalizeSummaryPayload(
+    await postChatJson({ system, user, temperature })
+  );
 }

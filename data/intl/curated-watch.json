@@ -1,0 +1,46 @@
+{
+  "lastCheckedAt": "2026-05-22T08:00:00.000Z",
+  "autoPublishVersion": 0,
+  "recentAutoPublish": null,
+  "sources": {
+    "intl-rule-20008024": {
+      "status": "ok",
+      "message": "manual curated",
+      "ruleTitle": "天猫国际商品效期管理规范（示例）",
+      "platformModifiedAt": null,
+      "contentHash": null,
+      "lastSyncedAt": null
+    },
+    "intl-rule-spring-ship": {
+      "status": "ok",
+      "message": "manual curated",
+      "ruleTitle": "天猫/天猫国际2026年农历春节发货时间及交易流程调整公告",
+      "platformModifiedAt": "2026-02-10T00:00:00.000Z",
+      "contentHash": null,
+      "lastSyncedAt": null
+    },
+    "intl-rule-qual-brand": {
+      "status": "ok",
+      "message": "manual curated",
+      "ruleTitle": "天猫国际品牌与资质要求（示例）",
+      "platformModifiedAt": null,
+      "contentHash": null,
+      "lastSyncedAt": null
+    },
+    "intl-rule-penalty-ship": {
+      "status": "ok",
+      "message": "manual curated",
+      "ruleTitle": "天猫国际物流违规处理（示例）",
+      "platformModifiedAt": null,
+      "contentHash": null,
+      "lastSyncedAt": null
+    }
+  },
+  "summary": {
+    "checked": 4,
+    "changed": 0,
+    "errors": 0,
+    "published": 0,
+    "synced": 0
+  }
+}

@@ -8,6 +8,7 @@ import {
   buildRuleSummaryUserPrompt
 } from "./prompts.js";
 import { chatJson, getLlmConfig, isLlmEnabled } from "./client.js";
+import { summaryNeedsQualityRetry } from "../../utils/summaryQuality.js";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -66,10 +67,38 @@ function ruleKey(rule) {
 export async function summarizeRule(rule) {
   const maxChars = Number(process.env.LLM_CONTENT_MAX_CHARS || 6000);
   const user = buildRuleSummaryUserPrompt(rule, maxChars);
-  const parsed = await chatJson({
+  let parsed = await chatJson({
     system: RULE_SUMMARY_SYSTEM_PROMPT,
-    user
+    user,
+    temperature: 0.2
   });
+
+  if (summaryNeedsQualityRetry(rule, parsed)) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[llm] retry (tighter extraction): ${rule.title?.slice(0, 40) || "rule"}`
+    );
+    try {
+      const retryUser = `${user}\n\n【补充要求】上次摘要遗漏了原文中的处罚依据规则名称、5天未寄出或30元赔付红包等要点，请严格按原文分条补全「核心变化」与「不利」。`;
+      parsed = await chatJson({
+        system: RULE_SUMMARY_SYSTEM_PROMPT,
+        user: retryUser,
+        temperature: 0.1
+      });
+      if (summaryNeedsQualityRetry(rule, parsed)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[llm] retry still incomplete: ${rule.title?.slice(0, 40) || "rule"}`
+        );
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[llm] retry failed, keeping first pass: ${rule.title?.slice(0, 40) || "rule"}`,
+        err instanceof Error ? err.message : err
+      );
+    }
+  }
 
   const { model } = getLlmConfig();
   return {

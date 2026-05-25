@@ -298,6 +298,44 @@ body::after {
 .tab-icon.score { background: var(--tab-icon-score-bg); color: var(--blue); }
 .tab-icon.ship { background: var(--tab-icon-ship-bg); color: var(--green); }
 .tab-icon.penalty { background: var(--tab-icon-penalty-bg); color: var(--red); }
+.tab-icon.intl_expiry { background: rgba(255, 184, 0, 0.12); color: var(--amber); }
+.tab-icon.intl_logistics { background: rgba(0, 232, 123, 0.12); color: var(--green); }
+.tab-icon.intl_qual { background: rgba(59, 130, 246, 0.12); color: var(--blue); }
+.tab-icon.intl_penalty { background: rgba(255, 0, 54, 0.12); color: var(--red); }
+
+.platform-select-wrap {
+  padding: 0 16px 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+.platform-select-label {
+  display: block;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.platform-select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.platform-select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+.platform-select option:disabled {
+  color: var(--text-dim);
+}
+.data-source-item.active-source { color: var(--text-primary); font-weight: 600; }
+.data-source-item.active-source .dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
 .tab-icon.weekly { background: var(--tab-icon-weekly-bg); color: #a855f7; }
 [data-theme="light"] .tab-icon.weekly { color: #7c3aed; }
 .tab-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
@@ -727,6 +765,10 @@ table.weekly-table {
         <input type="text" class="search-input" placeholder="搜索规则关键词..." id="searchInput">
       </div>
     </div>
+    <div class="platform-select-wrap">
+      <label class="platform-select-label" for="platformSelect">监控平台</label>
+      <select class="platform-select" id="platformSelect" aria-label="选择监控平台"></select>
+    </div>
     <nav class="nav-tabs" id="navTabs">
       <div class="nav-tab active" data-tab="home">
         <div class="tab-icon home">⌂</div>
@@ -738,32 +780,11 @@ table.weekly-table {
         <span class="tab-label">周度规则</span>
         <span class="tab-count" id="weeklyTabCount">0</span>
       </div>
-      <div class="nav-tab" data-tab="shelf">
-        <div class="tab-icon shelf">⏱</div>
-        <span class="tab-label">商品效期要求</span>
-        <span class="tab-count">6</span>
-      </div>
-      <div class="nav-tab" data-tab="score">
-        <div class="tab-icon score">★</div>
-        <span class="tab-label">店铺真实体验分</span>
-        <span class="tab-count">8</span>
-      </div>
-      <div class="nav-tab" data-tab="ship">
-        <div class="tab-icon ship">⇢</div>
-        <span class="tab-label">发货时效</span>
-        <span class="tab-count">6</span>
-      </div>
-      <div class="nav-tab" data-tab="penalty">
-        <div class="tab-icon penalty">⚠</div>
-        <span class="tab-label">发货违规及处罚</span>
-        <span class="tab-count">5</span>
-      </div>
+      <div id="navCategoryTabs"></div>
     </nav>
     <div class="sidebar-footer">
       <div class="data-sources-title">数据来源</div>
-      <div class="data-source-item"><span class="dot"></span>天猫规则中心</div>
-      <div class="data-source-item"><span class="dot"></span>淘宝大学</div>
-      <div class="data-source-item"><span class="dot"></span>天猫国际</div>
+      <div id="sidebarDataSources"></div>
     </div>
   </aside>
   <main class="main-content" id="mainContent"></main>
@@ -775,12 +796,178 @@ let curatedSourcesData = { version: 1, sources: [], repoEditUrl: 'https://github
 let curatedWatchData = null;
 let curatedInsightsData = null;
 
-const RULES_DATA_FALLBACK = {
+const RULES_DATA_FALLBACK_TMALL = {
   shelf: { tag: 'SHELF-LIFE RULES', title: '商品效期要求', desc: '正在加载规则卡片…', cards: [] },
   score: { tag: 'EXPERIENCE SCORE', title: '店铺真实体验分', desc: '正在加载规则卡片…', cards: [] },
   ship: { tag: 'SHIPPING TIMELINE', title: '发货时效', desc: '正在加载规则卡片…', cards: [] },
   penalty: { tag: 'VIOLATIONS & PENALTIES', title: '发货违规及处罚', desc: '正在加载规则卡片…', cards: [] }
 };
+
+const RULES_DATA_FALLBACK_INTL = {
+  intl_expiry: { tag: 'INTL EXPIRY', title: '效期与效期管理', desc: '正在加载规则卡片…', cards: [] },
+  intl_logistics: { tag: 'INTL LOGISTICS', title: '跨境物流与发货', desc: '正在加载规则卡片…', cards: [] },
+  intl_qual: { tag: 'INTL QUALIFICATION', title: '资质与品牌', desc: '正在加载规则卡片…', cards: [] },
+  intl_penalty: { tag: 'INTL PENALTIES', title: '违规与处罚', desc: '正在加载规则卡片…', cards: [] }
+};
+
+var PLATFORM_STORAGE_KEY = 'rule-monitor-platform';
+var PLATFORM_STORAGE_KEY_LEGACY = 'tmall-rule-platform';
+var currentPlatform = 'tmall';
+var PLATFORM_CONFIG = {};
+var platformsManifestList = [];
+var clientPlatformMatchers = {};
+var clientRuleHosts = ['rulechannel.tmall.com', 'rule.tmall.hk'];
+
+var PLATFORM_FALLBACKS_BY_ID = {
+  tmall: RULES_DATA_FALLBACK_TMALL,
+  intl: RULES_DATA_FALLBACK_INTL
+};
+
+function buildPlatformRuntimeConfig(entry) {
+  var nav = [];
+  var catIcons = {};
+  var catColors = {};
+  var catBgs = {};
+  var categoryKeys = [];
+  (entry.categories || []).forEach(function (c) {
+    categoryKeys.push(c.key);
+    nav.push({ key: c.key, label: c.label, icon: c.icon, iconClass: c.iconClass });
+    catIcons[c.key] = c.icon;
+    catColors[c.key] = c.color || 'var(--text-primary)';
+    catBgs[c.key] = c.bg || 'rgba(128,128,128,0.12)';
+  });
+  return {
+    id: entry.id,
+    label: entry.label,
+    enabled: Boolean(entry.enabled),
+    dataPrefix: entry.dataPrefix || '',
+    weeklyScope: entry.weeklyScope || entry.id,
+    fallbacks: PLATFORM_FALLBACKS_BY_ID[entry.id] || {},
+    homeSubtitle: entry.homeSubtitle || '',
+    homeDesc: entry.homeDesc || '',
+    weeklyDesc: entry.weeklyDesc || '',
+    brandSubTitle: entry.brandSubTitle || entry.label,
+    dataSources: entry.dataSources || [],
+    categoryKeys: categoryKeys,
+    nav: nav,
+    catIcons: catIcons,
+    catColors: catColors,
+    catBgs: catBgs
+  };
+}
+
+function applyInlinePlatformConfigFallback() {
+  var inline = [
+    {
+      id: 'tmall', label: '天猫平台', enabled: true, priority: 100, dataPrefix: '', weeklyScope: 'tmall',
+      brandSubTitle: 'Tmall Rules Monitor',
+      homeDesc: '天猫规则监控中心总览，汇总所有规则分类、最新动态与抓取状态。',
+      weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的天猫平台规则（含联合公告中的天猫部分），提炼重点、商家影响与后续流程调整建议。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。',
+      homeSubtitle: 'shelf / score / ship / penalty',
+      dataSources: ['天猫规则中心', '淘宝大学'],
+      ruleHosts: ['rulechannel.tmall.com'],
+      categories: [
+        { key: 'shelf', label: '商品效期要求', icon: '⏱', iconClass: 'shelf', color: 'var(--amber)', bg: 'rgba(255,184,0,0.12)' },
+        { key: 'score', label: '店铺真实体验分', icon: '★', iconClass: 'score', color: 'var(--blue)', bg: 'rgba(59,130,246,0.12)' },
+        { key: 'ship', label: '发货时效', icon: '⇢', iconClass: 'ship', color: 'var(--green)', bg: 'rgba(0,232,123,0.12)' },
+        { key: 'penalty', label: '发货违规及处罚', icon: '⚠', iconClass: 'penalty', color: 'var(--red)', bg: 'rgba(255,0,54,0.12)' }
+      ]
+    },
+    {
+      id: 'intl', label: '天猫国际', enabled: true, priority: 90, dataPrefix: 'intl/', weeklyScope: 'intl',
+      brandSubTitle: 'Tmall Global Rules',
+      homeDesc: '天猫国际规则监控总览，汇总效期、跨境物流、资质与违规等分类及监测状态。',
+      weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>天猫国际相关</strong>规则。',
+      homeSubtitle: '效期 / 物流 / 资质 / 违规',
+      dataSources: ['天猫国际（rule.tmall.hk）'],
+      ruleHosts: ['rule.tmall.hk'],
+      categories: [
+        { key: 'intl_expiry', label: '效期与效期管理', icon: '⏱', iconClass: 'intl_expiry', color: 'var(--amber)', bg: 'rgba(255,184,0,0.12)' },
+        { key: 'intl_logistics', label: '跨境物流与发货', icon: '⇢', iconClass: 'intl_logistics', color: 'var(--green)', bg: 'rgba(0,232,123,0.12)' },
+        { key: 'intl_qual', label: '资质与品牌', icon: '✦', iconClass: 'intl_qual', color: 'var(--blue)', bg: 'rgba(59,130,246,0.12)' },
+        { key: 'intl_penalty', label: '违规与处罚', icon: '⚠', iconClass: 'intl_penalty', color: 'var(--red)', bg: 'rgba(255,0,54,0.12)' }
+      ]
+    }
+  ];
+  platformsManifestList = inline;
+  PLATFORM_CONFIG = {};
+  inline.forEach(function (entry) {
+    PLATFORM_CONFIG[entry.id] = buildPlatformRuntimeConfig(entry);
+  });
+}
+
+function registerClientPlatformMatchers(manifest) {
+  clientPlatformMatchers = {};
+  (manifest.platforms || []).forEach(function (p) {
+    var scope = p.weeklyScope || p.id;
+    if (scope === 'tmall' || scope === 'intl') return;
+    var wm = p.weeklyMatchers || {};
+    clientPlatformMatchers[scope] = {
+      titlePatterns: (wm.titlePatterns || []).map(function (pat) { return new RegExp(pat, 'i'); }),
+      urlPatterns: (wm.urlPatterns || []).map(function (pat) { return new RegExp(pat, 'i'); })
+    };
+  });
+}
+
+function registerClientRuleHosts(manifest) {
+  var set = {};
+  clientRuleHosts.forEach(function (h) { set[h] = true; });
+  (manifest.platforms || []).forEach(function (p) {
+    (p.ruleHosts || []).forEach(function (h) {
+      if (h) set[h] = true;
+    });
+  });
+  clientRuleHosts = Object.keys(set);
+}
+
+function matchesClientRegisteredScope(rule, weeklyScope) {
+  var matchers = clientPlatformMatchers[weeklyScope];
+  if (!matchers) return false;
+  var title = (rule && rule.title) || '';
+  var url = (rule && rule.url) || '';
+  return matchers.titlePatterns.some(function (re) { return re.test(title); }) ||
+    matchers.urlPatterns.some(function (re) { return re.test(url); });
+}
+
+async function loadPlatformsManifest() {
+  try {
+    var base = getDataBasePath();
+    var res = await fetch(base + 'platforms.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var manifest = await parseJsonFromResponse(res);
+    registerClientPlatformMatchers(manifest);
+    registerClientRuleHosts(manifest);
+    platformsManifestList = (manifest.platforms || []).slice().sort(function (a, b) {
+      return (b.priority || 0) - (a.priority || 0);
+    });
+    PLATFORM_CONFIG = {};
+    platformsManifestList.forEach(function (entry) {
+      PLATFORM_CONFIG[entry.id] = buildPlatformRuntimeConfig(entry);
+    });
+    return true;
+  } catch (e) {
+    console.warn('platforms.json load failed, using inline fallback:', e);
+    applyInlinePlatformConfigFallback();
+    return false;
+  }
+}
+
+function getPlatformConfig() {
+  return PLATFORM_CONFIG[currentPlatform] || PLATFORM_CONFIG.tmall;
+}
+
+function isPlatformEnabled(platformId) {
+  var cfg = PLATFORM_CONFIG[platformId];
+  return Boolean(cfg && cfg.enabled);
+}
+
+function getCuratedCategoryKeys() {
+  return getPlatformConfig().categoryKeys;
+}
+
+function getRulesDataFallback() {
+  return getPlatformConfig().fallbacks;
+}
 
 function hasCuratedLink(url) {
   return String(url || '').trim().length > 0;
@@ -795,17 +982,21 @@ function filterCuratedSection(section, fallback) {
 }
 
 function applyCuratedCardsPayload(data) {
+  var keys = getCuratedCategoryKeys();
+  var fallback = getRulesDataFallback();
   if (!data) {
-    RULES_DATA = RULES_DATA_FALLBACK;
+    var empty = {};
+    keys.forEach(function (k) { empty[k] = fallback[k]; });
+    RULES_DATA = empty;
     return;
   }
-  RULES_DATA = {
-    shelf: filterCuratedSection(data.shelf, RULES_DATA_FALLBACK.shelf),
-    score: filterCuratedSection(data.score, RULES_DATA_FALLBACK.score),
-    ship: filterCuratedSection(data.ship, RULES_DATA_FALLBACK.ship),
-    penalty: filterCuratedSection(data.penalty, RULES_DATA_FALLBACK.penalty)
-  };
+  var next = {};
+  keys.forEach(function (k) {
+    next[k] = filterCuratedSection(data[k], fallback[k]);
+  });
+  RULES_DATA = next;
 }
+applyInlinePlatformConfigFallback();
 applyCuratedCardsPayload(null);
 
 const TIMELINE_DATA = [
@@ -827,7 +1018,7 @@ let backendStatus = {
   sources: {
     "天猫规则中心": { status: "unknown", lastCheck: null },
     "淘宝大学": { status: "unknown", lastCheck: null },
-    "天猫国际": { status: "unknown", lastCheck: null }
+    "天猫国际": { status: "manual", lastCheck: null }
   }
 };
 
@@ -1174,11 +1365,50 @@ function pickWeeklyActionsStructured(rule) {
   return structured;
 }
 
-function buildWeeklyReportClient(rules) {
+function getRulePlatformScope(rule) {
+  var scope = rule && rule.platformScope;
+  if (typeof scope === 'string' && scope.length > 0) return scope;
+  var title = (rule && rule.title) || '';
+  var url = (rule && rule.url) || '';
+  var keys = Object.keys(clientPlatformMatchers);
+  for (var i = 0; i < keys.length; i++) {
+    if (matchesClientRegisteredScope(rule, keys[i])) return keys[i];
+  }
+  if (/rule\.tmall\.hk/i.test(url)) return 'intl';
+  if (/天猫\/天猫国际|天猫国际.*天猫/.test(title)) return 'both';
+  if (/天猫国际/.test(title)) return 'intl';
+  return 'tmall';
+}
+
+function ruleMatchesWeeklyScope(rule, weeklyScope) {
+  if (rule && rule.platformScope === weeklyScope) return true;
+  if (weeklyScope === 'tmall' || weeklyScope === 'intl') {
+    var ps = getRulePlatformScope(rule);
+    if (weeklyScope === 'intl') return ps === 'intl' || ps === 'both';
+    return ps === 'tmall' || ps === 'both';
+  }
+  return matchesClientRegisteredScope(rule, weeklyScope);
+}
+
+function filterWeeklyReportForPlatform(report, weeklyScope) {
+  if (!report || !Array.isArray(report.items)) return report;
+  report.items = report.items.filter(function (item) {
+    return ruleMatchesWeeklyScope(
+      { title: item.title, url: item.url, platformScope: item.platformScope },
+      weeklyScope
+    );
+  });
+  report.total = report.items.length;
+  return report;
+}
+
+function buildWeeklyReportClient(rules, weeklyScope) {
+  weeklyScope = weeklyScope || getPlatformConfig().weeklyScope;
   var range = getLastWeekRangeClient();
   var items = (Array.isArray(rules) ? rules : [])
     .filter(function (r) {
-      return isInLastWeekClient(r.publishedAt, range) || isInLastWeekClient(r.lastSeenAt, range);
+      return (isInLastWeekClient(r.publishedAt, range) || isInLastWeekClient(r.lastSeenAt, range)) &&
+        ruleMatchesWeeklyScope(r, weeklyScope);
     })
     .sort(function (a, b) {
       return new Date(b.publishedAt || b.lastSeenAt || 0) - new Date(a.publishedAt || a.lastSeenAt || 0);
@@ -1221,14 +1451,15 @@ function updateWeeklyTabCount() {
 }
 
 async function loadWeeklyReport() {
+  var weeklyScope = getPlatformConfig().weeklyScope;
   var preferApi = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
   if (preferApi) {
     try {
-      var res = await fetch('/api/weekly');
+      var res = await fetch('/api/weekly?platform=' + encodeURIComponent(weeklyScope));
       if (res.ok) {
         var data = await res.json();
         if (data && Array.isArray(data.items)) {
-          weeklyReportData = data;
+          weeklyReportData = filterWeeklyReportForPlatform(data, weeklyScope);
           if (!weeklyReportData.range || !weeklyReportData.range.label) {
             var r = getLastWeekRangeClient();
             weeklyReportData.range = { label: formatWeeklyRangeLabel(r) };
@@ -1251,7 +1482,7 @@ async function loadWeeklyReport() {
       }
     }
     if (Array.isArray(rules)) {
-      weeklyReportData = buildWeeklyReportClient(rules);
+      weeklyReportData = buildWeeklyReportClient(rules, weeklyScope);
       updateWeeklyTabCount();
     }
   } catch (e2) {
@@ -1339,12 +1570,14 @@ async function loadExternalData() {
       if (Array.isArray(rulesArr)) rulesJsonCache = rulesArr;
     }
 
-    await loadCuratedData(basePath);
+    await loadCuratedData();
     await loadWeeklyReport();
+    updateCategoryTabCounts();
   } catch (e) {
     console.warn('External data load failed, using embedded defaults:', e);
-    await loadCuratedData(basePath);
+    await loadCuratedData();
     await loadWeeklyReport();
+    updateCategoryTabCounts();
   }
 }
 
@@ -1356,7 +1589,9 @@ function normalizeRuleDetailLink(raw) {
   if (s.indexOf('#/rule/detail') !== -1) return s;
   try {
     var u = new URL(s);
-    if (u.hostname.indexOf('rulechannel.tmall.com') === -1) return s;
+    var hostOk = clientRuleHosts.some(function (h) { return u.hostname.indexOf(h) !== -1; });
+    if (!hostOk) return s;
+    var isHk = u.hostname.indexOf('rule.tmall.hk') !== -1;
     var ruleId = u.searchParams.get('ruleId') || '';
     var cId = u.searchParams.get('cId') || '';
     if (!ruleId && u.hash) {
@@ -1371,6 +1606,7 @@ function normalizeRuleDetailLink(raw) {
     var params = new URLSearchParams({ type: 'detail', ruleId: ruleId });
     if (cId) params.set('cId', cId);
     var qs = params.toString();
+    if (isHk) return 'https://rule.tmall.hk/?' + qs;
     return 'https://rulechannel.tmall.com/?' + qs + '#/rule/detail?' + qs;
   } catch (e1) {
     return s;
@@ -1494,15 +1730,14 @@ async function parseJsonFromResponse(res) {
   return JSON.parse(text.replace(/^\uFEFF/, ''));
 }
 
-var CURATED_CATEGORY_KEYS = ['shelf', 'score', 'ship', 'penalty'];
-
 function refreshCuratedTabIfActive() {
-  if (CURATED_CATEGORY_KEYS.indexOf(currentTab) >= 0) {
+  if (getCuratedCategoryKeys().indexOf(currentTab) >= 0) {
     showTab(currentTab);
   }
 }
 
-async function loadCuratedData(basePath) {
+async function loadCuratedData() {
+  var basePath = getDataBasePath() + getPlatformConfig().dataPrefix;
   try {
     var cardsRes = await fetch(basePath + 'curated-cards.json');
     if (cardsRes.ok) {
@@ -1537,6 +1772,7 @@ async function loadCuratedData(basePath) {
   } catch (e) {
     console.warn('curated-category-insights.json load failed:', e);
   }
+  updateCategoryTabCounts();
   refreshCuratedTabIfActive();
 }
 
@@ -1636,8 +1872,9 @@ function renderTimeline() {
 }
 
 function renderHome() {
+  var cfg = getPlatformConfig();
+  var catKeys = cfg.categoryKeys;
   var totalCards = 0;
-  var catKeys = ['shelf', 'score', 'ship', 'penalty'];
   catKeys.forEach(function(k) {
     if (RULES_DATA && RULES_DATA[k] && RULES_DATA[k].cards) totalCards += RULES_DATA[k].cards.length;
   });
@@ -1649,15 +1886,16 @@ function renderHome() {
     latestDate = new Date().getFullYear() + '-' + tlData[0].date;
   }
 
-  var catIcons = { shelf: '⏱', score: '★', ship: '⇢', penalty: '⚠' };
-  var catColors = { shelf: 'var(--amber)', score: 'var(--blue)', ship: 'var(--green)', penalty: 'var(--red)' };
-  var catBgs = { shelf: 'rgba(255,184,0,0.12)', score: 'rgba(59,130,246,0.12)', ship: 'rgba(0,232,123,0.12)', penalty: 'rgba(255,0,54,0.12)' };
+  var catIcons = cfg.catIcons;
+  var catColors = cfg.catColors;
+  var catBgs = cfg.catBgs;
+  var homeDesc = cfg.homeDesc || '规则监控中心总览。';
 
   var html = '<div class="content-section active">' +
     '<div class="section-header">' +
       '<div class="section-tag">OVERVIEW</div>' +
-      '<h1 class="section-title">首页</h1>' +
-      '<p class="section-desc">天猫规则监控中心总览，汇总所有规则分类、最新动态与抓取状态。</p>' +
+      '<h1 class="section-title">首页 · ' + escapeHtml(cfg.label) + '</h1>' +
+      '<p class="section-desc">' + homeDesc + '</p>' +
     '</div>' +
     renderCuratedAlertBanner();
 
@@ -1666,7 +1904,7 @@ function renderHome() {
     '<div class="home-stat-card" style="--card-color:var(--text-primary)">' +
       '<div class="home-stat-label">规则分类</div>' +
       '<div class="home-stat-value" style="color:var(--text-primary)">' + catKeys.length + '</div>' +
-      '<div class="home-stat-sub">shelf / score / ship / penalty</div>' +
+      '<div class="home-stat-sub">' + escapeHtml(cfg.homeSubtitle) + '</div>' +
     '</div>' +
     '<div class="home-stat-card" style="--card-color:var(--red)">' +
       '<div class="home-stat-label">基础规则</div>' +
@@ -1692,7 +1930,7 @@ function renderHome() {
   html += '<div class="home-section-title">规则分类索引</div>' +
     '<div class="home-category-list">';
   catKeys.forEach(function(k) {
-    var d = (RULES_DATA && RULES_DATA[k]) ? RULES_DATA[k] : RULES_DATA_FALLBACK[k];
+    var d = (RULES_DATA && RULES_DATA[k]) ? RULES_DATA[k] : getRulesDataFallback()[k];
     html += '<div class="home-category-item" onclick="showTab(\'' + k + '\')">' +
       '<div class="cat-icon" style="background:' + catBgs[k] + ';color:' + catColors[k] + '">' + catIcons[k] + '</div>' +
       '<div class="cat-info"><div class="cat-name">' + d.title + '</div>' +
@@ -1721,12 +1959,14 @@ function formatWeeklyDate(iso) {
 function renderWeekly() {
   var report = weeklyReportData || { range: { label: '' }, total: 0, items: [] };
   var rangeLabel = report.range && report.range.label ? report.range.label : formatWeeklyRangeLabel(getLastWeekRangeClient());
+  var weeklyDesc = getPlatformConfig().weeklyDesc ||
+    '汇总<strong>上周一至上周日</strong>期间发布或更新的相关规则，提炼重点、商家影响与流程建议。';
 
   var html = '<div class="content-section active" id="section-weekly">' +
     '<div class="section-header">' +
       '<div class="section-tag">WEEKLY</div>' +
-      '<h1 class="section-title">周度规则</h1>' +
-      '<p class="section-desc">汇总<strong>上周一至上周日</strong>期间发布或更新的天猫规则，提炼重点、商家影响与后续流程调整建议。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。</p>' +
+      '<h1 class="section-title">周度规则 · ' + escapeHtml(getPlatformConfig().label) + '</h1>' +
+      '<p class="section-desc">' + weeklyDesc + '</p>' +
     '</div>' +
     '<div class="weekly-range-banner">' +
       '<div><div class="weekly-range-label">统计周期</div>' +
@@ -1787,7 +2027,7 @@ function renderWeekly() {
 }
 
 function renderSection(key) {
-  const data = (RULES_DATA && RULES_DATA[key]) ? RULES_DATA[key] : RULES_DATA_FALLBACK[key];
+  const data = (RULES_DATA && RULES_DATA[key]) ? RULES_DATA[key] : getRulesDataFallback()[key];
   let html = '<div class="content-section active" id="section-' + key + '">' +
     '<div class="section-header">' +
       '<div class="section-tag">' + data.tag + '</div>' +
@@ -1835,7 +2075,8 @@ function showTab(key) {
   }
 
   document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
-  document.querySelector('.nav-tab[data-tab="' + key + '"]').classList.add('active');
+  var activeTab = document.querySelector('.nav-tab[data-tab="' + key + '"]');
+  if (activeTab) activeTab.classList.add('active');
 
   if (typeof gsap !== 'undefined') {
     gsap.fromTo('.home-stat-card', { opacity: 0, y: 15 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out' });
@@ -1966,6 +2207,114 @@ function updateClock() {
   }
 }
 
+// === PLATFORM SWITCH ===
+function initPlatformFromStorage() {
+  var saved = null;
+  try {
+    saved = localStorage.getItem(PLATFORM_STORAGE_KEY) || localStorage.getItem(PLATFORM_STORAGE_KEY_LEGACY);
+  } catch (e) { /* ignore */ }
+  if (saved && isPlatformEnabled(saved)) {
+    currentPlatform = saved;
+  } else {
+    currentPlatform = 'tmall';
+  }
+  updatePlatformSelectUi();
+  renderSidebarDataSources();
+}
+
+function renderPlatformSelect() {
+  var sel = document.getElementById('platformSelect');
+  if (!sel) return;
+  sel.innerHTML = '';
+  platformsManifestList.forEach(function (entry) {
+    var opt = document.createElement('option');
+    opt.value = entry.id;
+    opt.textContent = entry.enabled ? entry.label : entry.label + '（规划中）';
+    opt.disabled = !entry.enabled;
+    sel.appendChild(opt);
+  });
+  if (!isPlatformEnabled(currentPlatform)) currentPlatform = 'tmall';
+  sel.value = currentPlatform;
+}
+
+function updatePlatformSelectUi() {
+  var sel = document.getElementById('platformSelect');
+  if (sel && isPlatformEnabled(currentPlatform)) sel.value = currentPlatform;
+  var cfg = getPlatformConfig();
+  var logoSub = document.querySelector('.logo-sub');
+  if (logoSub) logoSub.textContent = cfg.brandSubTitle || cfg.label;
+}
+
+function renderSidebarDataSources() {
+  var container = document.getElementById('sidebarDataSources');
+  if (!container) return;
+  var cfg = getPlatformConfig();
+  var html = '';
+  (cfg.dataSources || []).forEach(function (label, i) {
+    html += '<div class="data-source-item' + (i === 0 ? ' active-source' : '') + '">' +
+      '<span class="dot"></span>' + escapeHtml(label) + '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function renderPlatformNavTabs() {
+  var container = document.getElementById('navCategoryTabs');
+  if (!container) return;
+  var cfg = getPlatformConfig();
+  var html = '';
+  cfg.nav.forEach(function (item) {
+    var count = (RULES_DATA && RULES_DATA[item.key] && RULES_DATA[item.key].cards)
+      ? RULES_DATA[item.key].cards.length
+      : 0;
+    html += '<div class="nav-tab" data-tab="' + item.key + '">' +
+      '<div class="tab-icon ' + item.iconClass + '">' + item.icon + '</div>' +
+      '<span class="tab-label">' + escapeHtml(item.label) + '</span>' +
+      '<span class="tab-count">' + count + '</span></div>';
+  });
+  container.innerHTML = html;
+}
+
+function updateCategoryTabCounts() {
+  var cfg = getPlatformConfig();
+  cfg.nav.forEach(function (item) {
+    var tab = document.querySelector('.nav-tab[data-tab="' + item.key + '"]');
+    if (!tab) return;
+    var countEl = tab.querySelector('.tab-count');
+    var count = (RULES_DATA && RULES_DATA[item.key] && RULES_DATA[item.key].cards)
+      ? RULES_DATA[item.key].cards.length
+      : 0;
+    if (countEl) countEl.textContent = String(count);
+  });
+}
+
+function initPlatformSwitch() {
+  var sel = document.getElementById('platformSelect');
+  if (!sel) return;
+  sel.addEventListener('change', function () {
+    switchPlatform(sel.value);
+  });
+}
+
+async function switchPlatform(platform) {
+  if (!isPlatformEnabled(platform)) return;
+  if (platform === currentPlatform) return;
+  currentPlatform = platform;
+  try {
+    localStorage.setItem(PLATFORM_STORAGE_KEY, platform);
+  } catch (e) { /* ignore */ }
+  updatePlatformSelectUi();
+  renderSidebarDataSources();
+  applyCuratedCardsPayload(null);
+  renderPlatformNavTabs();
+  var keepTab = getCuratedCategoryKeys().indexOf(currentTab) >= 0 ||
+    currentTab === 'home' ||
+    currentTab === 'weekly';
+  await loadCuratedData();
+  await loadWeeklyReport();
+  updateStatusBar();
+  showTab(keepTab ? currentTab : 'home');
+}
+
 // === THEME ===
 var THEME_STORAGE_KEY = 'tmall-theme';
 
@@ -2011,10 +2360,18 @@ function bootComplete() {
   setInterval(updateClock, 1000);
 }
 
+async function bootDataReady() {
+  await loadPlatformsManifest();
+  renderPlatformSelect();
+  initPlatformFromStorage();
+  renderPlatformNavTabs();
+  return Promise.all([loadExternalData(), loadVisitStats()]);
+}
+
 function boot() {
   var fill = document.getElementById('initBarFill');
   var overlay = document.getElementById('initOverlay');
-  var dataReady = Promise.all([loadExternalData(), loadVisitStats()]);
+  var dataReady = bootDataReady();
 
   if (typeof gsap !== 'undefined') {
     gsap.to(fill, {
@@ -2042,6 +2399,7 @@ function boot() {
 }
 
 window.addEventListener('DOMContentLoaded', function () {
+  initPlatformSwitch();
   initThemeToggle();
   boot();
 });

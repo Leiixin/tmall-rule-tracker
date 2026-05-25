@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { CATEGORY_LABELS } from "../config.js";
+import { ruleMatchesWeeklyScope } from "../utils/rulePlatformScope.js";
 import { classifyRule } from "./classifier.js";
 import {
   normalizeActionsStructured,
@@ -183,7 +184,11 @@ function inLastWeek(iso, range) {
   );
 }
 
-export function buildWeeklyReport(rules, reference = new Date()) {
+export function buildWeeklyReport(
+  rules,
+  reference = new Date(),
+  weeklyScope = "tmall"
+) {
   const range = getLastWeekRange(reference);
   const classified = (Array.isArray(rules) ? rules : []).map((rule) =>
     rule.tags && rule.summary ? rule : classifyRule(rule)
@@ -192,7 +197,9 @@ export function buildWeeklyReport(rules, reference = new Date()) {
   const items = classified
     .filter(
       (rule) =>
-        inLastWeek(rule.publishedAt, range) || inLastWeek(rule.lastSeenAt, range)
+        (inLastWeek(rule.publishedAt, range) ||
+          inLastWeek(rule.lastSeenAt, range)) &&
+        ruleMatchesWeeklyScope(rule, weeklyScope)
     )
     .sort((a, b) => {
       const aTime = dayjs(a.publishedAt || a.lastSeenAt || 0).valueOf();

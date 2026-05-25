@@ -48,15 +48,15 @@ http://localhost:3000
 
 周度规则表格中的「重点内容 / 商家影响 / 流程建议」可接入 [DeepSeek](https://platform.deepseek.com/)（OpenAI 兼容 API）。摘要写入 `data/rules.json` 的 `aiSummary` 字段，正文未变时自动复用缓存。
 
-输出格式（`promptVersion: 5`）：
+输出格式（`promptVersion: 6`）：
 
-- **highlightsStructured**：`核心变化` / `适用范围` / `生效时间`
-- **impactsStructured**：`不利` / `有利` / `中性`（经营后果判断，不写各组动作）
-- **actionsStructured**：`运营组` / `客服组` / `物流组`（可执行措施，不与 impacts 重复）
+- **highlightsStructured**：`核心变化` / `适用范围` / `生效时间`（处罚/服务承诺类须分条保留书名号规则名、时效、金额，禁止笼统「面临赔付风险」）
+- **impactsStructured**：`不利` / `有利` / `中性`（经营后果与 highlights 处罚条呼应，不写各组动作）
+- **actionsStructured**：`运营组` / `客服组` / `物流组`（可执行措施，含 24h/5 天等检查点，不与 impacts 重复）
 
 三列均在页面渲染为「小标题 + 1.2.3. 分条」。旧版扁平 `impacts` / `actions` 数组会自动迁移为结构化展示。
 
-修改提示词或升级 `PROMPT_VERSION` 后，需重跑 `npm run crawl` / `npm run summarize` 或 GitHub Actions 才会刷新旧摘要。
+修改提示词或升级 `PROMPT_VERSION`（当前为 **6**）后，需重跑 `npm run summarize`（或 `npm run crawl` / GitHub Actions）才会刷新旧 `aiSummary` 缓存。
 
 1. 复制环境变量模板并填写 Key：
 ```bash
@@ -111,6 +111,37 @@ npm run migrate:score-insights
 
 回滚展示：在 Git 历史中恢复 `data/curated-cards.json` 的上一版即可。
 
+## 多平台（侧栏下拉 + platforms.json）
+
+平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用，其余（抖音、小红书、快手、拼多多、微信小店、得物、京东）显示为「规划中」且不可选。
+
+### 数据目录约定
+
+```text
+data/
+  platforms.json              # 平台清单（分类 Tab、周度过滤、数据来源文案）
+  rules.json                  # 现阶段：全平台抓取池（可用 platformScope 标注）
+  curated-*.json              # 天猫平台（历史路径，data 根目录）
+  intl/curated-*.json         # 天猫国际
+  {platformId}/               # 新平台，例如 douyin/、jd/
+    curated-cards.json
+    curated-sources.json
+    curated-watch.json
+    curated-category-insights.json
+    rules.json                # 可选：平台独立周度池（二期）
+```
+
+- 本地记忆键：`rule-monitor-platform`（兼容旧键 `tmall-rule-platform`）
+- 周度 API：`GET /api/weekly?platform=<weeklyScope>`（如 `tmall`、`intl`、`douyin`）
+- 分类 sync 预留：`CURATED_DATA_PREFIX=intl/` 或 `PLATFORM_ID=intl` → 读写 `data/intl/curated-sources.json`（见 `scripts/sync-curated-cards.mjs` 顶部注释）
+
+### 下一阶段：接入抖音（示例）
+
+1. 在 `platforms.json` 将 `douyin.enabled` 设为 `true` 并补全 `categories`
+2. 新建 `data/douyin/` 四套 curated JSON（勿提交空文件到 Pages）
+3. 在 `weeklyMatchers` 中补充标题/域名规则（如 `rules.jinritemai.com`，以调研为准）
+4. 三期：抖音爬虫 + `sync:curated` 的 `--platform douyin` 参数
+
 ## 常用命令
 - 启动：`npm run start`
 - 开发模式：`npm run dev`
@@ -128,6 +159,8 @@ npm run migrate:score-insights
 - `GET /api/dashboard`
 - `GET /api/conclusions`
 - `GET /api/presentation`
+- `GET /api/weekly?platform=<weeklyScope>`（如 `tmall`、`intl`；规划中平台无数据）
+- `GET /data/platforms.json`
 - `GET /data/status.json`
 - `GET /data/scraped.json`
 - `GET /data/timeline.json`

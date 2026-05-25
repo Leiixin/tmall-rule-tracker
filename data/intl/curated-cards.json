@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-22T08:00:00.000Z",
+  "autoPublishVersion": 0,
+  "intl_expiry": {
+    "tag": "INTL EXPIRY",
+    "title": "效期与效期管理",
+    "desc": "天猫国际对跨境在售商品的保质期、临期标注与禁售标准，适用于食品、美妆、保健品等类目。依据天猫国际商品效期相关规范。",
+    "cards": [
+      {
+        "title": "跨境商品效期展示与临期标注",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2023-04-03",
+        "tags": ["跨境全类目"],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
+        "body": "<ul><li>临期商品须在标题或详情页醒目展示 <span class=\"highlight\">临期信息</span> 或到期日</li><li>剩余保质期低于平台要求的 <span class=\"highlight\">禁止上架销售</span></li><li>效期信息须真实、清晰，不得仅写「详见外包装」</li><li>来源：天猫国际商品效期管理相关规范（以 rule.tmall.hk 原文为准）</li></ul>",
+        "sourceId": "intl-rule-20008024",
+        "cardId": "intl_expiry:0"
+      }
+    ]
+  },
+  "intl_logistics": {
+    "tag": "INTL LOGISTICS",
+    "title": "跨境物流与发货",
+    "desc": "涵盖保税/直邮发货时效、物流轨迹、大促期间发货调整及交易流程，含天猫/天猫国际联合公告。",
+    "cards": [
+      {
+        "title": "春节发货时效与物流轨迹（天猫/天猫国际）",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-02-10",
+        "tags": ["大促", "发货时效"],
+        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009880&cId=393#/rule/detail?ruleId=20009880&cId=393",
+        "body": "<ul><li>支付时间在 <span class=\"num\">2026-02-10</span> 至 <span class=\"num\">2026-02-23</span> 的订单，须在 <span class=\"num\">2026-02-26 23:59:59</span> 前发货并有揽收记录</li><li>天猫国际订单适用国际段发货与物流考核要求（以公告原文为准）</li><li>物流轨迹异常、超时认定按活动期间专项规则执行</li><li>来源：《天猫/天猫国际2026年农历春节发货时间及交易流程调整公告》</li></ul>",
+        "sourceId": "intl-rule-spring-ship",
+        "cardId": "intl_logistics:0"
+      }
+    ]
+  },
+  "intl_qual": {
+    "tag": "INTL QUALIFICATION",
+    "title": "资质与品牌",
+    "desc": "天猫国际店铺入驻、品牌授权、资质文件与商品准入要求，影响上架与活动报名资格。",
+    "cards": [
+      {
+        "title": "品牌授权与资质文件要求",
+        "severity": "warning",
+        "severityText": "准入",
+        "date": "2025-10-01",
+        "tags": ["品牌", "入驻"],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
+        "body": "<ul><li>经营品牌须提供 <span class=\"highlight\">有效商标权证明</span> 及授权链路</li><li>跨境商品须符合进口资质、检验检疫等要求（类目差异以平台为准）</li><li>资质过期或信息不实将导致商品下架或限制活动报名</li><li>来源：天猫国际商家与品牌管理相关规范</li></ul>",
+        "sourceId": "intl-rule-qual-brand",
+        "cardId": "intl_qual:0"
+      }
+    ]
+  },
+  "intl_penalty": {
+    "tag": "INTL PENALTIES",
+    "title": "违规与处罚",
+    "desc": "天猫国际对发货违规、效期违规、资质造假等行为的处理规则与赔付标准。",
+    "cards": [
+      {
+        "title": "延迟发货与物流违规处理",
+        "severity": "critical",
+        "severityText": "处罚",
+        "date": "2024-09-12",
+        "tags": ["发货违规"],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
+        "body": "<ul><li>未按承诺时效发货或未上传有效物流单号的，按 <span class=\"highlight\">延迟发货</span> 规则处理</li><li>物流轨迹异常、虚假发货等情形可能触发扣分、赔付或限制权益</li><li>大促期间违规认定以专项公告及日常规范中较严者为准</li><li>来源：天猫国际市场管理 / 物流时效相关规范</li></ul>",
+        "sourceId": "intl-rule-penalty-ship",
+        "cardId": "intl_penalty:0"
+      }
+    ]
+  }
+}

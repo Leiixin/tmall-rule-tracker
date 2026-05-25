@@ -1,6 +1,9 @@
 import express from "express";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { registerPlatformMatchers } from "./utils/rulePlatformScope.js";
+import { registerRuleHostsFromManifest } from "./utils/ruleDetailUrl.js";
 import {
   buildConclusions,
   buildDashboard,
@@ -19,6 +22,26 @@ const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, "..", "public");
 
 const app = express();
+
+let platformsManifestLoaded = false;
+
+async function ensurePlatformsManifest() {
+  if (platformsManifestLoaded) {
+    return;
+  }
+  try {
+    const raw = await readFile(
+      path.join(process.cwd(), "data", "platforms.json"),
+      "utf8"
+    );
+    const manifest = JSON.parse(raw.replace(/^\uFEFF/, ""));
+    registerPlatformMatchers(manifest);
+    registerRuleHostsFromManifest(manifest);
+    platformsManifestLoaded = true;
+  } catch (err) {
+    console.warn("platforms.json load failed:", err.message);
+  }
+}
 
 app.use(express.json());
 app.use(express.static(publicDir));
@@ -176,9 +199,12 @@ app.get("/api/presentation", async (_req, res) => {
   res.json(buildSheetPresentation(processed));
 });
 
-app.get("/api/weekly", async (_req, res) => {
+app.get("/api/weekly", async (req, res) => {
+  await ensurePlatformsManifest();
   const rules = await loadRules();
-  res.json(buildWeeklyReport(rules));
+  const requested = String(req.query.platform || "tmall");
+  const weeklyScope = requested.length ? requested : "tmall";
+  res.json(buildWeeklyReport(rules, new Date(), weeklyScope));
 });
 
 app.post("/api/crawl", async (_req, res) => {

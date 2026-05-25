@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-22T08:00:00.000Z",
+  "categories": {
+    "intl_logistics": {
+      "pinned": true,
+      "sourceId": "intl-rule-spring-ship",
+      "ruleTitle": "天猫/天猫国际2026年农历春节发货时间及交易流程调整公告",
+      "panelSubtitle": "春节期间天猫国际发货与物流考核要点",
+      "generatedAt": "2026-05-22T08:00:00.000Z",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009880&cId=393#/rule/detail?ruleId=20009880&cId=393",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "春节期间发货截止时间",
+          "detail": "指定支付时段内订单须在 <span class=\"new-val\">2026-02-26 23:59:59</span> 前发货并确保物流单号有揽收记录。",
+          "date": "2026-02-10",
+          "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009880&cId=393#/rule/detail?ruleId=20009880&cId=393"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "跨境仓配排期压力",
+          "desc": "保税仓、直邮链路需提前锁定运力，<span class=\"warn\">国际段揽收时效</span>直接影响店铺考核。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "medium",
+          "title": "节前发货预案",
+          "desc": "梳理在售 SKU 库存与承诺时效，客服话术同步春节发货规则。"
+        }
+      ]
+    }
+  }
+}

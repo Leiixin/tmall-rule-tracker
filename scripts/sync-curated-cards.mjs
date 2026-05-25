@@ -1,3 +1,9 @@
+/**
+ * Curated 分类页同步。默认读写 data/ 根目录（天猫平台）。
+ * 国际或其它平台预留：
+ *   CURATED_DATA_PREFIX=intl/  → data/intl/curated-sources.json 等
+ *   PLATFORM_ID=intl           → 同上（与 CURATED_DATA_PREFIX 二选一）
+ */
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
