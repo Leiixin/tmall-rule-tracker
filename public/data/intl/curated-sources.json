@@ -4,14 +4,14 @@
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/intl/curated-sources.json",
   "sources": [
     {
-      "id": "intl-rule-20008024",
-      "ruleId": "20008024",
-      "cId": "636",
-      "url": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
+      "id": "intl-rule-11005234",
+      "ruleId": "11005234",
+      "cId": "630",
+      "url": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
       "label": "跨境商品效期展示与临期标注",
       "categories": ["intl_expiry"],
       "cardIds": ["intl_expiry:0"],
-      "ruleTitle": "天猫国际商品效期管理规范（示例）"
+      "ruleTitle": "天猫国际效期管理规范"
     },
     {
       "id": "intl-rule-spring-ship",

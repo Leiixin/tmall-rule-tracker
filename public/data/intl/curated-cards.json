@@ -13,9 +13,9 @@
         "severityText": "强制",
         "date": "2023-04-03",
         "tags": ["跨境全类目"],
-        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
-        "body": "<ul><li>临期商品须在标题或详情页醒目展示 <span class=\"highlight\">临期信息</span> 或到期日</li><li>剩余保质期低于平台要求的 <span class=\"highlight\">禁止上架销售</span></li><li>效期信息须真实、清晰，不得仅写「详见外包装」</li><li>来源：天猫国际商品效期管理相关规范（以 rule.tmall.hk 原文为准）</li></ul>",
-        "sourceId": "intl-rule-20008024",
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+        "body": "<ul><li>临期商品须在标题或详情页醒目展示 <span class=\"highlight\">临期信息</span> 或到期日</li><li>剩余保质期低于平台要求的 <span class=\"highlight\">禁止上架销售</span></li><li>效期信息须真实、清晰，不得仅写「详见外包装」</li><li>来源：《天猫国际效期管理规范》（以 rule.tmall.hk 原文为准）</li></ul>",
+        "sourceId": "intl-rule-11005234",
         "cardId": "intl_expiry:0"
       }
     ]
