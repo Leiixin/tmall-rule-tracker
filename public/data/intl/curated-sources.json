@@ -9,8 +9,12 @@
       "cId": "630",
       "url": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
       "label": "跨境商品效期展示与临期标注",
-      "categories": ["intl_expiry"],
-      "cardIds": ["intl_expiry:0"],
+      "categories": [
+        "intl_expiry"
+      ],
+      "cardIds": [
+        "intl_expiry:0"
+      ],
       "ruleTitle": "天猫国际效期管理规范"
     },
     {
@@ -19,8 +23,12 @@
       "cId": "393",
       "url": "https://rulechannel.tmall.com/?type=detail&ruleId=20009880&cId=393#/rule/detail?ruleId=20009880&cId=393",
       "label": "春节发货时效与物流轨迹",
-      "categories": ["intl_logistics"],
-      "cardIds": ["intl_logistics:0"],
+      "categories": [
+        "intl_logistics"
+      ],
+      "cardIds": [
+        "intl_logistics:0"
+      ],
       "ruleTitle": "天猫/天猫国际2026年农历春节发货时间及交易流程调整公告"
     },
     {
@@ -29,8 +37,12 @@
       "cId": "636",
       "url": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
       "label": "品牌授权与资质文件要求",
-      "categories": ["intl_qual"],
-      "cardIds": ["intl_qual:0"],
+      "categories": [
+        "intl_qual"
+      ],
+      "cardIds": [
+        "intl_qual:0"
+      ],
       "ruleTitle": "天猫国际品牌与资质要求（示例）"
     },
     {
@@ -39,8 +51,12 @@
       "cId": "636",
       "url": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
       "label": "延迟发货与物流违规处理",
-      "categories": ["intl_penalty"],
-      "cardIds": ["intl_penalty:0"],
+      "categories": [
+        "intl_penalty"
+      ],
+      "cardIds": [
+        "intl_penalty:0"
+      ],
       "ruleTitle": "天猫国际物流违规处理（示例）"
     }
   ]
