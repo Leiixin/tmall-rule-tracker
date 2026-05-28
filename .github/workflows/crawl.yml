@@ -59,6 +59,17 @@ jobs:
           LLM_MAX_CURATED_SOURCES_PER_RUN: "2"
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
 
+      - name: Sync Intl Expiry Curated Cards
+        run: node scripts/sync-curated-cards.mjs --platform=intl --force-source=intl-rule-11005234
+        env:
+          TZ: Asia/Shanghai
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          ENABLE_CURATED_AUTO_PUBLISH: "true"
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+          LLM_MAX_CURATED_SOURCES_PER_RUN: "1"
+
       - name: Commit Updated Data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
