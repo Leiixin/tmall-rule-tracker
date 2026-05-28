@@ -1,0 +1,61 @@
+name: Sync Intl Curated Cards
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-intl-curated
+  cancel-in-progress: false
+
+jobs:
+  sync-intl-expiry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync latest main
+        run: git pull --ff-only origin main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Generate intl_expiry cards from rule 11005234
+        run: npm run sync:curated:intl
+        env:
+          TZ: Asia/Shanghai
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+          LLM_MAX_CURATED_SOURCES_PER_RUN: "1"
+          ENABLE_CURATED_AUTO_PUBLISH: "true"
+
+      - name: Commit intl curated data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/intl/ public/data/intl/
+          if git diff --staged --quiet; then
+            echo "No intl curated changes."
+            exit 0
+          fi
+          git commit -m "chore(intl): DeepSeek curated cards for expiry rule 11005234"
+          git pull --rebase origin main
+          git push origin main

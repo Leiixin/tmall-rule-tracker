@@ -20,12 +20,33 @@ const CATEGORY_META = {
     title: "发货违规及处罚",
     focus:
       "延迟发货、缺货、虚假发货、轨迹超时/异常的认定与赔付比例、处罚措施。"
+  },
+  intl_expiry: {
+    title: "效期与效期管理",
+    focus:
+      "天猫国际跨境在售商品的保质期、临期标注、禁售标准、效期信息展示真实性；适用于食品、美妆、保健品等类目。"
+  },
+  intl_logistics: {
+    title: "跨境物流与发货",
+    focus:
+      "保税/直邮发货时效、物流轨迹、大促期间发货调整及交易流程；含天猫/天猫国际联合公告要点。"
+  },
+  intl_qual: {
+    title: "资质与品牌",
+    focus: "品牌授权、资质文件、跨境经营资质与合规要求。"
+  },
+  intl_penalty: {
+    title: "违规与处罚",
+    focus: "延迟发货、物流违规、效期违规等的认定与处罚措施。"
   }
 };
 
 export function buildCuratedCardsSystemPrompt(category) {
   const meta = CATEGORY_META[category] || { title: category, focus: "" };
-  return `你是天猫商家运营顾问。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
+  const advisor = String(category).startsWith("intl_")
+    ? "天猫国际跨境商家运营顾问"
+    : "天猫商家运营顾问";
+  return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
 
 分类侧重：${meta.focus}
 

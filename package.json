@@ -14,6 +14,7 @@
     "migrate:curated": "node scripts/migrate-curated-data.mjs",
     "migrate:score-insights": "node scripts/migrate-score-insights.mjs",
     "sync:curated": "node scripts/sync-curated-cards.mjs",
+    "sync:curated:intl": "node scripts/sync-curated-cards.mjs --platform=intl --force-source=intl-rule-11005234",
     "audit:fabrication": "node scripts/audit-curated-fabrication.mjs"
   },
   "dependencies": {

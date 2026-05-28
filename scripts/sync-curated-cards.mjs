@@ -1,25 +1,95 @@
 /**
  * Curated 分类页同步。默认读写 data/ 根目录（天猫平台）。
- * 国际或其它平台预留：
- *   CURATED_DATA_PREFIX=intl/  → data/intl/curated-sources.json 等
- *   PLATFORM_ID=intl           → 同上（与 CURATED_DATA_PREFIX 二选一）
+ * 国际或其它平台：
+ *   --platform=intl  或 PLATFORM_ID=intl  或 CURATED_DATA_PREFIX=intl/
+ *   --force-source=intl-rule-11005234  强制 DeepSeek 重生成该来源卡片
  */
 import { createHash } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+
+function loadDotEnv() {
+  const envPath = path.join(process.cwd(), ".env");
+  if (!existsSync(envPath)) {
+    return;
+  }
+  for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) {
+      continue;
+    }
+    const eq = trimmed.indexOf("=");
+    if (eq <= 0) {
+      continue;
+    }
+    const key = trimmed.slice(0, eq).trim();
+    let val = trimmed.slice(eq + 1).trim();
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
+      val = val.slice(1, -1);
+    }
+    if (!process.env[key]) {
+      process.env[key] = val;
+    }
+  }
+}
+
+loadDotEnv();
 
 import { fetchRuleDetailByRuleId } from "../src/crawler/tmallCrawler.js";
 import { generateCuratedCardsForCategory } from "../src/services/llm/curatedCardsGenerator.js";
 import { generateCategoryInsights } from "../src/services/llm/curatedCategoryInsightsGenerator.js";
 import { isLlmEnabled } from "../src/services/llm/client.js";
 
-const CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
+const TMALL_CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
+const INTL_CATEGORY_KEYS = [
+  "intl_expiry",
+  "intl_logistics",
+  "intl_qual",
+  "intl_penalty"
+];
 
 function contentHash(text) {
   return createHash("sha256")
     .update(String(text || ""))
     .digest("hex")
     .slice(0, 16);
+}
+
+function parseCli(argv) {
+  let platform = process.env.PLATFORM_ID || "";
+  let curatedPrefix = process.env.CURATED_DATA_PREFIX || "";
+  const forceSourceIds = new Set();
+
+  for (const arg of argv) {
+    if (arg.startsWith("--platform=")) {
+      platform = arg.slice("--platform=".length);
+    } else if (arg.startsWith("--force-source=")) {
+      forceSourceIds.add(arg.slice("--force-source=".length));
+    }
+  }
+
+  const envForce = process.env.FORCE_CURATED_SOURCE_IDS || "";
+  envForce
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .forEach((id) => forceSourceIds.add(id));
+
+  if (!curatedPrefix && platform === "intl") {
+    curatedPrefix = "intl/";
+  }
+  if (curatedPrefix && !curatedPrefix.endsWith("/")) {
+    curatedPrefix += "/";
+  }
+
+  const categoryKeys =
+    curatedPrefix === "intl/" ? INTL_CATEGORY_KEYS : TMALL_CATEGORY_KEYS;
+
+  return { curatedPrefix, categoryKeys, forceSourceIds };
 }
 
 async function readJson(filePath, fallback) {
@@ -70,6 +140,18 @@ function updateSourceCache(cache, sourceId, detail) {
   cache.updatedAt = new Date().toISOString();
 }
 
+function copyPrevWatchEntry(prev, source, prevWatch) {
+  const p = prevWatch.sources?.[source.id] || prev;
+  return {
+    status: p.status || "ok",
+    message: p.message || "skipped (force run for other sources)",
+    ruleTitle: resolveRuleTitle(source, p),
+    platformModifiedAt: p.platformModifiedAt || null,
+    contentHash: p.contentHash || "",
+    lastSyncedAt: p.lastSyncedAt || null
+  };
+}
+
 async function notifyIfChanged(watch) {
   const url = process.env.NOTIFY_WEBHOOK_URL || "";
   if (!url) {
@@ -103,12 +185,87 @@ async function notifyIfChanged(watch) {
   }
 }
 
+async function publishCardsForSource({
+  source,
+  detail,
+  hash,
+  platformModifiedAt,
+  curatedCards,
+  categoryKeys,
+  watch,
+  prevWatch,
+  timestamp,
+  publishBudget
+}) {
+  let publishedCategories = 0;
+
+  for (const category of source.categories || []) {
+    if (!categoryKeys.includes(category)) {
+      continue;
+    }
+    const { cards } = await generateCuratedCardsForCategory({
+      category,
+      detail,
+      source
+    });
+    if (!curatedCards[category]) {
+      throw new Error(`curated-cards.json missing category: ${category}`);
+    }
+    curatedCards[category].cards = mergeCardsForSource(
+      curatedCards[category].cards,
+      category,
+      source.id,
+      cards
+    );
+    publishedCategories += 1;
+  }
+
+  if (publishedCategories > 0) {
+    watch.summary.published += 1;
+    watch.summary.synced += 1;
+    watch.autoPublishVersion += 1;
+    const displayTitle = source.ruleTitle || source.label || source.id;
+    watch.recentAutoPublish = {
+      at: timestamp,
+      sourceId: source.id,
+      ruleTitle: displayTitle,
+      label: displayTitle,
+      categories: source.categories
+    };
+    watch.sources[source.id] = {
+      status: "synced",
+      message: `auto-published ${publishedCategories} categor(ies)`,
+      ruleTitle: resolveRuleTitle(source, prevWatch.sources?.[source.id] || {}),
+      platformModifiedAt,
+      contentHash: hash,
+      lastSyncedAt: timestamp,
+      insightsGeneratedAt:
+        watch.sources[source.id]?.insightsGeneratedAt || timestamp
+    };
+    curatedCards.updatedAt = timestamp;
+    curatedCards.autoPublishVersion = watch.autoPublishVersion;
+    return publishBudget - 1;
+  }
+
+  return publishBudget;
+}
+
 async function main() {
   const root = process.cwd();
-  const dataDir = process.env.DATA_DIR
+  const { curatedPrefix, categoryKeys, forceSourceIds } = parseCli(
+    process.argv.slice(2)
+  );
+  const forceOnly = forceSourceIds.size > 0;
+
+  const baseDataDir = process.env.DATA_DIR
     ? path.resolve(process.env.DATA_DIR)
     : path.join(root, "data");
-  const publicDataDir = path.join(root, "public", "data");
+  const dataDir = curatedPrefix
+    ? path.join(baseDataDir, curatedPrefix.replace(/\/$/, ""))
+    : baseDataDir;
+  const publicDataDir = curatedPrefix
+    ? path.join(root, "public", "data", curatedPrefix.replace(/\/$/, ""))
+    : path.join(root, "public", "data");
 
   const cardsPath = path.join(dataDir, "curated-cards.json");
   const sourcesPath = path.join(dataDir, "curated-sources.json");
@@ -126,7 +283,9 @@ async function main() {
   const sourceCache = await readJson(cachePath, { version: 1, sources: {} });
 
   if (!curatedCards) {
-    throw new Error("curated-cards.json missing; run node scripts/migrate-curated-data.mjs");
+    throw new Error(
+      `curated-cards.json missing at ${cardsPath}; run migrate or create intl data`
+    );
   }
 
   const timestamp = new Date().toISOString();
@@ -136,6 +295,12 @@ async function main() {
   const autoPublish =
     String(process.env.ENABLE_CURATED_AUTO_PUBLISH || "true").toLowerCase() !==
     "false";
+
+  if (forceOnly && !llmOn) {
+    throw new Error(
+      "LLM disabled: set ENABLE_LLM_SUMMARY=true and DEEPSEEK_API_KEY for --force-source"
+    );
+  }
 
   const watch = {
     lastCheckedAt: timestamp,
@@ -148,16 +313,25 @@ async function main() {
       errors: 0,
       published: 0,
       synced: 0,
-      insightsGenerated: 0
+      insightsGenerated: 0,
+      forced: forceSourceIds.size
     }
   };
 
-  let publishBudget = maxPublish;
+  let publishBudget = forceOnly
+    ? Math.max(maxPublish, forceSourceIds.size)
+    : maxPublish;
   let insightsBudget = maxInsights;
   const changedQueue = [];
 
   for (const source of curatedSources.sources || []) {
     if (!String(source.url || "").trim()) {
+      continue;
+    }
+
+    const forceRegenerate = forceSourceIds.has(source.id);
+    if (forceOnly && !forceRegenerate) {
+      watch.sources[source.id] = copyPrevWatchEntry({}, source, prevWatch);
       continue;
     }
 
@@ -199,16 +373,18 @@ async function main() {
 
       const hash = contentHash(detail.content);
       const platformModifiedAt = detail.publishedAt;
-      const changed =
+      const contentChanged =
         !prev.contentHash ||
         prev.contentHash !== hash ||
         (prev.platformModifiedAt &&
           prev.platformModifiedAt !== platformModifiedAt);
 
-      if (changed) {
+      if (contentChanged || forceRegenerate) {
         watch.sources[source.id] = {
           status: "changed",
-          message: "platform content or revision changed",
+          message: forceRegenerate
+            ? "force regenerate"
+            : "platform content or revision changed",
           ruleTitle,
           platformModifiedAt,
           contentHash: hash,
@@ -252,7 +428,10 @@ async function main() {
       let generatedForSource = 0;
 
       for (const category of source.categories || []) {
-        if (!CATEGORY_KEYS.includes(category)) {
+        if (!categoryKeys.includes(category)) {
+          continue;
+        }
+        if (String(category).startsWith("intl_")) {
           continue;
         }
         const existing = curatedInsights.categories?.[category];
@@ -298,53 +477,20 @@ async function main() {
     }
 
     const { source, detail, hash, platformModifiedAt } = item;
-    let publishedCategories = 0;
 
     try {
-      for (const category of source.categories || []) {
-        if (!CATEGORY_KEYS.includes(category)) {
-          continue;
-        }
-        const { cards } = await generateCuratedCardsForCategory({
-          category,
-          detail,
-          source
-        });
-        curatedCards[category].cards = mergeCardsForSource(
-          curatedCards[category].cards,
-          category,
-          source.id,
-          cards
-        );
-        publishedCategories += 1;
-      }
-
-      if (publishedCategories > 0) {
-        publishBudget -= 1;
-        watch.summary.published += 1;
-        watch.summary.synced += 1;
-        watch.autoPublishVersion += 1;
-        const displayTitle = source.ruleTitle || source.label || source.id;
-        watch.recentAutoPublish = {
-          at: timestamp,
-          sourceId: source.id,
-          ruleTitle: displayTitle,
-          label: displayTitle,
-          categories: source.categories
-        };
-        watch.sources[source.id] = {
-          status: "synced",
-          message: `auto-published ${publishedCategories} categor(ies)`,
-          ruleTitle: resolveRuleTitle(source, prevWatch.sources?.[source.id] || {}),
-          platformModifiedAt,
-          contentHash: hash,
-          lastSyncedAt: timestamp,
-          insightsGeneratedAt:
-            watch.sources[source.id]?.insightsGeneratedAt || timestamp
-        };
-        curatedCards.updatedAt = timestamp;
-        curatedCards.autoPublishVersion = watch.autoPublishVersion;
-      }
+      publishBudget = await publishCardsForSource({
+        source,
+        detail,
+        hash,
+        platformModifiedAt,
+        curatedCards,
+        categoryKeys,
+        watch,
+        prevWatch,
+        timestamp,
+        publishBudget
+      });
     } catch (err) {
       const prevEntry = prevWatch.sources?.[source.id] || {};
       watch.sources[source.id] = {
@@ -373,12 +519,21 @@ async function main() {
 
   await mkdir(publicDataDir, { recursive: true });
   await writeJson(path.join(publicDataDir, "curated-cards.json"), curatedCards);
-  await writeJson(path.join(publicDataDir, "curated-sources.json"), curatedSources);
+  await writeJson(
+    path.join(publicDataDir, "curated-sources.json"),
+    curatedSources
+  );
   await writeJson(path.join(publicDataDir, "curated-watch.json"), watch);
   await writeJson(
     path.join(publicDataDir, "curated-category-insights.json"),
     curatedInsights
   );
+  if (Object.keys(sourceCache.sources || {}).length) {
+    await writeJson(
+      path.join(publicDataDir, "curated-source-cache.json"),
+      sourceCache
+    );
+  }
 
   await notifyIfChanged(watch);
 
@@ -387,6 +542,7 @@ async function main() {
     JSON.stringify(
       {
         ok: true,
+        dataDir,
         llm: llmOn,
         autoPublish,
         ...watch.summary,
