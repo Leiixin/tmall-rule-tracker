@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T14:00:00.000Z",
+  "updatedAt": "2026-05-29T16:00:00.000Z",
   "categories": {
     "intl_logistics": {
       "pinned": true,
@@ -95,6 +95,11 @@
           "level": "medium",
           "title": "类目资质清单",
           "desc": "食品类备齐境内食营许可与委托经营协议；高敏类目（特配奶粉、OTC、医疗器械）提前准备责任险与检测报告。"
+        },
+        {
+          "level": "medium",
+          "title": "女装与美妆差异化",
+          "desc": "服装服饰专营店授权为 <span class=\"warn\">三级以内</span>；美妆专营店须 <span class=\"warn\">≥3 个品牌</span>、主体注册满 1 年，且授权为三级及以内完整链路。"
         }
       ]
     }

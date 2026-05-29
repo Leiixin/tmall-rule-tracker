@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T14:00:00.000Z",
+  "updatedAt": "2026-05-29T16:00:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/intl/curated-sources.json",
   "sources": [
     {
@@ -45,7 +45,9 @@
       ],
       "cardIds": [
         "intl_qual:0",
-        "intl_qual:1"
+        "intl_qual:1",
+        "intl_qual:2",
+        "intl_qual:3"
       ],
       "ruleTitle": "天猫国际商家资质标准",
       "manualTextPath": "data/intl/rule-text/rule-11000442.txt"

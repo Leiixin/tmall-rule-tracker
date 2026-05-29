@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T14:00:00.000Z",
+  "updatedAt": "2026-05-29T16:00:00.000Z",
   "autoPublishVersion": 0,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
@@ -47,7 +47,7 @@
   "intl_qual": {
     "tag": "INTL QUALIFICATION",
     "title": "资质与品牌",
-    "desc": "天猫国际各类型店铺入驻、品牌授权链路及食品、母婴、医药、美妆等重点行业类目资质要求，依据《天猫国际商家资质标准》。",
+    "desc": "天猫国际各类型店铺入驻、品牌授权链路及食品、母婴、医药、女装、美妆等重点行业类目资质要求，依据《天猫国际商家资质标准》。",
     "cards": [
       {
         "title": "各类型店铺入驻与品牌授权",
@@ -72,13 +72,42 @@
         "tags": [
           "食品",
           "母婴",
-          "医药",
-          "美妆"
+          "医药"
         ],
         "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
-        "body": "<ul><li><span class=\"highlight\">食品大类</span>：境内营业执照、食品经营许可证、法定代表人证件、跨境电商零售进口食品委托经营协议</li><li><span class=\"highlight\">母婴奶粉</span>：特殊配方奶粉专营店需境内关联主体食营许可、<span class=\"num\">1000万</span> 产品质量责任险、验商验仓等；来源地限指定国家/地区</li><li><span class=\"highlight\">医药器械</span>：OTC/国际医药需药品经营许可及 <span class=\"num\">1000万</span> 责任险；医疗器械需经营许可及 <span class=\"num\">500万</span> 责任险</li><li><span class=\"highlight\">美妆专营店</span>：须经营 <span class=\"num\">3</span> 个及以上品牌，开店主体注册满 <span class=\"num\">1</span> 年，三级及以内授权或进货凭证</li><li>特殊资质以工作人员或系统提示为准；来源：《天猫国际商家资质标准》</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">食品大类</span>（茶、酒类、咖啡、粮油、零食、生鲜等）：境内营业执照、食品经营许可证、法定代表人证件、跨境电商零售进口食品委托经营协议；专营店须四级内完整授权或进货凭证</li><li><span class=\"highlight\">母婴奶粉</span>：授权级数因类目而异（奶粉/辅食三级、特配奶粉二级等）；特配奶粉专营店另需境内关联主体食营许可、<span class=\"num\">1000万</span> 产品质量责任险、验商验仓、指定来源国家/地区</li><li><span class=\"highlight\">医药器械</span>：OTC/国际医药需药品经营许可及 <span class=\"num\">1000万</span> 责任险；医疗器械需经营许可及 <span class=\"num\">500万</span> 责任险；隐形眼镜等另有注册证、渠道铺货证明等要求</li><li>特殊资质以工作人员或系统提示为准；来源：《天猫国际商家资质标准》</li></ul>",
         "sourceId": "intl-rule-11000442",
         "cardId": "intl_qual:1"
+      },
+      {
+        "title": "女装/服装服饰类目入驻资质",
+        "severity": "warning",
+        "severityText": "准入",
+        "date": "2024-10-23",
+        "tags": [
+          "女装",
+          "服装服饰",
+          "授权链路"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
+        "body": "<ul><li><span class=\"highlight\">经营大类</span>：服装服饰，涵盖 <span class=\"highlight\">女装/女士精品</span>、男装、女鞋、流行男鞋、女士内衣/男士内衣/家居服、服饰配件/皮带/帽子/围巾、户外/登山/野营/旅行用品、箱包皮具、运动服饰鞋包、珠宝/钻石/翡翠/黄金、手表等一级类目</li><li><span class=\"highlight\">品牌旗舰店</span>：所售品牌商标注册证（或受理函+非R说明）；非商标持有人须提供商标权人 <span class=\"highlight\">独占授权</span>；原则上仅销售对应品牌商品</li><li><span class=\"highlight\">专卖店</span>：商标注册材料 + 商标权人出具的授权书</li><li><span class=\"highlight\">专营店</span>：同一经营大类下经营两个及以上品牌；须提供以商标权人为源头的 <span class=\"num\">三级以内</span> 完整授权或进货凭证</li><li>该大类 <span class=\"highlight\">无额外行业经营许可证</span> 要求（区别于食品、医药等），以平台审核及系统提示为准</li><li>来源：《天猫国际商家资质标准》第二章「服装服饰」相关条款</li></ul>",
+        "sourceId": "intl-rule-11000442",
+        "cardId": "intl_qual:2"
+      },
+      {
+        "title": "美妆类目入驻资质",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2024-10-23",
+        "tags": [
+          "美妆",
+          "彩妆",
+          "护肤"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
+        "body": "<ul><li><span class=\"highlight\">经营大类</span>：美妆，一级类目包括 <span class=\"highlight\">彩妆/香水/美妆工具</span>、<span class=\"highlight\">美容护肤/美体/精油</span></li><li><span class=\"highlight\">类目开放限制</span>：美容护肤/美体/精油 <span class=\"highlight\">不开放</span> 以下二级类目：足部护理、身体护理（新）、局部护理、身体清洁、胸部护理（新）、男士身体护理</li><li><span class=\"highlight\">专营店硬性要求</span>：须入驻经营 <span class=\"num\">3</span> 个及以上品牌；开店主体公司 <span class=\"highlight\">注册时间不少于 1 年</span></li><li><span class=\"highlight\">专营店授权</span>：须提供以商标权人为源头的 <span class=\"num\">三级及以内</span> 完整授权或进货凭证（高于服装服饰的三级以内要求，须完整链路）</li><li><span class=\"highlight\">品牌旗舰店</span>：商标注册证（或受理函+非R说明）；非持有人须独占授权，商品须直接来源于商标权人</li><li><span class=\"highlight\">专卖店</span>：商标注册材料 + 商标权人授权书；若由商标权人授权经营，须提供符合行业授权级数要求的完整授权或进货凭证</li><li>来源：《天猫国际商家资质标准》第二章「美妆」相关条款</li></ul>",
+        "sourceId": "intl-rule-11000442",
+        "cardId": "intl_qual:3"
       }
     ]
   },
