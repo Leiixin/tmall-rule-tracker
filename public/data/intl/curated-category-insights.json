@@ -1,7 +1,55 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T16:00:00.000Z",
+  "updatedAt": "2026-05-29T18:00:00.000Z",
   "categories": {
+    "intl_expiry": {
+      "pinned": true,
+      "sourceId": "intl-rule-11005234",
+      "ruleTitle": "天猫国际商品效期管理规范",
+      "panelSubtitle": "临期标注、禁售阈值与违规处理（2026-05-21 生效）",
+      "generatedAt": "2026-05-29T18:00:00.000Z",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "规则生效时间",
+          "detail": "本规范于 <span class=\"new-val\">2026-05-21</span> 起正式生效（2026-05-15 公示），附录1临期/禁售阈值以变更后标准执行。",
+          "date": "2026-05-15",
+          "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630"
+        },
+        {
+          "type": "modify",
+          "title": "临期展示强制要求",
+          "detail": "临近保质期商品须在标题标注 <span class=\"new-val\">【临期】</span>，并在详情页最上方清晰展示临期信息。",
+          "date": "2025-07-30",
+          "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "临期/禁售双阈值",
+          "desc": "各品类按附录1执行临期（通常剩余 &lt;30%）与禁售（通常剩余 &lt;10% 或短保天数）两套标准，短保商品分段更严。"
+        },
+        {
+          "level": "high",
+          "title": "违规处罚升级",
+          "desc": "临期未标注可走滥发信息或描述不符；<span class=\"warn\">禁售或过期</span> 按严重（A）级质量违规处理。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "high",
+          "title": "仓内效期盘点",
+          "desc": "按品类对照附录1阈值，出库前校验剩余保质期；暗码效期商品确保入库解读规则准确并留档。"
+        },
+        {
+          "level": "medium",
+          "title": "临期商品上架规范",
+          "desc": "触发临期阈值时同步改标题【临期】与详情页首屏展示，组合装外包装效期取最先到期内件。"
+        }
+      ]
+    },
     "intl_logistics": {
       "pinned": true,
       "sourceId": "intl-rule-2927",

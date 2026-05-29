@@ -1,24 +1,71 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T16:00:00.000Z",
+  "updatedAt": "2026-05-29T18:00:00.000Z",
   "autoPublishVersion": 0,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
     "title": "效期与效期管理",
-    "desc": "天猫国际对跨境在售商品的保质期、临期标注与禁售标准，适用于食品、美妆、保健品等类目。依据天猫国际商品效期相关规范。",
+    "desc": "天猫国际跨境商品保质期标注、临期展示、禁售阈值及违规处理，依据《天猫国际商品效期管理规范》（2026-05-21 起生效）。",
     "cards": [
       {
-        "title": "跨境商品效期展示与临期标注",
+        "title": "效期标注与临期展示要求",
         "severity": "critical",
         "severityText": "强制",
-        "date": "2023-04-03",
+        "date": "2025-07-30",
         "tags": [
-          "跨境全类目"
+          "效期标注",
+          "临期展示"
         ],
         "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
-        "body": "<ul><li>临期商品须在标题或详情页醒目展示 <span class=\"highlight\">临期信息</span> 或到期日</li><li>剩余保质期低于平台要求的 <span class=\"highlight\">禁止上架销售</span></li><li>效期信息须真实、清晰，不得仅写「详见外包装」</li><li>来源：《天猫国际效期管理规范》（以 rule.tmall.hk 原文为准）</li></ul>",
+        "body": "<ul><li>最小销售单元须标注 <span class=\"highlight\">生产日期、保质期限</span>，信息一致清晰，不得重复粘贴、修改、模糊、手写或篡改</li><li>进口包装 <span class=\"highlight\">中文与外文效期应一致</span>；外文仅标年月、中文标年月日的，按中文标识录入</li><li><span class=\"highlight\">组合装</span>：内件效期一致且外包装可透视的，外包装效期非强制；内件效期不一致的，外包装须标 <span class=\"highlight\">最先到期</span> 商品时效</li><li><span class=\"highlight\">暗码效期</span>商品入库须向仓提供准确效期解读规则</li><li>临期商品须在标题标注 <span class=\"highlight\">【临期】</span>，且在详情页 <span class=\"highlight\">最上方</span> 清晰明显展示临期信息</li><li>规则于 <span class=\"num\">2026-05-21</span> 起生效；来源：《天猫国际商品效期管理规范》</li></ul>",
         "sourceId": "intl-rule-11005234",
         "cardId": "intl_expiry:0"
+      },
+      {
+        "title": "效期违规处理",
+        "severity": "critical",
+        "severityText": "处罚",
+        "date": "2025-07-30",
+        "tags": [
+          "临期未标注",
+          "禁售",
+          "过期"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+        "body": "<ul><li><span class=\"highlight\">临期未标注</span>（发布环节）：按《天猫国际市场管理规则》<span class=\"highlight\">滥发信息</span> 处理</li><li><span class=\"highlight\">临期未标注</span>（售出引发投诉）：按 <span class=\"highlight\">出售描述不符或品质存在问题</span> 处理</li><li><span class=\"highlight\">禁售或过期</span>：按商品质量不符合平台规定 <span class=\"highlight\">严重（A）</span> 等级处理</li><li><span class=\"highlight\">暗码效期</span>入库解读规则或结果错误致买家受影响：视情节按描述不符/品质问题实施细则处罚</li><li>来源：《天猫国际商品效期管理规范》第二章</li></ul>",
+        "sourceId": "intl-rule-11005234",
+        "cardId": "intl_expiry:1"
+      },
+      {
+        "title": "美妆/个护临期与禁售阈值",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-07-30",
+        "tags": [
+          "美妆",
+          "个护",
+          "临期",
+          "禁售"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+        "body": "<ul><li>适用：美妆/个护、婴童美妆/护肤、家居&amp;母婴洗护清洁剂、湿/纸巾、香薰等</li><li><span class=\"highlight\">保质期 ≥3 年</span>：临期=剩余 &lt; 总保质期 <span class=\"num\">30%</span>（&lt;365 天按 365 天算）；禁售=剩余 &lt; <span class=\"num\">10%</span>（&lt;180 天按 180 天算）</li><li><span class=\"highlight\">保质期 &lt;3 年</span>：临期=剩余 &lt; <span class=\"num\">30%</span>（&lt;180 天按 180 天算）；禁售按保质期分段（如 120–180 天剩余 &lt;45 天、90–120 天 &lt;30 天、≤30 天 &lt;5 天等）</li><li>达到临期阈值须在标题标【临期】并在详情页最上方展示；低于禁售阈值 <span class=\"highlight\">禁止上架销售</span></li><li>来源：《天猫国际商品效期管理规范》附录1</li></ul>",
+        "sourceId": "intl-rule-11005234",
+        "cardId": "intl_expiry:2"
+      },
+      {
+        "title": "食品/母婴/医药保健效期阈值",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-07-30",
+        "tags": [
+          "食品",
+          "母婴奶粉",
+          "医药保健"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
+        "body": "<ul><li><span class=\"highlight\">食品</span>：保质期 &gt;25 月临期 30%（&lt;120 天按 120 天）、禁售 10%（&lt;180 天按 180 天）；13–25 月、6–13 月及短保分段另有阈值（如 4–6 月临期 &lt;60 天禁售 &lt;45 天）</li><li><span class=\"highlight\">婴童奶粉</span>：保质期 &gt;2 年临期 30%（&lt;180 天按 180 天）、禁售 10%（&lt;180 天按 180 天）；≤2 年按分段禁售（如 120–180 天剩余 &lt;45 天）</li><li><span class=\"highlight\">医药保健/母婴营养品食品</span>：保质期 ≥2 年临期 30%（&lt;120 天按 120 天）、禁售 10%（&lt;180 天按 180 天）；6 月–2 年、3–6 月及 ≤3 月短保分段执行</li><li><span class=\"highlight\">宠物</span>及其他效期管理品类：按附录1对应分段执行临期 30% / 禁售 10% 及短保天数规则</li><li>来源：《天猫国际商品效期管理规范》附录1</li></ul>",
+        "sourceId": "intl-rule-11005234",
+        "cardId": "intl_expiry:3"
       }
     ]
   },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T16:00:00.000Z",
+  "updatedAt": "2026-05-29T18:00:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/intl/curated-sources.json",
   "sources": [
     {
@@ -8,14 +8,18 @@
       "ruleId": "11005234",
       "cId": "630",
       "url": "https://rule.tmall.hk/?type=detail&ruleId=11005234&cId=630#/rule/detail?ruleId=11005234&cId=630",
-      "label": "跨境商品效期展示与临期标注",
+      "label": "天猫国际商品效期管理规范",
       "categories": [
         "intl_expiry"
       ],
       "cardIds": [
-        "intl_expiry:0"
+        "intl_expiry:0",
+        "intl_expiry:1",
+        "intl_expiry:2",
+        "intl_expiry:3"
       ],
-      "ruleTitle": "天猫国际效期管理规范"
+      "ruleTitle": "天猫国际商品效期管理规范",
+      "manualTextPath": "data/intl/rule-text/rule-11005234.txt"
     },
     {
       "id": "intl-rule-2927",

@@ -1,15 +1,15 @@
 {
-  "lastCheckedAt": "2026-05-29T14:00:00.000Z",
+  "lastCheckedAt": "2026-05-29T18:00:00.000Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
     "intl-rule-11005234": {
-      "status": "error",
-      "message": "MTOP detail fetch failed",
-      "ruleTitle": "天猫国际效期管理规范",
-      "platformModifiedAt": null,
+      "status": "ok",
+      "message": "manual curated from rule-text",
+      "ruleTitle": "天猫国际商品效期管理规范",
+      "platformModifiedAt": "2025-07-30T06:47:00.000Z",
       "contentHash": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": "2026-05-29T18:00:00.000Z"
     },
     "intl-rule-2927": {
       "status": "ok",
