@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-05-29T03:30:00.000Z",
+  "lastCheckedAt": "2026-05-29T12:00:00.000Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -18,14 +18,6 @@
       "platformModifiedAt": "2024-03-28T14:17:00.000Z",
       "contentHash": "",
       "lastSyncedAt": "2026-05-29T03:30:00.000Z"
-    },
-    "intl-rule-spring-ship": {
-      "status": "ok",
-      "message": "manual curated",
-      "ruleTitle": "天猫/天猫国际2026年农历春节发货时间及交易流程调整公告",
-      "platformModifiedAt": "2026-02-10T00:00:00.000Z",
-      "contentHash": "",
-      "lastSyncedAt": null
     },
     "intl-rule-qual-brand": {
       "status": "ok",

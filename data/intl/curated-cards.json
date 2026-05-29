@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T03:30:00.000Z",
+  "updatedAt": "2026-05-29T12:00:00.000Z",
   "autoPublishVersion": 0,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
@@ -25,22 +25,8 @@
   "intl_logistics": {
     "tag": "INTL LOGISTICS",
     "title": "跨境物流与发货",
-    "desc": "涵盖保税/直邮发货时效、物流轨迹认定、大促期间发货调整及交易流程，依据《天猫国际物流时效管理规范》等。",
+    "desc": "涵盖保税/直邮发货时效、物流轨迹认定及交易流程，依据《天猫国际物流时效管理规范》。",
     "cards": [
-      {
-        "title": "春节发货时效与物流轨迹（天猫/天猫国际）",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2026-02-10",
-        "tags": [
-          "大促",
-          "发货时效"
-        ],
-        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009880&cId=393#/rule/detail?ruleId=20009880&cId=393",
-        "body": "<ul><li>支付时间在 <span class=\"num\">2026-02-10</span> 至 <span class=\"num\">2026-02-23</span> 的订单，须在 <span class=\"num\">2026-02-26 23:59:59</span> 前发货并有揽收记录</li><li>天猫国际订单适用国际段发货与物流考核要求（以公告原文为准）</li><li>物流轨迹异常、超时认定按活动期间专项规则执行</li><li>来源：《天猫/天猫国际2026年农历春节发货时间及交易流程调整公告》</li></ul>",
-        "sourceId": "intl-rule-spring-ship",
-        "cardId": "intl_logistics:0"
-      },
       {
         "title": "保税/直邮发货时效要求",
         "severity": "critical",
@@ -54,7 +40,7 @@
         "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
         "body": "<ul><li>保税进口：买家付款并完成实名认证及「掌上海关」核验后 <span class=\"num\">48</span> 小时内发货</li><li>海外直邮/集货进口：除发货地法定假日外，完成上述核验后 <span class=\"num\">120</span> 小时内发货</li><li>定制、预售等特殊情形按约定时间发货；「发货」以物流详情显示 <span class=\"highlight\">已揽收/揽件</span> 为准</li><li>规则于 <span class=\"num\">2026-04-22</span> 起生效；来源：《天猫国际物流时效管理规范》</li></ul>",
         "sourceId": "intl-rule-2927",
-        "cardId": "intl_logistics:1"
+        "cardId": "intl_logistics:0"
       }
     ]
   },
