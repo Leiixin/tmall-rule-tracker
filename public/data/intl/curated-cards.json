@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-22T08:00:00.000Z",
+  "updatedAt": "2026-05-29T03:30:00.000Z",
   "autoPublishVersion": 0,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
@@ -25,7 +25,7 @@
   "intl_logistics": {
     "tag": "INTL LOGISTICS",
     "title": "跨境物流与发货",
-    "desc": "涵盖保税/直邮发货时效、物流轨迹、大促期间发货调整及交易流程，含天猫/天猫国际联合公告。",
+    "desc": "涵盖保税/直邮发货时效、物流轨迹认定、大促期间发货调整及交易流程，依据《天猫国际物流时效管理规范》等。",
     "cards": [
       {
         "title": "春节发货时效与物流轨迹（天猫/天猫国际）",
@@ -40,6 +40,21 @@
         "body": "<ul><li>支付时间在 <span class=\"num\">2026-02-10</span> 至 <span class=\"num\">2026-02-23</span> 的订单，须在 <span class=\"num\">2026-02-26 23:59:59</span> 前发货并有揽收记录</li><li>天猫国际订单适用国际段发货与物流考核要求（以公告原文为准）</li><li>物流轨迹异常、超时认定按活动期间专项规则执行</li><li>来源：《天猫/天猫国际2026年农历春节发货时间及交易流程调整公告》</li></ul>",
         "sourceId": "intl-rule-spring-ship",
         "cardId": "intl_logistics:0"
+      },
+      {
+        "title": "保税/直邮发货时效要求",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2024-03-28",
+        "tags": [
+          "保税",
+          "直邮",
+          "发货时效"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>保税进口：买家付款并完成实名认证及「掌上海关」核验后 <span class=\"num\">48</span> 小时内发货</li><li>海外直邮/集货进口：除发货地法定假日外，完成上述核验后 <span class=\"num\">120</span> 小时内发货</li><li>定制、预售等特殊情形按约定时间发货；「发货」以物流详情显示 <span class=\"highlight\">已揽收/揽件</span> 为准</li><li>规则于 <span class=\"num\">2026-04-22</span> 起生效；来源：《天猫国际物流时效管理规范》</li></ul>",
+        "sourceId": "intl-rule-2927",
+        "cardId": "intl_logistics:1"
       }
     ]
   },
@@ -67,19 +82,21 @@
   "intl_penalty": {
     "tag": "INTL PENALTIES",
     "title": "违规与处罚",
-    "desc": "天猫国际对发货违规、效期违规、资质造假等行为的处理规则与赔付标准。",
+    "desc": "天猫国际对延迟发货、缺货、虚假发货等物流违规的处理规则、赔付标准与店铺管控措施。",
     "cards": [
       {
-        "title": "延迟发货与物流违规处理",
+        "title": "延迟发货、缺货与虚假发货赔付",
         "severity": "critical",
         "severityText": "处罚",
-        "date": "2024-09-12",
+        "date": "2024-03-28",
         "tags": [
-          "发货违规"
+          "延迟发货",
+          "缺货",
+          "虚假发货"
         ],
-        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
-        "body": "<ul><li>未按承诺时效发货或未上传有效物流单号的，按 <span class=\"highlight\">延迟发货</span> 规则处理</li><li>物流轨迹异常、虚假发货等情形可能触发扣分、赔付或限制权益</li><li>大促期间违规认定以专项公告及日常规范中较严者为准</li><li>来源：天猫国际市场管理 / 物流时效相关规范</li></ul>",
-        "sourceId": "intl-rule-penalty-ship",
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li><span class=\"highlight\">延迟发货</span>：未满足发货原则，赔付成交价 <span class=\"num\">5%</span>（最低 5 元、最高 50 元）</li><li><span class=\"highlight\">缺货</span>：延迟后 72 小时仍未发货等情形，保税赔 <span class=\"num\">15%</span>、直邮/集货赔 <span class=\"num\">30%</span>（各 5–500 元）</li><li><span class=\"highlight\">虚假发货</span>：保税揽收后 24h 无更新、物流停滞超期等；直邮国际段揽收后 <span class=\"num\">168</span> 小时无更新，赔付 <span class=\"num\">30%</span></li><li>同日多笔合并赔付最高 <span class=\"num\">500</span> 元；月度揽收及时率 &lt;85% 限制大促活动 <span class=\"num\">30</span> 天</li><li>来源：《天猫国际物流时效管理规范》</li></ul>",
+        "sourceId": "intl-rule-2927",
         "cardId": "intl_penalty:0"
       }
     ]

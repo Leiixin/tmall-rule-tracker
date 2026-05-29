@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-05-28T10:45:58.577Z",
+  "lastCheckedAt": "2026-05-29T03:30:00.000Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -10,6 +10,14 @@
       "platformModifiedAt": null,
       "contentHash": "",
       "lastSyncedAt": null
+    },
+    "intl-rule-2927": {
+      "status": "ok",
+      "message": "manual curated from rule-text",
+      "ruleTitle": "天猫国际物流时效管理规范",
+      "platformModifiedAt": "2024-03-28T14:17:00.000Z",
+      "contentHash": "",
+      "lastSyncedAt": "2026-05-29T03:30:00.000Z"
     },
     "intl-rule-spring-ship": {
       "status": "ok",
@@ -26,23 +34,15 @@
       "platformModifiedAt": null,
       "contentHash": "",
       "lastSyncedAt": null
-    },
-    "intl-rule-penalty-ship": {
-      "status": "ok",
-      "message": "manual curated",
-      "ruleTitle": "天猫国际物流违规处理（示例）",
-      "platformModifiedAt": null,
-      "contentHash": "",
-      "lastSyncedAt": null
     }
   },
   "summary": {
-    "checked": 1,
+    "checked": 0,
     "changed": 0,
-    "errors": 1,
+    "errors": 0,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
-    "forced": 1
+    "forced": 0
   }
 }

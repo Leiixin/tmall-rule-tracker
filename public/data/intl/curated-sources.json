@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-22T08:00:00.000Z",
+  "updatedAt": "2026-05-29T03:30:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/intl/curated-sources.json",
   "sources": [
     {
@@ -16,6 +16,23 @@
         "intl_expiry:0"
       ],
       "ruleTitle": "天猫国际效期管理规范"
+    },
+    {
+      "id": "intl-rule-2927",
+      "ruleId": "2927",
+      "cId": "633",
+      "url": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+      "label": "天猫国际物流时效管理规范",
+      "categories": [
+        "intl_logistics",
+        "intl_penalty"
+      ],
+      "cardIds": [
+        "intl_logistics:1",
+        "intl_penalty:0"
+      ],
+      "ruleTitle": "天猫国际物流时效管理规范",
+      "manualTextPath": "data/intl/rule-text/rule-2927.txt"
     },
     {
       "id": "intl-rule-spring-ship",
@@ -44,20 +61,6 @@
         "intl_qual:0"
       ],
       "ruleTitle": "天猫国际品牌与资质要求（示例）"
-    },
-    {
-      "id": "intl-rule-penalty-ship",
-      "ruleId": "20008024",
-      "cId": "636",
-      "url": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
-      "label": "延迟发货与物流违规处理",
-      "categories": [
-        "intl_penalty"
-      ],
-      "cardIds": [
-        "intl_penalty:0"
-      ],
-      "ruleTitle": "天猫国际物流违规处理（示例）"
     }
   ]
 }
