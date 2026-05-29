@@ -1,5 +1,10 @@
 ﻿import dayjs from "dayjs";
-import { CATEGORY_KEYWORDS, CATEGORY_LABELS } from "../config.js";
+import {
+  CATEGORY_KEYWORDS,
+  CATEGORY_LABELS,
+  INTL_CATEGORY_KEYWORDS,
+  INTL_CATEGORY_LABELS
+} from "../config.js";
 
 function normalizeText(text) {
   return (text || "").replace(/\s+/g, " ").trim();
@@ -40,24 +45,36 @@ function buildSummary(text) {
   };
 }
 
-function detectTags(text) {
-  return Object.entries(CATEGORY_KEYWORDS)
+function detectTags(text, keywordMap = CATEGORY_KEYWORDS) {
+  return Object.entries(keywordMap)
     .filter(([, keywords]) => containsAny(text, keywords))
     .map(([key]) => key);
 }
 
-export function classifyRule(rule) {
-  const text = normalizeText(`${rule.title || ""} ${rule.content || ""}`);
+function buildIntlSummary(text) {
   return {
-    ...rule,
-    snippet: normalizeText(rule.content || "").slice(0, 220),
-    tags: detectTags(text),
-    summary: buildSummary(text)
+    intl_expiry: pickSentence(text, INTL_CATEGORY_KEYWORDS.intl_expiry),
+    intl_logistics: pickSentence(text, INTL_CATEGORY_KEYWORDS.intl_logistics),
+    intl_qual: pickSentence(text, INTL_CATEGORY_KEYWORDS.intl_qual),
+    intl_penalty: pickSentence(text, INTL_CATEGORY_KEYWORDS.intl_penalty)
   };
 }
 
-export function classifyRules(rules) {
-  return rules.map(classifyRule);
+export function classifyRule(rule, options = {}) {
+  const text = normalizeText(`${rule.title || ""} ${rule.content || ""}`);
+  const isIntl = options.platform === "intl";
+  const keywordMap = isIntl ? INTL_CATEGORY_KEYWORDS : CATEGORY_KEYWORDS;
+
+  return {
+    ...rule,
+    snippet: normalizeText(rule.content || "").slice(0, 220),
+    tags: detectTags(text, keywordMap),
+    summary: isIntl ? buildIntlSummary(text) : buildSummary(text)
+  };
+}
+
+export function classifyRules(rules, options = {}) {
+  return rules.map((rule) => classifyRule(rule, options));
 }
 
 function pickLatestByTag(rules, tag) {

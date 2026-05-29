@@ -7,17 +7,20 @@ import {
   MAX_LIST_PER_SOURCE,
   MAX_MTOP_LIST_PAGES,
   MTOP_APIS,
-  MTOP_CONFIG,
   MTOP_HK_SITE,
   MTOP_CN_SITE,
   MTOP_DETAIL_CONCURRENCY,
   MTOP_PAGE_SIZE,
   MTOP_SEARCH_KEYWORDS,
+  MTOP_SEARCH_KEYWORDS_INTL,
   RULE_KEYWORDS,
   CRAWL_SOURCE_MANIFEST,
+  CRAWL_SOURCE_MANIFEST_INTL,
   MTOP_HTML_SKIP_THRESHOLD,
   MTOP_RULE_SOURCE_LABEL,
-  TMALL_SOURCES
+  MTOP_HK_RULE_SOURCE_LABEL,
+  TMALL_SOURCES,
+  INTL_HTML_SOURCES
 } from "../config.js";
 import { buildRuleDetailUrl } from "../utils/ruleDetailUrl.js";
 
@@ -239,8 +242,13 @@ class MtopRuleClient {
   }
 }
 
-async function crawlByMtop() {
-  const mtop = new MtopRuleClient();
+async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
+  const searchKeywords = options.searchKeywords || MTOP_SEARCH_KEYWORDS;
+  const sourceLabel = options.sourceLabel || MTOP_RULE_SOURCE_LABEL;
+  const ruleHost = options.ruleHost || "rulechannel.tmall.com";
+  const isHk = site === MTOP_HK_SITE;
+
+  const mtop = new MtopRuleClient(site);
   const metadata = [];
 
   for (let pageIndex = 1; pageIndex <= MAX_MTOP_LIST_PAGES; pageIndex += 1) {
@@ -264,7 +272,7 @@ async function crawlByMtop() {
     }
   }
 
-  for (const keyword of MTOP_SEARCH_KEYWORDS) {
+  for (const keyword of searchKeywords) {
     const payload = await mtop.call(MTOP_APIS.search, {
       pageIndex: 1,
       pageSize: 20,
@@ -288,7 +296,15 @@ async function crawlByMtop() {
 
   const picked = [...byRuleId.values()].slice(0, MAX_DETAIL_FETCH);
   const details = await mapLimit(picked, MTOP_DETAIL_CONCURRENCY, async (item) => {
-    const payload = await mtop.call(MTOP_APIS.detail, { ruleId: item.ruleId });
+    const detailPayload = {
+      ruleId: String(item.ruleId),
+      language: null
+    };
+    if (isHk && item.lastCategoryId != null && item.lastCategoryId !== "") {
+      detailPayload.lastCategoryId = String(item.lastCategoryId);
+    }
+
+    const payload = await mtop.call(MTOP_APIS.detail, detailPayload);
     if (!isMtopSuccess(payload) || !payload?.data?.model) {
       return null;
     }
@@ -301,11 +317,12 @@ async function crawlByMtop() {
 
     const publishedAt =
       parseDateTime(model.modifiedTime || item.modifiedTime) || new Date().toISOString();
+    const cId = model.lastCategoryId ?? item.lastCategoryId ?? "";
 
     return {
       title: normalizeText(model.ruleTitle || item.ruleTitle || ""),
-      url: buildRuleDetailUrl(model.ruleId || item.ruleId, model.lastCategoryId),
-      source: MTOP_RULE_SOURCE_LABEL,
+      url: buildRuleDetailUrl(model.ruleId || item.ruleId, cId, ruleHost),
+      source: sourceLabel,
       publishedAt,
       content: content.slice(0, 12000),
       crawledAt: new Date().toISOString()
@@ -424,8 +441,8 @@ async function crawlHtmlSource(source) {
 
 const HTML_SKIP_MESSAGE = "MTOP 已满足阈值，本次未执行网页抓取";
 
-function manifestEntryById(id) {
-  return CRAWL_SOURCE_MANIFEST.find((entry) => entry.id === id);
+function manifestEntryById(id, manifest = CRAWL_SOURCE_MANIFEST) {
+  return manifest.find((entry) => entry.id === id);
 }
 
 function dedupeRules(rules) {
@@ -439,14 +456,19 @@ function dedupeRules(rules) {
   return [...deduped.values()];
 }
 
-export async function crawlAllSources() {
+async function crawlAllSourcesForManifest({
+  manifest,
+  htmlSources,
+  mtopId,
+  mtopCrawl
+}) {
   const report = [];
-  const mtopEntry = manifestEntryById("mtop");
-  const mtopRules = await crawlByMtop();
+  const mtopEntry = manifestEntryById(mtopId, manifest);
+  const mtopRules = await mtopCrawl();
 
   report.push({
-    id: "mtop",
-    label: mtopEntry.label,
+    id: mtopId,
+    label: mtopEntry?.label || mtopId,
     status: mtopRules.length > 0 ? "online" : "error",
     count: mtopRules.length,
     message: mtopRules.length === 0 ? "未获取到规则" : undefined
@@ -455,7 +477,7 @@ export async function crawlAllSources() {
   const skipHtml = mtopRules.length >= MTOP_HTML_SKIP_THRESHOLD;
   const htmlRules = [];
 
-  for (const entry of CRAWL_SOURCE_MANIFEST.filter((item) => item.type === "html")) {
+  for (const entry of manifest.filter((item) => item.type === "html")) {
     if (skipHtml) {
       report.push({
         id: entry.id,
@@ -467,7 +489,7 @@ export async function crawlAllSources() {
       continue;
     }
 
-    const source = TMALL_SOURCES.find((item) => item.url === entry.url);
+    const source = htmlSources.find((item) => item.url === entry.url);
     if (!source) {
       report.push({
         id: entry.id,
@@ -492,6 +514,36 @@ export async function crawlAllSources() {
 
   const rules = skipHtml ? mtopRules : dedupeRules([...mtopRules, ...htmlRules]);
   return { rules, report };
+}
+
+export async function crawlAllSources(options = {}) {
+  const platform = options.platform || "tmall";
+
+  if (platform === "intl") {
+    return crawlAllSourcesForManifest({
+      manifest: CRAWL_SOURCE_MANIFEST_INTL,
+      htmlSources: INTL_HTML_SOURCES,
+      mtopId: "mtop-hk",
+      mtopCrawl: () =>
+        crawlByMtop(MTOP_HK_SITE, {
+          searchKeywords: MTOP_SEARCH_KEYWORDS_INTL,
+          sourceLabel: MTOP_HK_RULE_SOURCE_LABEL,
+          ruleHost: "rule.tmall.hk"
+        })
+    });
+  }
+
+  return crawlAllSourcesForManifest({
+    manifest: CRAWL_SOURCE_MANIFEST,
+    htmlSources: TMALL_SOURCES,
+    mtopId: "mtop",
+    mtopCrawl: () =>
+      crawlByMtop(MTOP_CN_SITE, {
+        searchKeywords: MTOP_SEARCH_KEYWORDS,
+        sourceLabel: MTOP_RULE_SOURCE_LABEL,
+        ruleHost: "rulechannel.tmall.com"
+      })
+  });
 }
 
 /** 按 ruleId 拉取单条规则详情（供分类页引用来源监测使用） */

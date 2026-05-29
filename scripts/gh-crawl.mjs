@@ -1,16 +1,37 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import dayjs from "dayjs";
 
 import { crawlAllSources } from "../src/crawler/tmallCrawler.js";
-import { classifyRules } from "../src/services/classifier.js";
-import { enrichRulesWithAiSummary } from "../src/services/llm/summarizer.js";
-import { loadRules, upsertRules } from "../src/services/storage.js";
 import { normalizeRuleDetailUrl } from "../src/utils/ruleDetailUrl.js";
 import {
   buildErrorReport,
   buildSourcesFromReport
 } from "../src/utils/crawlSourceStatus.js";
+
+const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+function parsePlatform(argv) {
+  for (const arg of argv) {
+    if (arg.startsWith("--platform=")) {
+      return arg.slice("--platform=".length);
+    }
+  }
+  return process.env.PLATFORM_ID || "tmall";
+}
+
+const platform = parsePlatform(process.argv.slice(2));
+
+if (platform === "intl" && !process.env.DATA_DIR) {
+  process.env.DATA_DIR = path.join(repoRoot, "data", "intl");
+}
+
+function resolveDataDir() {
+  return process.env.DATA_DIR
+    ? path.resolve(process.env.DATA_DIR)
+    : path.join(repoRoot, "data");
+}
 
 function safeJsonParse(text, fallback) {
   try {
@@ -31,7 +52,6 @@ async function readJson(filePath, fallback) {
 
 async function writeJson(filePath, value) {
   await mkdir(path.dirname(filePath), { recursive: true });
-  // Write UTF-8 with BOM for Windows PowerShell / Notepad compatibility.
   await writeFile(filePath, `\uFEFF${JSON.stringify(value, null, 2)}`, "utf8");
 }
 
@@ -40,14 +60,23 @@ function toYmd(iso) {
   return t.isValid() ? t.format("YYYY-MM-DD") : "";
 }
 
-function buildCategorized(processedRules, timestamp) {
-  const categorized = {
-    shelf: [],
-    score: [],
-    ship: [],
-    penalty: [],
-    general: []
-  };
+function buildCategorized(processedRules, timestamp, crawlPlatform) {
+  const isIntl = crawlPlatform === "intl";
+  const categorized = isIntl
+    ? {
+        intl_expiry: [],
+        intl_logistics: [],
+        intl_qual: [],
+        intl_penalty: [],
+        general: []
+      }
+    : {
+        shelf: [],
+        score: [],
+        ship: [],
+        penalty: [],
+        general: []
+      };
 
   const toItem = (rule, category) => {
     const discoveredAt = rule.lastSeenAt || rule.publishedAt || timestamp;
@@ -66,21 +95,30 @@ function buildCategorized(processedRules, timestamp) {
     const tags = Array.isArray(rule.tags) ? rule.tags : [];
     let matched = false;
 
-    if (tags.includes("effectivePeriod")) {
-      categorized.shelf.push(toItem(rule, "shelf"));
-      matched = true;
-    }
-    if (tags.includes("shopExperienceScore")) {
-      categorized.score.push(toItem(rule, "score"));
-      matched = true;
-    }
-    if (tags.includes("shippingTimeliness")) {
-      categorized.ship.push(toItem(rule, "ship"));
-      matched = true;
-    }
-    if (tags.includes("shippingViolationPenalty")) {
-      categorized.penalty.push(toItem(rule, "penalty"));
-      matched = true;
+    if (isIntl) {
+      for (const tag of ["intl_expiry", "intl_logistics", "intl_qual", "intl_penalty"]) {
+        if (tags.includes(tag)) {
+          categorized[tag].push(toItem(rule, tag));
+          matched = true;
+        }
+      }
+    } else {
+      if (tags.includes("effectivePeriod")) {
+        categorized.shelf.push(toItem(rule, "shelf"));
+        matched = true;
+      }
+      if (tags.includes("shopExperienceScore")) {
+        categorized.score.push(toItem(rule, "score"));
+        matched = true;
+      }
+      if (tags.includes("shippingTimeliness")) {
+        categorized.ship.push(toItem(rule, "ship"));
+        matched = true;
+      }
+      if (tags.includes("shippingViolationPenalty")) {
+        categorized.penalty.push(toItem(rule, "penalty"));
+        matched = true;
+      }
     }
 
     if (!matched) {
@@ -110,16 +148,25 @@ function buildTimeline(rules, timestamp, limit = 16) {
   return { lastUpdated: timestamp, items };
 }
 
-async function main() {
-  const dataDir = process.env.DATA_DIR
-    ? path.resolve(process.env.DATA_DIR)
-    : path.join(process.cwd(), "data");
+function publicDataDirFor(dataDir) {
+  const rel = path.relative(path.join(repoRoot, "data"), dataDir);
+  if (rel && !rel.startsWith("..") && rel !== ".") {
+    return path.join(repoRoot, "public", "data", rel);
+  }
+  return path.join(repoRoot, "public", "data");
+}
 
+async function main() {
+  const { classifyRules } = await import("../src/services/classifier.js");
+  const { enrichRulesWithAiSummary } = await import("../src/services/llm/summarizer.js");
+  const { loadRules, upsertRules } = await import("../src/services/storage.js");
+
+  const dataDir = resolveDataDir();
   const statusPath = path.join(dataDir, "status.json");
   const scrapedPath = path.join(dataDir, "scraped.json");
   const timelinePath = path.join(dataDir, "timeline.json");
   const rulesPath = path.join(dataDir, "rules.json");
-  const publicDataDir = path.join(process.cwd(), "public", "data");
+  const publicDataDir = publicDataDirFor(dataDir);
 
   const prevStatus = await readJson(statusPath, {});
   const prevFetchCount = Number(prevStatus.fetchCount || 0);
@@ -137,10 +184,10 @@ async function main() {
   let llmResult = null;
 
   try {
-    const crawlResult = await crawlAllSources();
+    const crawlResult = await crawlAllSources({ platform });
     crawled = crawlResult.rules;
     crawlReport = crawlResult.report;
-    const classified = classifyRules(crawled);
+    const classified = classifyRules(crawled, { platform });
     merged = await upsertRules(classified);
 
     if (merged.length) {
@@ -158,11 +205,10 @@ async function main() {
     }
   } catch (err) {
     errorMessage = err instanceof Error ? err.message : "crawl failed";
-    // Keep previous data intact when crawl fails.
     merged = beforeRules;
   }
 
-  const processed = classifyRules(merged);
+  const processed = classifyRules(merged, { platform });
   const newRulesCount = Math.max(0, merged.length - beforeCount);
   const fetchCount = prevFetchCount + 1;
 
@@ -176,12 +222,13 @@ async function main() {
     fetchCount,
     totalRules: merged.length,
     newRulesCount,
-    sources
+    sources,
+    platform
   };
 
   const scrapedJson = {
     lastUpdated: timestamp,
-    categorized: buildCategorized(processed, timestamp)
+    categorized: buildCategorized(processed, timestamp, platform)
   };
 
   const timelineJson = buildTimeline(merged, timestamp);
@@ -201,12 +248,12 @@ async function main() {
     // public/data may not exist in minimal checkouts
   }
 
-  // Helpful for Actions logs.
   // eslint-disable-next-line no-console
   console.log(
     JSON.stringify(
       {
         ok: !errorMessage,
+        platform,
         fetched: crawled.length,
         stored: merged.length,
         fetchCount,

@@ -880,9 +880,9 @@ function applyInlinePlatformConfigFallback() {
       ]
     },
     {
-      id: 'intl', label: '天猫国际', enabled: true, planning: true, priority: 90, dataPrefix: 'intl/', weeklyScope: 'intl',
+      id: 'intl', label: '天猫国际', enabled: true, priority: 90, dataPrefix: 'intl/', weeklyScope: 'intl',
       brandSubTitle: 'Tmall Global Rules',
-      homeDesc: '天猫国际规则监控总览，汇总效期、跨境物流、资质与违规等分类及监测状态。',
+      homeDesc: '天猫国际规则监控总览：rule.tmall.hk MTOP 自动抓取首页规则公告，并汇总效期、跨境物流、资质与违规等分类卡片。',
       weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>天猫国际相关</strong>规则。',
       homeSubtitle: '效期 / 物流 / 资质 / 违规',
       dataSources: ['天猫国际（rule.tmall.hk）'],
@@ -1042,8 +1042,8 @@ function isLocalDevHost() {
   return h === 'localhost' || h === '127.0.0.1';
 }
 
-let timelineDataLive = null;
-let rulesJsonCache = null;
+let timelineDataByPlatform = {};
+let rulesJsonCacheByPlatform = {};
 let weeklyReportData = { range: { label: '' }, total: 0, items: [] };
 var visitStatsCache = { sitePv: null, siteUv: null };
 var BSZ_API = 'https://bsz.saop.cc/api';
@@ -1089,6 +1089,27 @@ function getDataBasePath() {
     return '/tmall-rule-tracker/data/';
   }
   return './data/';
+}
+
+function getPlatformDataPath() {
+  return getDataBasePath() + (getPlatformConfig().dataPrefix || '');
+}
+
+function getTimelineForPlatform(platform) {
+  var p = platform || currentPlatform;
+  return timelineDataByPlatform[p] || null;
+}
+
+function getTimelineForDisplay() {
+  var live = getTimelineForPlatform();
+  if (live && live.length) return live;
+  if (currentPlatform === 'intl') return [];
+  return TIMELINE_DATA;
+}
+
+function getRulesJsonCache(platform) {
+  var p = platform || currentPlatform;
+  return rulesJsonCacheByPlatform[p] || null;
 }
 
 var WEEKLY_TAG_LABELS = {
@@ -1483,14 +1504,14 @@ async function loadWeeklyReport() {
     } catch (e) { /* fallback */ }
   }
   try {
-    var rules = rulesJsonCache;
+    var rules = getRulesJsonCache();
     if (!rules) {
-      var base = getDataBasePath();
+      var base = getPlatformDataPath();
       var rulesRes = await fetch(base + 'rules.json');
-      if (!rulesRes.ok) rulesRes = await fetch('./data/rules.json');
+      if (!rulesRes.ok) rulesRes = await fetch(getDataBasePath() + 'rules.json');
       if (rulesRes.ok) {
         rules = await rulesRes.json();
-        rulesJsonCache = rules;
+        rulesJsonCacheByPlatform[currentPlatform] = rules;
       }
     }
     if (Array.isArray(rules)) {
@@ -1520,11 +1541,11 @@ function mergeBackendStatus(primary, secondary) {
 }
 
 async function loadExternalData() {
-  var basePath = getDataBasePath();
+  var basePath = getPlatformDataPath();
+  var useApi = currentPlatform === 'tmall' &&
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
   try {
-    // Static hosting (GitHub Pages) has no backend API. Prefer local JSON there.
-    var preferApi = (location.hostname === 'localhost' || location.hostname === '127.0.0.1');
-    var requests = preferApi
+    var requests = useApi
       ? [
           fetch('/api/status'),
           fetch('/api/rules'),
@@ -1539,7 +1560,7 @@ async function loadExternalData() {
           fetch('/api/status'),
           fetch('/api/rules')
         ];
-    var idx = preferApi
+    var idx = useApi
       ? { apiStatus: 0, apiRules: 1, timeline: 2, localStatus: 3, rulesJson: 4 }
       : { localStatus: 0, timeline: 1, rulesJson: 2, apiStatus: 3, apiRules: 4 };
     var results = await Promise.allSettled(requests);
@@ -1574,12 +1595,16 @@ async function loadExternalData() {
 
     if (results[idx.timeline].status === 'fulfilled' && results[idx.timeline].value.ok) {
       var d = await results[idx.timeline].value.json();
-      if (d && d.items && d.items.length > 0) timelineDataLive = d.items;
+      if (d && d.items && d.items.length > 0) {
+        timelineDataByPlatform[currentPlatform] = d.items;
+      } else {
+        timelineDataByPlatform[currentPlatform] = null;
+      }
     }
 
     if (results[idx.rulesJson].status === 'fulfilled' && results[idx.rulesJson].value.ok) {
       var rulesArr = await results[idx.rulesJson].value.json();
-      if (Array.isArray(rulesArr)) rulesJsonCache = rulesArr;
+      if (Array.isArray(rulesArr)) rulesJsonCacheByPlatform[currentPlatform] = rulesArr;
     }
 
     await loadCuratedData();
@@ -1880,8 +1905,12 @@ function renderCategoryInsights(key) {
 }
 
 function renderTimeline() {
-  var data = timelineDataLive || TIMELINE_DATA;
-  let html = '<div class="timeline-section"><div class="timeline-header">规则公告<a href="https://rulechannel.tmall.com/" target="_blank" rel="noopener" style="float:right;font-size:12px;color:var(--text-muted);font-weight:400;text-decoration:none;opacity:.6">来源: 天猫规则中心</a></div><div class="timeline">';
+  var data = getTimelineForDisplay();
+  var timelineSourceUrl = currentPlatform === 'intl'
+    ? 'https://rule.tmall.hk/'
+    : 'https://rulechannel.tmall.com/';
+  var timelineSourceLabel = currentPlatform === 'intl' ? '天猫国际规则中心' : '天猫规则中心';
+  let html = '<div class="timeline-section"><div class="timeline-header">规则公告<a href="' + timelineSourceUrl + '" target="_blank" rel="noopener" style="float:right;font-size:12px;color:var(--text-muted);font-weight:400;text-decoration:none;opacity:.6">来源: ' + timelineSourceLabel + '</a></div><div class="timeline">';
   data.forEach(function(item) {
     var detailLink = item.link ? normalizeRuleDetailLink(item.link) : '';
     var inner = detailLink
@@ -1901,7 +1930,7 @@ function renderHome() {
     if (RULES_DATA && RULES_DATA[k] && RULES_DATA[k].cards) totalCards += RULES_DATA[k].cards.length;
   });
   var fetchedTotal = backendStatus ? backendStatus.totalRules : 0;
-  var tlData = timelineDataLive || TIMELINE_DATA;
+  var tlData = getTimelineForDisplay();
   var latestDate = '--';
   // Use the most recent date from 规则公告 (timeline)
   if (tlData.length > 0 && tlData[0].date) {
@@ -2328,7 +2357,7 @@ async function switchPlatform(platform) {
     currentTab === 'home' ||
     currentTab === 'weekly';
   await loadCuratedData();
-  await loadWeeklyReport();
+  await loadExternalData();
   updateStatusBar();
   showTab(keepTab ? currentTab : 'home');
 }

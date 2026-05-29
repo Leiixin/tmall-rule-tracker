@@ -10,6 +10,7 @@
     "autostart:remove": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/uninstall-autostart.ps1",
     "migrate:urls": "node scripts/migrate-rule-urls.mjs",
     "crawl": "node scripts/gh-crawl.mjs",
+    "crawl:intl": "node scripts/gh-crawl.mjs --platform=intl",
     "summarize": "node scripts/summarize-rules.mjs",
     "migrate:curated": "node scripts/migrate-curated-data.mjs",
     "migrate:score-insights": "node scripts/migrate-score-insights.mjs",

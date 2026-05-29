@@ -46,6 +46,16 @@ jobs:
           LLM_BASE_URL: https://api.deepseek.com
           LLM_MODEL: deepseek-chat
 
+      - name: Crawl Intl Rules (rule.tmall.hk)
+        run: node scripts/gh-crawl.mjs --platform=intl
+        env:
+          TZ: Asia/Shanghai
+          DATA_DIR: data/intl
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+
       - name: Sync Curated Category Cards
         run: node scripts/sync-curated-cards.mjs
         env:
