@@ -1,6 +1,6 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-05-29T09:55:27.862Z",
+  "updatedAt": "2026-05-29T10:03:41.740Z",
   "autoPublishVersion": 1,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
@@ -28,10 +28,10 @@
         "date": "2026-06-02",
         "tags": [
           "保质期",
-          "禁售"
+          "临期"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期以月/年换算：1月=<span class=\"num\">30</span>天，1年=<span class=\"num\">365</span>天，临期天数向上取整</li><li>365天≤保质期：剩余≤<span class=\"num\">45</span>天为临期；180～365天：≤<span class=\"num\">30</span>天；90～180天：≤<span class=\"num\">20</span>天</li><li>国家/地区标准严于平台时，按更严标准执行</li><li>来源：《商品保质期管理和宣传规范》3.2</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">换算规则</span>：保质期以「月」计按 <span class=\"num\">1月=30天</span>；以「年」计按 <span class=\"num\">1年=365天</span>；临期天数<strong>向上取整</strong></li><li><span class=\"highlight\">365天≤保质期</span>：剩余保质期 <span class=\"num\">0～45天</span>（含）为临期</li><li><span class=\"highlight\">180天≤保质期＜365天</span>：剩余 <span class=\"num\">0～30天</span>（含）为临期</li><li><span class=\"highlight\">90天≤保质期＜180天</span>：剩余 <span class=\"num\">0～20天</span>（含）为临期</li><li><span class=\"highlight\">30天≤保质期＜90天</span>：剩余 <span class=\"num\">0～10天</span>（含）为临期</li><li><span class=\"highlight\">15天≤保质期＜30天</span>：剩余 <span class=\"num\">0～5天</span>（含）为临期</li><li><span class=\"highlight\">保质期＜15天</span>：剩余 <span class=\"num\">0～4天</span>（含）为临期</li><li>国家/地区临期标准严于上述时，按更严标准执行；个护家清行业另见《【个护家清】商品发布细则》</li><li>来源：《商品保质期管理和宣传规范》3.2、3.5、3.6</li></ul>",
         "sourceId": "dy-rule-aJk964FFQKKZ",
         "cardId": "shelf:1"
       },
