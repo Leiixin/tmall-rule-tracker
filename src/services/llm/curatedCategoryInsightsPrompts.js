@@ -19,9 +19,20 @@ const CATEGORY_META = {
   }
 };
 
-export function buildCategoryInsightsSystemPrompt(category) {
+function advisorForPlatform(platform, category) {
+  if (platform === "douyin") {
+    return "抖音电商商家运营顾问";
+  }
+  if (platform === "intl" || String(category).startsWith("intl_")) {
+    return "天猫国际跨境商家运营顾问";
+  }
+  return "天猫商家运营顾问";
+}
+
+export function buildCategoryInsightsSystemPrompt(category, platform = "tmall") {
   const meta = CATEGORY_META[category] || { title: category, focus: "" };
-  return `你是天猫商家运营顾问。根据规则原文（及可选的变更前摘要），为「${meta.title}」分类页生成规则变更解读 JSON（不要 markdown）。
+  const advisor = advisorForPlatform(platform, category);
+  return `你是${advisor}。根据规则原文（及可选的变更前摘要），为「${meta.title}」分类页生成规则变更解读 JSON（不要 markdown）。
 
 分类侧重：${meta.focus}
 

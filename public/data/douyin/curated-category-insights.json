@@ -1,0 +1,78 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-05-29T07:23:08.213Z",
+  "categories": {
+    "score": {
+      "pinned": true,
+      "sourceId": "dy-rule-103956",
+      "ruleTitle": "商家体验分规范",
+      "panelSubtitle": "2026年5月商家体验分规范要点（正式阶段）",
+      "generatedAt": "2026-05-29T07:23:08.213Z",
+      "link": "https://school.jinritemai.com/doudian/web/rules/103956",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "成长/正式阶段分流考核",
+          "detail": "近30天有效支付订单 <span class=\"new-val\">&lt;30单</span> 为成长阶段（默认70分）；<span class=\"new-val\">≥30单</span> 进入正式阶段百分制考核（50～100分）。",
+          "date": "2026-05-07",
+          "link": "https://school.jinritemai.com/doudian/web/rules/103956"
+        },
+        {
+          "type": "new",
+          "title": "差行为扣分机制",
+          "detail": "消极服务、刷单刷评等行为可累计扣分：客服嘲讽等每次扣 <span class=\"num\">3</span> 分（30天累计不超15分）；非正常手段刷体验分一次性扣 <span class=\"num\">15</span> 分。",
+          "date": "2026-05-07",
+          "link": "https://school.jinritemai.com/doudian/web/rules/103956"
+        },
+        {
+          "type": "modify",
+          "title": "三维指标权重因行业而异",
+          "detail": "正式阶段体验分 = 商品体验×权重 + 物流体验×权重 + 服务体验×权重 − 差行为扣分；不同行业权重存在差异。",
+          "date": "2026-05-07",
+          "link": "https://school.jinritemai.com/doudian/web/rules/103956"
+        },
+        {
+          "type": "new",
+          "title": "应用场景扩展",
+          "detail": "体验分影响 <span class=\"highlight\">千川投放、营销活动提报、精选联盟准入</span>；正式阶段分数以五星制向消费者展示。",
+          "date": "2026-05-07",
+          "link": "https://school.jinritemai.com/doudian/web/rules/103956"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "流量与投放",
+          "desc": "体验分低于管控线将限制千川投放及活动报名，直接影响获客。"
+        },
+        {
+          "level": "medium",
+          "title": "联盟与分销",
+          "desc": "精选联盟准入与体验分挂钩，低分将限制达人合作机会。"
+        },
+        {
+          "level": "medium",
+          "title": "消费者感知",
+          "desc": "正式阶段分数在店铺首页、商详页展示，直接影响转化与信任。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "action",
+          "title": "监控三维指标",
+          "desc": "在抖店后台「商家体验分」查看商品、物流、服务各指标得分与行业对比，优先改善低于合格线的项。"
+        },
+        {
+          "level": "action",
+          "title": "避免差行为扣分",
+          "desc": "规范客服话术与售后处理，杜绝刷单刷评；成长阶段亦须避免消极服务导致降至60分。"
+        },
+        {
+          "level": "action",
+          "title": "关注揽收与售后时效",
+          "desc": "重点优化揽收时长、配送时效达成率、售后处理时长及飞鸽响应时长，均为正式阶段核心考核项。"
+        }
+      ]
+    }
+  }
+}

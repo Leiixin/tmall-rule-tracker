@@ -815,17 +815,20 @@ const RULES_DATA_FALLBACK_INTL = {
   intl_penalty: { tag: 'INTL PENALTIES', title: '违规与处罚', desc: '正在加载规则卡片…', cards: [] }
 };
 
+const RULES_DATA_FALLBACK_DOUYIN = RULES_DATA_FALLBACK_TMALL;
+
 var PLATFORM_STORAGE_KEY = 'rule-monitor-platform';
 var PLATFORM_STORAGE_KEY_LEGACY = 'tmall-rule-platform';
 var currentPlatform = 'tmall';
 var PLATFORM_CONFIG = {};
 var platformsManifestList = [];
 var clientPlatformMatchers = {};
-var clientRuleHosts = ['rulechannel.tmall.com', 'rule.tmall.hk'];
+var clientRuleHosts = ['rulechannel.tmall.com', 'rule.tmall.hk', 'school.jinritemai.com'];
 
 var PLATFORM_FALLBACKS_BY_ID = {
   tmall: RULES_DATA_FALLBACK_TMALL,
-  intl: RULES_DATA_FALLBACK_INTL
+  intl: RULES_DATA_FALLBACK_INTL,
+  douyin: RULES_DATA_FALLBACK_DOUYIN
 };
 
 function buildPlatformRuntimeConfig(entry) {
@@ -892,6 +895,21 @@ function applyInlinePlatformConfigFallback() {
         { key: 'intl_logistics', label: '跨境物流与发货', icon: '⇢', iconClass: 'intl_logistics', color: 'var(--green)', bg: 'rgba(0,232,123,0.12)' },
         { key: 'intl_qual', label: '资质与品牌', icon: '✦', iconClass: 'intl_qual', color: 'var(--blue)', bg: 'rgba(59,130,246,0.12)' },
         { key: 'intl_penalty', label: '违规与处罚', icon: '⚠', iconClass: 'intl_penalty', color: 'var(--red)', bg: 'rgba(255,0,54,0.12)' }
+      ]
+    },
+    {
+      id: 'douyin', label: '抖音', enabled: true, priority: 80, dataPrefix: 'douyin/', weeklyScope: 'douyin',
+      brandSubTitle: 'Douyin Rules',
+      homeDesc: '抖音电商规则监控总览：school.jinritemai.com 规则中心 BFF 自动抓取首页公告与规则库，并汇总商品效期、体验分、发货时效与违规处罚等分类卡片。',
+      weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商相关</strong>规则。',
+      homeSubtitle: 'shelf / score / ship / penalty',
+      dataSources: ['抖音电商规则中心（school.jinritemai.com）'],
+      ruleHosts: ['school.jinritemai.com'],
+      categories: [
+        { key: 'shelf', label: '商品效期要求', icon: '⏱', iconClass: 'shelf', color: 'var(--amber)', bg: 'rgba(255,184,0,0.12)' },
+        { key: 'score', label: '店铺真实体验分', icon: '★', iconClass: 'score', color: 'var(--blue)', bg: 'rgba(59,130,246,0.12)' },
+        { key: 'ship', label: '发货时效', icon: '⇢', iconClass: 'ship', color: 'var(--green)', bg: 'rgba(0,232,123,0.12)' },
+        { key: 'penalty', label: '发货违规及处罚', icon: '⚠', iconClass: 'penalty', color: 'var(--red)', bg: 'rgba(255,0,54,0.12)' }
       ]
     }
   ];

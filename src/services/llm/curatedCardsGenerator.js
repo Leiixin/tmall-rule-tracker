@@ -58,13 +58,14 @@ export function normalizeCuratedCards(parsed, { source, platformModifiedAt }) {
 export async function generateCuratedCardsForCategory({
   category,
   detail,
-  source
+  source,
+  platform = "tmall"
 }) {
   if (!isLlmEnabled()) {
     throw new Error("LLM is disabled");
   }
 
-  const system = buildCuratedCardsSystemPrompt(category);
+  const system = buildCuratedCardsSystemPrompt(category, platform);
   const user = buildCuratedCardsUserPrompt({
     category,
     ruleTitle: detail.title,

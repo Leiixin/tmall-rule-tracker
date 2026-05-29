@@ -41,11 +41,19 @@ const CATEGORY_META = {
   }
 };
 
-export function buildCuratedCardsSystemPrompt(category) {
+function advisorForPlatform(platform, category) {
+  if (platform === "douyin") {
+    return "抖音电商商家运营顾问";
+  }
+  if (platform === "intl" || String(category).startsWith("intl_")) {
+    return "天猫国际跨境商家运营顾问";
+  }
+  return "天猫商家运营顾问";
+}
+
+export function buildCuratedCardsSystemPrompt(category, platform = "tmall") {
   const meta = CATEGORY_META[category] || { title: category, focus: "" };
-  const advisor = String(category).startsWith("intl_")
-    ? "天猫国际跨境商家运营顾问"
-    : "天猫商家运营顾问";
+  const advisor = advisorForPlatform(platform, category);
   return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
 
 分类侧重：${meta.focus}

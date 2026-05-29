@@ -2,7 +2,11 @@
  * 规则详情页链接规范化（多平台 ruleHosts 白名单）。
  */
 
-const DEFAULT_RULE_HOSTS = ["rulechannel.tmall.com", "rule.tmall.hk"];
+const DEFAULT_RULE_HOSTS = [
+  "rulechannel.tmall.com",
+  "rule.tmall.hk",
+  "school.jinritemai.com"
+];
 
 /** @type {string[]} */
 let registeredRuleHosts = [...DEFAULT_RULE_HOSTS];

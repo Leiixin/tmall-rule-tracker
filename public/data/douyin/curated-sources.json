@@ -1,0 +1,133 @@
+﻿{
+  "version": 1,
+  "updatedAt": "2026-05-29T07:23:08.213Z",
+  "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/douyin/curated-sources.json",
+  "sources": [
+    {
+      "id": "dy-rule-aJk964FFQKKZ",
+      "slug": "aJk964FFQKKZ",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/aJk964FFQKKZ",
+      "label": "商品保质期与临期标注",
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:0",
+        "shelf:1",
+        "shelf:2"
+      ],
+      "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
+      "manualTextPath": "data/douyin/rule-text/rule-aJk964FFQKKZ.txt"
+    },
+    {
+      "id": "dy-rule-aHGYneqr4WDJ",
+      "slug": "aHGYneqr4WDJ",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/aHGYneqr4WDJ",
+      "label": "盲盒类商品信息公示",
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:3"
+      ],
+      "ruleTitle": "盲盒类商品管理规范",
+      "manualTextPath": "data/douyin/rule-text/rule-aHGYneqr4WDJ.txt"
+    },
+    {
+      "id": "dy-rule-103956",
+      "slug": "103956",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/103956",
+      "label": "商家体验分考核",
+      "categories": [
+        "score"
+      ],
+      "cardIds": [
+        "score:0",
+        "score:1",
+        "score:2"
+      ],
+      "ruleTitle": "商家体验分规范",
+      "manualTextPath": "data/douyin/rule-text/rule-103956.txt"
+    },
+    {
+      "id": "dy-rule-113278",
+      "slug": "113278",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/113278",
+      "label": "消极服务与售后",
+      "categories": [
+        "ship"
+      ],
+      "cardIds": [
+        "ship:0",
+        "ship:1"
+      ],
+      "ruleTitle": "【商家—消极服务】细则",
+      "manualTextPath": "data/douyin/rule-text/rule-113278.txt"
+    },
+    {
+      "id": "dy-rule-aHu5aT4aoQXD",
+      "slug": "aHu5aT4aoQXD",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/aHu5aT4aoQXD",
+      "label": "物流轨迹与发货时效",
+      "categories": [
+        "ship"
+      ],
+      "cardIds": [
+        "ship:2"
+      ],
+      "ruleTitle": "发货常见问题—物流轨迹超时",
+      "manualTextPath": "data/douyin/rule-text/rule-aHu5aT4aoQXD.txt"
+    },
+    {
+      "id": "dy-rule-113470",
+      "slug": "113470",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/113470",
+      "label": "虚假交易认定与处罚",
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:0",
+        "penalty:1"
+      ],
+      "ruleTitle": "【虚假交易】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-113470.txt"
+    },
+    {
+      "id": "dy-rule-aJ2ymdS5jWGZ",
+      "slug": "aJ2ymdS5jWGZ",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/aJ2ymdS5jWGZ",
+      "label": "价格违规场景",
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:2"
+      ],
+      "ruleTitle": "商家【价格违规】细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aJ2ymdS5jWGZ.txt"
+    },
+    {
+      "id": "dy-rule-101805",
+      "slug": "101805",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/rules/101805",
+      "label": "发布禁售商品",
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:3"
+      ],
+      "ruleTitle": "【发布法规禁止商品/信息】细则",
+      "manualTextPath": "data/douyin/rule-text/rule-101805.txt"
+    }
+  ]
+}

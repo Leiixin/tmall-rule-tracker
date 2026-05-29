@@ -147,3 +147,55 @@ export const MTOP_SEARCH_KEYWORDS_INTL = [
   "发货",
   "公示"
 ];
+
+/** 抖音电商规则中心 school.jinritemai.com */
+export const CRAWL_SOURCE_MANIFEST_DOUYIN = [
+  { id: "douyin-bff", label: "抖音电商规则中心", type: "douyin" },
+  {
+    id: "douyin_html",
+    label: "规则中心网页（兜底）",
+    name: "抖音电商规则中心",
+    type: "html",
+    url: "https://school.jinritemai.com/doudian/web/rules"
+  }
+];
+
+export const DOUYIN_RULE_SOURCE_LABEL = CRAWL_SOURCE_MANIFEST_DOUYIN.find(
+  (s) => s.id === "douyin-bff"
+).label;
+
+export const DOUYIN_HTML_SOURCES = CRAWL_SOURCE_MANIFEST_DOUYIN.filter((s) => s.type === "html").map(
+  (s) => ({
+    name: s.name,
+    url: s.url
+  })
+);
+
+export const DOUYIN_GRAPH_ID = 312;
+export const DOUYIN_ROOT_NODE_ID = 7236;
+
+export const DOUYIN_CATEGORY_KEYWORDS = {
+  shelf: ["效期", "临期", "保质期", "过期", "禁售", "新鲜日期", "盲盒", "商品信息", "到期"],
+  score: ["体验分", "商家体验分", "商品体验", "物流体验", "服务体验", "品退", "差评", "综合评分"],
+  ship: ["发货", "揽收", "物流时效", "轨迹", "售后", "退款", "消极服务", "飞鸽", "配送"],
+  penalty: ["违规", "处罚", "违约金", "扣分", "虚假交易", "价格违规", "清退", "封禁", "赔付"]
+};
+
+export const DOUYIN_CATEGORY_LABELS = {
+  shelf: "商品效期要求",
+  score: "店铺真实体验分",
+  ship: "发货时效",
+  penalty: "发货违规及处罚"
+};
+
+export const DOUYIN_SEARCH_KEYWORDS = ["发货", "违规", "入驻", "直播", "售后", "资质", "创作者"];
+
+export const MAX_DOUYIN_PAGE_SIZE = 50;
+export const MAX_DOUYIN_CATALOG_PAGES = 8;
+export const MAX_DOUYIN_ANNOUNCEMENT_PAGES = 5;
+
+export const PLATFORM_CRAWL_MANIFESTS = {
+  tmall: CRAWL_SOURCE_MANIFEST,
+  intl: CRAWL_SOURCE_MANIFEST_INTL,
+  douyin: CRAWL_SOURCE_MANIFEST_DOUYIN
+};

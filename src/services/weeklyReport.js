@@ -1,5 +1,11 @@
 import dayjs from "dayjs";
-import { CATEGORY_LABELS } from "../config.js";
+import { CATEGORY_LABELS, INTL_CATEGORY_LABELS, DOUYIN_CATEGORY_LABELS } from "../config.js";
+
+const ALL_CATEGORY_LABELS = {
+  ...CATEGORY_LABELS,
+  ...INTL_CATEGORY_LABELS,
+  ...DOUYIN_CATEGORY_LABELS
+};
 import { ruleMatchesWeeklyScope } from "../utils/rulePlatformScope.js";
 import { classifyRule } from "./classifier.js";
 import {
@@ -45,7 +51,7 @@ function pickHighlightsStructured(rule) {
     structured["核心变化"] = [rule.snippet.slice(0, 240)];
   } else {
     const summary = rule.summary || {};
-    for (const key of Object.keys(CATEGORY_LABELS)) {
+    for (const key of Object.keys(ALL_CATEGORY_LABELS)) {
       const line = summary[key];
       if (line && line !== "未识别到明确描述") {
         structured["核心变化"] = [line.slice(0, 240)];
@@ -62,7 +68,7 @@ function pickHighlightsStructured(rule) {
   const tags = Array.isArray(rule.tags) ? rule.tags : [];
   if (tags.length) {
     structured["适用范围"] = [
-      tags.map((t) => CATEGORY_LABELS[t] || t).join("、")
+      tags.map((t) => ALL_CATEGORY_LABELS[t] || t).join("、")
     ];
   }
 

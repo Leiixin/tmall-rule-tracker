@@ -56,6 +56,16 @@ jobs:
           LLM_BASE_URL: https://api.deepseek.com
           LLM_MODEL: deepseek-chat
 
+      - name: Crawl Douyin Rules (school.jinritemai.com)
+        run: node scripts/gh-crawl.mjs --platform=douyin
+        env:
+          TZ: Asia/Shanghai
+          DATA_DIR: data/douyin
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+
       - name: Sync Curated Category Cards
         run: node scripts/sync-curated-cards.mjs
         env:
@@ -79,6 +89,18 @@ jobs:
           LLM_BASE_URL: https://api.deepseek.com
           LLM_MODEL: deepseek-chat
           LLM_MAX_CURATED_SOURCES_PER_RUN: "1"
+
+      - name: Sync Douyin Curated Cards
+        run: node scripts/sync-curated-cards.mjs --platform=douyin
+        env:
+          TZ: Asia/Shanghai
+          PLATFORM_ID: douyin
+          ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}
+          ENABLE_CURATED_AUTO_PUBLISH: "true"
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || secrets.DEEPSEEK }}
+          LLM_BASE_URL: https://api.deepseek.com
+          LLM_MODEL: deepseek-chat
+          LLM_MAX_CURATED_SOURCES_PER_RUN: "2"
 
       - name: Commit Updated Data
         env:

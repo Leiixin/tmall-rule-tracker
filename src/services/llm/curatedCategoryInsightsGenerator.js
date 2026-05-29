@@ -99,13 +99,14 @@ export async function generateCategoryInsights({
   category,
   detail,
   source,
-  previousContent
+  previousContent,
+  platform = "tmall"
 }) {
   if (!isLlmEnabled()) {
     throw new Error("LLM is disabled");
   }
 
-  const system = buildCategoryInsightsSystemPrompt(category);
+  const system = buildCategoryInsightsSystemPrompt(category, platform);
   const user = buildCategoryInsightsUserPrompt({
     category,
     ruleTitle: detail.title,

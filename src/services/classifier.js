@@ -3,7 +3,9 @@ import {
   CATEGORY_KEYWORDS,
   CATEGORY_LABELS,
   INTL_CATEGORY_KEYWORDS,
-  INTL_CATEGORY_LABELS
+  INTL_CATEGORY_LABELS,
+  DOUYIN_CATEGORY_KEYWORDS,
+  DOUYIN_CATEGORY_LABELS
 } from "../config.js";
 
 function normalizeText(text) {
@@ -51,6 +53,25 @@ function detectTags(text, keywordMap = CATEGORY_KEYWORDS) {
     .map(([key]) => key);
 }
 
+function getKeywordMap(platform) {
+  if (platform === "intl") {
+    return INTL_CATEGORY_KEYWORDS;
+  }
+  if (platform === "douyin") {
+    return DOUYIN_CATEGORY_KEYWORDS;
+  }
+  return CATEGORY_KEYWORDS;
+}
+
+function buildDouyinSummary(text) {
+  return {
+    shelf: pickSentence(text, DOUYIN_CATEGORY_KEYWORDS.shelf),
+    score: pickSentence(text, DOUYIN_CATEGORY_KEYWORDS.score),
+    ship: pickSentence(text, DOUYIN_CATEGORY_KEYWORDS.ship),
+    penalty: pickSentence(text, DOUYIN_CATEGORY_KEYWORDS.penalty)
+  };
+}
+
 function buildIntlSummary(text) {
   return {
     intl_expiry: pickSentence(text, INTL_CATEGORY_KEYWORDS.intl_expiry),
@@ -60,16 +81,26 @@ function buildIntlSummary(text) {
   };
 }
 
+function buildSummaryForPlatform(text, platform) {
+  if (platform === "intl") {
+    return buildIntlSummary(text);
+  }
+  if (platform === "douyin") {
+    return buildDouyinSummary(text);
+  }
+  return buildSummary(text);
+}
+
 export function classifyRule(rule, options = {}) {
   const text = normalizeText(`${rule.title || ""} ${rule.content || ""}`);
-  const isIntl = options.platform === "intl";
-  const keywordMap = isIntl ? INTL_CATEGORY_KEYWORDS : CATEGORY_KEYWORDS;
+  const platform = options.platform || "tmall";
+  const keywordMap = getKeywordMap(platform);
 
   return {
     ...rule,
-    snippet: normalizeText(rule.content || "").slice(0, 220),
+    snippet: normalizeText(rule.content || rule.snippet || "").slice(0, 220),
     tags: detectTags(text, keywordMap),
-    summary: isIntl ? buildIntlSummary(text) : buildSummary(text)
+    summary: buildSummaryForPlatform(text, platform)
   };
 }
 

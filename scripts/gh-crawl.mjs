@@ -27,6 +27,24 @@ if (platform === "intl" && !process.env.DATA_DIR) {
   process.env.DATA_DIR = path.join(repoRoot, "data", "intl");
 }
 
+if (platform === "douyin" && !process.env.DATA_DIR) {
+  process.env.DATA_DIR = path.join(repoRoot, "data", "douyin");
+}
+
+const PLATFORM_CATEGORY_BUCKETS = {
+  tmall: ["shelf", "score", "ship", "penalty"],
+  intl: ["intl_expiry", "intl_logistics", "intl_qual", "intl_penalty"],
+  douyin: ["shelf", "score", "ship", "penalty"]
+};
+
+function tmallTagToBucket(tag) {
+  if (tag === "effectivePeriod") return "shelf";
+  if (tag === "shopExperienceScore") return "score";
+  if (tag === "shippingTimeliness") return "ship";
+  if (tag === "shippingViolationPenalty") return "penalty";
+  return null;
+}
+
 function resolveDataDir() {
   return process.env.DATA_DIR
     ? path.resolve(process.env.DATA_DIR)
@@ -61,22 +79,9 @@ function toYmd(iso) {
 }
 
 function buildCategorized(processedRules, timestamp, crawlPlatform) {
-  const isIntl = crawlPlatform === "intl";
-  const categorized = isIntl
-    ? {
-        intl_expiry: [],
-        intl_logistics: [],
-        intl_qual: [],
-        intl_penalty: [],
-        general: []
-      }
-    : {
-        shelf: [],
-        score: [],
-        ship: [],
-        penalty: [],
-        general: []
-      };
+  const bucketKeys = PLATFORM_CATEGORY_BUCKETS[crawlPlatform] || PLATFORM_CATEGORY_BUCKETS.tmall;
+  const categorized = Object.fromEntries(bucketKeys.map((key) => [key, []]));
+  categorized.general = [];
 
   const toItem = (rule, category) => {
     const discoveredAt = rule.lastSeenAt || rule.publishedAt || timestamp;
@@ -95,29 +100,20 @@ function buildCategorized(processedRules, timestamp, crawlPlatform) {
     const tags = Array.isArray(rule.tags) ? rule.tags : [];
     let matched = false;
 
-    if (isIntl) {
-      for (const tag of ["intl_expiry", "intl_logistics", "intl_qual", "intl_penalty"]) {
-        if (tags.includes(tag)) {
-          categorized[tag].push(toItem(rule, tag));
+    if (crawlPlatform === "tmall") {
+      for (const tag of tags) {
+        const bucket = tmallTagToBucket(tag);
+        if (bucket && categorized[bucket]) {
+          categorized[bucket].push(toItem(rule, bucket));
           matched = true;
         }
       }
     } else {
-      if (tags.includes("effectivePeriod")) {
-        categorized.shelf.push(toItem(rule, "shelf"));
-        matched = true;
-      }
-      if (tags.includes("shopExperienceScore")) {
-        categorized.score.push(toItem(rule, "score"));
-        matched = true;
-      }
-      if (tags.includes("shippingTimeliness")) {
-        categorized.ship.push(toItem(rule, "ship"));
-        matched = true;
-      }
-      if (tags.includes("shippingViolationPenalty")) {
-        categorized.penalty.push(toItem(rule, "penalty"));
-        matched = true;
+      for (const tag of bucketKeys) {
+        if (tags.includes(tag)) {
+          categorized[tag].push(toItem(rule, tag));
+          matched = true;
+        }
       }
     }
 
@@ -214,8 +210,8 @@ async function main() {
 
   const sources =
     errorMessage && crawled.length === 0
-      ? buildSourcesFromReport(buildErrorReport(errorMessage), timestamp)
-      : buildSourcesFromReport(crawlReport, timestamp);
+      ? buildSourcesFromReport(buildErrorReport(errorMessage, platform), timestamp, platform)
+      : buildSourcesFromReport(crawlReport, timestamp, platform);
 
   const statusJson = {
     lastFetchTime: timestamp,

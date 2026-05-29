@@ -128,7 +128,30 @@ npm run migrate:score-insights
 
 ## 多平台（侧栏下拉 + platforms.json）
 
-平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用。`planning: true` 仅在下拉文案后追加「（规划中）」；`enabled: false` 的平台（抖音、小红书、快手、拼多多、微信小店、得物、京东）同样显示「规划中」且不可选。天猫国际为 `enabled: true` + `planning: true`：可点击进入，文案带括号。
+平台注册表：[`data/platforms.json`](data/platforms.json)（同步到 `public/data/platforms.json`）。侧栏 **监控平台** 下拉切换；`enabled: true` 的平台可正常使用。**抖音** 与 **天猫** 共用四类 Tab key（`shelf` / `score` / `ship` / `penalty`）及相同展示文案（商品效期要求、店铺真实体验分、发货时效、发货违规及处罚），数据分别存放在 `data/` 与 `data/douyin/`。
+
+### 抖音分类页（与天猫对齐）
+
+抖音与天猫使用**相同的四类 Tab key 与文案**，前端共用 `index.html` 的 `renderSection()` 布局；数据目录为 `data/douyin/curated-*.json`（与天猫根目录 `curated-*.json` 结构一致）。
+
+| Tab key | 展示名称 | 抖音锚点示例 |
+|---------|----------|--------------|
+| `shelf` | 商品效期要求 | 《商品保质期管理和宣传规范》、盲盒类商品管理规范 |
+| `score` | 店铺真实体验分 | 《商家体验分规范》（slug `103956`） |
+| `ship` | 发货时效 | 消极服务细则、揽收时效、物流轨迹 |
+| `penalty` | 发货违规及处罚 | 虚假交易、价格违规、禁售商品细则 |
+
+详情拉取走 `fetchDouyinRuleDetailForCurated`；API 失败时可参考 `data/douyin/rule-text/rule-{slug}.txt` 手工兜底。
+
+**维护流程：**
+
+1. 在 `data/douyin/curated-sources.json` 为每类配置锚点规则（`id` + `slug` + `categories` + `cardIds`）
+2. 手工或 LLM 整理 `curated-cards.json`（每类 3～4 张卡）
+3. 首期可手工编写 `curated-category-insights.json`（如 `score` 的 `pinned: true` 变更解读块）
+4. 重建种子数据：`npm run build:curated:douyin`
+5. 重标规则分类标签：`npm run migrate:douyin:categories`（或重新 `crawl:douyin`）
+6. 配置 `DEEPSEEK_API_KEY` 后跑 `npm run sync:curated:douyin`；重点来源可用 `npm run sync:curated:douyin:force`
+7. 镜像目录 `public/data/douyin/` 须与 `data/douyin/` 保持一致
 
 ### 数据目录约定
 
@@ -148,14 +171,15 @@ data/
 
 - 本地记忆键：`rule-monitor-platform`（兼容旧键 `tmall-rule-platform`）
 - 周度 API：`GET /api/weekly?platform=<weeklyScope>`（如 `tmall`、`intl`、`douyin`）
-- 分类 sync 预留：`CURATED_DATA_PREFIX=intl/` 或 `PLATFORM_ID=intl` → 读写 `data/intl/curated-sources.json`（见 `scripts/sync-curated-cards.mjs` 顶部注释）
+- 分类 sync 预留：`CURATED_DATA_PREFIX=intl/` 或 `PLATFORM_ID=intl` → 读写 `data/intl/curated-sources.json`（见 `scripts/sync-curated-cards.mjs` 顶部注释）；抖音使用 `--platform=douyin` 或 `PLATFORM_ID=douyin`
 
-### 下一阶段：接入抖音（示例）
+### 常用命令（抖音）
 
-1. 在 `platforms.json` 将 `douyin.enabled` 设为 `true` 并补全 `categories`
-2. 新建 `data/douyin/` 四套 curated JSON（勿提交空文件到 Pages）
-3. 在 `weeklyMatchers` 中补充标题/域名规则（如 `rules.jinritemai.com`，以调研为准）
-4. 三期：抖音爬虫 + `sync:curated` 的 `--platform douyin` 参数
+- 抓取：`npm run crawl:douyin`
+- 重建分类页种子数据：`npm run build:curated:douyin`
+- 重标规则分类标签：`npm run migrate:douyin:categories`
+- 分类页来源同步：`npm run sync:curated:douyin`
+- 强制重生成体验分/虚假交易锚点：`npm run sync:curated:douyin:force`
 
 ## 常用命令
 - 启动：`npm run start`

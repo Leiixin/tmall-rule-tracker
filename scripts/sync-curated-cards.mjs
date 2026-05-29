@@ -51,6 +51,17 @@ const INTL_CATEGORY_KEYS = [
   "intl_qual",
   "intl_penalty"
 ];
+const DOUYIN_CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
+
+function resolveCategoryKeys(curatedPrefix, platform) {
+  if (curatedPrefix === "intl/" || platform === "intl") {
+    return INTL_CATEGORY_KEYS;
+  }
+  if (curatedPrefix === "douyin/" || platform === "douyin") {
+    return DOUYIN_CATEGORY_KEYS;
+  }
+  return TMALL_CATEGORY_KEYS;
+}
 
 function contentHash(text) {
   return createHash("sha256")
@@ -82,14 +93,16 @@ function parseCli(argv) {
   if (!curatedPrefix && platform === "intl") {
     curatedPrefix = "intl/";
   }
+  if (!curatedPrefix && platform === "douyin") {
+    curatedPrefix = "douyin/";
+  }
   if (curatedPrefix && !curatedPrefix.endsWith("/")) {
     curatedPrefix += "/";
   }
 
-  const categoryKeys =
-    curatedPrefix === "intl/" ? INTL_CATEGORY_KEYS : TMALL_CATEGORY_KEYS;
+  const categoryKeys = resolveCategoryKeys(curatedPrefix, platform);
 
-  return { curatedPrefix, categoryKeys, forceSourceIds };
+  return { curatedPrefix, categoryKeys, forceSourceIds, platform };
 }
 
 async function readJson(filePath, fallback) {
@@ -169,7 +182,7 @@ async function notifyIfChanged(watch) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        text: `天猫规则监控：分类页引用规则检查完成。已发布 ${watch.summary?.published || 0}，变更待处理 ${watch.summary?.changed || 0}，错误 ${watch.summary?.errors || 0}。`,
+        text: `${process.env.PLATFORM_ID || "天猫"}规则监控：分类页引用规则检查完成。已发布 ${watch.summary?.published || 0}，变更待处理 ${watch.summary?.changed || 0}，错误 ${watch.summary?.errors || 0}。`,
         watch: {
           lastCheckedAt: watch.lastCheckedAt,
           recentAutoPublish: watch.recentAutoPublish
@@ -195,7 +208,8 @@ async function publishCardsForSource({
   watch,
   prevWatch,
   timestamp,
-  publishBudget
+  publishBudget,
+  platform = "tmall"
 }) {
   let publishedCategories = 0;
 
@@ -206,7 +220,8 @@ async function publishCardsForSource({
     const { cards } = await generateCuratedCardsForCategory({
       category,
       detail,
-      source
+      source,
+      platform
     });
     if (!curatedCards[category]) {
       throw new Error(`curated-cards.json missing category: ${category}`);
@@ -252,7 +267,7 @@ async function publishCardsForSource({
 
 async function main() {
   const root = process.cwd();
-  const { curatedPrefix, categoryKeys, forceSourceIds } = parseCli(
+  const { curatedPrefix, categoryKeys, forceSourceIds, platform } = parseCli(
     process.argv.slice(2)
   );
   const forceOnly = forceSourceIds.size > 0;
@@ -443,7 +458,8 @@ async function main() {
             category,
             detail,
             source,
-            previousContent
+            previousContent,
+            platform
           });
           if (!curatedInsights.categories) {
             curatedInsights.categories = {};
@@ -489,7 +505,8 @@ async function main() {
         watch,
         prevWatch,
         timestamp,
-        publishBudget
+        publishBudget,
+        platform
       });
     } catch (err) {
       const prevEntry = prevWatch.sources?.[source.id] || {};

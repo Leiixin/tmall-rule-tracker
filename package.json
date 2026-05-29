@@ -11,11 +11,16 @@
     "migrate:urls": "node scripts/migrate-rule-urls.mjs",
     "crawl": "node scripts/gh-crawl.mjs",
     "crawl:intl": "node scripts/gh-crawl.mjs --platform=intl",
+    "crawl:douyin": "node scripts/gh-crawl.mjs --platform=douyin",
     "summarize": "node scripts/summarize-rules.mjs",
     "migrate:curated": "node scripts/migrate-curated-data.mjs",
     "migrate:score-insights": "node scripts/migrate-score-insights.mjs",
     "sync:curated": "node scripts/sync-curated-cards.mjs",
     "sync:curated:intl": "node scripts/sync-curated-cards.mjs --platform=intl --force-source=intl-rule-11005234",
+    "sync:curated:douyin": "node scripts/sync-curated-cards.mjs --platform=douyin",
+    "sync:curated:douyin:force": "node scripts/sync-curated-cards.mjs --platform=douyin --force-source=dy-rule-103956 --force-source=dy-rule-113470",
+    "migrate:douyin:categories": "node scripts/migrate-douyin-category-keys.mjs",
+    "build:curated:douyin": "node scripts/build-douyin-curated-data.mjs",
     "audit:fabrication": "node scripts/audit-curated-fabrication.mjs"
   },
   "dependencies": {

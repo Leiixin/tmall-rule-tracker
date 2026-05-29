@@ -1,0 +1,14 @@
+﻿{
+  "lastFetchTime": "2026-05-29T06:38:17.947Z",
+  "fetchCount": 1,
+  "totalRules": 584,
+  "newRulesCount": 584,
+  "platform": "douyin",
+  "sources": {
+    "抖音电商规则中心": {
+      "status": "online",
+      "lastCheck": "2026-05-29T06:38:17.947Z",
+      "count": 584
+    }
+  }
+}

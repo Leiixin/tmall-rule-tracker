@@ -53,21 +53,26 @@
     {
       "id": "douyin",
       "label": "抖音",
-      "enabled": false,
+      "enabled": true,
       "priority": 80,
       "dataPrefix": "douyin/",
       "weeklyScope": "douyin",
       "brandSubTitle": "Douyin Rules",
-      "homeDesc": "抖音平台规则监控（规划中）。",
-      "weeklyDesc": "抖音相关规则周度汇总（规划中）。",
-      "homeSubtitle": "入驻 / 内容 / 交易 / 违规",
-      "dataSources": ["抖音电商规则中心（待接入）"],
-      "ruleHosts": [],
+      "homeDesc": "抖音电商规则监控总览：school.jinritemai.com 规则中心 BFF 自动抓取首页公告与规则库，并汇总商品效期、体验分、发货时效与违规处罚等分类卡片。",
+      "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商相关</strong>规则（标题含「抖音」或链接为 school.jinritemai.com/doudian）。",
+      "homeSubtitle": "shelf / score / ship / penalty",
+      "dataSources": ["抖音电商规则中心（school.jinritemai.com）"],
+      "ruleHosts": ["school.jinritemai.com"],
       "weeklyMatchers": {
         "titlePatterns": ["抖音"],
-        "urlPatterns": []
+        "urlPatterns": ["school\\.jinritemai\\.com/doudian"]
       },
-      "categories": []
+      "categories": [
+        { "key": "shelf", "label": "商品效期要求", "icon": "⏱", "iconClass": "shelf", "color": "var(--amber)", "bg": "rgba(255,184,0,0.12)" },
+        { "key": "score", "label": "店铺真实体验分", "icon": "★", "iconClass": "score", "color": "var(--blue)", "bg": "rgba(59,130,246,0.12)" },
+        { "key": "ship", "label": "发货时效", "icon": "⇢", "iconClass": "ship", "color": "var(--green)", "bg": "rgba(0,232,123,0.12)" },
+        { "key": "penalty", "label": "发货违规及处罚", "icon": "⚠", "iconClass": "penalty", "color": "var(--red)", "bg": "rgba(255,0,54,0.12)" }
+      ]
     },
     {
       "id": "xhs",

@@ -16,12 +16,16 @@ import {
   RULE_KEYWORDS,
   CRAWL_SOURCE_MANIFEST,
   CRAWL_SOURCE_MANIFEST_INTL,
+  CRAWL_SOURCE_MANIFEST_DOUYIN,
+  DOUYIN_HTML_SOURCES,
+  DOUYIN_SEARCH_KEYWORDS,
   MTOP_HTML_SKIP_THRESHOLD,
   MTOP_RULE_SOURCE_LABEL,
   MTOP_HK_RULE_SOURCE_LABEL,
   TMALL_SOURCES,
   INTL_HTML_SOURCES
 } from "../config.js";
+import { crawlDouyinRules, fetchDouyinRuleDetailForCurated } from "./douyinCrawler.js";
 import { buildRuleDetailUrl } from "../utils/ruleDetailUrl.js";
 
 const USER_AGENT =
@@ -463,18 +467,26 @@ async function crawlAllSourcesForManifest({
   mtopCrawl
 }) {
   const report = [];
-  const mtopEntry = manifestEntryById(mtopId, manifest);
-  const mtopRules = await mtopCrawl();
+  let primaryRules = [];
 
-  report.push({
-    id: mtopId,
-    label: mtopEntry?.label || mtopId,
-    status: mtopRules.length > 0 ? "online" : "error",
-    count: mtopRules.length,
-    message: mtopRules.length === 0 ? "未获取到规则" : undefined
-  });
+  if (mtopCrawl) {
+    primaryRules = await mtopCrawl();
+    const primaryEntry =
+      (mtopId && manifestEntryById(mtopId, manifest)) ||
+      manifest.find((item) => item.type === "douyin" || item.type === "mtop") ||
+      manifest[0];
 
-  const skipHtml = mtopRules.length >= MTOP_HTML_SKIP_THRESHOLD;
+    report.push({
+      id: primaryEntry?.id || mtopId || "primary",
+      label: primaryEntry?.label || mtopId || "primary",
+      status: primaryRules.length > 0 ? "online" : "error",
+      count: primaryRules.length,
+      message: primaryRules.length === 0 ? "未获取到规则" : undefined
+    });
+  }
+
+  const skipHtml =
+    Boolean(mtopId) && primaryRules.length >= MTOP_HTML_SKIP_THRESHOLD;
   const htmlRules = [];
 
   for (const entry of manifest.filter((item) => item.type === "html")) {
@@ -512,12 +524,21 @@ async function crawlAllSourcesForManifest({
     });
   }
 
-  const rules = skipHtml ? mtopRules : dedupeRules([...mtopRules, ...htmlRules]);
+  const rules = skipHtml ? primaryRules : dedupeRules([...primaryRules, ...htmlRules]);
   return { rules, report };
 }
 
 export async function crawlAllSources(options = {}) {
   const platform = options.platform || "tmall";
+
+  if (platform === "douyin") {
+    return crawlAllSourcesForManifest({
+      manifest: CRAWL_SOURCE_MANIFEST_DOUYIN,
+      htmlSources: DOUYIN_HTML_SOURCES,
+      mtopId: null,
+      mtopCrawl: () => crawlDouyinRules({ searchKeywords: DOUYIN_SEARCH_KEYWORDS })
+    });
+  }
 
   if (platform === "intl") {
     return crawlAllSourcesForManifest({
@@ -631,8 +652,21 @@ export async function fetchRuleDetailByRuleId(ruleId, options = {}) {
   });
 }
 
-/** curated 来源：自动识别 rule.tmall.hk 并使用国际站 MTOP（buCode 316 + lastCategoryId） */
+/** curated 来源：自动识别平台并拉取详情 */
 export async function fetchRuleDetailForCuratedSource(source) {
+  if (!source) {
+    return null;
+  }
+
+  const isDouyin =
+    source.platform === "douyin" ||
+    /school\.jinritemai\.com/i.test(String(source.url || "")) ||
+    Boolean(source.slug);
+
+  if (isDouyin && (source.slug || source.url || source.id)) {
+    return fetchDouyinRuleDetailForCurated(source);
+  }
+
   if (!source?.ruleId) {
     return null;
   }
