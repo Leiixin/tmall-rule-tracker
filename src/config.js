@@ -64,6 +64,29 @@ export const MTOP_CONFIG = {
   terminal: "PC"
 };
 
+/** rule.tmall.hk GlobalConfig: buCode 316, identityCode/requestCode 1 */
+export const MTOP_HK_CONFIG = {
+  appKey: MTOP_CONFIG.appKey,
+  version: MTOP_CONFIG.version,
+  identityCode: "1",
+  buCode: 316,
+  terminal: "PC",
+  referer: "https://rule.tmall.hk/",
+  origin: "https://rule.tmall.hk"
+};
+
+export const MTOP_CN_SITE = {
+  ...MTOP_CONFIG,
+  referer: "https://rulechannel.tmall.com/",
+  origin: "https://rulechannel.tmall.com"
+};
+
+export const MTOP_HK_SITE = {
+  ...MTOP_HK_CONFIG,
+  referer: MTOP_HK_CONFIG.referer,
+  origin: MTOP_HK_CONFIG.origin
+};
+
 export const MTOP_APIS = {
   latest: "mtop.alibaba.rulechannel.newrule.rule.latest",
   list: "mtop.alibaba.rulechannel.newrule.rule.list",

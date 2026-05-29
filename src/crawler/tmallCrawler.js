@@ -8,6 +8,8 @@ import {
   MAX_MTOP_LIST_PAGES,
   MTOP_APIS,
   MTOP_CONFIG,
+  MTOP_HK_SITE,
+  MTOP_CN_SITE,
   MTOP_DETAIL_CONCURRENCY,
   MTOP_PAGE_SIZE,
   MTOP_SEARCH_KEYWORDS,
@@ -142,15 +144,16 @@ async function mapLimit(items, limit, mapper) {
 }
 
 class MtopRuleClient {
-  constructor() {
+  constructor(site = MTOP_CN_SITE) {
+    this.site = site;
     this.cookieHeader = "";
     this.token = "";
     this.http = axios.create({
       timeout: 20000,
       headers: {
         "User-Agent": USER_AGENT,
-        Referer: "https://rulechannel.tmall.com/",
-        Origin: "https://rulechannel.tmall.com"
+        Referer: site.referer,
+        Origin: site.origin
       },
       validateStatus: () => true
     });
@@ -158,15 +161,15 @@ class MtopRuleClient {
 
   baseData(data = {}) {
     return {
-      identityCode: MTOP_CONFIG.identityCode,
-      terminal: MTOP_CONFIG.terminal,
-      buCode: MTOP_CONFIG.buCode,
+      identityCode: this.site.identityCode,
+      terminal: this.site.terminal,
+      buCode: this.site.buCode,
       ...data
     };
   }
 
   endpoint(api) {
-    return `https://h5api.m.taobao.com/h5/${api}/${MTOP_CONFIG.version}/`;
+    return `https://h5api.m.taobao.com/h5/${api}/${this.site.version}/`;
   }
 
   async refreshToken(api, data) {
@@ -176,11 +179,11 @@ class MtopRuleClient {
     const response = await this.http.get(this.endpoint(api), {
       params: {
         jsv: "2.7.4",
-        appKey: MTOP_CONFIG.appKey,
+        appKey: this.site.appKey,
         t: Date.now().toString(),
         sign: "",
         api,
-        v: MTOP_CONFIG.version,
+        v: this.site.version,
         type: "jsonp",
         dataType: "jsonp",
         callback: "mtopjsonp1",
@@ -208,16 +211,16 @@ class MtopRuleClient {
     }
 
     const t = Date.now().toString();
-    const sign = md5(`${this.token}&${t}&${MTOP_CONFIG.appKey}&${dataString}`);
+    const sign = md5(`${this.token}&${t}&${this.site.appKey}&${dataString}`);
 
     const response = await this.http.get(this.endpoint(api), {
       params: {
         jsv: "2.7.4",
-        appKey: MTOP_CONFIG.appKey,
+        appKey: this.site.appKey,
         t,
         sign,
         api,
-        v: MTOP_CONFIG.version,
+        v: this.site.version,
         type: "jsonp",
         dataType: "jsonp",
         callback: "mtopjsonp1",
@@ -492,33 +495,122 @@ export async function crawlAllSources() {
 }
 
 /** 按 ruleId 拉取单条规则详情（供分类页引用来源监测使用） */
-export async function fetchRuleDetailByRuleId(ruleId) {
-  if (!ruleId) {
+function modelToRuleDetail(model, { ruleId, fallbackUrl, origin = "mtop" }) {
+  if (!model) {
     return null;
   }
-
-  const mtop = new MtopRuleClient();
-  const payload = await mtop.call(MTOP_APIS.detail, { ruleId: String(ruleId) });
-  if (!isMtopSuccess(payload) || !payload?.data?.model) {
-    return null;
-  }
-
-  const model = payload.data.model;
   const content = htmlToText(model.ruleHtmlPcDetail || model.ruleAslContent || "");
   if (!content) {
     return null;
   }
-
   const publishedAt =
     parseDateTime(model.modifiedTime) || new Date().toISOString();
-
+  const resolvedRuleId = String(model.ruleId || ruleId);
+  const cId = model.lastCategoryId != null ? String(model.lastCategoryId) : "";
   return {
-    ruleId: String(model.ruleId || ruleId),
-    cId: model.lastCategoryId != null ? String(model.lastCategoryId) : "",
+    ruleId: resolvedRuleId,
+    cId,
     title: normalizeText(model.ruleTitle || ""),
-    url: buildRuleDetailUrl(model.ruleId || ruleId, model.lastCategoryId),
+    url:
+      fallbackUrl ||
+      buildRuleDetailUrl(
+        resolvedRuleId,
+        cId,
+        origin.startsWith("mtop-hk") ? "rule.tmall.hk" : "rulechannel.tmall.com"
+      ),
     publishedAt,
     content: content.slice(0, 12000),
-    crawledAt: new Date().toISOString()
+    crawledAt: new Date().toISOString(),
+    origin
   };
+}
+
+async function fetchRuleDetailViaMtop(site, { ruleId, lastCategoryId, fallbackUrl }) {
+  const mtop = new MtopRuleClient(site);
+  const detailPayload = {
+    ruleId: String(ruleId),
+    language: null
+  };
+  if (lastCategoryId) {
+    detailPayload.lastCategoryId = String(lastCategoryId);
+  }
+
+  const payload = await mtop.call(MTOP_APIS.detail, detailPayload);
+  if (isMtopSuccess(payload) && payload?.data?.model) {
+    return modelToRuleDetail(payload.data.model, {
+      ruleId,
+      fallbackUrl,
+      origin: site === MTOP_HK_SITE ? "mtop-hk" : "mtop"
+    });
+  }
+
+  if (site === MTOP_HK_SITE) {
+    const logPayload = await mtop.call(
+      "mtop.alibaba.rulechannel.newrule.rulelog.detail",
+      {
+        historyId: String(ruleId),
+        language: null
+      }
+    );
+    if (isMtopSuccess(logPayload) && logPayload?.data?.model) {
+      return modelToRuleDetail(logPayload.data.model, {
+        ruleId,
+        fallbackUrl,
+        origin: "mtop-hk-log"
+      });
+    }
+  }
+
+  return null;
+}
+
+export async function fetchRuleDetailByRuleId(ruleId, options = {}) {
+  if (!ruleId) {
+    return null;
+  }
+
+  const lastCategoryId = options.cId || options.lastCategoryId || "";
+  const site = options.site === "hk" ? MTOP_HK_SITE : MTOP_CN_SITE;
+
+  return fetchRuleDetailViaMtop(site, {
+    ruleId,
+    lastCategoryId,
+    fallbackUrl: options.url
+  });
+}
+
+/** curated 来源：自动识别 rule.tmall.hk 并使用国际站 MTOP（buCode 316 + lastCategoryId） */
+export async function fetchRuleDetailForCuratedSource(source) {
+  if (!source?.ruleId) {
+    return null;
+  }
+
+  const isHk = /rule\.tmall\.hk/i.test(String(source.url || ""));
+  const lastCategoryId = source.cId || source.lastCategoryId || "";
+
+  if (isHk) {
+    const hk = await fetchRuleDetailViaMtop(MTOP_HK_SITE, {
+      ruleId: source.ruleId,
+      lastCategoryId,
+      fallbackUrl: source.url
+    });
+    if (hk) {
+      return hk;
+    }
+  }
+
+  const cn = await fetchRuleDetailViaMtop(MTOP_CN_SITE, {
+    ruleId: source.ruleId,
+    lastCategoryId,
+    fallbackUrl: source.url
+  });
+  if (cn) {
+    return cn;
+  }
+
+  return fetchRuleDetailByRuleId(source.ruleId, {
+    site: isHk ? "hk" : "cn",
+    cId: lastCategoryId,
+    url: source.url
+  });
 }

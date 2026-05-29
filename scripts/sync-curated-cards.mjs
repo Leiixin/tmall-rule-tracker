@@ -39,7 +39,7 @@ function loadDotEnv() {
 
 loadDotEnv();
 
-import { fetchRuleDetailByRuleId } from "../src/crawler/tmallCrawler.js";
+import { fetchRuleDetailForCuratedSource } from "../src/crawler/tmallCrawler.js";
 import { generateCuratedCardsForCategory } from "../src/services/llm/curatedCardsGenerator.js";
 import { generateCategoryInsights } from "../src/services/llm/curatedCategoryInsightsGenerator.js";
 import { isLlmEnabled } from "../src/services/llm/client.js";
@@ -135,7 +135,7 @@ function updateSourceCache(cache, sourceId, detail) {
     title: detail.title,
     content: detail.content,
     fetchedAt: detail.crawledAt || new Date().toISOString(),
-    origin: "mtop"
+    origin: detail.origin || "mtop"
   };
   cache.updatedAt = new Date().toISOString();
 }
@@ -352,7 +352,7 @@ async function main() {
     }
 
     try {
-      const detail = await fetchRuleDetailByRuleId(source.ruleId);
+      const detail = await fetchRuleDetailForCuratedSource(source);
       if (!detail) {
         watch.sources[source.id] = {
           status: "error",
@@ -537,21 +537,23 @@ async function main() {
 
   await notifyIfChanged(watch);
 
+  const result = {
+    ok: watch.summary.errors === 0,
+    dataDir,
+    llm: llmOn,
+    autoPublish,
+    ...watch.summary,
+    autoPublishVersion: watch.autoPublishVersion
+  };
+
   // eslint-disable-next-line no-console
-  console.log(
-    JSON.stringify(
-      {
-        ok: true,
-        dataDir,
-        llm: llmOn,
-        autoPublish,
-        ...watch.summary,
-        autoPublishVersion: watch.autoPublishVersion
-      },
-      null,
-      2
-    )
-  );
+  console.log(JSON.stringify(result, null, 2));
+
+  if (forceOnly && watch.summary.published === 0) {
+    throw new Error(
+      "force curated sync produced no cards (check MTOP fetch / DEEPSEEK_API_KEY)"
+    );
+  }
 }
 
 await main();
