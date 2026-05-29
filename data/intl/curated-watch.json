@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-05-29T12:00:00.000Z",
+  "lastCheckedAt": "2026-05-29T14:00:00.000Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -19,13 +19,13 @@
       "contentHash": "",
       "lastSyncedAt": "2026-05-29T03:30:00.000Z"
     },
-    "intl-rule-qual-brand": {
+    "intl-rule-11000442": {
       "status": "ok",
-      "message": "manual curated",
-      "ruleTitle": "天猫国际品牌与资质要求（示例）",
-      "platformModifiedAt": null,
+      "message": "manual curated from rule-text",
+      "ruleTitle": "天猫国际商家资质标准",
+      "platformModifiedAt": "2024-10-23T07:30:00.000Z",
       "contentHash": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": "2026-05-29T14:00:00.000Z"
     }
   },
   "summary": {

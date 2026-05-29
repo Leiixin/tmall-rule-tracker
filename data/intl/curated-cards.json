@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T12:00:00.000Z",
+  "updatedAt": "2026-05-29T14:00:00.000Z",
   "autoPublishVersion": 0,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
@@ -47,21 +47,38 @@
   "intl_qual": {
     "tag": "INTL QUALIFICATION",
     "title": "资质与品牌",
-    "desc": "天猫国际店铺入驻、品牌授权、资质文件与商品准入要求，影响上架与活动报名资格。",
+    "desc": "天猫国际各类型店铺入驻、品牌授权链路及食品、母婴、医药、美妆等重点行业类目资质要求，依据《天猫国际商家资质标准》。",
     "cards": [
       {
-        "title": "品牌授权与资质文件要求",
+        "title": "各类型店铺入驻与品牌授权",
         "severity": "warning",
         "severityText": "准入",
-        "date": "2025-10-01",
+        "date": "2024-10-23",
         "tags": [
-          "品牌",
-          "入驻"
+          "入驻",
+          "品牌授权",
+          "店铺类型"
         ],
-        "link": "https://rule.tmall.hk/?type=detail&ruleId=20008024&cId=636",
-        "body": "<ul><li>经营品牌须提供 <span class=\"highlight\">有效商标权证明</span> 及授权链路</li><li>跨境商品须符合进口资质、检验检疫等要求（类目差异以平台为准）</li><li>资质过期或信息不实将导致商品下架或限制活动报名</li><li>来源：天猫国际商家与品牌管理相关规范</li></ul>",
-        "sourceId": "intl-rule-qual-brand",
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
+        "body": "<ul><li>开店企业均须：主体公司 <span class=\"highlight\">登记注册文件</span>、授权代表人声明书及身份证件</li><li><span class=\"highlight\">品牌旗舰店</span>：商标注册证（或受理函+非R说明）；非持有人须提供商标权人 <span class=\"highlight\">独占授权</span></li><li><span class=\"highlight\">专卖店</span>：商标注册材料 + 商标权人授权书</li><li><span class=\"highlight\">专营店</span>：经营两个及以上品牌；须提供以商标权人为源头的 <span class=\"num\">四级内</span> 完整授权或进货凭证</li><li><span class=\"highlight\">卖场型旗舰店</span>：另需 35 类商标注册证及卖场特殊资质（支持邀约或自主入驻）</li><li>规则于 <span class=\"num\">2026-05-27</span> 起生效；来源：《天猫国际商家资质标准》</li></ul>",
+        "sourceId": "intl-rule-11000442",
         "cardId": "intl_qual:0"
+      },
+      {
+        "title": "重点行业类目资质要求",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2024-10-23",
+        "tags": [
+          "食品",
+          "母婴",
+          "医药",
+          "美妆"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
+        "body": "<ul><li><span class=\"highlight\">食品大类</span>：境内营业执照、食品经营许可证、法定代表人证件、跨境电商零售进口食品委托经营协议</li><li><span class=\"highlight\">母婴奶粉</span>：特殊配方奶粉专营店需境内关联主体食营许可、<span class=\"num\">1000万</span> 产品质量责任险、验商验仓等；来源地限指定国家/地区</li><li><span class=\"highlight\">医药器械</span>：OTC/国际医药需药品经营许可及 <span class=\"num\">1000万</span> 责任险；医疗器械需经营许可及 <span class=\"num\">500万</span> 责任险</li><li><span class=\"highlight\">美妆专营店</span>：须经营 <span class=\"num\">3</span> 个及以上品牌，开店主体注册满 <span class=\"num\">1</span> 年，三级及以内授权或进货凭证</li><li>特殊资质以工作人员或系统提示为准；来源：《天猫国际商家资质标准》</li></ul>",
+        "sourceId": "intl-rule-11000442",
+        "cardId": "intl_qual:1"
       }
     ]
   },

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T03:30:00.000Z",
+  "updatedAt": "2026-05-29T14:00:00.000Z",
   "categories": {
     "intl_logistics": {
       "pinned": true,
@@ -47,6 +47,54 @@
           "level": "medium",
           "title": "物流轨迹监控",
           "desc": "关注揽收后 24h（保税）/ 168h（直邮国际段）无更新等虚假发货风险点，提前预警异常单。"
+        }
+      ]
+    },
+    "intl_qual": {
+      "pinned": true,
+      "sourceId": "intl-rule-11000442",
+      "ruleTitle": "天猫国际商家资质标准",
+      "panelSubtitle": "店铺类型品牌授权与重点行业类目准入",
+      "generatedAt": "2026-05-29T14:00:00.000Z",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "规则生效时间",
+          "detail": "本标准于 <span class=\"new-val\">2026-05-27</span> 起正式生效（2026-05-21 公示）。",
+          "date": "2026-05-21",
+          "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624"
+        },
+        {
+          "type": "modify",
+          "title": "专营店授权链路",
+          "detail": "专营店须提供以商标权人为源头的 <span class=\"new-val\">四级内</span> 完整授权或进货凭证，不同大类授权级数有差异。",
+          "date": "2024-10-23",
+          "link": "https://rule.tmall.hk/?type=detail&ruleId=11000442&cId=624#/rule/detail?ruleId=11000442&cId=624"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "入驻资质门槛",
+          "desc": "开店须备齐主体登记文件、授权代表人材料，并按店铺类型提交 <span class=\"warn\">商标授权链路</span> 或进货凭证。"
+        },
+        {
+          "level": "high",
+          "title": "行业特殊资质",
+          "desc": "食品、母婴奶粉、医药器械、美妆等类目另有境内证照、责任险、验商验仓等 <span class=\"warn\">额外准入要求</span>。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "high",
+          "title": "授权链路自查",
+          "desc": "按店铺类型核对授权级数（旗舰店独占授权、专营店四级内链路等），确保模板与商标持有人信息一致。"
+        },
+        {
+          "level": "medium",
+          "title": "类目资质清单",
+          "desc": "食品类备齐境内食营许可与委托经营协议；高敏类目（特配奶粉、OTC、医疗器械）提前准备责任险与检测报告。"
         }
       ]
     }
