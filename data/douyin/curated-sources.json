@@ -1,39 +1,25 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-05-29T07:23:08.213Z",
+  "updatedAt": "2026-05-29T09:55:27.862Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/douyin/curated-sources.json",
   "sources": [
     {
       "id": "dy-rule-aJk964FFQKKZ",
       "slug": "aJk964FFQKKZ",
       "platform": "douyin",
-      "url": "https://school.jinritemai.com/doudian/web/rules/aJk964FFQKKZ",
-      "label": "商品保质期与临期标注",
+      "url": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+      "label": "商品保质期管理和宣传规范",
       "categories": [
         "shelf"
       ],
       "cardIds": [
         "shelf:0",
         "shelf:1",
-        "shelf:2"
+        "shelf:2",
+        "shelf:3"
       ],
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
       "manualTextPath": "data/douyin/rule-text/rule-aJk964FFQKKZ.txt"
-    },
-    {
-      "id": "dy-rule-aHGYneqr4WDJ",
-      "slug": "aHGYneqr4WDJ",
-      "platform": "douyin",
-      "url": "https://school.jinritemai.com/doudian/web/rules/aHGYneqr4WDJ",
-      "label": "盲盒类商品信息公示",
-      "categories": [
-        "shelf"
-      ],
-      "cardIds": [
-        "shelf:3"
-      ],
-      "ruleTitle": "盲盒类商品管理规范",
-      "manualTextPath": "data/douyin/rule-text/rule-aHGYneqr4WDJ.txt"
     },
     {
       "id": "dy-rule-103956",

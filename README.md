@@ -136,7 +136,7 @@ npm run migrate:score-insights
 
 | Tab key | 展示名称 | 抖音锚点示例 |
 |---------|----------|--------------|
-| `shelf` | 商品效期要求 | 《商品保质期管理和宣传规范》、盲盒类商品管理规范 |
+| `shelf` | 商品效期要求 | 《商品保质期管理和宣传规范》（[文章 aJk964FFQKKZ](https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ)） |
 | `score` | 店铺真实体验分 | 《商家体验分规范》（slug `103956`） |
 | `ship` | 发货时效 | 消极服务细则、揽收时效、物流轨迹 |
 | `penalty` | 发货违规及处罚 | 虚假交易、价格违规、禁售商品细则 |

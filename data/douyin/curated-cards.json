@@ -1,11 +1,11 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-05-29T07:23:08.213Z",
+  "updatedAt": "2026-05-29T09:55:27.862Z",
   "autoPublishVersion": 1,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
-    "desc": "抖音在售商品保质期、临期标注与禁售标准，依据《商品保质期管理和宣传规范》《盲盒类商品管理规范》（2026年6月修订公示）。",
+    "desc": "抖音在售商品保质期、临期标注与禁售标准，唯一依据《商品保质期管理和宣传规范》（公示期 2026-05-26～2026-06-02，预计 2026-06-02 生效）。",
     "cards": [
       {
         "title": "临期商品标题与详情标注",
@@ -16,7 +16,7 @@
           "临期",
           "标注"
         ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/aJk964FFQKKZ",
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
         "body": "<ul><li>临期商品须在标题写明 <span class=\"highlight\">「临期商品」</span> 字样</li><li>详情页最上方显著标示「此商品为临近保质期商品」</li><li>临期起算时间以商家发货后物流公司系统 <span class=\"highlight\">揽收时间</span> 为准</li><li>来源：《商品保质期管理和宣传规范》3.3</li></ul>",
         "sourceId": "dy-rule-aJk964FFQKKZ",
         "cardId": "shelf:0"
@@ -30,8 +30,8 @@
           "保质期",
           "禁售"
         ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/aJk964FFQKKZ",
-        "body": "<ul><li>保质期以月/年换算：1月=<span class=\"num\">30</span>天，1年=<span class=\"num\">365</span>天，临期天数向上取整</li><li>例：保质期365～730天，剩余≤<span class=\"num\">30</span>天为临期</li><li>国家/地区标准严于平台时，按更严标准执行</li><li>来源：《商品保质期管理和宣传规范》3.2</li></ul>",
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>保质期以月/年换算：1月=<span class=\"num\">30</span>天，1年=<span class=\"num\">365</span>天，临期天数向上取整</li><li>365天≤保质期：剩余≤<span class=\"num\">45</span>天为临期；180～365天：≤<span class=\"num\">30</span>天；90～180天：≤<span class=\"num\">20</span>天</li><li>国家/地区标准严于平台时，按更严标准执行</li><li>来源：《商品保质期管理和宣传规范》3.2</li></ul>",
         "sourceId": "dy-rule-aJk964FFQKKZ",
         "cardId": "shelf:1"
       },
@@ -44,23 +44,23 @@
           "酒类",
           "宣传"
         ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/aJk964FFQKKZ",
-        "body": "<ul><li>宣传酒类「新鲜日期」时，签收日期与生产日期时间差不得超过保质期的 <span class=\"num\">1/3</span></li><li>违规按商家【虚假宣传】、创作者虚假宣传细则处理</li><li>平台 <span class=\"highlight\">禁止销售过期商品</span></li><li>来源：《商品保质期管理和宣传规范》3.7、4.1</li></ul>",
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>宣传酒类「新鲜日期」时，<span class=\"highlight\">签收日期与生产日期时间差</span>不得超过保质期的 <span class=\"num\">1/3</span></li><li>例：保质期90天、差值22天，未超30天（1/3）即符合标准</li><li>违规按商家【虚假宣传】、创作者虚假宣传细则处理</li><li>来源：《商品保质期管理和宣传规范》3.7</li></ul>",
         "sourceId": "dy-rule-aJk964FFQKKZ",
         "cardId": "shelf:2"
       },
       {
-        "title": "盲盒商品信息公示要求",
-        "severity": "warning",
-        "severityText": "规范",
-        "date": "2026-05-29",
+        "title": "过期禁售与效期违规处理",
+        "severity": "critical",
+        "severityText": "处罚",
+        "date": "2026-06-02",
         "tags": [
-          "盲盒",
-          "商品信息"
+          "过期",
+          "违规"
         ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/aHGYneqr4WDJ",
-        "body": "<ul><li>详情页须描述可获得的所有内容明细，显著提醒「盲盒类商品具有不确定性」</li><li>须明示抽盒规则、商品分布、隐藏款概率、价值范围等关键信息</li><li>不得虚假宣传必中款、百分百中等引人误解信息</li><li>来源：《盲盒类商品管理规范》4.5</li></ul>",
-        "sourceId": "dy-rule-aHGYneqr4WDJ",
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>平台 <span class=\"highlight\">禁止销售过期商品</span>，违者按禁售商品细则处理</li><li>包装篡改/手写/模糊保质期、内外包装日期不一致：按商品标识标志不合格细则处理</li><li>临期商品未按 3.3 提示临期特性：按关键信息不明确细则处理</li><li>适用类目含水饮冲调、休闲食品、酒类、母婴、个护家清等（见规则正文）</li></ul>",
+        "sourceId": "dy-rule-aJk964FFQKKZ",
         "cardId": "shelf:3"
       }
     ]

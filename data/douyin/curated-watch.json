@@ -1,6 +1,6 @@
 ﻿{
   "version": 1,
-  "lastCheckedAt": "2026-05-29T07:23:08.213Z",
+  "lastCheckedAt": "2026-05-29T09:55:27.862Z",
   "autoPublishVersion": 1,
   "recentAutoPublish": null,
   "summary": {
@@ -14,65 +14,57 @@
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-aJk964FFQKKZ",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
-    },
-    "dy-rule-aHGYneqr4WDJ": {
-      "status": "ok",
-      "message": "manual curated from rules.json",
-      "ruleTitle": "盲盒类商品管理规范",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
-      "contentHash": "manual-aHGYneqr4WDJ",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-103956": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "商家体验分规范",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-103956",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-113278": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "【商家—消极服务】细则",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-113278",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-aHu5aT4aoQXD": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "发货常见问题—物流轨迹超时",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-aHu5aT4aoQXD",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-113470": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "【虚假交易】实施细则",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-113470",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-aJ2ymdS5jWGZ": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "商家【价格违规】细则",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-aJ2ymdS5jWGZ",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     },
     "dy-rule-101805": {
       "status": "ok",
       "message": "manual curated from rules.json",
       "ruleTitle": "【发布法规禁止商品/信息】细则",
-      "platformModifiedAt": "2026-05-29T07:23:08.213Z",
+      "platformModifiedAt": "2026-05-29T09:55:27.862Z",
       "contentHash": "manual-101805",
-      "lastSyncedAt": "2026-05-29T07:23:08.213Z"
+      "lastSyncedAt": "2026-05-29T09:55:27.862Z"
     }
   }
 }
