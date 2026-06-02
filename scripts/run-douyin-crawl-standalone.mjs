@@ -6,6 +6,10 @@ import {
   crawlDouyinRules
 } from "../src/crawler/douyinCrawler.js";
 import { DOUYIN_CATEGORY_KEYWORDS } from "../src/config.js";
+import { classifyRules } from "../src/services/classifier.js";
+import { enrichRulesWithAiSummary } from "../src/services/llm/summarizer.js";
+import { isLlmEnabled } from "../src/services/llm/client.js";
+import { loadRules, upsertRules } from "../src/services/storage.js";
 
 function detectTags(text) {
   return Object.entries(DOUYIN_CATEGORY_KEYWORDS)
@@ -27,6 +31,7 @@ function classifyDouyinRules(rules) {
 const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.join(repoRoot, "data", "douyin");
 const publicDir = path.join(repoRoot, "public", "data", "douyin");
+process.env.DATA_DIR = dataDir;
 
 function toYmd(iso) {
   if (!iso) return "";
@@ -80,9 +85,28 @@ async function writeJson(filePath, value) {
 }
 
 const timestamp = new Date().toISOString();
+const beforeRules = await loadRules();
 const crawlResult = await crawlDouyinRules({ returnReport: true });
 const crawled = crawlResult.rules;
-const classified = classifyDouyinRules(crawled);
+let classified = classifyRules(classifyDouyinRules(crawled), { platform: "douyin" });
+classified = await upsertRules(classified);
+
+let llmResult = { summarized: 0, skipped: 0, errors: 0, disabled: true };
+if (isLlmEnabled() && classified.length) {
+  const enrich = await enrichRulesWithAiSummary(classified, {
+    previousRules: beforeRules,
+    persist: true,
+    platform: "douyin",
+    weeklyScope: "douyin"
+  });
+  classified = enrich.rules;
+  llmResult = {
+    summarized: enrich.summarized,
+    skipped: enrich.skipped,
+    errors: enrich.errors,
+    disabled: enrich.disabled
+  };
+}
 const dynamicsCount = classified.filter((r) =>
   String(r.source || "").includes("规则动态")
 ).length;
@@ -128,7 +152,9 @@ console.log(
     {
       ok: true,
       fetched: crawled.length,
-      withContent: classified.filter((r) => (r.content || "").length > 80).length
+      merged: classified.length,
+      withContent: classified.filter((r) => (r.content || "").length > 80).length,
+      llm: llmResult
     },
     null,
     2

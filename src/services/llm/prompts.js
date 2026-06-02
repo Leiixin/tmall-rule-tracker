@@ -1,4 +1,4 @@
-export const PROMPT_VERSION = "6";
+export const PROMPT_VERSION = "7";
 
 export const HIGHLIGHT_SECTION_KEYS = ["核心变化", "适用范围", "生效时间"];
 
@@ -73,6 +73,33 @@ impactsStructured 键名只能是：不利、有利、中性。
 actionsStructured 键名只能是：运营组、客服组、物流组。
 使用简体中文；只依据原文；信息不足则保守表述。`;
 
+export const RULE_SUMMARY_SYSTEM_PROMPT_DOUYIN = `你是抖音电商（抖店）商家运营与平台规则顾问。根据用户提供的规则标题、发布时间与正文，输出严格 JSON（不要 markdown 代码块）。
+
+三列分工（禁止重复、禁止同义复述）：
+1. highlightsStructured 重点内容：只写客观事实，不写友好/不友好判断，不写应做什么。
+2. impactsStructured 商家影响：只写对商家经营有利/不利/中性合规成本的判断，不写各组具体动作。
+3. actionsStructured 流程建议：只写各组可执行措施，不要重复 impactsStructured 中的风险结论。
+
+输出格式与键名约束与天猫规则摘要相同（highlightsStructured / impactsStructured / actionsStructured，键名分别为核心变化/适用范围/生效时间、不利/有利/中性、运营组/客服组/物流组）。
+
+抖音场景侧重（原文有则写，无则勿编造）：
+- 商品上架、效期、库存与下架展示要求；
+- 店铺/商品体验分、信用分、流量与活动报名门槛；
+- 发货、揽收、物流时效与虚假发货/延迟发货处罚；
+- 违规扣分、保证金、赔付、限制经营等处罚层级须分条摘录；
+- 原文出现的规则名称（含书名号）、时效、金额、赔付形式须保留。
+
+结构化字段通用规则：
+- 每个键的值为字符串数组（1～4 条），单条 20～55 字；禁止合并多种处罚为一条空泛表述。
+- 使用简体中文；只依据原文；信息不足则保守表述。`;
+
+export function getRuleSummarySystemPrompt(platform) {
+  if (platform === "douyin") {
+    return RULE_SUMMARY_SYSTEM_PROMPT_DOUYIN;
+  }
+  return RULE_SUMMARY_SYSTEM_PROMPT;
+}
+
 export function flattenStructured(structured, sectionKeys) {
   const flat = [];
   for (const key of sectionKeys) {
@@ -102,17 +129,25 @@ export function flattenActionsStructured(structured) {
   return flattenStructured(structured, ACTION_SECTION_KEYS);
 }
 
-export function buildRuleSummaryUserPrompt(rule, contentMaxChars) {
+export function buildRuleSummaryUserPrompt(rule, contentMaxChars, platform = "tmall") {
   const title = rule.title || "未命名规则";
   const publishedAt = rule.publishedAt || rule.lastSeenAt || "未知";
   const content = String(rule.content || "").slice(0, contentMaxChars);
+  const defaultSource =
+    platform === "douyin"
+      ? "抖音电商规则学习中心（规则动态）"
+      : "天猫规则中心";
+  const extraHint =
+    platform === "douyin"
+      ? "若正文含体验分、发货时效、违规扣分或赔付，「核心变化」须分条摘录并保留原文数字与规则名称。"
+      : "若正文含服务保障、违规处理、赔付金额，「核心变化」须按处罚层级分条摘录，并保留书名号规则名、时效与金额数字。";
   return `标题：${title}
 发布时间：${publishedAt}
-来源：${rule.source || "天猫规则中心"}
+来源：${rule.source || defaultSource}
 
 正文：
 ${content}
 
 请按 system 输出 JSON。三个 structured 对象均为「键名 + 要点数组」；impacts 用不利/有利/中性；actions 用运营组/客服组/物流组；三者勿重复。
-若正文含服务保障、违规处理、赔付金额，「核心变化」须按处罚层级分条摘录，并保留书名号规则名、时效与金额数字。`;
+${extraHint}`;
 }

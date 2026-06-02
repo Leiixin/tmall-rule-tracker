@@ -69,12 +69,25 @@ cp .env.example .env
 npm run summarize
 ```
 
-3. 抓取时会顺带总结（每次最多 `LLM_MAX_RULES_PER_RUN` 条，默认 20）：
+3. 抓取时会顺带总结（天猫每次最多 `LLM_MAX_RULES_PER_RUN` 条，默认 20；**抖音周度**优先摘要上周公告，最多 `LLM_MAX_DOUYIN_WEEKLY` 条，默认 30）：
 ```bash
 npm run crawl
+npm run crawl:douyin
 ```
 
-4. GitHub Actions：在 **Settings → Secrets and variables → Actions** 添加 `DEEPSEEK_API_KEY` 后，在 **Actions** 页手动运行 **Crawl Tmall Rules**，或等待每日定时任务；成功后 `data/rules.json` 会出现 `aiSummary`。
+4. 仅补全抖音上周公告的 AI 解读（不重新爬站）：
+```bash
+npm run summarize:douyin
+# 或
+DATA_DIR=data/douyin node scripts/summarize-rules.mjs --platform=douyin
+```
+
+5. 校验抖音周度 AI 覆盖率：
+```bash
+npm run verify:douyin:weekly-llm
+```
+
+6. GitHub Actions：在 **Settings → Secrets and variables → Actions** 添加 `DEEPSEEK_API_KEY` 后，在 **Actions** 页手动运行 **Crawl Tmall Rules**，或等待每日定时任务；成功后 `data/rules.json` / `data/douyin/rules.json` 会出现 `aiSummary`。
 
 未配置 Key 时行为与原先一致（snippet / 分类模板），不影响抓取。
 

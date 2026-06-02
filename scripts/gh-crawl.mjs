@@ -188,9 +188,13 @@ async function main() {
     merged = await upsertRules(classified);
 
     if (merged.length) {
+      const weeklyScope =
+        platform === "douyin" ? "douyin" : platform === "intl" ? "intl" : "tmall";
       const enrich = await enrichRulesWithAiSummary(merged, {
         previousRules: beforeRules,
-        persist: true
+        persist: true,
+        platform,
+        weeklyScope
       });
       merged = enrich.rules;
       llmResult = {

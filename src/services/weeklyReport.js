@@ -30,7 +30,15 @@ export function getLastWeekRange(reference = new Date()) {
   return { start: lastMonday, end: lastSunday };
 }
 
-function pickHighlightsStructured(rule) {
+const DOUYIN_SUMMARY_KEYS = ["shelf", "score", "ship", "penalty"];
+const TMALL_SUMMARY_KEYS = [
+  "effectivePeriod",
+  "shopExperienceScore",
+  "shippingTimeliness",
+  "shippingViolationPenalty"
+];
+
+function pickHighlightsStructured(rule, weeklyScope = "tmall") {
   const ai = rule.aiSummary;
   if (
     ai?.highlightsStructured &&
@@ -51,11 +59,22 @@ function pickHighlightsStructured(rule) {
     structured["核心变化"] = [rule.snippet.slice(0, 240)];
   } else {
     const summary = rule.summary || {};
-    for (const key of Object.keys(ALL_CATEGORY_LABELS)) {
+    const keys =
+      weeklyScope === "douyin" ? DOUYIN_SUMMARY_KEYS : TMALL_SUMMARY_KEYS;
+    for (const key of keys) {
       const line = summary[key];
       if (line && line !== "未识别到明确描述") {
         structured["核心变化"] = [line.slice(0, 240)];
         break;
+      }
+    }
+    if (!structured["核心变化"]) {
+      for (const key of Object.keys(ALL_CATEGORY_LABELS)) {
+        const line = summary[key];
+        if (line && line !== "未识别到明确描述") {
+          structured["核心变化"] = [line.slice(0, 240)];
+          break;
+        }
       }
     }
   }
@@ -123,6 +142,30 @@ function pickImpactsStructured(rule) {
       "违规与赔付标准明确，直接增加售后成本与账户处罚风险。"
     ];
   }
+  if (tags.includes("shelf")) {
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "涉及商品效期、上架或库存展示要求，可能影响 SKU 标注、下架与活动报名。"
+    ];
+  }
+  if (tags.includes("score")) {
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "体验分/信用分与流量、活动资源挂钩，指标波动将直接影响曝光与转化。"
+    ];
+  }
+  if (tags.includes("ship")) {
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "发货或揽收时效不达标可能触发体验分降权、赔付与客诉上升。"
+    ];
+  }
+  if (tags.includes("penalty")) {
+    structured["不利"] = [
+      ...(structured["不利"] || []),
+      "违规扣分、保证金或赔付标准明确，直接增加售后成本与限流风险。"
+    ];
+  }
   if (!Object.keys(structured).length) {
     structured["中性"] = [
       "规则可能调整履约或售后要求，需结合类目评估合规与成本。"
@@ -131,7 +174,7 @@ function pickImpactsStructured(rule) {
   return structured;
 }
 
-function pickActionsStructured(rule) {
+function pickActionsStructured(rule, weeklyScope = "tmall") {
   const ai = rule.aiSummary;
   if (
     ai?.actionsStructured &&
@@ -169,6 +212,32 @@ function pickActionsStructured(rule) {
       "对高投诉 SKU 建立熔断，避免重复违规。"
     ];
   }
+  if (tags.includes("shelf")) {
+    structured["运营组"] = [
+      ...(structured["运营组"] || []),
+      "维护效期与上架日历，生效前完成详情页、库存与资质复核。"
+    ];
+  }
+  if (tags.includes("score")) {
+    structured["运营组"] = [
+      ...(structured["运营组"] || []),
+      "建立体验分周报，拆解商品/物流/服务维度改进项。"
+    ];
+    structured["客服组"] = ["压降响应、售后纠纷等高权重服务指标。"];
+  }
+  if (tags.includes("ship")) {
+    structured["物流组"] = ["更新发货模板与揽收 SLA，设置轨迹停滞与超时预警。"];
+  }
+  if (tags.includes("penalty")) {
+    structured["客服组"] = [
+      ...(structured["客服组"] || []),
+      "梳理违规赔付场景，更新话术与判责协同流程。"
+    ];
+    structured["运营组"] = [
+      ...(structured["运营组"] || []),
+      "对高违规 SKU 建立熔断，避免重复扣分或限流。"
+    ];
+  }
   if (!Object.keys(structured).length) {
     structured["运营组"] = ["组织共读原文并形成内部变更纪要。"];
     structured["客服组"] = ["生效当周按日复盘投诉、超时与赔付指标。"];
@@ -194,14 +263,20 @@ export function buildWeeklyReport(
       return bTime - aTime;
     })
     .map((rule) => {
-      const highlightsStructured = pickHighlightsStructured(rule);
-      const impactsStructured = pickImpactsStructured(rule);
-      const actionsStructured = pickActionsStructured(rule);
+      const highlightsStructured = pickHighlightsStructured(rule, weeklyScope);
+      const impactsStructured = pickImpactsStructured(rule, weeklyScope);
+      const actionsStructured = pickActionsStructured(rule, weeklyScope);
+      const defaultSource =
+        weeklyScope === "douyin"
+          ? "抖音电商规则学习中心"
+          : weeklyScope === "intl"
+            ? "天猫国际规则公示"
+            : "天猫规则中心";
       return {
         title: rule.title || "未命名规则",
         url: rule.url || "",
         publishedAt: rule.publishedAt || rule.lastSeenAt || null,
-        source: rule.source || "天猫规则中心",
+        source: rule.source || defaultSource,
         highlightsStructured,
         highlights: flattenHighlightsStructured(highlightsStructured),
         impactsStructured,

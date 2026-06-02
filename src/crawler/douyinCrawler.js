@@ -11,6 +11,11 @@ import {
   MAX_DOUYIN_DYNAMICS_LIST_PAGES,
   MAX_DOUYIN_PAGE_SIZE
 } from "../config.js";
+import { getLastWeekRange } from "../services/weeklyReport.js";
+import {
+  isDouyinAnnouncementLikeSource,
+  isDouyinWeeklyRule
+} from "../utils/weeklyEligibility.js";
 
 const BASE_URL = "https://school.jinritemai.com";
 const USER_AGENT =
@@ -318,35 +323,83 @@ function mergeIndexedRules(map, items, meta) {
   }
 }
 
-async function fetchDetailsForRules(ruleMap, limit) {
-  const sorted = [...ruleMap.values()].sort(
-    (a, b) => timeValue(b.publishedAt) - timeValue(a.publishedAt)
-  );
+function detailFetchSortKey(rule, range) {
+  if (rule.content && rule.content.length > 80) {
+    return 3;
+  }
+  if (isDouyinWeeklyRule(rule, range)) {
+    return 0;
+  }
+  if (isDouyinAnnouncementLikeSource(rule)) {
+    return 1;
+  }
+  return 2;
+}
+
+async function fetchOneRuleDetail(ruleMap, rule) {
+  if (rule.content && rule.content.length > 80) {
+    return false;
+  }
+  try {
+    const detail = await fetchDouyinRuleDetail(rule.id);
+    if (detail?.content) {
+      ruleMap.set(rule.id, {
+        ...rule,
+        title: detail.title || rule.title,
+        content: detail.content,
+        snippet: detail.content.slice(0, 220),
+        publishedAt: detail.publishedAt || rule.publishedAt,
+        url: detail.url || rule.url
+      });
+      return true;
+    }
+  } catch {
+    // skip single rule failures
+  }
+  return false;
+}
+
+async function fetchDetailsForRules(ruleMap, limit, options = {}) {
+  const range = getLastWeekRange();
+  const weeklyBudget =
+    options.weeklyDetailBudget ??
+    Number(process.env.DOUYIN_WEEKLY_DETAIL_FETCH || 40);
+
+  const weeklyCandidates = [...ruleMap.values()]
+    .filter((rule) => isDouyinWeeklyRule(rule, range))
+    .sort((a, b) => timeValue(b.publishedAt) - timeValue(a.publishedAt));
 
   let fetched = 0;
+  let weeklyFetched = 0;
+  for (const rule of weeklyCandidates) {
+    if (weeklyFetched >= weeklyBudget) {
+      break;
+    }
+    const updated = ruleMap.get(rule.id) || rule;
+    if (await fetchOneRuleDetail(ruleMap, updated)) {
+      fetched += 1;
+      weeklyFetched += 1;
+    }
+  }
+
+  const sorted = [...ruleMap.values()].sort((a, b) => {
+    const keyDiff = detailFetchSortKey(a, range) - detailFetchSortKey(b, range);
+    if (keyDiff !== 0) {
+      return keyDiff;
+    }
+    return timeValue(b.publishedAt) - timeValue(a.publishedAt);
+  });
+
   for (const rule of sorted) {
     if (fetched >= limit) {
       break;
     }
-    if (rule.content && rule.content.length > 80) {
+    const updated = ruleMap.get(rule.id) || rule;
+    if (updated.content && updated.content.length > 80) {
       continue;
     }
-
-    try {
-      const detail = await fetchDouyinRuleDetail(rule.id);
-      if (detail?.content) {
-        ruleMap.set(rule.id, {
-          ...rule,
-          title: detail.title || rule.title,
-          content: detail.content,
-          snippet: detail.content.slice(0, 220),
-          publishedAt: detail.publishedAt || rule.publishedAt,
-          url: detail.url || rule.url
-        });
-        fetched += 1;
-      }
-    } catch {
-      // skip single rule failures
+    if (await fetchOneRuleDetail(ruleMap, updated)) {
+      fetched += 1;
     }
   }
 }

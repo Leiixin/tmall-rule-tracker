@@ -2,10 +2,11 @@ import { createHash } from "node:crypto";
 
 import { saveRules } from "../storage.js";
 import { getLastWeekRange } from "../weeklyReport.js";
+import { isDouyinWeeklyRule } from "../../utils/weeklyEligibility.js";
 import {
   PROMPT_VERSION,
-  RULE_SUMMARY_SYSTEM_PROMPT,
-  buildRuleSummaryUserPrompt
+  buildRuleSummaryUserPrompt,
+  getRuleSummarySystemPrompt
 } from "./prompts.js";
 import { chatJson, getLlmConfig, isLlmEnabled } from "./client.js";
 import { summaryNeedsQualityRetry } from "../../utils/summaryQuality.js";
@@ -64,11 +65,13 @@ function ruleKey(rule) {
   return rule.url || `${rule.title}|${rule.publishedAt}`;
 }
 
-export async function summarizeRule(rule) {
+export async function summarizeRule(rule, options = {}) {
+  const platform = options.platform || "tmall";
   const maxChars = Number(process.env.LLM_CONTENT_MAX_CHARS || 6000);
-  const user = buildRuleSummaryUserPrompt(rule, maxChars);
+  const system = getRuleSummarySystemPrompt(platform);
+  const user = buildRuleSummaryUserPrompt(rule, maxChars, platform);
   let parsed = await chatJson({
-    system: RULE_SUMMARY_SYSTEM_PROMPT,
+    system,
     user,
     temperature: 0.2
   });
@@ -81,7 +84,7 @@ export async function summarizeRule(rule) {
     try {
       const retryUser = `${user}\n\n【补充要求】上次摘要遗漏了原文中的处罚依据规则名称、5天未寄出或30元赔付红包等要点，请严格按原文分条补全「核心变化」与「不利」。`;
       parsed = await chatJson({
-        system: RULE_SUMMARY_SYSTEM_PROMPT,
+        system,
         user: retryUser,
         temperature: 0.1
       });
@@ -110,12 +113,22 @@ export async function summarizeRule(rule) {
   };
 }
 
-function prioritizeRules(rules, previousRules) {
+function prioritizeRules(rules, previousRules, options = {}) {
+  const { weeklyScope } = options;
   const prevMap = new Map(previousRules.map((r) => [ruleKey(r), r]));
   const range = getLastWeekRange();
-  const max = Number(process.env.LLM_MAX_RULES_PER_RUN || 20);
+  const max =
+    weeklyScope === "douyin"
+      ? Number(process.env.LLM_MAX_DOUYIN_WEEKLY || process.env.LLM_MAX_RULES_PER_RUN || 30)
+      : Number(process.env.LLM_MAX_RULES_PER_RUN || 20);
 
-  const candidates = rules.filter((rule) => needsAiSummary(rule, prevMap.get(ruleKey(rule))));
+  let candidates = rules.filter((rule) =>
+    needsAiSummary(rule, prevMap.get(ruleKey(rule)))
+  );
+
+  if (weeklyScope === "douyin") {
+    candidates = candidates.filter((rule) => isDouyinWeeklyRule(rule, range));
+  }
 
   const weekStart = range.start.valueOf();
   const weekEnd = range.end.valueOf();
@@ -142,13 +155,22 @@ function prioritizeRules(rules, previousRules) {
  * 为需要更新的规则调用 DeepSeek 生成 aiSummary，并写回 rules 数组（可选 saveRules）
  */
 export async function enrichRulesWithAiSummary(rules, options = {}) {
-  const { previousRules = [], persist = true } = options;
+  const {
+    previousRules = [],
+    persist = true,
+    platform,
+    weeklyScope
+  } = options;
+  const llmPlatform =
+    platform || (weeklyScope === "douyin" ? "douyin" : weeklyScope === "intl" ? "intl" : "tmall");
 
   if (!isLlmEnabled()) {
     return { rules, summarized: 0, skipped: 0, errors: 0, disabled: true };
   }
 
-  const { candidates, skipped } = prioritizeRules(rules, previousRules);
+  const { candidates, skipped } = prioritizeRules(rules, previousRules, {
+    weeklyScope
+  });
   const delayMs = Number(process.env.LLM_REQUEST_DELAY_MS || 500);
   let summarized = 0;
   let errors = 0;
@@ -158,7 +180,7 @@ export async function enrichRulesWithAiSummary(rules, options = {}) {
   for (const rule of candidates) {
     const key = ruleKey(rule);
     try {
-      const aiSummary = await summarizeRule(rule);
+      const aiSummary = await summarizeRule(rule, { platform: llmPlatform });
       const target = byKey.get(key);
       if (target) {
         target.aiSummary = aiSummary;

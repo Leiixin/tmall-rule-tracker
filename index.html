@@ -907,7 +907,7 @@ function applyInlinePlatformConfigFallback() {
       id: 'douyin', label: '抖音', enabled: true, priority: 80, dataPrefix: 'douyin/', weeklyScope: 'douyin',
       brandSubTitle: 'Douyin Rules',
       homeDesc: '抖音电商规则监控总览：规则动态栏目 /rules/11688 自动抓取公告列表，并汇总规则库与商品效期、体验分、发货时效、违规处罚等分类卡片。',
-      weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商公告类</strong>规则（规则动态栏目 /rules/11688、首页推荐；不含规则库全量目录同步）。',
+      weeklyDesc: '汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商公告类</strong>规则（规则动态栏目 /rules/11688、首页推荐；不含规则库全量目录同步）。已配置 DeepSeek 时，三列优先展示 AI 解读；未配置则使用规则模板。',
       homeSubtitle: 'shelf / score / ship / penalty',
       dataSources: ['抖音电商规则中心（school.jinritemai.com）'],
       ruleHosts: ['school.jinritemai.com'],
@@ -1142,8 +1142,14 @@ var WEEKLY_TAG_LABELS = {
   effectivePeriod: '效期',
   shopExperienceScore: '店铺体验分',
   shippingTimeliness: '发货时效',
-  shippingViolationPenalty: '发货违规及处罚'
+  shippingViolationPenalty: '发货违规及处罚',
+  shelf: '商品效期要求',
+  score: '店铺真实体验分',
+  ship: '发货时效',
+  penalty: '违规处罚'
 };
+var WEEKLY_DOUYIN_SUMMARY_KEYS = ['shelf', 'score', 'ship', 'penalty'];
+var WEEKLY_TMALL_SUMMARY_KEYS = ['effectivePeriod', 'shopExperienceScore', 'shippingTimeliness', 'shippingViolationPenalty'];
 
 function escapeHtml(str) {
   return String(str || '')
@@ -1333,7 +1339,7 @@ function migrateActionsFromFlat(lines) {
   );
 }
 
-function pickWeeklyHighlightsStructured(rule) {
+function pickWeeklyHighlightsStructured(rule, weeklyScope) {
   var ai = rule.aiSummary;
   if (ai && ai.highlightsStructured && typeof ai.highlightsStructured === 'object') {
     if (Object.keys(ai.highlightsStructured).length) return ai.highlightsStructured;
@@ -1349,7 +1355,7 @@ function pickWeeklyHighlightsStructured(rule) {
     structured['核心变化'] = [rule.snippet.slice(0, 240)];
   } else {
     var s = rule.summary || {};
-    var keys = ['effectivePeriod', 'shopExperienceScore', 'shippingTimeliness', 'shippingViolationPenalty'];
+    var keys = weeklyScope === 'douyin' ? WEEKLY_DOUYIN_SUMMARY_KEYS : WEEKLY_TMALL_SUMMARY_KEYS;
     for (var i = 0; i < keys.length; i++) {
       if (s[keys[i]] && s[keys[i]] !== '未识别到明确描述') {
         structured['核心变化'] = [s[keys[i]].slice(0, 240)];
@@ -1395,7 +1401,7 @@ function formatWeeklyHighlights(structured) {
   return formatWeeklyStructuredBlocks(HIGHLIGHT_SECTION_KEYS, structured);
 }
 
-function pickWeeklyImpactsStructured(rule) {
+function pickWeeklyImpactsStructured(rule, weeklyScope) {
   var ai = rule.aiSummary;
   if (ai && ai.impactsStructured && typeof ai.impactsStructured === 'object') {
     if (Object.keys(ai.impactsStructured).length) return ai.impactsStructured;
@@ -1417,13 +1423,25 @@ function pickWeeklyImpactsStructured(rule) {
   if (tags.indexOf('shippingViolationPenalty') >= 0) {
     structured['不利'] = (structured['不利'] || []).concat(['违规与赔付标准明确，增加售后成本与处罚风险。']);
   }
+  if (tags.indexOf('shelf') >= 0) {
+    structured['不利'] = (structured['不利'] || []).concat(['涉及商品效期、上架或库存展示，可能影响 SKU 标注、下架与活动报名。']);
+  }
+  if (tags.indexOf('score') >= 0) {
+    structured['不利'] = (structured['不利'] || []).concat(['体验分/信用分与流量、活动资源挂钩，波动将影响曝光与转化。']);
+  }
+  if (tags.indexOf('ship') >= 0) {
+    structured['不利'] = (structured['不利'] || []).concat(['发货或揽收超时可能触发体验分降权、赔付与客诉。']);
+  }
+  if (tags.indexOf('penalty') >= 0) {
+    structured['不利'] = (structured['不利'] || []).concat(['违规扣分、保证金或赔付标准明确，增加售后成本与限流风险。']);
+  }
   if (!Object.keys(structured).length) {
     structured['中性'] = ['需结合类目评估履约与合规成本，建议查阅原文。'];
   }
   return structured;
 }
 
-function pickWeeklyActionsStructured(rule) {
+function pickWeeklyActionsStructured(rule, weeklyScope) {
   var ai = rule.aiSummary;
   if (ai && ai.actionsStructured && typeof ai.actionsStructured === 'object') {
     if (Object.keys(ai.actionsStructured).length) return ai.actionsStructured;
@@ -1446,6 +1464,20 @@ function pickWeeklyActionsStructured(rule) {
   if (tags.indexOf('shippingViolationPenalty') >= 0) {
     structured['客服组'] = ['梳理赔付场景，更新话术与自动同意策略。'];
     structured['运营组'] = (structured['运营组'] || []).concat(['对高投诉 SKU 建立熔断，避免重复违规。']);
+  }
+  if (tags.indexOf('shelf') >= 0) {
+    structured['运营组'] = (structured['运营组'] || []).concat(['维护效期与上架日历，生效前完成详情页、库存与资质复核。']);
+  }
+  if (tags.indexOf('score') >= 0) {
+    structured['运营组'] = (structured['运营组'] || []).concat(['建立体验分周报，拆解商品/物流/服务维度改进项。']);
+    structured['客服组'] = ['压降响应、售后纠纷等高权重服务指标。'];
+  }
+  if (tags.indexOf('ship') >= 0) {
+    structured['物流组'] = ['更新发货模板与揽收 SLA，设置轨迹停滞与超时预警。'];
+  }
+  if (tags.indexOf('penalty') >= 0) {
+    structured['客服组'] = (structured['客服组'] || []).concat(['梳理违规赔付场景，更新话术与判责协同流程。']);
+    structured['运营组'] = (structured['运营组'] || []).concat(['对高违规 SKU 建立熔断，避免重复扣分或限流。']);
   }
   if (!Object.keys(structured).length) {
     structured['运营组'] = ['组织共读原文并形成内部变更纪要。'];
@@ -1503,9 +1535,9 @@ function buildWeeklyReportClient(rules, weeklyScope) {
     })
     .map(function (rule) {
       var tags = rule.tags || [];
-      var highlightsStructured = pickWeeklyHighlightsStructured(rule);
-      var impactsStructured = pickWeeklyImpactsStructured(rule);
-      var actionsStructured = pickWeeklyActionsStructured(rule);
+      var highlightsStructured = pickWeeklyHighlightsStructured(rule, weeklyScope);
+      var impactsStructured = pickWeeklyImpactsStructured(rule, weeklyScope);
+      var actionsStructured = pickWeeklyActionsStructured(rule, weeklyScope);
       return {
         title: rule.title || '未命名规则',
         url: rule.url || '',
