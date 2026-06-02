@@ -1,21 +1,20 @@
 ﻿{
-  "lastFetchTime": "2026-06-02T09:13:17.252Z",
-  "fetchCount": 1,
-  "totalRules": 833,
-  "newRulesCount": 833,
-  "platform": "douyin",
+  "lastFetchTime": "2026-06-02T09:45:56.420Z",
+  "fetchCount": 2,
+  "totalRules": 832,
+  "newRulesCount": 832,
   "sources": {
     "抖音电商规则中心": {
       "status": "online",
-      "lastCheck": "2026-06-02T09:13:17.252Z",
-      "count": 833
+      "lastCheck": "2026-06-02T09:45:56.420Z",
+      "count": 832
     },
-    "规则动态/11688": {
-      "status": "online",
-      "lastCheck": "2026-06-02T09:13:17.252Z",
-      "count": 499,
-      "pagesFetched": 10,
-      "totalFromApi": 3325
+    "规则中心网页（兜底）": {
+      "status": "error",
+      "lastCheck": "2026-06-02T09:45:56.420Z",
+      "count": 0,
+      "message": "未获取到规则"
     }
-  }
+  },
+  "platform": "douyin"
 }

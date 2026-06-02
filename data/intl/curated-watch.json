@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-02T06:28:56.971Z",
+  "lastCheckedAt": "2026-06-02T09:46:59.893Z",
   "autoPublishVersion": 1,
   "recentAutoPublish": {
     "at": "2026-06-02T06:28:56.971Z",
@@ -21,13 +21,12 @@
       "lastSyncedAt": "2026-05-29T18:00:00.000Z"
     },
     "intl-rule-2927": {
-      "status": "synced",
-      "message": "auto-published 2 categor(ies)",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【已失效】淘宝规则",
       "platformModifiedAt": "2012-05-20T00:00:00.000Z",
       "contentHash": "5d736fa01babf061",
-      "lastSyncedAt": "2026-06-02T06:28:56.971Z",
-      "insightsGeneratedAt": "2026-06-02T06:28:56.971Z"
+      "lastSyncedAt": "2026-06-02T06:28:56.971Z"
     },
     "intl-rule-11000442": {
       "status": "error",
@@ -40,10 +39,10 @@
   },
   "summary": {
     "checked": 3,
-    "changed": 1,
+    "changed": 0,
     "errors": 2,
-    "published": 1,
-    "synced": 1,
+    "published": 0,
+    "synced": 0,
     "insightsGenerated": 0,
     "forced": 0
   }
