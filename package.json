@@ -11,6 +11,7 @@
     "migrate:urls": "node scripts/migrate-rule-urls.mjs",
     "crawl": "node scripts/gh-crawl.mjs",
     "crawl:intl": "node scripts/gh-crawl.mjs --platform=intl",
+    "probe:intl:publicity": "node scripts/probe-intl-publicity.mjs",
     "crawl:douyin": "node scripts/gh-crawl.mjs --platform=douyin",
     "summarize": "node scripts/summarize-rules.mjs",
     "migrate:curated": "node scripts/migrate-curated-data.mjs",

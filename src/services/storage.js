@@ -66,6 +66,7 @@ export async function upsertRules(incomingRules) {
       ...existing,
       ...normalized,
       aiSummary: keepAiSummary ? existing.aiSummary : normalized.aiSummary,
+      weeklyChannel: normalized.weeklyChannel || existing?.weeklyChannel,
       firstSeenAt: existing?.firstSeenAt || new Date().toISOString(),
       lastSeenAt: new Date().toISOString()
     });

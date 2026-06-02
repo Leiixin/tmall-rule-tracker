@@ -21,6 +21,11 @@ export const CRAWL_SOURCE_MANIFEST = [
 export const CRAWL_SOURCE_MANIFEST_INTL = [
   { id: "mtop-hk", label: "天猫国际（rule.tmall.hk / MTOP）", type: "mtop" },
   {
+    id: "mtop-hk-publicity",
+    label: "天猫国际（规则公示 / MTOP）",
+    type: "mtop"
+  },
+  {
     id: "rule_tmall_hk",
     label: "天猫国际规则中心（网页）",
     name: "天猫国际规则中心",
@@ -147,6 +152,12 @@ export const MTOP_SEARCH_KEYWORDS_INTL = [
   "发货",
   "公示"
 ];
+
+/** rule.tmall.hk 规则公示栏（#/rules?cId=636） */
+export const INTL_PUBLICITY_CATEGORY_ID = "636";
+export const INTL_PUBLICITY_SOURCE_SUFFIX = "（规则公示）";
+export const MAX_INTL_PUBLICITY_LIST_PAGES = 10;
+export const MAX_INTL_PUBLICITY_DETAIL_FETCH = 50;
 
 /** 抖音电商规则中心 school.jinritemai.com */
 export const CRAWL_SOURCE_MANIFEST_DOUYIN = [

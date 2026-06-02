@@ -6,7 +6,7 @@ const ALL_CATEGORY_LABELS = {
   ...INTL_CATEGORY_LABELS,
   ...DOUYIN_CATEGORY_LABELS
 };
-import { ruleMatchesWeeklyScope } from "../utils/rulePlatformScope.js";
+import { isRuleInWeeklyWindow } from "../utils/weeklyEligibility.js";
 import { classifyRule } from "./classifier.js";
 import {
   normalizeActionsStructured,
@@ -176,20 +176,6 @@ function pickActionsStructured(rule) {
   return structured;
 }
 
-function inLastWeek(iso, range) {
-  if (!iso) {
-    return false;
-  }
-  const t = dayjs(iso);
-  if (!t.isValid()) {
-    return false;
-  }
-  return (
-    (t.isAfter(range.start) || t.isSame(range.start)) &&
-    (t.isBefore(range.end) || t.isSame(range.end))
-  );
-}
-
 export function buildWeeklyReport(
   rules,
   reference = new Date(),
@@ -201,12 +187,7 @@ export function buildWeeklyReport(
   );
 
   const items = classified
-    .filter(
-      (rule) =>
-        (inLastWeek(rule.publishedAt, range) ||
-          inLastWeek(rule.lastSeenAt, range)) &&
-        ruleMatchesWeeklyScope(rule, weeklyScope)
-    )
+    .filter((rule) => isRuleInWeeklyWindow(rule, range, weeklyScope))
     .sort((a, b) => {
       const aTime = dayjs(a.publishedAt || a.lastSeenAt || 0).valueOf();
       const bTime = dayjs(b.publishedAt || b.lastSeenAt || 0).valueOf();

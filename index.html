@@ -1177,6 +1177,39 @@ function isInLastWeekClient(iso, range) {
   return t >= range.start && t <= range.end;
 }
 
+function formatChineseDateFromIso(iso) {
+  if (!iso) return '';
+  var t = new Date(iso);
+  if (isNaN(t.getTime())) return '';
+  return t.getFullYear() + '年' + (t.getMonth() + 1) + '月' + t.getDate() + '日（以原文为准）';
+}
+
+function isDouyinAnnouncementLikeSourceClient(rule) {
+  if (!rule) return false;
+  if (rule.weeklyChannel === 'announcement') return true;
+  return /公示通知|首页推荐/.test(String(rule.source || ''));
+}
+
+function isIntlAnnouncementLikeSourceClient(rule) {
+  if (!rule) return false;
+  if (rule.weeklyChannel === 'announcement') return true;
+  return /规则公示/.test(String(rule.source || ''));
+}
+
+function isRuleInWeeklyWindowClient(rule, range, weeklyScope) {
+  if (!ruleMatchesWeeklyScope(rule, weeklyScope)) return false;
+  if (weeklyScope === 'douyin') {
+    if (!isDouyinAnnouncementLikeSourceClient(rule)) return false;
+    return isInLastWeekClient(rule.publishedAt, range);
+  }
+  if (weeklyScope === 'intl') {
+    if (!isIntlAnnouncementLikeSourceClient(rule)) return false;
+    return isInLastWeekClient(rule.publishedAt, range);
+  }
+  return isInLastWeekClient(rule.publishedAt, range) ||
+    isInLastWeekClient(rule.lastSeenAt, range);
+}
+
 var HIGHLIGHT_SECTION_KEYS = ['核心变化', '适用范围', '生效时间'];
 var IMPACT_SECTION_KEYS = ['不利', '有利', '中性'];
 var ACTION_SECTION_KEYS = ['运营组', '客服组', '物流组'];
@@ -1324,12 +1357,9 @@ function pickWeeklyHighlightsStructured(rule) {
     structured['适用范围'] = [tags.map(function (t) { return WEEKLY_TAG_LABELS[t] || t; }).join('、')];
   }
   var pub = rule.publishedAt || rule.lastSeenAt;
-  if (pub) {
-    var t = new Date(pub);
-    if (!isNaN(t.getTime())) {
-      var pad = function (n) { return String(n).padStart(2, '0'); };
-      structured['生效时间'] = [t.getFullYear() + '年' + t.getMonth() + 1 + '月' + t.getDate() + '日（以原文为准）'];
-    }
+  var effectiveLabel = formatChineseDateFromIso(pub);
+  if (effectiveLabel) {
+    structured['生效时间'] = [effectiveLabel];
   }
   return structured;
 }
@@ -1458,8 +1488,7 @@ function buildWeeklyReportClient(rules, weeklyScope) {
   var range = getLastWeekRangeClient();
   var items = (Array.isArray(rules) ? rules : [])
     .filter(function (r) {
-      return (isInLastWeekClient(r.publishedAt, range) || isInLastWeekClient(r.lastSeenAt, range)) &&
-        ruleMatchesWeeklyScope(r, weeklyScope);
+      return isRuleInWeeklyWindowClient(r, range, weeklyScope);
     })
     .sort(function (a, b) {
       return new Date(b.publishedAt || b.lastSeenAt || 0) - new Date(a.publishedAt || a.lastSeenAt || 0);

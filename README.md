@@ -173,6 +173,14 @@ data/
 - 周度 API：`GET /api/weekly?platform=<weeklyScope>`（如 `tmall`、`intl`、`douyin`）
 - 分类 sync 预留：`CURATED_DATA_PREFIX=intl/` 或 `PLATFORM_ID=intl` → 读写 `data/intl/curated-sources.json`（见 `scripts/sync-curated-cards.mjs` 顶部注释）；抖音使用 `--platform=douyin` 或 `PLATFORM_ID=douyin`
 
+### 常用命令（天猫国际）
+
+- 抓取（含通用 MTOP + **规则公示栏** 专用管道，公示详情单次最多 50 条）：`npm run crawl:intl`
+- 探测公示栏 list API 参数：`npm run probe:intl:publicity`
+- 分类页来源同步：`npm run sync:curated:intl`
+
+公示栏默认按 `lastCategoryId=636`（`#/rules?cId=636`）分页拉列表；可通过环境变量 `INTL_PUBLICITY_CATEGORY_ID`、`INTL_PUBLICITY_DETAIL_LIMIT` 覆盖。`data/intl/status.json` 的 `sources` 会单独报告 `mtop-hk-publicity` 芯片。
+
 ### 常用命令（抖音）
 
 - 抓取：`npm run crawl:douyin`

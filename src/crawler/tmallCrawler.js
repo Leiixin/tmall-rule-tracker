@@ -13,6 +13,10 @@ import {
   MTOP_PAGE_SIZE,
   MTOP_SEARCH_KEYWORDS,
   MTOP_SEARCH_KEYWORDS_INTL,
+  INTL_PUBLICITY_CATEGORY_ID,
+  INTL_PUBLICITY_SOURCE_SUFFIX,
+  MAX_INTL_PUBLICITY_LIST_PAGES,
+  MAX_INTL_PUBLICITY_DETAIL_FETCH,
   RULE_KEYWORDS,
   CRAWL_SOURCE_MANIFEST,
   CRAWL_SOURCE_MANIFEST_INTL,
@@ -246,19 +250,17 @@ class MtopRuleClient {
   }
 }
 
-async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
-  const searchKeywords = options.searchKeywords || MTOP_SEARCH_KEYWORDS;
-  const sourceLabel = options.sourceLabel || MTOP_RULE_SOURCE_LABEL;
-  const ruleHost = options.ruleHost || "rulechannel.tmall.com";
-  const isHk = site === MTOP_HK_SITE;
-
-  const mtop = new MtopRuleClient(site);
+async function collectMtopListMetadata(mtop, options = {}) {
+  const maxPages = options.maxPages ?? MAX_MTOP_LIST_PAGES;
+  const pageSize = options.pageSize ?? MTOP_PAGE_SIZE;
+  const listExtra = options.listExtra || {};
   const metadata = [];
 
-  for (let pageIndex = 1; pageIndex <= MAX_MTOP_LIST_PAGES; pageIndex += 1) {
+  for (let pageIndex = 1; pageIndex <= maxPages; pageIndex += 1) {
     const payload = await mtop.call(MTOP_APIS.list, {
       pageIndex,
-      pageSize: MTOP_PAGE_SIZE
+      pageSize,
+      ...listExtra
     });
 
     if (!isMtopSuccess(payload)) {
@@ -271,11 +273,16 @@ async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
     }
 
     metadata.push(...list);
-    if (list.length < MTOP_PAGE_SIZE) {
+    if (list.length < pageSize) {
       break;
     }
   }
 
+  return metadata;
+}
+
+async function collectMtopSearchMetadata(mtop, searchKeywords) {
+  const metadata = [];
   for (const keyword of searchKeywords) {
     const payload = await mtop.call(MTOP_APIS.search, {
       pageIndex: 1,
@@ -290,22 +297,43 @@ async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
     const list = Array.isArray(payload?.data?.model) ? payload.data.model : [];
     metadata.push(...list);
   }
+  return metadata;
+}
 
+function dedupeMtopMetadata(metadata) {
   const byRuleId = new Map();
   for (const item of metadata) {
     if (item?.ruleId && !byRuleId.has(item.ruleId)) {
       byRuleId.set(item.ruleId, item);
     }
   }
+  return byRuleId;
+}
 
-  const picked = [...byRuleId.values()].slice(0, MAX_DETAIL_FETCH);
+async function fetchMtopRuleDetails(mtop, items, options = {}) {
+  const {
+    site = MTOP_CN_SITE,
+    sourceLabel = MTOP_RULE_SOURCE_LABEL,
+    ruleHost = "rulechannel.tmall.com",
+    maxDetail = MAX_DETAIL_FETCH,
+    platformScope = null,
+    weeklyChannel = null,
+    defaultCategoryId = ""
+  } = options;
+  const isHk = site === MTOP_HK_SITE;
+  const picked = items.slice(0, maxDetail);
+
   const details = await mapLimit(picked, MTOP_DETAIL_CONCURRENCY, async (item) => {
     const detailPayload = {
       ruleId: String(item.ruleId),
       language: null
     };
-    if (isHk && item.lastCategoryId != null && item.lastCategoryId !== "") {
-      detailPayload.lastCategoryId = String(item.lastCategoryId);
+    const categoryId =
+      item.lastCategoryId != null && item.lastCategoryId !== ""
+        ? String(item.lastCategoryId)
+        : defaultCategoryId;
+    if (isHk && categoryId) {
+      detailPayload.lastCategoryId = categoryId;
     }
 
     const payload = await mtop.call(MTOP_APIS.detail, detailPayload);
@@ -321,9 +349,10 @@ async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
 
     const publishedAt =
       parseDateTime(model.modifiedTime || item.modifiedTime) || new Date().toISOString();
-    const cId = model.lastCategoryId ?? item.lastCategoryId ?? "";
+    const cId = model.lastCategoryId ?? item.lastCategoryId ?? defaultCategoryId ?? "";
 
-    return {
+    const rule = {
+      ruleId: String(model.ruleId || item.ruleId),
       title: normalizeText(model.ruleTitle || item.ruleTitle || ""),
       url: buildRuleDetailUrl(model.ruleId || item.ruleId, cId, ruleHost),
       source: sourceLabel,
@@ -331,9 +360,123 @@ async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
       content: content.slice(0, 12000),
       crawledAt: new Date().toISOString()
     };
+    if (platformScope) {
+      rule.platformScope = platformScope;
+    }
+    if (weeklyChannel) {
+      rule.weeklyChannel = weeklyChannel;
+    }
+    return rule;
   });
 
   return details.filter(Boolean);
+}
+
+async function crawlByMtop(site = MTOP_CN_SITE, options = {}) {
+  const searchKeywords = options.searchKeywords || MTOP_SEARCH_KEYWORDS;
+  const sourceLabel = options.sourceLabel || MTOP_RULE_SOURCE_LABEL;
+  const ruleHost = options.ruleHost || "rulechannel.tmall.com";
+  const platformScope = options.platformScope || null;
+
+  const mtop = new MtopRuleClient(site);
+  const listMeta = await collectMtopListMetadata(mtop, {
+    maxPages: options.maxListPages
+  });
+  const searchMeta = await collectMtopSearchMetadata(mtop, searchKeywords);
+  const byRuleId = dedupeMtopMetadata([...listMeta, ...searchMeta]);
+
+  return fetchMtopRuleDetails(mtop, [...byRuleId.values()], {
+    site,
+    sourceLabel,
+    ruleHost,
+    maxDetail: options.maxDetail ?? MAX_DETAIL_FETCH,
+    platformScope
+  });
+}
+
+/** 天猫国际规则公示栏（按 lastCategoryId 分页 list，最多 50 条详情） */
+export async function crawlIntlPublicityByMtop() {
+  const categoryId =
+    process.env.INTL_PUBLICITY_CATEGORY_ID || INTL_PUBLICITY_CATEGORY_ID;
+  const maxDetail = Number(
+    process.env.INTL_PUBLICITY_DETAIL_LIMIT || MAX_INTL_PUBLICITY_DETAIL_FETCH
+  );
+  const mtop = new MtopRuleClient(MTOP_HK_SITE);
+  const listMeta = await collectMtopListMetadata(mtop, {
+    maxPages: MAX_INTL_PUBLICITY_LIST_PAGES,
+    listExtra: { lastCategoryId: String(categoryId) }
+  });
+  const byRuleId = dedupeMtopMetadata(listMeta);
+
+  return fetchMtopRuleDetails(mtop, [...byRuleId.values()], {
+    site: MTOP_HK_SITE,
+    sourceLabel: `${MTOP_HK_RULE_SOURCE_LABEL}${INTL_PUBLICITY_SOURCE_SUFFIX}`,
+    ruleHost: "rule.tmall.hk",
+    maxDetail,
+    platformScope: "intl",
+    weeklyChannel: "announcement",
+    defaultCategoryId: String(categoryId)
+  });
+}
+
+/** 探测公示栏 list 参数（供 scripts/probe-intl-publicity.mjs） */
+export async function probeIntlPublicityListVariants(targetRuleId = "20010186") {
+  const mtop = new MtopRuleClient(MTOP_HK_SITE);
+  const variants = [
+    { name: "plain", listExtra: {} },
+    {
+      name: "lastCategoryId_636",
+      listExtra: { lastCategoryId: "636" }
+    },
+    {
+      name: "lastCategoryId_161",
+      listExtra: { lastCategoryId: "161" }
+    },
+    {
+      name: "categoryId_636",
+      listExtra: { categoryId: "636" }
+    }
+  ];
+
+  const results = [];
+  for (const variant of variants) {
+    const listMeta = await collectMtopListMetadata(mtop, {
+      maxPages: 3,
+      listExtra: variant.listExtra
+    });
+    const ids = listMeta.map((item) => String(item.ruleId || ""));
+    results.push({
+      name: variant.name,
+      listExtra: variant.listExtra,
+      total: listMeta.length,
+      containsTarget: ids.includes(String(targetRuleId)),
+      sampleRuleIds: ids.slice(0, 8)
+    });
+  }
+
+  const searchPayload = await mtop.call(MTOP_APIS.search, {
+    pageIndex: 1,
+    pageSize: 50,
+    keyword: "公示"
+  });
+  const searchList = isMtopSuccess(searchPayload)
+    ? searchPayload?.data?.model || []
+    : [];
+  const searchIds = searchList.map((item) => String(item.ruleId || ""));
+
+  return {
+    targetRuleId: String(targetRuleId),
+    variants: results,
+    searchPublicity: {
+      total: searchList.length,
+      containsTarget: searchIds.includes(String(targetRuleId)),
+      sampleRuleIds: searchIds.slice(0, 8)
+    },
+    winningPayload:
+      results.find((r) => r.containsTarget)?.listExtra ||
+      results.find((r) => r.total > 0)?.listExtra ||
+      { lastCategoryId: INTL_PUBLICITY_CATEGORY_ID }
+  };
 }
 
 function extractCandidates(html, sourceUrl) {
@@ -528,6 +671,92 @@ async function crawlAllSourcesForManifest({
   return { rules, report };
 }
 
+async function crawlAllSourcesForIntl() {
+  const manifest = CRAWL_SOURCE_MANIFEST_INTL;
+  const htmlSources = INTL_HTML_SOURCES;
+  const report = [];
+
+  const general = await crawlByMtop(MTOP_HK_SITE, {
+    searchKeywords: MTOP_SEARCH_KEYWORDS_INTL,
+    sourceLabel: MTOP_HK_RULE_SOURCE_LABEL,
+    ruleHost: "rule.tmall.hk",
+    platformScope: "intl"
+  });
+
+  const hkEntry = manifestEntryById("mtop-hk", manifest);
+  report.push({
+    id: "mtop-hk",
+    label: hkEntry?.label || "mtop-hk",
+    status: general.length > 0 ? "online" : "error",
+    count: general.length,
+    message: general.length === 0 ? "未获取到规则" : undefined
+  });
+
+  let publicity = [];
+  let publicityMessage;
+  try {
+    publicity = await crawlIntlPublicityByMtop();
+  } catch (err) {
+    publicityMessage = err instanceof Error ? err.message : String(err);
+  }
+
+  const publicityEntry = manifestEntryById("mtop-hk-publicity", manifest);
+  report.push({
+    id: "mtop-hk-publicity",
+    label: publicityEntry?.label || "mtop-hk-publicity",
+    status: publicity.length > 0 ? "online" : "error",
+    count: publicity.length,
+    message:
+      publicityMessage ||
+      (publicity.length === 0 ? "未获取到公示栏规则" : undefined)
+  });
+
+  const primaryRules = dedupeRules([...general, ...publicity]);
+  const skipHtml = primaryRules.length >= MTOP_HTML_SKIP_THRESHOLD;
+  const htmlRules = [];
+
+  for (const entry of manifest.filter((item) => item.type === "html")) {
+    if (skipHtml) {
+      report.push({
+        id: entry.id,
+        label: entry.label,
+        status: "skipped",
+        count: 0,
+        message: HTML_SKIP_MESSAGE
+      });
+      continue;
+    }
+
+    const source = htmlSources.find((item) => item.url === entry.url);
+    if (!source) {
+      report.push({
+        id: entry.id,
+        label: entry.label,
+        status: "error",
+        count: 0,
+        message: "HTML 源配置缺失"
+      });
+      continue;
+    }
+
+    const result = await crawlHtmlSource(source);
+    for (const rule of result) {
+      rule.platformScope = rule.platformScope || "intl";
+    }
+    htmlRules.push(...result);
+    report.push({
+      id: entry.id,
+      label: entry.label,
+      status: result.length > 0 ? "online" : "error",
+      count: result.length,
+      message: result.length === 0 ? "未获取到规则" : undefined
+    });
+  }
+
+  const rules = skipHtml ? primaryRules : dedupeRules([...primaryRules, ...htmlRules]);
+  return { rules, report };
+}
+
 export async function crawlAllSources(options = {}) {
   const platform = options.platform || "tmall";
 
@@ -541,17 +770,7 @@ export async function crawlAllSources(options = {}) {
   }
 
   if (platform === "intl") {
-    return crawlAllSourcesForManifest({
-      manifest: CRAWL_SOURCE_MANIFEST_INTL,
-      htmlSources: INTL_HTML_SOURCES,
-      mtopId: "mtop-hk",
-      mtopCrawl: () =>
-        crawlByMtop(MTOP_HK_SITE, {
-          searchKeywords: MTOP_SEARCH_KEYWORDS_INTL,
-          sourceLabel: MTOP_HK_RULE_SOURCE_LABEL,
-          ruleHost: "rule.tmall.hk"
-        })
-    });
+    return crawlAllSourcesForIntl();
   }
 
   return crawlAllSourcesForManifest({

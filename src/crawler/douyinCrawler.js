@@ -112,24 +112,32 @@ async function douyinGetJson(path, params = {}) {
   return payload.data;
 }
 
-function indexItemToRule(item, { source, content = "" }) {
+function indexItemToRule(item, { source, content = "", weeklyChannel = null }) {
   const id = String(item.id || item.object_id || item.knowledge_id || "");
   const title = normalizeText(item.title || item.name || "");
-  const publishedAt =
-    unixToIso(item.update_at || item.update_time || item.create_at) ||
-    new Date().toISOString();
+  const publishedAt = unixToIso(
+    item.update_at || item.update_time || item.create_at
+  );
 
-  return {
+  const rule = {
     id,
     title,
     content,
     url: buildRuleUrl(id),
     source: source || DOUYIN_RULE_SOURCE_LABEL,
     platformScope: "douyin",
-    publishedAt,
     lastSeenAt: new Date().toISOString(),
     snippet: normalizeText(content || item.summary || "").slice(0, 220)
   };
+
+  if (publishedAt) {
+    rule.publishedAt = publishedAt;
+  }
+  if (weeklyChannel) {
+    rule.weeklyChannel = weeklyChannel;
+  }
+
+  return rule;
 }
 
 async function fetchCenterMain() {
@@ -210,7 +218,11 @@ function mergeIndexedRules(map, items, meta) {
     const existing = map.get(id);
     const candidate = indexItemToRule(
       { ...item, id },
-      { source: meta.source, content: existing?.content || "" }
+      {
+        source: meta.source,
+        content: existing?.content || "",
+        weeklyChannel: meta.weeklyChannel || existing?.weeklyChannel || null
+      }
     );
     if (
       !existing ||
@@ -264,14 +276,16 @@ export async function crawlDouyinRules(options = {}) {
 
   try {
     const center = await fetchCenterMain();
-    mergeIndexedRules(ruleMap, center?.new_rules, { source: DOUYIN_RULE_SOURCE_LABEL });
+    const homeMeta = {
+      source: `${DOUYIN_RULE_SOURCE_LABEL}（首页推荐）`,
+      weeklyChannel: "announcement"
+    };
+    mergeIndexedRules(ruleMap, center?.new_rules, homeMeta);
     mergeIndexedRules(ruleMap, center?.rule_module?.list, {
       source: DOUYIN_RULE_SOURCE_LABEL
     });
     if (center?.latest_rule) {
-      mergeIndexedRules(ruleMap, [center.latest_rule], {
-        source: DOUYIN_RULE_SOURCE_LABEL
-      });
+      mergeIndexedRules(ruleMap, [center.latest_rule], homeMeta);
     }
   } catch {
     // center main optional
@@ -286,7 +300,10 @@ export async function crawlDouyinRules(options = {}) {
         update_time: item.update_time,
         summary: item.summary
       }));
-      mergeIndexedRules(ruleMap, infos, { source: `${DOUYIN_RULE_SOURCE_LABEL}（公示通知）` });
+      mergeIndexedRules(ruleMap, infos, {
+        source: `${DOUYIN_RULE_SOURCE_LABEL}（公示通知）`,
+        weeklyChannel: "announcement"
+      });
       if (!infos.length || infos.length < MAX_DOUYIN_PAGE_SIZE) {
         break;
       }
