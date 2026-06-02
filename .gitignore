@@ -2,3 +2,7 @@
 .env
 *.log
 tunnel*.log
+
+# 一次性抖音 spike 脚本（保留正式回归探针）
+scripts/probe-douyin-*.mjs
+!scripts/probe-douyin-section-11688.mjs

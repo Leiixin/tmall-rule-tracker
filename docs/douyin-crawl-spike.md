@@ -46,3 +46,13 @@ Accept: application/json
 
 - 入口：`fe-eschool-web/index.*.js`
 - 规则页 chunk：`async/pages-Rules.{hash}.js`
+
+## 日常回归探测
+
+栏目 11688 列表 API 是否与爬虫一致，请运行：
+
+```bash
+npm run probe:douyin:section
+```
+
+（对应 [`scripts/probe-douyin-section-11688.mjs`](../scripts/probe-douyin-section-11688.mjs)）

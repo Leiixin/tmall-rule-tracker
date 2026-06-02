@@ -18,6 +18,13 @@ function ruleUrl(slug) {
 const SHELF_ARTICLE_URL =
   "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ";
 
+const SCORE_ARTICLE_URL =
+  "https://school.jinritemai.com/doudian/web/article/103956";
+
+/** 发货时效 + 发货违规及处罚 统一来源 */
+const SHIP_PENALTY_ARTICLE_URL =
+  "https://school.jinritemai.com/doudian/web/article/101706";
+
 const timestamp = new Date().toISOString();
 
 const curatedSources = {
@@ -40,61 +47,23 @@ const curatedSources = {
       id: "dy-rule-103956",
       slug: "103956",
       platform: "douyin",
-      url: ruleUrl("103956"),
+      ruleId: "103956",
+      url: SCORE_ARTICLE_URL,
       label: "商家体验分考核",
       categories: ["score"],
       cardIds: ["score:0", "score:1", "score:2"],
       ruleTitle: "商家体验分规范"
     },
     {
-      id: "dy-rule-113278",
-      slug: "113278",
+      id: "dy-rule-101706",
+      slug: "101706",
       platform: "douyin",
-      url: ruleUrl("113278"),
-      label: "消极服务与售后",
-      categories: ["ship"],
-      cardIds: ["ship:0", "ship:1"],
-      ruleTitle: "【商家—消极服务】细则"
-    },
-    {
-      id: "dy-rule-aHu5aT4aoQXD",
-      slug: "aHu5aT4aoQXD",
-      platform: "douyin",
-      url: ruleUrl("aHu5aT4aoQXD"),
-      label: "物流轨迹与发货时效",
-      categories: ["ship"],
-      cardIds: ["ship:2"],
-      ruleTitle: "发货常见问题—物流轨迹超时"
-    },
-    {
-      id: "dy-rule-113470",
-      slug: "113470",
-      platform: "douyin",
-      url: ruleUrl("113470"),
-      label: "虚假交易认定与处罚",
-      categories: ["penalty"],
-      cardIds: ["penalty:0", "penalty:1"],
-      ruleTitle: "【虚假交易】实施细则"
-    },
-    {
-      id: "dy-rule-aJ2ymdS5jWGZ",
-      slug: "aJ2ymdS5jWGZ",
-      platform: "douyin",
-      url: ruleUrl("aJ2ymdS5jWGZ"),
-      label: "价格违规场景",
-      categories: ["penalty"],
-      cardIds: ["penalty:2"],
-      ruleTitle: "商家【价格违规】细则"
-    },
-    {
-      id: "dy-rule-101805",
-      slug: "101805",
-      platform: "douyin",
-      url: ruleUrl("101805"),
-      label: "发布禁售商品",
-      categories: ["penalty"],
-      cardIds: ["penalty:3"],
-      ruleTitle: "【发布法规禁止商品/信息】细则"
+      ruleId: "101706",
+      url: SHIP_PENALTY_ARTICLE_URL,
+      label: "商家发货行为管理规则",
+      categories: ["ship", "penalty"],
+      cardIds: ["ship:0", "ship:1", "ship:2", "penalty:0", "penalty:1", "penalty:2"],
+      ruleTitle: "商家发货行为管理规则"
     }
   ]
 };
@@ -200,39 +169,39 @@ const curatedCards = {
     tag: "SHIPPING TIMELINE",
     title: "发货时效",
     desc:
-      "发货揽收、物流轨迹与售后响应要求，依据《商家体验分规范》物流指标及《【商家—消极服务】细则》。",
+      "发货承诺、发货时间认定与各类发货时效要求，依据《商家发货行为管理规则》（2025-09-29 修订生效）。",
     cards: [
       {
-        title: "消极服务常见场景",
+        title: "发货时效类型与承诺",
         severity: "critical",
-        severityText: "处罚",
-        date: "2026-05-29",
-        tags: ["客服", "飞鸽"],
-        link: ruleUrl("113278"),
-        body: "<ul><li>包括嘲讽贬低消费者、<span class=\"highlight\">响应慢/不响应</span>（平均响应&gt;90秒）、无故拉黑等</li><li>情节一般：自然周10通以上会话违规，扣违约金 <span class=\"num\">100元</span></li><li>嘲讽贬低消费者可扣订单实付 <span class=\"num\">5%</span> 赔付消费者（单次5～30元）</li><li>来源：《【商家—消极服务】细则》一</li></ul>",
-        sourceId: "dy-rule-113278",
+        severityText: "强制",
+        date: "2025-09-29",
+        tags: ["极速发货", "次日发货"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li><span class=\"highlight\">极速/当日发货</span>：16:00前支付订单当日23:59:59前发货；16:00后支付订单次日23:59:59前发货</li><li><span class=\"highlight\">次日发货</span>：支付成功后次日23:59:59前发货</li><li>商家自主设置时效的，须在承诺时间内发货</li><li>多渠道承诺不一致时，以<span class=\"highlight\">有利于消费者的最短时效</span>为准</li><li>来源：《商家发货行为管理规则》第三章、附则表</li></ul>",
+        sourceId: "dy-rule-101706",
         cardId: "ship:0"
       },
       {
-        title: "无故拒绝售后",
-        severity: "critical",
-        severityText: "强制",
-        date: "2026-05-29",
-        tags: ["售后", "退款"],
-        link: ruleUrl("113278"),
-        body: "<ul><li>无理由关闭售后、未上传有效沟通记录即拒绝等，经平台判定为商家责任</li><li>情节一般：售后拒绝率&gt;行业均值5倍且日均无故拒绝≥5笔，扣违约金 <span class=\"num\">100元</span> 并冻结货款结算</li><li>可扣订单实付 <span class=\"num\">10%</span> 赔付消费者（单次5～50元）</li><li>来源：《【商家—消极服务】细则》二</li></ul>",
-        sourceId: "dy-rule-113278",
+        title: "发货时间如何认定",
+        severity: "warning",
+        severityText: "参考",
+        date: "2025-09-29",
+        tags: ["揽收", "发货"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li>有物流回传：以物流公司<span class=\"highlight\">揽收记录</span>时间为准（如「已揽收/揽件」）</li><li>无物流回传：以商家后台点击发货时间为准；若底单显示更晚发货，取更晚时间</li><li>协商工具另行约定发货时间的，以双方约定为准</li><li>来源：《商家发货行为管理规则》2.2</li></ul>",
+        sourceId: "dy-rule-101706",
         cardId: "ship:1"
       },
       {
-        title: "揽收时效考核要点",
+        title: "特殊场景发货要求",
         severity: "warning",
         severityText: "参考",
-        date: "2026-05-07",
-        tags: ["揽收", "物流"],
-        link: ruleUrl("103956"),
-        body: "<ul><li>现货订单：消费者支付次日 <span class=\"num\">23:59:59</span> 前完成揽收计为达成</li><li>预售订单：在承诺发货时效前揽收计为达成</li><li>存在欺诈发货或物流轨迹异常赔付的订单，计为不达成</li><li>物流轨迹超时等问题参照《商家发货行为管理规则》处理</li></ul>",
-        sourceId: "dy-rule-aHu5aT4aoQXD",
+        date: "2025-09-29",
+        tags: ["QIC", "蟹卡"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li><span class=\"highlight\">蟹卡类目</span>：消费者兑换实物时须按所选邮寄日期发货</li><li><span class=\"highlight\">QIC送仓</span>：普通商品支付后48小时内送仓/揽收；定制预售类在承诺时效前送仓</li><li>平台大促及特定节假日发货时效以平台通知或公告为准</li><li>来源：《商家发货行为管理规则》1.2、3.2、附则表</li></ul>",
+        sourceId: "dy-rule-101706",
         cardId: "ship:2"
       }
     ]
@@ -241,51 +210,40 @@ const curatedCards = {
     tag: "VIOLATIONS & PENALTIES",
     title: "发货违规及处罚",
     desc:
-      "虚假交易、价格违规、禁售商品等必读细则，依据《【虚假交易】实施细则》《商家【价格违规】细则》《【发布法规禁止商品/信息】细则》。",
+      "发货超时、缺货、物流轨迹异常、欺诈发货等违规场景与平台处置，依据《商家发货行为管理规则》第四章（2025-09-29 修订生效）。",
     cards: [
       {
-        title: "虚假交易违规定义",
+        title: "发货超时与缺货/无货",
         severity: "critical",
         severityText: "强制",
-        date: "2026-05-29",
-        tags: ["刷单", "虚假交易"],
-        link: ruleUrl("113470"),
-        body: "<ul><li>通过虚构交易、刷单刷评、刷分炒信等方式获取 <span class=\"highlight\">虚假销量、体验分、流量或榜单排名</span></li><li>包括自有/马甲账号购买、虚假物流、诱导好评返现等</li><li>平台可基于大数据从发货、账号、行为、售后等维度综合判定</li><li>来源：《【虚假交易】实施细则》</li></ul>",
-        sourceId: "dy-rule-113470",
+        date: "2025-09-29",
+        tags: ["发货超时", "缺货"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li><span class=\"highlight\">发货超时</span>：未在承诺发货时效内发货，详见【商家-发货超时】实施细则</li><li><span class=\"highlight\">缺货/无货</span>：承认缺货、无法联系、超时仍未发货等，订单/商品可判缺货违规</li><li>蟹卡+实物兑换双违规的，平台可对两类履约同时处置并赔付体验损失</li><li>来源：《商家发货行为管理规则》4.1.1、4.1.2</li></ul>",
+        sourceId: "dy-rule-101706",
         cardId: "penalty:0"
       },
       {
-        title: "虚假交易商家处罚梯度",
+        title: "物流轨迹超时与异常",
         severity: "critical",
         severityText: "处罚",
-        date: "2026-05-29",
-        tags: ["违约金", "清退"],
-        link: ruleUrl("113470"),
-        body: "<ul><li><span class=\"highlight\">情节严重</span>：限制营销活动 <span class=\"num\">14天</span>，违约金为虚假交易支付金额×<span class=\"num\">1%</span>（最低1000元，最高20000元）</li><li><span class=\"highlight\">情节特别严重</span>：店铺清退</li><li>申诉时效：判罚后 <span class=\"num\">7天</span> 内</li><li>来源：《【虚假交易】实施细则》</li></ul>",
-        sourceId: "dy-rule-113470",
+        date: "2025-09-29",
+        tags: ["物流轨迹", "揽收"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li><span class=\"highlight\">轨迹超时</span>：发货后未在规定时效内回传揽收，或揽收后未回传分拨记录</li><li><span class=\"highlight\">轨迹异常</span>：单号/轨迹明显异常，或合理期限内消费者未收到商品</li><li>分别参见【商家-物流轨迹超时】【商家-物流轨迹异常】实施细则</li><li>来源：《商家发货行为管理规则》4.1.3、4.1.4</li></ul>",
+        sourceId: "dy-rule-101706",
         cardId: "penalty:1"
       },
       {
-        title: "价格违规主要场景",
-        severity: "warning",
-        severityText: "警告",
-        date: "2026-05-29",
-        tags: ["价格", "SKU"],
-        link: ruleUrl("aJ2ymdS5jWGZ"),
-        body: "<ul><li><span class=\"highlight\">价格设定不合理</span>：售价超出类目常规区间、SKU价差异常</li><li><span class=\"highlight\">价格虚假或虚构</span>：虚构划线价/折扣、标题或主图价格与实际不符</li><li><span class=\"highlight\">低价SKU作弊</span>：跨品类混卖、小规格拆分、无意义SKU引流</li><li>情节特别严重：商品封禁、店铺清退</li></ul>",
-        sourceId: "dy-rule-aJ2ymdS5jWGZ",
-        cardId: "penalty:2"
-      },
-      {
-        title: "发布禁售/违禁商品",
+        title: "欺诈发货与其它加重措施",
         severity: "critical",
-        severityText: "强制",
-        date: "2026-05-29",
-        tags: ["禁售", "违禁品"],
-        link: ruleUrl("101805"),
-        body: "<ul><li>发布法律法规及平台禁止销售的商品或信息</li><li>禁售商品不得作为盲盒、福袋等形式出售</li><li>情节严重可 <span class=\"highlight\">店铺清退</span></li><li>来源：《【发布法规禁止商品/信息】细则》</li></ul>",
-        sourceId: "dy-rule-101805",
-        cardId: "penalty:3"
+        severityText: "处罚",
+        date: "2025-09-29",
+        tags: ["欺诈发货", "申诉"],
+        link: SHIP_PENALTY_ARTICLE_URL,
+        body: "<ul><li><span class=\"highlight\">欺诈发货</span>：未真实发货致物流完结时消费者未收到货，详见【商家-欺诈发货】实施细则</li><li>滥用厂家自送、现货+预售批量投诉等可关闭权限、下架商品</li><li>多次违规或批量投诉：可警告、限发品、冻结货款、清退等；违规计入<span class=\"highlight\">商家评级</span>负向指标</li><li>不认可处罚可在 <span class=\"num\">7</span> 个自然日内至【店铺保障-申诉中心】申诉</li><li>来源：《商家发货行为管理规则》4.1.5、4.1.6、第五章</li></ul>",
+        sourceId: "dy-rule-101706",
+        cardId: "penalty:2"
       }
     ]
   }

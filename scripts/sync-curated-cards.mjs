@@ -354,7 +354,10 @@ async function main() {
     const prev = prevWatch.sources?.[source.id] || {};
     const previousContent = sourceCache.sources?.[source.id]?.content || "";
 
-    if (!source.ruleId) {
+    const isDouyinSource =
+      source.platform === "douyin" ||
+      /school\.jinritemai\.com/i.test(String(source.url || ""));
+    if (!source.ruleId && !(isDouyinSource && source.slug)) {
       watch.sources[source.id] = {
         status: "ok",
         message: "local card without ruleId",

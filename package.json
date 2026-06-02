@@ -22,7 +22,7 @@
     "sync:curated": "node scripts/sync-curated-cards.mjs",
     "sync:curated:intl": "node scripts/sync-curated-cards.mjs --platform=intl --force-source=intl-rule-11005234",
     "sync:curated:douyin": "node scripts/sync-curated-cards.mjs --platform=douyin",
-    "sync:curated:douyin:force": "node scripts/sync-curated-cards.mjs --platform=douyin --force-source=dy-rule-103956 --force-source=dy-rule-113470",
+    "sync:curated:douyin:force": "node scripts/sync-curated-cards.mjs --platform=douyin --force-source=dy-rule-101706",
     "migrate:douyin:categories": "node scripts/migrate-douyin-category-keys.mjs",
     "build:curated:douyin": "node scripts/build-douyin-curated-data.mjs",
     "audit:fabrication": "node scripts/audit-curated-fabrication.mjs"
