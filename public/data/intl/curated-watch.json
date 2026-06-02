@@ -1,27 +1,37 @@
 {
-  "lastCheckedAt": "2026-05-29T18:00:00.000Z",
-  "autoPublishVersion": 0,
-  "recentAutoPublish": null,
+  "lastCheckedAt": "2026-06-02T06:28:56.971Z",
+  "autoPublishVersion": 1,
+  "recentAutoPublish": {
+    "at": "2026-06-02T06:28:56.971Z",
+    "sourceId": "intl-rule-2927",
+    "ruleTitle": "【已失效】淘宝规则",
+    "label": "【已失效】淘宝规则",
+    "categories": [
+      "intl_logistics",
+      "intl_penalty"
+    ]
+  },
   "sources": {
     "intl-rule-11005234": {
-      "status": "ok",
-      "message": "manual curated from rule-text",
+      "status": "error",
+      "message": "MTOP detail fetch failed",
       "ruleTitle": "天猫国际商品效期管理规范",
       "platformModifiedAt": "2025-07-30T06:47:00.000Z",
       "contentHash": "",
       "lastSyncedAt": "2026-05-29T18:00:00.000Z"
     },
     "intl-rule-2927": {
-      "status": "ok",
-      "message": "manual curated from rule-text",
-      "ruleTitle": "天猫国际物流时效管理规范",
-      "platformModifiedAt": "2024-03-28T14:17:00.000Z",
-      "contentHash": "",
-      "lastSyncedAt": "2026-05-29T03:30:00.000Z"
+      "status": "synced",
+      "message": "auto-published 2 categor(ies)",
+      "ruleTitle": "【已失效】淘宝规则",
+      "platformModifiedAt": "2012-05-20T00:00:00.000Z",
+      "contentHash": "5d736fa01babf061",
+      "lastSyncedAt": "2026-06-02T06:28:56.971Z",
+      "insightsGeneratedAt": "2026-06-02T06:28:56.971Z"
     },
     "intl-rule-11000442": {
-      "status": "ok",
-      "message": "manual curated from rule-text",
+      "status": "error",
+      "message": "MTOP detail fetch failed",
       "ruleTitle": "天猫国际商家资质标准",
       "platformModifiedAt": "2024-10-23T07:30:00.000Z",
       "contentHash": "",
@@ -29,11 +39,11 @@
     }
   },
   "summary": {
-    "checked": 0,
-    "changed": 0,
-    "errors": 0,
-    "published": 0,
-    "synced": 0,
+    "checked": 3,
+    "changed": 1,
+    "errors": 2,
+    "published": 1,
+    "synced": 1,
     "insightsGenerated": 0,
     "forced": 0
   }

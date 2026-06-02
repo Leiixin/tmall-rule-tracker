@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-29T18:00:00.000Z",
-  "autoPublishVersion": 0,
+  "updatedAt": "2026-06-02T06:28:56.971Z",
+  "autoPublishVersion": 1,
   "intl_expiry": {
     "tag": "INTL EXPIRY",
     "title": "效期与效期管理",
@@ -75,19 +75,74 @@
     "desc": "涵盖保税/直邮发货时效、物流轨迹认定及交易流程，依据《天猫国际物流时效管理规范》。",
     "cards": [
       {
-        "title": "保税/直邮发货时效要求",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2024-03-28",
+        "cardId": "intl_logistics:0",
+        "sourceId": "intl-rule-2927",
+        "title": "发货时效与交易流程基本规则",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2012-05-20",
         "tags": [
-          "保税",
-          "直邮",
-          "发货时效"
+          "发货时效",
+          "交易流程"
         ],
         "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
-        "body": "<ul><li>保税进口：买家付款并完成实名认证及「掌上海关」核验后 <span class=\"num\">48</span> 小时内发货</li><li>海外直邮/集货进口：除发货地法定假日外，完成上述核验后 <span class=\"num\">120</span> 小时内发货</li><li>定制、预售等特殊情形按约定时间发货；「发货」以物流详情显示 <span class=\"highlight\">已揽收/揽件</span> 为准</li><li>规则于 <span class=\"num\">2026-04-22</span> 起生效；来源：《天猫国际物流时效管理规范》</li></ul>",
+        "body": "<ul><li>买家拍下商品并成功付款到支付宝视为成交，货到付款交易中拍下即成交。</li><li>卖家应合理保障买家权益，按交易流程操作。</li><li>若发生危及交易安全的行为，淘宝可采取限制发货、延长交易超时等措施。</li></ul>"
+      },
+      {
+        "cardId": "intl_logistics:1",
         "sourceId": "intl-rule-2927",
-        "cardId": "intl_logistics:0"
+        "title": "延迟发货违约金与违背承诺处理",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2012-05-20",
+        "tags": [
+          "延迟发货",
+          "违约金"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>卖家未按约定时间发货（延迟发货）须向买家支付违约金。</li><li>违背承诺的纠正包括支付违约金、提供发票或履行退换修服务。</li><li>违约金金额按实际交易价款计算。</li></ul>"
+      },
+      {
+        "cardId": "intl_logistics:2",
+        "sourceId": "intl-rule-2927",
+        "title": "物流发货速度与店铺评分",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2012-05-20",
+        "tags": [
+          "物流速度",
+          "店铺评分"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>店铺评分包括物流发货速度，由买家对卖家作出。</li><li>评分是连续六个月内所有评分的算术平均值。</li><li>每个自然月相同买卖家交易，店铺评分仅计前3次。</li></ul>"
+      },
+      {
+        "cardId": "intl_logistics:3",
+        "sourceId": "intl-rule-2927",
+        "title": "包邮定义与运费责任",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2012-05-20",
+        "tags": [
+          "包邮",
+          "运费"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>包邮指卖家对所售商品承担大陆地区首次发货的运费。</li><li>卖家应如实描述包邮条件，不得误导买家。</li></ul>"
+      },
+      {
+        "cardId": "intl_logistics:4",
+        "sourceId": "intl-rule-2927",
+        "title": "违规发货相关处理措施",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2012-05-20",
+        "tags": [
+          "限制发货",
+          "违规处理"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>限制发货指禁止卖家操作“买家已付款，等待卖家发货”状态的交易。</li><li>出售假冒商品等严重违规可导致限制发货、店铺监管等措施。</li><li>一般违规累计扣分达节点时，可能同时限制发货。</li></ul>"
       }
     ]
   },
@@ -164,19 +219,116 @@
     "desc": "天猫国际对延迟发货、缺货、虚假发货等物流违规的处理规则、赔付标准与店铺管控措施。",
     "cards": [
       {
-        "title": "延迟发货、缺货与虚假发货赔付",
-        "severity": "critical",
-        "severityText": "处罚",
-        "date": "2024-03-28",
+        "cardId": "intl_penalty:0",
+        "sourceId": "intl-rule-2927",
+        "title": "延迟发货违约金处理",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2012-05-20",
         "tags": [
           "延迟发货",
-          "缺货",
-          "虚假发货"
+          "违约金"
         ],
         "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
-        "body": "<ul><li><span class=\"highlight\">延迟发货</span>：未满足发货原则，赔付成交价 <span class=\"num\">5%</span>（最低 5 元、最高 50 元）</li><li><span class=\"highlight\">缺货</span>：延迟后 72 小时仍未发货等情形，保税赔 <span class=\"num\">15%</span>、直邮/集货赔 <span class=\"num\">30%</span>（各 5–500 元）</li><li><span class=\"highlight\">虚假发货</span>：保税揽收后 24h 无更新、物流停滞超期等；直邮国际段揽收后 <span class=\"num\">168</span> 小时无更新，赔付 <span class=\"num\">30%</span></li><li>同日多笔合并赔付最高 <span class=\"num\">500</span> 元；月度揽收及时率 &lt;85% 限制大促活动 <span class=\"num\">30</span> 天</li><li>来源：《天猫国际物流时效管理规范》</li></ul>",
+        "body": "<ul><li>卖家须按实际交易价款向买家支付因未按约定时间发货产生的违约金。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:1",
         "sourceId": "intl-rule-2927",
-        "cardId": "intl_penalty:0"
+        "title": "描述不符违规处理",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2012-05-20",
+        "tags": [
+          "描述不符",
+          "商品下架"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>描述严重不符导致无法正常使用的，删除商品；影响使用的，下架商品。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:2",
+        "sourceId": "intl-rule-2927",
+        "title": "滥发信息违规处理",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2012-05-20",
+        "tags": [
+          "滥发信息",
+          "商品删除"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>发布禁售商品或违规信息，删除商品或关闭副店。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:3",
+        "sourceId": "intl-rule-2927",
+        "title": "出售假冒商品严重违规",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2012-05-20",
+        "tags": [
+          "假冒商品",
+          "查封账户"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>情节特别严重每次扣48分，查封账户；情节严重扣24分。</li><li>信息层面判断每件扣2分（3天内≤12分）；实际出售每次扣12分。</li><li>提供便利条件每次扣2分，情节严重扣12分。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:4",
+        "sourceId": "intl-rule-2927",
+        "title": "严重违规节点处理措施",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2012-05-20",
+        "tags": [
+          "节点处理",
+          "店铺屏蔽"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>扣分达12分：店铺屏蔽、限制发布商品等7天。</li><li>扣分达24分：店铺屏蔽、下架商品等14天。</li><li>扣分达36分：关闭店铺等21天。</li><li>扣分达48分：查封账户。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:5",
+        "sourceId": "intl-rule-2927",
+        "title": "一般违规节点处理措施",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2012-05-20",
+        "tags": [
+          "一般违规",
+          "店铺屏蔽"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>每扣12分给予店铺屏蔽、限制发布商品及公示警告7天。</li><li>恶意评价或竞拍不买增加限制买家行为。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:6",
+        "sourceId": "intl-rule-2927",
+        "title": "违规扣分清零规则",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2012-05-20",
+        "tags": [
+          "扣分清零",
+          "年度清零"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>每年12月31日24时清零。</li><li>出售假冒商品扣分达24分及以上不清零，以24分计入次年。</li><li>累计扣分达48分及以上查封账户。</li></ul>"
+      },
+      {
+        "cardId": "intl_penalty:7",
+        "sourceId": "intl-rule-2927",
+        "title": "违规申诉与纠正教育",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2012-05-20",
+        "tags": [
+          "申诉",
+          "纠正教育"
+        ],
+        "link": "https://rule.tmall.hk/?type=detail&ruleId=2927&cId=633#/rule/detail?ruleId=2927",
+        "body": "<ul><li>会员可在违规处理之日起15天内通过线上入口申诉。</li><li>首次或非故意违规，淘宝给予纠正和教育。</li></ul>"
       }
     ]
   }

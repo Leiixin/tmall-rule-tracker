@@ -1,18 +1,11 @@
-﻿{
-  "version": 1,
-  "lastCheckedAt": "2026-05-29T10:03:41.740Z",
+{
+  "lastCheckedAt": "2026-06-02T06:29:14.093Z",
   "autoPublishVersion": 1,
   "recentAutoPublish": null,
-  "summary": {
-    "published": 0,
-    "changed": 0,
-    "errors": 0,
-    "insightsGenerated": 0
-  },
   "sources": {
     "dy-rule-aJk964FFQKKZ": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-aJk964FFQKKZ",
@@ -20,7 +13,7 @@
     },
     "dy-rule-103956": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "商家体验分规范",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-103956",
@@ -28,7 +21,7 @@
     },
     "dy-rule-113278": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "【商家—消极服务】细则",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-113278",
@@ -36,7 +29,7 @@
     },
     "dy-rule-aHu5aT4aoQXD": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "发货常见问题—物流轨迹超时",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-aHu5aT4aoQXD",
@@ -44,7 +37,7 @@
     },
     "dy-rule-113470": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "【虚假交易】实施细则",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-113470",
@@ -52,7 +45,7 @@
     },
     "dy-rule-aJ2ymdS5jWGZ": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "商家【价格违规】细则",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-aJ2ymdS5jWGZ",
@@ -60,11 +53,20 @@
     },
     "dy-rule-101805": {
       "status": "ok",
-      "message": "manual curated from rules.json",
+      "message": "local card without ruleId",
       "ruleTitle": "【发布法规禁止商品/信息】细则",
       "platformModifiedAt": "2026-05-29T10:03:41.740Z",
       "contentHash": "manual-101805",
       "lastSyncedAt": "2026-05-29T10:03:41.740Z"
     }
+  },
+  "summary": {
+    "checked": 7,
+    "changed": 0,
+    "errors": 0,
+    "published": 0,
+    "synced": 0,
+    "insightsGenerated": 0,
+    "forced": 0
   }
 }
