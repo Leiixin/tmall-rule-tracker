@@ -1,0 +1,48 @@
+{
+  "updatedAt": "2026-05-22T12:00:00.000Z",
+  "resolvedFrom": "article/101706 embedded links + rules.json fallback",
+  "resolved": {
+    "penalty_index": {
+      "key": "penalty_index",
+      "label": "【商家-违规发货违规处理手段】实施细则",
+      "slug": "aHwH9wK4JUHQ",
+      "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+    },
+    "ship_timeout": {
+      "key": "ship_timeout",
+      "label": "【商家-发货超时】实施细则",
+      "slug": "aHwH9wK4Je2N",
+      "ruleTitle": "【商家-发货超时】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+    },
+    "stockout": {
+      "key": "stockout",
+      "label": "【商家-缺货/无货】实施细则",
+      "slug": "aHwHGWzbmk88",
+      "ruleTitle": "【商家-缺货/无货】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
+    },
+    "track_timeout": {
+      "key": "track_timeout",
+      "label": "【商家-物流轨迹超时】实施细则",
+      "slug": "aHwHroCPheig",
+      "ruleTitle": "【商家-物流轨迹超时】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwHroCPheig"
+    },
+    "track_abnormal": {
+      "key": "track_abnormal",
+      "label": "【商家-物流轨迹异常】实施细则",
+      "slug": "aHzmeN9E9dBF",
+      "ruleTitle": "【商家-物流轨迹异常】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+    },
+    "fraud_ship": {
+      "key": "fraud_ship",
+      "label": "【商家-欺诈发货】实施细则",
+      "slug": "aHwH9wK4JyWJ",
+      "ruleTitle": "【商家-欺诈发货】实施细则",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+    }
+  }
+}

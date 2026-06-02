@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-02T12:00:00.000Z",
+  "updatedAt": "2026-05-22T12:00:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/douyin/curated-sources.json",
   "sources": [
     {
@@ -34,9 +34,75 @@
       "url": "https://school.jinritemai.com/doudian/web/article/101706",
       "label": "商家发货行为管理规则",
       "categories": ["ship", "penalty"],
-      "cardIds": ["ship:0", "ship:1", "ship:2", "penalty:0", "penalty:1", "penalty:2"],
+      "cardIds": ["ship:0", "ship:1", "ship:2", "penalty:5", "penalty:6"],
       "ruleTitle": "商家发货行为管理规则",
       "manualTextPath": "data/douyin/rule-text/rule-101706.txt"
+    },
+    {
+      "id": "dy-rule-aHwH9wK4JUHQ",
+      "slug": "aHwH9wK4JUHQ",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ",
+      "label": "【商家-违规发货违规处理手段】实施细则",
+      "categories": ["penalty"],
+      "cardIds": [],
+      "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4JUHQ.txt"
+    },
+    {
+      "id": "dy-rule-aHwH9wK4Je2N",
+      "slug": "aHwH9wK4Je2N",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
+      "label": "【商家-发货超时】实施细则",
+      "categories": ["penalty"],
+      "cardIds": ["penalty:0"],
+      "ruleTitle": "【商家-发货超时】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4Je2N.txt"
+    },
+    {
+      "id": "dy-rule-aHwHGWzbmk88",
+      "slug": "aHwHGWzbmk88",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88",
+      "label": "【商家-缺货/无货】实施细则",
+      "categories": ["penalty"],
+      "cardIds": ["penalty:1"],
+      "ruleTitle": "【商家-缺货/无货】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHwHGWzbmk88.txt"
+    },
+    {
+      "id": "dy-rule-aHwHroCPheig",
+      "slug": "aHwHroCPheig",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwHroCPheig",
+      "label": "【商家-物流轨迹超时】实施细则",
+      "categories": ["penalty"],
+      "cardIds": ["penalty:2"],
+      "ruleTitle": "【商家-物流轨迹超时】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHwHroCPheig.txt"
+    },
+    {
+      "id": "dy-rule-aHzmeN9E9dBF",
+      "slug": "aHzmeN9E9dBF",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
+      "label": "【商家-物流轨迹异常】实施细则",
+      "categories": ["penalty"],
+      "cardIds": ["penalty:3"],
+      "ruleTitle": "【商家-物流轨迹异常】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHzmeN9E9dBF.txt"
+    },
+    {
+      "id": "dy-rule-aHwH9wK4JyWJ",
+      "slug": "aHwH9wK4JyWJ",
+      "platform": "douyin",
+      "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
+      "label": "【商家-欺诈发货】实施细则",
+      "categories": ["penalty"],
+      "cardIds": ["penalty:4"],
+      "ruleTitle": "【商家-欺诈发货】实施细则",
+      "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4JyWJ.txt"
     }
   ]
 }
