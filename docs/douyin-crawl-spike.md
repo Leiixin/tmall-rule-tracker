@@ -6,8 +6,10 @@
 
 | 用途 | 路径 | 说明 |
 |------|------|------|
-| 规则中心首页 | `/api/eschool/v1/rule/center/main` | `new_rules`、`rule_module`、`latest_rule`、`violations` |
-| 公示/征集通知列表 | `/api/eschool/v1/rule/list?rule_type=0&page=&page_size=` | `total`≈3311，分页有效 |
+| 规则中心首页 | `/api/eschool/v1/rule/center/main?new_rule_num={n}&violation_num=6` | `rule_module`、`latest_rule`、`violations`（**不再**用 `new_rules` 作规则动态） |
+| **规则动态栏目** `/doudian/web/rules/11688` | `/api/eschool/v1/rule/list?rule_type=0&direction=2&page=&page_size=` | Referer 设为栏目 URL；`total`≈3300+；爬虫默认 **10 页**（约 500 条） |
+| 公示/征集（与栏目 list 同源，已合并） | 同上 `rule/list` | 与栏目 11688 列表 API 相同，避免重复分页 |
+| 栏目节点（可选） | `/api/eschool/v2/library/article/list?node_id=11688` | `total`≈367，与栏目路由 ID 一致，可作子集参考 |
 | 规则库列表 | `/api/eschool/v2/library/article/list?node_id=7236&page=&page_size=` | 生产根节点 `7236`，`total`≈12744 |
 | 规则正文 | `/api/eschool/v2/library/article/detail?id={id}&graphId=312&need_content=true` | `article_info.content` 为 Delta JSON |
 

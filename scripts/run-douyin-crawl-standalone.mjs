@@ -1,7 +1,10 @@
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { crawlDouyinRules } from "../src/crawler/douyinCrawler.js";
+import {
+  buildDouyinTimelineJson,
+  crawlDouyinRules
+} from "../src/crawler/douyinCrawler.js";
 import { DOUYIN_CATEGORY_KEYWORDS } from "../src/config.js";
 
 function detectTags(text) {
@@ -71,33 +74,18 @@ function buildCategorized(rules, timestamp) {
   return buckets;
 }
 
-function buildTimeline(rules, timestamp) {
-  const sorted = [...rules].sort(
-    (a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0)
-  );
-  return {
-    lastUpdated: timestamp,
-    items: sorted.slice(0, 16).map((rule) => {
-      const d = new Date(rule.publishedAt || timestamp);
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
-      return {
-        date: `${mm}-${dd}`,
-        text: rule.title,
-        link: rule.url
-      };
-    })
-  };
-}
-
 async function writeJson(filePath, value) {
   await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(filePath, `\uFEFF${JSON.stringify(value, null, 2)}`, "utf8");
 }
 
 const timestamp = new Date().toISOString();
-const crawled = await crawlDouyinRules();
+const crawlResult = await crawlDouyinRules({ returnReport: true });
+const crawled = crawlResult.rules;
 const classified = classifyDouyinRules(crawled);
+const dynamicsCount = classified.filter((r) =>
+  String(r.source || "").includes("规则动态")
+).length;
 
 const status = {
   lastFetchTime: timestamp,
@@ -110,6 +98,13 @@ const status = {
       status: classified.length > 0 ? "online" : "error",
       lastCheck: timestamp,
       count: classified.length
+    },
+    "规则动态/11688": {
+      status: dynamicsCount > 0 ? "online" : "error",
+      lastCheck: timestamp,
+      count: dynamicsCount,
+      pagesFetched: crawlResult.dynamicsReport?.pagesFetched ?? 0,
+      totalFromApi: crawlResult.dynamicsReport?.totalFromApi ?? 0
     }
   }
 };
@@ -119,7 +114,7 @@ const scraped = {
   categorized: buildCategorized(classified, timestamp)
 };
 
-const timeline = buildTimeline(classified, timestamp);
+const timeline = await buildDouyinTimelineJson(timestamp);
 
 for (const dir of [dataDir, publicDir]) {
   await writeJson(path.join(dir, "status.json"), status);

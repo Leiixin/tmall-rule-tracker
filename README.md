@@ -183,7 +183,8 @@ data/
 
 ### 常用命令（抖音）
 
-- 抓取：`npm run crawl:douyin`
+- 抓取：`npm run crawl:douyin`（**规则动态**对齐栏目 [`/doudian/web/rules/11688`](https://school.jinritemai.com/doudian/web/rules/11688?tabKey=rules)，`rule/list?rule_type=0&direction=2` 默认 10 页；另含规则库目录与首页必读/推荐；周度统计仅公告类来源）
+- 探测栏目 API：`node scripts/probe-douyin-section-11688.mjs`
 - 重建分类页种子数据：`npm run build:curated:douyin`
 - 重标规则分类标签：`npm run migrate:douyin:categories`
 - 分类页来源同步：`npm run sync:curated:douyin`

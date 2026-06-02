@@ -203,7 +203,18 @@ export const DOUYIN_SEARCH_KEYWORDS = ["发货", "违规", "入驻", "直播", "
 
 export const MAX_DOUYIN_PAGE_SIZE = 50;
 export const MAX_DOUYIN_CATALOG_PAGES = 8;
-export const MAX_DOUYIN_ANNOUNCEMENT_PAGES = 5;
+/** @deprecated 与栏目 11688 rule/list 同源，已由 MAX_DOUYIN_DYNAMICS_LIST_PAGES 取代 */
+export const MAX_DOUYIN_ANNOUNCEMENT_PAGES = 0;
+
+/** 规则动态栏目 /doudian/web/rules/11688 */
+export const DOUYIN_DYNAMICS_SECTION_ID = "11688";
+export const DOUYIN_DYNAMICS_SECTION_URL = `https://school.jinritemai.com/doudian/web/rules/${DOUYIN_DYNAMICS_SECTION_ID}?tabKey=rules`;
+export const MAX_DOUYIN_DYNAMICS_LIST_PAGES = 10;
+export const DOUYIN_DYNAMICS_LIST_PARAMS = {
+  rule_type: 0,
+  direction: 2
+};
+export const DOUYIN_DYNAMICS_SOURCE_SUFFIX = "（规则动态）";
 
 export const PLATFORM_CRAWL_MANIFESTS = {
   tmall: CRAWL_SOURCE_MANIFEST,

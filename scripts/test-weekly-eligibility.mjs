@@ -46,6 +46,12 @@ assert(
   "公示通知 source should match"
 );
 assert(
+  isDouyinAnnouncementLikeSource({
+    source: "抖音电商规则中心（规则动态）"
+  }),
+  "规则动态 source should match"
+);
+assert(
   !isDouyinAnnouncementLikeSource({ source: "抖音电商规则中心" }),
   "catalog source should not match"
 );

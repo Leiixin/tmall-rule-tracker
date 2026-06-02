@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import dayjs from "dayjs";
 
 import { crawlAllSources } from "../src/crawler/tmallCrawler.js";
+import { buildDouyinTimelineJson } from "../src/crawler/douyinCrawler.js";
 import { normalizeRuleDetailUrl } from "../src/utils/ruleDetailUrl.js";
 import {
   buildErrorReport,
@@ -227,7 +228,10 @@ async function main() {
     categorized: buildCategorized(processed, timestamp, platform)
   };
 
-  const timelineJson = buildTimeline(merged, timestamp);
+  const timelineJson =
+    platform === "douyin"
+      ? await buildDouyinTimelineJson(timestamp)
+      : buildTimeline(merged, timestamp);
 
   await writeJson(statusPath, statusJson);
   await writeJson(scrapedPath, scrapedJson);

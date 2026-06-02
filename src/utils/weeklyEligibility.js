@@ -11,7 +11,7 @@ export function inLastWeek(iso, range) {
   return t >= range.start && t <= range.end;
 }
 
-/** 抖音周度：公示通知、首页推荐等公告类来源 */
+/** 抖音周度：规则动态、公示通知、首页推荐等公告类来源 */
 export function isDouyinAnnouncementLikeSource(rule) {
   if (!rule) {
     return false;
@@ -20,7 +20,7 @@ export function isDouyinAnnouncementLikeSource(rule) {
     return true;
   }
   const source = String(rule.source || "");
-  return /公示通知|首页推荐/.test(source);
+  return /规则动态|公示通知|首页推荐/.test(source);
 }
 
 export function isDouyinWeeklyRule(rule, range) {

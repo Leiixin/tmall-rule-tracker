@@ -15,6 +15,8 @@
       "homeSubtitle": "shelf / score / ship / penalty",
       "dataSources": ["天猫规则中心"],
       "ruleHosts": ["rulechannel.tmall.com"],
+      "timelineSourceUrl": "https://rulechannel.tmall.com/",
+      "timelineSourceLabel": "天猫规则中心",
       "weeklyMatchers": {
         "titlePatterns": [],
         "urlPatterns": []
@@ -58,8 +60,10 @@
       "dataPrefix": "douyin/",
       "weeklyScope": "douyin",
       "brandSubTitle": "Douyin Rules",
-      "homeDesc": "抖音电商规则监控总览：school.jinritemai.com 规则中心 BFF 自动抓取首页公告与规则库，并汇总商品效期、体验分、发货时效与违规处罚等分类卡片。",
-      "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商公告类</strong>规则（公示通知、首页推荐；不含规则库全量目录同步）。链接为 school.jinritemai.com/doudian。",
+      "homeDesc": "抖音电商规则监控总览：规则动态栏目 /rules/11688 自动抓取公告列表，并汇总规则库与商品效期、体验分、发货时效、违规处罚等分类卡片。",
+      "timelineSourceUrl": "https://school.jinritemai.com/doudian/web/rules/11688?tabKey=rules",
+      "timelineSourceLabel": "抖音电商规则中心 · 规则动态",
+      "weeklyDesc": "汇总<strong>上周一至上周日</strong>期间发布或更新的<strong>抖音电商公告类</strong>规则（规则动态栏目 /rules/11688、首页推荐；不含规则库全量目录同步）。链接为 school.jinritemai.com/doudian。",
       "homeSubtitle": "shelf / score / ship / penalty",
       "dataSources": ["抖音电商规则中心（school.jinritemai.com）"],
       "ruleHosts": ["school.jinritemai.com"],

@@ -3,9 +3,12 @@ import {
   DOUYIN_ROOT_NODE_ID,
   DOUYIN_RULE_SOURCE_LABEL,
   DOUYIN_SEARCH_KEYWORDS,
+  DOUYIN_DYNAMICS_SOURCE_SUFFIX,
+  DOUYIN_DYNAMICS_SECTION_URL,
+  DOUYIN_DYNAMICS_LIST_PARAMS,
   MAX_DETAIL_FETCH,
-  MAX_DOUYIN_ANNOUNCEMENT_PAGES,
   MAX_DOUYIN_CATALOG_PAGES,
+  MAX_DOUYIN_DYNAMICS_LIST_PAGES,
   MAX_DOUYIN_PAGE_SIZE
 } from "../config.js";
 
@@ -40,6 +43,18 @@ function timeValue(iso) {
 
 function buildRuleUrl(id) {
   return `${BASE_URL}/doudian/web/rules/${encodeURIComponent(String(id))}`;
+}
+
+function buildArticleUrl(id) {
+  return `${BASE_URL}/doudian/web/article/${encodeURIComponent(String(id))}`;
+}
+
+function buildDynamicsItemUrl(id) {
+  const sid = String(id || "");
+  if (/^\d+$/.test(sid)) {
+    return buildRuleUrl(sid);
+  }
+  return buildArticleUrl(sid);
 }
 
 function extractSlugFromUrl(url) {
@@ -84,7 +99,7 @@ export function extractDouyinDeltaText(content) {
   }
 }
 
-async function douyinGetJson(path, params = {}) {
+async function douyinGetJson(path, params = {}, options = {}) {
   const url = new URL(path, BASE_URL);
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined && value !== null && value !== "") {
@@ -92,7 +107,12 @@ async function douyinGetJson(path, params = {}) {
     }
   }
 
-  const response = await fetch(url.toString(), { headers: DEFAULT_HEADERS });
+  const headers = {
+    ...DEFAULT_HEADERS,
+    ...(options.referer ? { Referer: options.referer } : {})
+  };
+
+  const response = await fetch(url.toString(), { headers });
   const text = await response.text();
   if (!response.ok) {
     throw new Error(`Douyin API ${response.status}: ${text.slice(0, 200)}`);
@@ -112,7 +132,7 @@ async function douyinGetJson(path, params = {}) {
   return payload.data;
 }
 
-function indexItemToRule(item, { source, content = "", weeklyChannel = null }) {
+function indexItemToRule(item, { source, content = "", weeklyChannel = null, url }) {
   const id = String(item.id || item.object_id || item.knowledge_id || "");
   const title = normalizeText(item.title || item.name || "");
   const publishedAt = unixToIso(
@@ -123,7 +143,7 @@ function indexItemToRule(item, { source, content = "", weeklyChannel = null }) {
     id,
     title,
     content,
-    url: buildRuleUrl(id),
+    url: url || buildDynamicsItemUrl(id),
     source: source || DOUYIN_RULE_SOURCE_LABEL,
     platformScope: "douyin",
     lastSeenAt: new Date().toISOString(),
@@ -141,15 +161,72 @@ function indexItemToRule(item, { source, content = "", weeklyChannel = null }) {
 }
 
 async function fetchCenterMain() {
-  return douyinGetJson("/api/eschool/v1/rule/center/main");
+  return douyinGetJson("/api/eschool/v1/rule/center/main", {
+    new_rule_num: 6,
+    violation_num: 6
+  });
 }
 
-async function fetchAnnouncementPage(page, pageSize) {
-  return douyinGetJson("/api/eschool/v1/rule/list", {
-    rule_type: 0,
+function mapRuleInfosToItems(ruleInfos) {
+  return (ruleInfos || []).map((item) => ({
+    id: item.knowledge_id,
+    title: item.title,
+    update_time: item.update_time,
+    summary: item.summary
+  }));
+}
+
+export async function fetchDynamicsSectionPage(page, pageSize, listParams = {}) {
+  const params = {
+    ...DOUYIN_DYNAMICS_LIST_PARAMS,
+    ...listParams,
     page,
     page_size: pageSize
+  };
+  return douyinGetJson("/api/eschool/v1/rule/list", params, {
+    referer: DOUYIN_DYNAMICS_SECTION_URL
   });
+}
+
+export async function crawlDouyinDynamicsSection(options = {}) {
+  const maxPages = options.maxPages ?? MAX_DOUYIN_DYNAMICS_LIST_PAGES;
+  const pageSize = options.pageSize ?? MAX_DOUYIN_PAGE_SIZE;
+  const listParams = options.listParams || {};
+  const dynamicsMeta = {
+    source: `${DOUYIN_RULE_SOURCE_LABEL}${DOUYIN_DYNAMICS_SOURCE_SUFFIX}`,
+    weeklyChannel: "announcement"
+  };
+
+  const ruleMap = new Map();
+  let pagesFetched = 0;
+  let totalFromApi = 0;
+
+  for (let page = 1; page <= maxPages; page += 1) {
+    try {
+      const data = await fetchDynamicsSectionPage(page, pageSize, listParams);
+      if (page === 1) {
+        totalFromApi = Number(data?.total) || 0;
+      }
+      const infos = mapRuleInfosToItems(data?.rule_infos);
+      mergeIndexedRules(ruleMap, infos, dynamicsMeta);
+      pagesFetched = page;
+      if (!infos.length) {
+        break;
+      }
+    } catch {
+      break;
+    }
+  }
+
+  return {
+    rules: [...ruleMap.values()],
+    report: {
+      pagesFetched,
+      totalFromApi,
+      listParams: { ...DOUYIN_DYNAMICS_LIST_PARAMS, ...listParams },
+      count: ruleMap.size
+    }
+  };
 }
 
 async function fetchCatalogPage(page, pageSize) {
@@ -187,7 +264,7 @@ export async function fetchDouyinRuleDetail(id, options = {}) {
     ruleId,
     slug: ruleId,
     title: normalizeText(info.name || ""),
-    url: buildRuleUrl(ruleId),
+    url: buildDynamicsItemUrl(ruleId),
     publishedAt: unixToIso(info.update_at || info.create_at) || new Date().toISOString(),
     content: content.slice(0, 12000),
     crawledAt: new Date().toISOString(),
@@ -224,12 +301,20 @@ function mergeIndexedRules(map, items, meta) {
         weeklyChannel: meta.weeklyChannel || existing?.weeklyChannel || null
       }
     );
-    if (
+    const shouldApply =
       !existing ||
-      timeValue(candidate.publishedAt) >= timeValue(existing.publishedAt)
-    ) {
-      map.set(id, { ...existing, ...candidate });
+      meta.weeklyChannel === "announcement" ||
+      timeValue(candidate.publishedAt) >= timeValue(existing.publishedAt);
+    if (!shouldApply) {
+      continue;
     }
+
+    const merged = { ...existing, ...candidate };
+    if (existing?.weeklyChannel === "announcement" && !meta.weeklyChannel) {
+      merged.source = existing.source;
+      merged.weeklyChannel = existing.weeklyChannel;
+    }
+    map.set(id, merged);
   }
 }
 
@@ -255,7 +340,8 @@ async function fetchDetailsForRules(ruleMap, limit) {
           title: detail.title || rule.title,
           content: detail.content,
           snippet: detail.content.slice(0, 220),
-          publishedAt: detail.publishedAt || rule.publishedAt
+          publishedAt: detail.publishedAt || rule.publishedAt,
+          url: detail.url || rule.url
         });
         fetched += 1;
       }
@@ -273,44 +359,7 @@ function matchesKeyword(title, keywords) {
 export async function crawlDouyinRules(options = {}) {
   const keywords = options.searchKeywords || DOUYIN_SEARCH_KEYWORDS;
   const ruleMap = new Map();
-
-  try {
-    const center = await fetchCenterMain();
-    const homeMeta = {
-      source: `${DOUYIN_RULE_SOURCE_LABEL}（首页推荐）`,
-      weeklyChannel: "announcement"
-    };
-    mergeIndexedRules(ruleMap, center?.new_rules, homeMeta);
-    mergeIndexedRules(ruleMap, center?.rule_module?.list, {
-      source: DOUYIN_RULE_SOURCE_LABEL
-    });
-    if (center?.latest_rule) {
-      mergeIndexedRules(ruleMap, [center.latest_rule], homeMeta);
-    }
-  } catch {
-    // center main optional
-  }
-
-  for (let page = 1; page <= MAX_DOUYIN_ANNOUNCEMENT_PAGES; page += 1) {
-    try {
-      const data = await fetchAnnouncementPage(page, MAX_DOUYIN_PAGE_SIZE);
-      const infos = (data?.rule_infos || []).map((item) => ({
-        id: item.knowledge_id,
-        title: item.title,
-        update_time: item.update_time,
-        summary: item.summary
-      }));
-      mergeIndexedRules(ruleMap, infos, {
-        source: `${DOUYIN_RULE_SOURCE_LABEL}（公示通知）`,
-        weeklyChannel: "announcement"
-      });
-      if (!infos.length || infos.length < MAX_DOUYIN_PAGE_SIZE) {
-        break;
-      }
-    } catch {
-      break;
-    }
-  }
+  let dynamicsReport = null;
 
   for (let page = 1; page <= MAX_DOUYIN_CATALOG_PAGES; page += 1) {
     try {
@@ -324,6 +373,42 @@ export async function crawlDouyinRules(options = {}) {
     }
   }
 
+  try {
+    const center = await fetchCenterMain();
+    const homeMeta = {
+      source: `${DOUYIN_RULE_SOURCE_LABEL}（首页推荐）`,
+      weeklyChannel: "announcement"
+    };
+    mergeIndexedRules(ruleMap, center?.rule_module?.list, {
+      source: DOUYIN_RULE_SOURCE_LABEL
+    });
+    if (center?.latest_rule) {
+      mergeIndexedRules(ruleMap, [center.latest_rule], homeMeta);
+    }
+  } catch {
+    // center main optional
+  }
+
+  const section = await crawlDouyinDynamicsSection({
+    maxPages: options.dynamicsListPages ?? MAX_DOUYIN_DYNAMICS_LIST_PAGES
+  });
+  dynamicsReport = section.report;
+  for (const rule of section.rules) {
+    const existing = ruleMap.get(rule.id);
+    if (!existing) {
+      ruleMap.set(rule.id, rule);
+      continue;
+    }
+    ruleMap.set(rule.id, {
+      ...existing,
+      ...rule,
+      source: rule.source,
+      weeklyChannel: rule.weeklyChannel,
+      url: rule.url,
+      publishedAt: rule.publishedAt || existing.publishedAt
+    });
+  }
+
   if (keywords.length) {
     const keywordHits = [...ruleMap.values()].filter((rule) =>
       matchesKeyword(rule.title, keywords)
@@ -335,31 +420,24 @@ export async function crawlDouyinRules(options = {}) {
 
   await fetchDetailsForRules(ruleMap, options.maxDetailFetch || MAX_DETAIL_FETCH);
 
-  return [...ruleMap.values()].filter((rule) => rule.title);
+  const rules = [...ruleMap.values()].filter((rule) => rule.title);
+  if (options.returnReport) {
+    return { rules, dynamicsReport };
+  }
+  return rules;
 }
 
 export async function crawlDouyinTimeline() {
   const items = [];
   try {
-    const center = await fetchCenterMain();
-    for (const row of center?.new_rules || []) {
-      items.push({
-        title: row.title,
-        url: buildRuleUrl(row.id),
-        publishedAt: unixToIso(row.update_at)
-      });
-    }
-  } catch {
-    // ignore
-  }
-
-  try {
-    const data = await fetchAnnouncementPage(1, 10);
+    const data = await fetchDynamicsSectionPage(1, 16);
     for (const row of data?.rule_infos || []) {
+      const id = row.knowledge_id;
       items.push({
         title: row.title,
-        url: buildRuleUrl(row.knowledge_id),
-        publishedAt: unixToIso(row.update_time)
+        url: buildDynamicsItemUrl(id),
+        publishedAt: unixToIso(row.update_time),
+        source: `${DOUYIN_RULE_SOURCE_LABEL}${DOUYIN_DYNAMICS_SOURCE_SUFFIX}`
       });
     }
   } catch {
@@ -368,3 +446,21 @@ export async function crawlDouyinTimeline() {
 
   return items;
 }
+
+export async function buildDouyinTimelineJson(timestamp = new Date().toISOString()) {
+  const rows = await crawlDouyinTimeline();
+  return {
+    lastUpdated: timestamp,
+    items: rows.map((row) => {
+      const d = new Date(row.publishedAt || timestamp);
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return {
+        date: Number.isNaN(d.getTime()) ? "--" : `${mm}-${dd}`,
+        text: row.title || "未命名规则",
+        link: row.url || ""
+      };
+    })
+  };
+}
+
