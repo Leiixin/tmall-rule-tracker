@@ -80,7 +80,7 @@ jobs:
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
 
       - name: Sync Intl Expiry Curated Cards
-        run: node scripts/sync-curated-cards.mjs --platform=intl --force-source=intl-rule-11005234
+        run: node scripts/sync-curated-cards.mjs --platform=intl
         env:
           TZ: Asia/Shanghai
           ENABLE_LLM_SUMMARY: ${{ secrets.DEEPSEEK_API_KEY != '' && 'true' || 'false' }}

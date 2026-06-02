@@ -96,7 +96,7 @@ npm run migrate:curated
 # 本地手动检测 + 可选自动发布
 ENABLE_LLM_SUMMARY=true npm run sync:curated
 
-# 天猫国际：仅对 intl-rule-11005234（效期规范 ruleId=11005234）强制 DeepSeek 生成 3～8 张卡片
+# 天猫国际：定时 crawl 仅检测 rule.tmall.hk 变更后自动更新卡片；需强制重生效期卡时用下方命令或 Actions「Sync Intl Curated Cards」
 ENABLE_LLM_SUMMARY=true npm run sync:curated:intl
 ```
 
