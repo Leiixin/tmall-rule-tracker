@@ -25,7 +25,8 @@
     "sync:curated:douyin:force": "node scripts/sync-curated-cards.mjs --platform=douyin --force-source=dy-rule-101706",
     "migrate:douyin:categories": "node scripts/migrate-douyin-category-keys.mjs",
     "build:curated:douyin": "node scripts/build-douyin-curated-data.mjs",
-    "audit:fabrication": "node scripts/audit-curated-fabrication.mjs"
+    "audit:fabrication": "node scripts/audit-curated-fabrication.mjs",
+    "test:curated-change": "node scripts/test-curated-change-detection.mjs"
   },
   "dependencies": {
     "axios": "^1.12.2",

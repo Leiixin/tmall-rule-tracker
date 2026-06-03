@@ -393,8 +393,10 @@ body::after {
 .card-body ul { list-style: none; padding: 0; }
 .card-body li { padding: 3px 0; padding-left: 16px; position: relative; }
 .card-body li::before { content: '›'; position: absolute; left: 2px; color: var(--red); font-weight: 700; }
-.card-body .highlight { color: var(--red); font-weight: 500; }
-.card-body .num { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-weight: 500; }
+.card-body .highlight,
+.weekly-cell-list .highlight { color: var(--red); font-weight: 500; }
+.card-body .num,
+.weekly-cell-list .num { color: var(--amber); font-weight: 500; }
 .card-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
 .date-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
 .card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--card-tag-bg); color: var(--text-dim); border: 1px solid var(--border); }
@@ -575,7 +577,7 @@ body::after {
 .analysis-item-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.65; }
 .analysis-item-desc .warn { color: var(--amber); font-weight: 500; }
 .analysis-item-desc .good { color: var(--green); font-weight: 500; }
-.analysis-item-desc .num { font-family: 'JetBrains Mono', monospace; color: var(--blue); }
+.analysis-item-desc .num { color: var(--blue); font-weight: 500; }
 .cron-info { font-size: 11px; color: var(--text-dim); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
 /* Home page */
 .home-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
@@ -671,11 +673,6 @@ table.weekly-table {
   margin-bottom: 2px; line-height: 1.4;
 }
 .weekly-highlight-block .weekly-cell-list { padding-left: 1.25em; }
-.weekly-cell-list .highlight { color: var(--red); font-weight: 500; }
-.weekly-cell-list .num {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--amber); font-weight: 500;
-}
 .weekly-table th.weekly-col-highlights { border-left: 3px solid var(--amber); }
 .weekly-table th.weekly-col-impact { border-left: 3px solid var(--red); }
 .weekly-table th.weekly-col-actions { border-left: 3px solid var(--green); }
@@ -1228,55 +1225,34 @@ var HIGHLIGHT_SECTION_KEYS = ['核心变化', '适用范围', '生效时间'];
 var IMPACT_SECTION_KEYS = ['不利', '有利', '中性'];
 var ACTION_SECTION_KEYS = ['运营组', '客服组', '物流组'];
 
-var WEEKLY_RISK_WORDS = [
-  '赔付', '处罚', '违规', '降分', '下架', '禁售', '扣分', '限制', '冻结',
-  '封店', '缺货', '虚假发货', '延迟发货', '轨迹异常', '降权', '投诉'
-];
+var INLINE_HIGHLIGHT_PLACEHOLDER = '\x00';
 
-var WEEKLY_CN_DATE_PATTERNS = [
-  /\d{4}年\d{1,2}月\d{1,2}日/g,
-  /\d{4}年\d{1,2}月/g,
-  /\d{1,2}月\d{1,2}日/g
-];
+function sanitizeInlineHighlightHtml(text) {
+  var input = String(text || '');
+  if (!input) return '';
 
-function isInsideHtmlSpan(whole, offset) {
-  var before = whole.slice(0, offset);
-  return before.lastIndexOf('<span') > before.lastIndexOf('</span>');
-}
-
-function wrapWeeklyNum(m) {
-  return '<span class="num">' + m + '</span>';
-}
-
-function formatWeeklyPointHtml(text) {
-  var safe = escapeHtml(String(text || ''));
-  if (!safe) return '';
-
-  WEEKLY_CN_DATE_PATTERNS.forEach(function (re) {
-    safe = safe.replace(re, function (m) {
-      return wrapWeeklyNum(m);
-    });
-  });
-
-  safe = safe.replace(
-    /\d+(?:\.\d+)?(?:%|％|分|天|小时|h|元|笔|次)?/g,
-    function (m, offset, whole) {
-      if (isInsideHtmlSpan(whole, offset)) return m;
-      return wrapWeeklyNum(m);
+  var spans = [];
+  var withoutSpans = input.replace(
+    /<span class="(num|highlight)">([\s\S]*?)<\/span>/gi,
+    function (_full, cls, inner) {
+      var idx = spans.length;
+      spans.push({ cls: cls.toLowerCase(), inner: escapeHtml(inner) });
+      return INLINE_HIGHLIGHT_PLACEHOLDER + idx + INLINE_HIGHLIGHT_PLACEHOLDER;
     }
   );
 
-  var riskRe = new RegExp(
-    '(' + WEEKLY_RISK_WORDS.map(function (w) {
-      return w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }).join('|') + ')',
-    'g'
-  );
-  safe = safe.replace(riskRe, function (m, _g1, offset, whole) {
-    if (isInsideHtmlSpan(whole, offset)) return m;
-    return '<span class="highlight">' + m + '</span>';
+  var safe = escapeHtml(withoutSpans);
+  spans.forEach(function (sp, idx) {
+    var token = INLINE_HIGHLIGHT_PLACEHOLDER + idx + INLINE_HIGHLIGHT_PLACEHOLDER;
+    safe = safe.split(token).join(
+      '<span class="' + sp.cls + '">' + sp.inner + '</span>'
+    );
   });
   return safe;
+}
+
+function formatWeeklyPointHtml(text) {
+  return sanitizeInlineHighlightHtml(text);
 }
 
 var IMPACT_LEGACY = [

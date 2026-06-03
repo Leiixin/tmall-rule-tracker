@@ -4,7 +4,6 @@
  *   --platform=intl  或 PLATFORM_ID=intl  或 CURATED_DATA_PREFIX=intl/
  *   --force-source=intl-rule-11005234  强制 DeepSeek 重生成该来源卡片
  */
-import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -43,6 +42,7 @@ import { fetchRuleDetailForCuratedSource } from "../src/crawler/tmallCrawler.js"
 import { generateCuratedCardsForCategory } from "../src/services/llm/curatedCardsGenerator.js";
 import { generateCategoryInsights } from "../src/services/llm/curatedCategoryInsightsGenerator.js";
 import { isLlmEnabled } from "../src/services/llm/client.js";
+import { detectCuratedSourceChange } from "../src/utils/curatedChangeDetection.js";
 
 const TMALL_CATEGORY_KEYS = ["shelf", "score", "ship", "penalty"];
 const INTL_CATEGORY_KEYS = [
@@ -61,13 +61,6 @@ function resolveCategoryKeys(curatedPrefix, platform) {
     return DOUYIN_CATEGORY_KEYS;
   }
   return TMALL_CATEGORY_KEYS;
-}
-
-function contentHash(text) {
-  return createHash("sha256")
-    .update(String(text || ""))
-    .digest("hex")
-    .slice(0, 16);
 }
 
 function parseCli(argv) {
@@ -203,6 +196,7 @@ async function publishCardsForSource({
   detail,
   hash,
   platformModifiedAt,
+  bodyPublicationFingerprint,
   curatedCards,
   categoryKeys,
   watch,
@@ -253,6 +247,7 @@ async function publishCardsForSource({
       ruleTitle: resolveRuleTitle(source, prevWatch.sources?.[source.id] || {}),
       platformModifiedAt,
       contentHash: hash,
+      bodyPublicationFingerprint,
       lastSyncedAt: timestamp,
       insightsGeneratedAt:
         watch.sources[source.id]?.insightsGeneratedAt || timestamp
@@ -389,23 +384,20 @@ async function main() {
       applyRuleTitle(source, detail);
       const ruleTitle = resolveRuleTitle(source, prev);
 
-      const hash = contentHash(detail.content);
-      const platformModifiedAt = detail.publishedAt;
-      const contentChanged =
-        !prev.contentHash ||
-        prev.contentHash !== hash ||
-        (prev.platformModifiedAt &&
-          prev.platformModifiedAt !== platformModifiedAt);
+      const change = detectCuratedSourceChange(prev, detail);
+      const { contentHash: hash, platformModifiedAt, bodyPublicationFingerprint } =
+        change.snapshot;
 
-      if (contentChanged || forceRegenerate) {
+      if (change.changed || forceRegenerate) {
         watch.sources[source.id] = {
           status: "changed",
           message: forceRegenerate
             ? "force regenerate"
-            : "platform content or revision changed",
+            : change.reasons.join("; ") || "platform content or revision changed",
           ruleTitle,
           platformModifiedAt,
           contentHash: hash,
+          bodyPublicationFingerprint,
           lastSyncedAt: prev.lastSyncedAt || null,
           detectedAt: timestamp
         };
@@ -415,6 +407,7 @@ async function main() {
           detail,
           hash,
           platformModifiedAt,
+          bodyPublicationFingerprint,
           previousContent
         });
       } else {
@@ -424,6 +417,7 @@ async function main() {
           ruleTitle,
           platformModifiedAt,
           contentHash: hash,
+          bodyPublicationFingerprint,
           lastSyncedAt: prev.lastSyncedAt || null
         };
       }
@@ -495,7 +489,7 @@ async function main() {
       continue;
     }
 
-    const { source, detail, hash, platformModifiedAt } = item;
+    const { source, detail, hash, platformModifiedAt, bodyPublicationFingerprint } = item;
 
     try {
       publishBudget = await publishCardsForSource({
@@ -503,6 +497,7 @@ async function main() {
         detail,
         hash,
         platformModifiedAt,
+        bodyPublicationFingerprint,
         curatedCards,
         categoryKeys,
         watch,
@@ -519,6 +514,7 @@ async function main() {
         ruleTitle: resolveRuleTitle(source, prevEntry),
         platformModifiedAt,
         contentHash: hash,
+        bodyPublicationFingerprint,
         lastSyncedAt: prevEntry.lastSyncedAt || null,
         detectedAt: timestamp,
         insightsGeneratedAt: prevEntry.insightsGeneratedAt || null

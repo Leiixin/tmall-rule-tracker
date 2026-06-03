@@ -56,7 +56,7 @@ http://localhost:3000
 
 三列均在页面渲染为「小标题 + 1.2.3. 分条」。旧版扁平 `impacts` / `actions` 数组会自动迁移为结构化展示。
 
-修改提示词或升级 `PROMPT_VERSION`（当前为 **6**）后，需重跑 `npm run summarize`（或 `npm run crawl` / GitHub Actions）才会刷新旧 `aiSummary` 缓存。
+修改提示词或升级 `PROMPT_VERSION`（当前为 **8**）后，需重跑 `npm run summarize`（或 `npm run crawl` / GitHub Actions）才会刷新旧 `aiSummary` 缓存。
 
 1. 复制环境变量模板并填写 Key：
 ```bash
@@ -97,7 +97,25 @@ npm run verify:douyin:weekly-llm
 
 - `data/curated-cards.json`：页面展示用的卡片正文
 - `data/curated-sources.json`：引用的天猫规则链接（按 `ruleId` 登记，可在 GitHub 编辑）
-- `data/curated-watch.json`：定时任务写入的监测状态（平台修订时间、内容哈希、是否已自动同步）
+- `data/curated-watch.json`：定时任务写入的监测状态（平台修订时间、正文日期指纹、内容哈希、是否已自动同步）
+
+**变更检测（天猫 / 抖音共用 `sync-curated-cards.mjs`）**：以下任一命中即标记 `changed`，并在 LLM 开启时入队 DeepSeek 重写：
+
+1. 首次纳入监测
+2. 正文 `contentHash` 变更
+3. 链接规则 `platformModifiedAt`（API 发布时间）变更
+4. 正文提到的公示/生效/修订日期指纹变更（`bodyPublicationFingerprint`）
+
+**DeepSeek 卡片结构**（`CURATED_CARDS_PROMPT_VERSION` 当前为 **2**）：
+
+- **效期 `shelf`**：阶段分卡；化妆品 / 隐形眼镜 / 保健品各独立成卡（原文有则写）
+- **体验分 `score`**：大指标一卡，须含计算公式或计分逻辑
+- **违规 `penalty`**：标题为具体违规行为，body 含认定条件 + 订单扣罚标准
+
+```bash
+npm run test:curated-change   # 变更检测单元检查
+```
+
 - `data/curated-category-insights.json`：分类页「规则变更记录 / 对商家的影响 / 优化策略建议」三栏数据（体验分 `pinned: true` 常驻；其余分类在监测到 `changed`/`synced` 且已有分析块时展示）
 
 页面每个分类下有 **「引用来源维护」** 面板；若检测到原文变更，首页与分类页会显示横幅。配置 `DEEPSEEK_API_KEY` 后，GitHub Actions 会在变更时用 DeepSeek **自动重写**对应分类卡片，并生成变更分析写入 `curated-category-insights.json`（卡片每次最多 `LLM_MAX_CURATED_SOURCES_PER_RUN` 条来源，分析每次最多 `LLM_MAX_INSIGHTS_PER_RUN` 条来源，默认均为 2）。
@@ -163,7 +181,7 @@ npm run migrate:score-insights
 3. 首期可手工编写 `curated-category-insights.json`（如 `score` 的 `pinned: true` 变更解读块）
 4. 重建种子数据：`npm run build:curated:douyin`
 5. 重标规则分类标签：`npm run migrate:douyin:categories`（或重新 `crawl:douyin`）
-6. 配置 `DEEPSEEK_API_KEY` 后跑 `npm run sync:curated:douyin`；重点来源可用 `npm run sync:curated:douyin:force`
+6. 配置 `DEEPSEEK_API_KEY` 后跑 `npm run sync:curated:douyin`；重点来源可用 `npm run sync:curated:douyin:force`（日常变更检测与重写以 sync 为准，`sync-douyin-curated-watch-dates.mjs` 仅用于手工校正 watch 时间戳）
 7. 镜像目录 `public/data/douyin/` 须与 `data/douyin/` 保持一致
 
 ### 数据目录约定

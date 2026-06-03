@@ -3,10 +3,13 @@
  * 用法:
  *   node scripts/sync-douyin-curated-watch-dates.mjs --category=penalty
  *   node scripts/sync-douyin-curated-watch-dates.mjs --set-sync-now
+ *
+ * 日常变更检测与 DeepSeek 重写以 sync-curated-cards.mjs 为准；本脚本用于手工校正时间戳。
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractBodyPublicationFingerprint } from "../src/utils/curatedChangeDetection.js";
 
 const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BASE_URL = "https://school.jinritemai.com";
@@ -29,30 +32,18 @@ function normalizeText(text) {
   return (text || "").replace(/\s+/g, " ").trim();
 }
 
+/** @deprecated use extractBodyPublicationFingerprint; kept for rule-text fallback */
 function parseChineseDateToIso(text) {
-  const t = normalizeText(text);
-  if (!t) return null;
-
-  const patterns = [
-    /于\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日\s*修订/g,
-    /(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日\s*修订/g,
-    /(\d{4})[年/-](\d{1,2})[月/-](\d{1,2})[日号]?\s*修订/g
-  ];
-
-  let latest = null;
-  for (const re of patterns) {
-    re.lastIndex = 0;
-    let m;
-    while ((m = re.exec(t)) !== null) {
-      const y = Number(m[1]);
-      const mo = Number(m[2]);
-      const d = Number(m[3]);
-      if (!y || !mo || !d) continue;
-      const iso = new Date(Date.UTC(y, mo - 1, d)).toISOString();
-      if (!latest || iso > latest) latest = iso;
-    }
+  const fp = extractBodyPublicationFingerprint("", text);
+  const revision = fp.match(/revision:(\d{4}-\d{2}-\d{2})/);
+  if (revision) {
+    return new Date(`${revision[1]}T00:00:00.000Z`).toISOString();
   }
-  return latest;
+  const effective = fp.match(/effective:(\d{4}-\d{2}-\d{2})/);
+  if (effective) {
+    return new Date(`${effective[1]}T00:00:00.000Z`).toISOString();
+  }
+  return null;
 }
 
 async function fetchArticleMeta(slug) {
@@ -111,9 +102,13 @@ async function resolvePlatformModifiedAt(source, rulesBySlug) {
   try {
     const meta = await fetchArticleMeta(slug);
     if (meta.platformModifiedAt) {
-      return { platformModifiedAt: meta.platformModifiedAt, from: "api", ruleTitle: meta.ruleTitle };
+      return {
+        platformModifiedAt: meta.platformModifiedAt,
+        from: "api",
+        ruleTitle: meta.ruleTitle
+      };
     }
-  } catch (err) {
+  } catch {
     // fall through
   }
 
