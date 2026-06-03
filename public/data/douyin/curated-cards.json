@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-03T06:11:00.411Z",
-  "autoPublishVersion": 7,
+  "updatedAt": "2026-06-03T09:46:10.416Z",
+  "autoPublishVersion": 5,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -90,84 +90,83 @@
         "title": "店铺真实体验分定义与考核对象",
         "severity": "info",
         "severityText": "通知",
-        "date": "2026-06-03",
+        "date": "2026-05-07",
         "tags": [
           "定义",
           "考核对象"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>商家体验分是反映店铺综合服务能力的重要指标，覆盖用户消费全链路。</li><li>考核对象为抖音电商平台商家（即时零售、全球购除外）。</li><li>根据近30天有效支付订单数分为成长阶段（<30单）和正式阶段（≥30单）。</li><li>考核订单为有效支付订单，赠品、福袋、低价及秒退订单不纳入。</li></ul>"
+        "body": "<ul><li>商家体验分是反映店铺综合服务能力的重要指标，覆盖用户消费全链路。</li><li>考核对象为抖音电商平台商家（即时零售、全球购除外），基于近30天有效支付订单数区分成长阶段（<span class=\"num\">30单</span>以下）和正式阶段（<span class=\"num\">30单</span>及以上）。</li><li>考核订单为有效支付订单，赠品、福袋、低价、秒退及异常订单不纳入，但差行为扣分不限制订单类型。</li></ul>"
       },
       {
         "cardId": "score:1",
         "sourceId": "dy-rule-103956",
-        "title": "三大维度指标详解",
-        "severity": "info",
-        "severityText": "通知",
-        "date": "2026-06-03",
+        "title": "成长阶段体验分规则",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2026-05-07",
         "tags": [
-          "商品体验",
-          "物流体验",
-          "服务体验"
+          "成长阶段",
+          "降分"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>商品体验：包括商品综合评分和商品品质退货率，考核近30天物流签收订单。</li><li>物流体验：包括揽收时长平均得分、运单配送时效达成率和发货物流品退率。</li><li>服务体验：包括售后处理时长达成率和飞鸽人工平均响应时长。</li><li>各指标得分分档为50/60/70/80/90/100，揽收时长按实际计算。</li></ul>"
+        "body": "<ul><li>完成出分任务后次日获得<span class=\"num\">70分</span>；个人店不适用。</li><li>若存在消极服务/售后、刷单炒信等行为，或任一指标不达标，体验分降至<span class=\"num\">60分</span>。</li></ul>"
       },
       {
         "cardId": "score:2",
         "sourceId": "dy-rule-103956",
-        "title": "计算公式与权重",
+        "title": "正式阶段体验分三大维度与计算公式",
         "severity": "info",
         "severityText": "通知",
-        "date": "2026-06-03",
+        "date": "2026-05-07",
         "tags": [
-          "计算公式",
-          "权重"
+          "正式阶段",
+          "计算公式"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>正式阶段体验分 = 商品体验得分×权重 + 物流体验得分×权重 + 服务体验得分×权重 - 差行为扣分。</li><li>各维度权重因行业而异，旗舰店与非旗舰店可能拆分考核。</li><li>偏远地区物流服务可加3分（物流体验最高100分）。</li><li>差行为扣分：消极服务每次扣3分（累计≤15分），刷单炒信一次性扣15分。</li></ul>"
+        "body": "<ul><li>正式阶段体验分 = 商品体验×权重 + 物流体验×权重 + 服务体验×权重 - 差行为扣分。</li><li>商品体验由商品综合评分和商品品质退货率构成；物流体验由揽收时长平均得分、运单配送时效达成率、发货物流品退率构成；服务体验由售后处理时长达成率和飞鸽人工平均响应时长构成。</li><li>单项指标得分分档为<span class=\"num\">50/60/70/80/90/100</span>，揽收时长除外。</li></ul>"
       },
       {
         "cardId": "score:3",
         "sourceId": "dy-rule-103956",
-        "title": "应用场景与权益",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2026-06-03",
+        "title": "差行为扣分与违规降分",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-05-07",
         "tags": [
-          "应用场景",
-          "权益"
+          "违规",
+          "扣分"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>体验分影响千川投放：低于管控要求禁止投放。</li><li>体验分影响活动提报：需达到报名门槛。</li><li>体验分影响精选联盟准入：满足条件方可准入。</li><li>高体验分商家可获得更多平台支持。</li></ul>"
+        "body": "<ul><li>消极服务/售后行为（如客服嘲讽、设置异常售后地址等）每次扣<span class=\"num\">3分</span>，近30天累计不超过<span class=\"num\">15分</span>。</li><li>刷单炒信等非正常手段提高体验分，一次性扣<span class=\"num\">15分</span>，近30天累计不超过<span class=\"num\">15分</span>。</li><li>提供虚假凭证等恶意干扰行为，平台可屏蔽体验分或设定分数上限。</li></ul>"
       },
       {
         "cardId": "score:4",
         "sourceId": "dy-rule-103956",
-        "title": "违规降分与干预措施",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2026-06-03",
+        "title": "体验分应用场景与消费者展示",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2026-05-07",
         "tags": [
-          "违规",
-          "降分"
+          "应用场景",
+          "展示"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>消极服务/售后行为每次扣3分，近30天累计≤15分。</li><li>刷单炒信等非正常手段一次性扣15分。</li><li>提供虚假凭证等恶意行为，平台可屏蔽体验分或设定上限。</li><li>成长阶段存在违规时，体验分降至60分。</li></ul>"
+        "body": "<ul><li>体验分应用于千川投放、活动提报、精选联盟准入等场景，低于管控要求将禁止投放或限制准入。</li><li>正式阶段体验分以五分制及星级向消费者展示（店铺首页、商品详情页），成长阶段不展示。</li></ul>"
       },
       {
         "cardId": "score:5",
         "sourceId": "dy-rule-103956",
-        "title": "2026年新规变化",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2026-06-03",
+        "title": "2026年新规变化要点",
+        "severity": "info",
+        "severityText": "通知",
+        "date": "2026-05-07",
         "tags": [
           "新规",
           "变化"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>本规则于2026年5月7日最新修订生效。</li><li>正式阶段体验分最低50分，最高100分。</li><li>差行为扣分明确累计上限（15分）。</li><li>偏远地区物流服务加分规则新增。</li><li>消费者展示分数与体验分映射关系细化（61-100分每4分一档，50-60分每1分一档）。</li></ul>"
+        "body": "<ul><li>新增偏远地区物流服务加分：近30天偏远中转签收且无售后订单数≥1，物流体验加<span class=\"num\">3分</span>（最高<span class=\"num\">100分</span>）。</li><li>商品综合评分、商品品质退货率、发货物流品退率在订单数少且差评/品退数≤3时，指标得分为<span class=\"num\">80分</span>。</li><li>差行为扣分明确累计上限，并新增对恶意干扰行为的干预措施。</li></ul>"
       }
     ]
   },
@@ -177,46 +176,72 @@
     "desc": "发货承诺、发货时间认定与各类发货时效要求，依据《商家发货行为管理规则》（2025-09-29 修订生效）。",
     "cards": [
       {
-        "title": "发货时效类型与承诺",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2025-09-29",
-        "tags": [
-          "极速发货",
-          "次日发货"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li><span class=\"highlight\">极速/当日发货</span>：16:00前支付订单当日23:59:59前发货；16:00后支付订单次日23:59:59前发货</li><li><span class=\"highlight\">次日发货</span>：支付成功后次日23:59:59前发货</li><li>商家自主设置时效的，须在承诺时间内发货</li><li>多渠道承诺不一致时，以<span class=\"highlight\">有利于消费者的最短时效</span>为准</li><li>来源：《商家发货行为管理规则》第三章、附则表</li></ul>",
+        "cardId": "ship:0",
         "sourceId": "dy-rule-101706",
-        "cardId": "ship:0"
-      },
-      {
-        "title": "发货时间如何认定",
-        "severity": "warning",
+        "title": "发货时效要求与认定标准",
+        "severity": "info",
         "severityText": "参考",
         "date": "2025-09-29",
         "tags": [
-          "揽收",
-          "发货"
+          "发货时限",
+          "发货认定"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>有物流回传：以物流公司<span class=\"highlight\">揽收记录</span>时间为准（如「已揽收/揽件」）</li><li>无物流回传：以商家后台点击发货时间为准；若底单显示更晚发货，取更晚时间</li><li>协商工具另行约定发货时间的，以双方约定为准</li><li>来源：《商家发货行为管理规则》2.2</li></ul>",
-        "sourceId": "dy-rule-101706",
-        "cardId": "ship:1"
+        "body": "<ul><li>消费者付款后，商家须在承诺发货时效内发货，以有利于消费者的最短时效为准。</li><li>发货时间认定：有物流回传的以揽件记录时间为准；无回传的以商家操作时间为准，若底单时间更晚取晚者。</li><li>蟹卡类目商品订单，消费者兑换实物时按选择的邮寄日期发货。</li></ul>"
       },
       {
-        "title": "特殊场景发货要求",
-        "severity": "warning",
+        "cardId": "ship:1",
+        "sourceId": "dy-rule-101706",
+        "title": "普通商品发货时效要求",
+        "severity": "info",
         "severityText": "参考",
         "date": "2025-09-29",
         "tags": [
-          "QIC",
-          "蟹卡"
+          "发货时限"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li><span class=\"highlight\">蟹卡类目</span>：消费者兑换实物时须按所选邮寄日期发货</li><li><span class=\"highlight\">QIC送仓</span>：普通商品支付后48小时内送仓/揽收；定制预售类在承诺时效前送仓</li><li>平台大促及特定节假日发货时效以平台通知或公告为准</li><li>来源：《商家发货行为管理规则》1.2、3.2、附则表</li></ul>",
+        "body": "<ul><li>极速发货：当日16:00前支付订单当日23:59:59前发货；16:00后支付次日23:59:59前发货。</li><li>次日发货：消费者支付成功后次日23:59:59前发货。</li><li>商家自主设置发货时间：须在设置的承诺时间内发货。</li><li>48小时发货：消费者支付成功后48小时内发货。</li></ul>"
+      },
+      {
+        "cardId": "ship:2",
         "sourceId": "dy-rule-101706",
-        "cardId": "ship:2"
+        "title": "QIC仓发货时效要求",
+        "severity": "info",
+        "severityText": "参考",
+        "date": "2025-09-29",
+        "tags": [
+          "发货时限",
+          "QIC仓"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>线下送仓（首次）：普通商品48小时内送至QIC仓；定制/预售类在承诺时效前送至。</li><li>快递送仓（首次）：普通商品48小时内发货至QIC仓并完成揽收；定制/预售类在承诺时效前送至。</li><li>质检驳回重新送仓：普通商品48小时内送至并通过质检；定制/预售类120小时内。</li></ul>"
+      },
+      {
+        "cardId": "ship:3",
+        "sourceId": "dy-rule-101706",
+        "title": "物流轨迹超时与异常认定",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2025-09-29",
+        "tags": [
+          "物流轨迹超时",
+          "物流轨迹异常"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>物流轨迹超时：上传单号后未在规定时效内回传揽收记录，或揽收后未在规定时效内回传分拨记录。</li><li>物流轨迹异常：物流单号异常或轨迹明显异常，或消费者在合理期限内未实际收到商品。</li></ul>"
+      },
+      {
+        "cardId": "ship:4",
+        "sourceId": "dy-rule-101706",
+        "title": "发货违规除外场景（免责情形）",
+        "severity": "normal",
+        "severityText": "通知",
+        "date": "2025-09-29",
+        "tags": [
+          "免责情形"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>消费者滥用发货规则或购买行为非生活消费所需。</li><li>商品本身或信息涉嫌违法违规，平台要求停止发货。</li><li>因自然灾害、会议赛事等不可抗力导致无法按时发货。</li><li>平台官方促销活动或节假日以平台通知为准。</li></ul>"
       }
     ]
   },
@@ -296,32 +321,117 @@
         "cardId": "penalty:4"
       },
       {
-        "title": "其它加重措施与商家评级",
+        "cardId": "penalty:5",
+        "sourceId": "dy-rule-101706",
+        "title": "发货超时认定与处罚",
         "severity": "critical",
-        "severityText": "处罚",
+        "severityText": "强制",
         "date": "2025-09-29",
         "tags": [
-          "厂家自送",
-          "商家评级"
+          "发货超时",
+          "违规处理"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>滥用厂家自送、现货+预售批量投诉：可取消预售权限、下架商品；厂家自送最短关闭 <span class=\"num\">7</span> 天、最长永久</li><li>物流宣传与实际不符：按虚假宣传规则处置；超长未签收订单消费者退款可默认同意</li><li>多次违规或批量投诉：公示警告、限发品、冻结货款、清退、关联店铺处理等</li><li>违规发货计入<span class=\"highlight\">商家评级</span>负向指标，影响极速发货权益、大促活动等</li><li>来源：《商家发货行为管理规则》4.1.6</li></ul>",
-        "sourceId": "dy-rule-101706",
-        "cardId": "penalty:5"
+        "body": "<ul><li>商家未在承诺发货时效内发货即构成<span class='highlight'>发货超时</span>。</li><li>违规处理细则参见【商家-发货超时】实施细则。</li></ul>"
       },
       {
-        "title": "申诉、除外与赔付说明",
+        "cardId": "penalty:6",
+        "sourceId": "dy-rule-101706",
+        "title": "缺货/无货违规及处理",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-09-29",
+        "tags": [
+          "缺货",
+          "无货"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>商家自主承认缺货、无法发货或拒绝发货，或平台/消费者在发货时限内无法联系商家，判定为<span class='highlight'>缺货/无货</span>。</li><li>违规处理细则参见【商家-缺货/无货】实施细则。</li></ul>"
+      },
+      {
+        "cardId": "penalty:7",
+        "sourceId": "dy-rule-101706",
+        "title": "物流轨迹超时与异常",
         "severity": "warning",
+        "severityText": "警告",
+        "date": "2025-09-29",
+        "tags": [
+          "物流轨迹",
+          "超时",
+          "异常"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li><span class='highlight'>物流轨迹超时</span>：上传单号后未在规定时效内回传揽收或分拨记录。</li><li><span class='highlight'>物流轨迹异常</span>：单号异常、轨迹明显异常或消费者合理期限内未收到商品。</li><li>分别参见【商家-物流轨迹超时】和【商家-物流轨迹异常】实施细则。</li></ul>"
+      },
+      {
+        "cardId": "penalty:8",
+        "sourceId": "dy-rule-101706",
+        "title": "欺诈发货定义与处罚",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-09-29",
+        "tags": [
+          "欺诈发货"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>商家未真实发货，导致物流完结时消费者未收到包裹，或实施其他欺诈行为，构成<span class='highlight'>欺诈发货</span>。</li><li>违规处理细则参见【商家-欺诈发货】实施细则。</li></ul>"
+      },
+      {
+        "cardId": "penalty:9",
+        "sourceId": "dy-rule-101706",
+        "title": "其他违规发货处理措施",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2025-09-29",
+        "tags": [
+          "预售",
+          "厂家自送",
+          "虚假宣传"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>预售订单批量投诉或不符合门槛，平台可取消预售权限并下架商品。</li><li>滥用厂家自送权限（如实际有物流轨迹却选择厂家自送），平台可关闭权限<span class='num'>7天至永久</span>。</li><li>物流服务承诺与实际不符，按虚假宣传处置，商家先行承担履约责任。</li></ul>"
+      },
+      {
+        "cardId": "penalty:10",
+        "sourceId": "dy-rule-101706",
+        "title": "超长时效未签收及多次违规处置",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2025-09-29",
+        "tags": [
+          "超长时效",
+          "批量违规"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>超长时效未签收订单，消费者发起未收到货退款，默认同意并自动退款。</li><li>多次违规或批量投诉，平台可采取<span class='highlight'>商品管理、限制提现、停业整顿、清退店铺</span>等措施。</li></ul>"
+      },
+      {
+        "cardId": "penalty:11",
+        "sourceId": "dy-rule-101706",
+        "title": "违规发货对商家评级的影响",
+        "severity": "info",
         "severityText": "参考",
         "date": "2025-09-29",
         "tags": [
-          "申诉",
-          "除外"
+          "商家评级",
+          "权益影响"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>不认可处罚可在收到通知后 <span class=\"num\">7</span> 个自然日内至【店铺-店铺保障-申诉中心】申诉</li><li>除外：不可抗力、大促/节假日调整时效、商品违法违规平台要求停发等</li><li>违约金从保证金/货款扣除，以无门槛现金券赔付消费者；保证金不足可暂停赔付</li><li>总纲处置索引参见【商家-违规发货违规处理手段】实施细则</li><li>来源：《商家发货行为管理规则》4.2、第五章；《【商家-违规发货违规处理手段】实施细则》</li></ul>",
+        "body": "<ul><li>违规发货行为是商家评级的<span class='highlight'>负向评价指标</span>，影响评级分值和平台权益。</li><li>可能影响极速发货产品使用权益、大促活动参与等。</li></ul>"
+      },
+      {
+        "cardId": "penalty:12",
         "sourceId": "dy-rule-101706",
-        "cardId": "penalty:6"
+        "title": "除外场景与申诉流程",
+        "severity": "info",
+        "severityText": "通知",
+        "date": "2025-09-29",
+        "tags": [
+          "除外场景",
+          "申诉"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>除外场景：消费者滥用规则、商品涉嫌违法违规、不可抗力、平台活动调整。</li><li>商家可在收到违规通知后<span class='num'>7个自然日</span>内申诉，平台<span class='num'>5个工作日</span>内反馈结果。</li></ul>"
       }
     ]
   }
