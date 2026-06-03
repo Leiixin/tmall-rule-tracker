@@ -62,8 +62,18 @@ async function fetchDetail(id) {
   return {
     title: normalizeText(info?.name || ""),
     content,
-    publishedAt: info?.update_at
-      ? new Date(info.update_at * 1000).toISOString()
+    publishedAt: (info?.update_timestamp ||
+      info?.create_timestamp ||
+      info?.update_at ||
+      info?.create_at)
+      ? new Date(
+          Number(
+            info.update_timestamp ||
+              info.create_timestamp ||
+              info.update_at ||
+              info.create_at
+          ) * 1000
+        ).toISOString()
       : new Date().toISOString()
   };
 }

@@ -429,24 +429,35 @@ const curatedInsights = {
   }
 };
 
+async function loadExistingWatch() {
+  try {
+    const raw = await readFile(path.join(dataDir, "curated-watch.json"), "utf8");
+    return JSON.parse(raw.replace(/^\uFEFF/, ""));
+  } catch {
+    return { sources: {} };
+  }
+}
+
+const existingWatch = await loadExistingWatch();
 const watchSources = {};
 for (const source of curatedSources.sources) {
+  const prev = existingWatch.sources?.[source.id] || {};
   watchSources[source.id] = {
-    status: "ok",
-    message: "manual curated from rules.json",
-    ruleTitle: source.ruleTitle,
-    platformModifiedAt: timestamp,
-    contentHash: `manual-${source.slug}`,
-    lastSyncedAt: timestamp
+    status: prev.status || "ok",
+    message: prev.message || "manual curated from rules.json",
+    ruleTitle: source.ruleTitle || prev.ruleTitle,
+    platformModifiedAt: prev.platformModifiedAt || null,
+    contentHash: prev.contentHash || `manual-${source.slug}`,
+    lastSyncedAt: prev.lastSyncedAt || timestamp
   };
 }
 
 const curatedWatch = {
-  version: 1,
-  lastCheckedAt: timestamp,
-  autoPublishVersion: 1,
-  recentAutoPublish: null,
-  summary: {
+  version: existingWatch.version || 1,
+  lastCheckedAt: existingWatch.lastCheckedAt || timestamp,
+  autoPublishVersion: existingWatch.autoPublishVersion ?? 1,
+  recentAutoPublish: existingWatch.recentAutoPublish ?? null,
+  summary: existingWatch.summary || {
     published: 0,
     changed: 0,
     errors: 0,

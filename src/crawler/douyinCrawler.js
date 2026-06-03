@@ -46,6 +46,31 @@ function timeValue(iso) {
   return Number.isNaN(parsed.getTime()) ? 0 : parsed.getTime();
 }
 
+function pickArticleTimestamp(info) {
+  if (!info) {
+    return null;
+  }
+  return (
+    info.update_timestamp ||
+    info.create_timestamp ||
+    info.update_at ||
+    info.create_at ||
+    info.update_time
+  );
+}
+
+function maxIso(a, b) {
+  const av = timeValue(a);
+  const bv = timeValue(b);
+  if (!av) {
+    return b || "";
+  }
+  if (!bv) {
+    return a || "";
+  }
+  return av >= bv ? a : b;
+}
+
 function buildRuleUrl(id) {
   return `${BASE_URL}/doudian/web/rules/${encodeURIComponent(String(id))}`;
 }
@@ -141,7 +166,7 @@ function indexItemToRule(item, { source, content = "", weeklyChannel = null, url
   const id = String(item.id || item.object_id || item.knowledge_id || "");
   const title = normalizeText(item.title || item.name || "");
   const publishedAt = unixToIso(
-    item.update_at || item.update_time || item.create_at
+    pickArticleTimestamp(item) || item.update_time || item.create_at
   );
 
   const rule = {
@@ -270,7 +295,7 @@ export async function fetchDouyinRuleDetail(id, options = {}) {
     slug: ruleId,
     title: normalizeText(info.name || ""),
     url: buildDynamicsItemUrl(ruleId),
-    publishedAt: unixToIso(info.update_at || info.create_at) || new Date().toISOString(),
+    publishedAt: unixToIso(pickArticleTimestamp(info)),
     content: content.slice(0, 12000),
     crawledAt: new Date().toISOString(),
     origin: "douyin-bff"
@@ -348,7 +373,7 @@ async function fetchOneRuleDetail(ruleMap, rule) {
         title: detail.title || rule.title,
         content: detail.content,
         snippet: detail.content.slice(0, 220),
-        publishedAt: detail.publishedAt || rule.publishedAt,
+        publishedAt: maxIso(detail.publishedAt, rule.publishedAt) || rule.publishedAt,
         url: detail.url || rule.url
       });
       return true;
