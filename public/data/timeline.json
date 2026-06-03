@@ -1,6 +1,16 @@
 ﻿{
-  "lastUpdated": "2026-06-02T09:41:30.695Z",
+  "lastUpdated": "2026-06-03T02:12:33.401Z",
   "items": [
+    {
+      "date": "06-02",
+      "text": "天猫“品牌质保”服务规范",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010215&cId=393#/rule/detail?type=detail&ruleId=20010215&cId=393"
+    },
+    {
+      "date": "06-02",
+      "text": "天猫“加价选顺丰”服务规范",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20006368&cId=1094#/rule/detail?type=detail&ruleId=20006368&cId=1094"
+    },
     {
       "date": "06-01",
       "text": "天猫在营商家资质标准",
@@ -70,16 +80,6 @@
       "date": "05-08",
       "text": "关于变更《天猫普通食品发布规范》《天猫食品行业管理规范》《天猫生鲜行业管理规范》的公示通知",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010081&cId=395#/rule/detail?type=detail&ruleId=20010081&cId=395"
-    },
-    {
-      "date": "05-03",
-      "text": "关于变更《拆旧服务服务标准》的公示通知",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010044&cId=395#/rule/detail?type=detail&ruleId=20010044&cId=395"
-    },
-    {
-      "date": "05-03",
-      "text": "天猫“虚标必赔”服务规范",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010043&cId=393#/rule/detail?type=detail&ruleId=20010043&cId=393"
     }
   ]
 }

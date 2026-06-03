@@ -9,8 +9,15 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
       "label": "商品保质期管理和宣传规范",
-      "categories": ["shelf"],
-      "cardIds": ["shelf:0", "shelf:1", "shelf:2", "shelf:3"],
+      "categories": [
+        "shelf"
+      ],
+      "cardIds": [
+        "shelf:0",
+        "shelf:1",
+        "shelf:2",
+        "shelf:3"
+      ],
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
       "manualTextPath": "data/douyin/rule-text/rule-aJk964FFQKKZ.txt"
     },
@@ -21,8 +28,14 @@
       "ruleId": "103956",
       "url": "https://school.jinritemai.com/doudian/web/article/103956",
       "label": "商家体验分考核",
-      "categories": ["score"],
-      "cardIds": ["score:0", "score:1", "score:2"],
+      "categories": [
+        "score"
+      ],
+      "cardIds": [
+        "score:0",
+        "score:1",
+        "score:2"
+      ],
       "ruleTitle": "商家体验分规范",
       "manualTextPath": "data/douyin/rule-text/rule-103956.txt"
     },
@@ -33,8 +46,17 @@
       "ruleId": "101706",
       "url": "https://school.jinritemai.com/doudian/web/article/101706",
       "label": "商家发货行为管理规则",
-      "categories": ["ship", "penalty"],
-      "cardIds": ["ship:0", "ship:1", "ship:2", "penalty:5", "penalty:6"],
+      "categories": [
+        "ship",
+        "penalty"
+      ],
+      "cardIds": [
+        "ship:0",
+        "ship:1",
+        "ship:2",
+        "penalty:5",
+        "penalty:6"
+      ],
       "ruleTitle": "商家发货行为管理规则",
       "manualTextPath": "data/douyin/rule-text/rule-101706.txt"
     },
@@ -44,7 +66,9 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ",
       "label": "【商家-违规发货违规处理手段】实施细则",
-      "categories": ["penalty"],
+      "categories": [
+        "penalty"
+      ],
       "cardIds": [],
       "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4JUHQ.txt"
@@ -55,8 +79,12 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
       "label": "【商家-发货超时】实施细则",
-      "categories": ["penalty"],
-      "cardIds": ["penalty:0"],
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:0"
+      ],
       "ruleTitle": "【商家-发货超时】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4Je2N.txt"
     },
@@ -66,8 +94,12 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88",
       "label": "【商家-缺货/无货】实施细则",
-      "categories": ["penalty"],
-      "cardIds": ["penalty:1"],
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:1"
+      ],
       "ruleTitle": "【商家-缺货/无货】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHwHGWzbmk88.txt"
     },
@@ -77,8 +109,12 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHwHroCPheig",
       "label": "【商家-物流轨迹超时】实施细则",
-      "categories": ["penalty"],
-      "cardIds": ["penalty:2"],
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:2"
+      ],
       "ruleTitle": "【商家-物流轨迹超时】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHwHroCPheig.txt"
     },
@@ -88,8 +124,12 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
       "label": "【商家-物流轨迹异常】实施细则",
-      "categories": ["penalty"],
-      "cardIds": ["penalty:3"],
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:3"
+      ],
       "ruleTitle": "【商家-物流轨迹异常】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHzmeN9E9dBF.txt"
     },
@@ -99,8 +139,12 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
       "label": "【商家-欺诈发货】实施细则",
-      "categories": ["penalty"],
-      "cardIds": ["penalty:4"],
+      "categories": [
+        "penalty"
+      ],
+      "cardIds": [
+        "penalty:4"
+      ],
       "ruleTitle": "【商家-欺诈发货】实施细则",
       "manualTextPath": "data/douyin/rule-text/rule-aHwH9wK4JyWJ.txt"
     }

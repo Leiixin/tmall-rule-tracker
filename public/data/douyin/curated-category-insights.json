@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-02T09:47:07.053Z",
+  "updatedAt": "2026-06-03T02:18:17.243Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -71,6 +71,194 @@
           "level": "action",
           "title": "关注揽收与售后时效",
           "desc": "重点优化揽收时长、配送时效达成率、售后处理时长及飞鸽响应时长，均为正式阶段核心考核项。"
+        }
+      ]
+    },
+    "shelf": {
+      "pinned": false,
+      "sourceId": "dy-rule-aJk964FFQKKZ",
+      "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
+      "panelSubtitle": "新增酒类“新鲜日期”宣传要求及违规处理，细化临期标准",
+      "generatedAt": "2026-06-03T02:18:29.242Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+      "changes": [
+        {
+          "type": "new",
+          "title": "新增酒类“新鲜日期”宣传要求",
+          "detail": "商家或创作者宣传酒类“新鲜日期”时，须满足用户签收日期与生产日期的时间差不超过保质期的1/3。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        },
+        {
+          "type": "new",
+          "title": "新增酒类“新鲜日期”违规处理",
+          "detail": "未按规范宣传“新鲜日期”的，平台将依据商家【虚假宣传】细则或创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则处理。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        },
+        {
+          "type": "modify",
+          "title": "细化临期商品标准",
+          "detail": "明确不同保质期区间的临期天数，并规定保质期计算规则：月按30天、年按365天换算，临期天数向上取整。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        },
+        {
+          "type": "modify",
+          "title": "明确临期商品标示要求",
+          "detail": "临期商品须在标题写明“临期商品”，并在详情页最上方显著标示“此商品为临近保质期商品”。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        },
+        {
+          "type": "modify",
+          "title": "新增临期商品起算时间",
+          "detail": "临期商品的起算时间以商家发货后物流系统揽收时间为准。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        },
+        {
+          "type": "modify",
+          "title": "新增个护家清行业临期标准引用",
+          "detail": "个护家清行业保质期临期商品标准详见《【个护家清】商品发布细则》。",
+          "date": "2026-06-02",
+          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "酒类商品宣传“新鲜日期”需合规",
+          "desc": "若宣传“新鲜日期”但实际不满足时间差要求，将面临<span class=\"warn\">虚假宣传</span>违规处理，影响商品流量和店铺信誉。"
+        },
+        {
+          "level": "high",
+          "title": "临期商品标示要求更严格",
+          "desc": "未按要求在标题和详情页标示临期信息，将按<span class=\"warn\">关键信息不明确</span>细则处理，可能导致商品下架或扣分。"
+        },
+        {
+          "level": "medium",
+          "title": "临期天数计算方式调整",
+          "desc": "需按新规则计算临期天数（月=30天，年=365天，向上取整），可能影响部分商品的临期判定和标示。"
+        },
+        {
+          "level": "medium",
+          "title": "临期起算时间变更",
+          "desc": "临期起算时间从发货后物流揽收开始，商家需关注发货时效，避免因物流延迟导致消费者收到临期商品。"
+        },
+        {
+          "level": "low",
+          "title": "个护家清行业需额外关注",
+          "desc": "个护家清商家需查阅《【个护家清】商品发布细则》中的临期标准，确保合规。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "action",
+          "title": "检查酒类商品宣传用语",
+          "desc": "如宣传“新鲜日期”，需确保签收日期与生产日期差≤保质期1/3，否则删除相关宣传词，避免违规。"
+        },
+        {
+          "level": "action",
+          "title": "更新临期商品标示",
+          "desc": "对库存中临期商品，在标题添加“临期商品”，并在详情页顶部显著标示，确保符合新要求。"
+        },
+        {
+          "level": "action",
+          "title": "重新计算临期天数",
+          "desc": "按新规则（月=30天，年=365天，向上取整）重新评估在售商品是否临期，及时调整标示。"
+        },
+        {
+          "level": "action",
+          "title": "优化发货流程",
+          "desc": "关注物流揽收时间，避免因发货延迟导致消费者收到商品时剩余保质期过短，引发投诉。"
+        },
+        {
+          "level": "action",
+          "title": "学习个护家清行业细则",
+          "desc": "个护家清商家及时查阅《【个护家清】商品发布细则》，确保临期商品处理符合行业标准。"
+        }
+      ]
+    },
+    "penalty": {
+      "pinned": false,
+      "sourceId": "dy-rule-aHwH9wK4JUHQ",
+      "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
+      "panelSubtitle": "明确违规发货处理手段及消费者赔付规则",
+      "generatedAt": "2026-06-03T02:18:50.082Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "违规处理手段细化",
+          "detail": "新增公示警告、扣除违约金、限制店铺权限、推荐降权、商品管理、扣除违规所得货款、清退店铺、关联店铺/账号处理、限制精选联盟权限、禁止投流、禁止上新、禁止上架、要求使用抖音电子面单等措施。",
+          "date": "2026-06-03",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+        },
+        {
+          "type": "modify",
+          "title": "消费者赔付标准明确",
+          "detail": "赔付金额为订单实际支付金额乘以对应比例，四舍五入取整，以无门槛现金券形式发放。",
+          "date": "2026-06-03",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+        },
+        {
+          "type": "new",
+          "title": "赔付发放条件",
+          "detail": "发货超时、物流轨迹超时/异常的订单，在核实违规完成后发放赔付优惠券，实际时间以系统通知为准。",
+          "date": "2026-06-03",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+        },
+        {
+          "type": "new",
+          "title": "不支持赔付的场景",
+          "detail": "因消费者原因无法履约、非生活消费购买、异常账户、蓄意牟利、不诚信行为等，平台有权不支持赔付。",
+          "date": "2026-06-03",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "违规成本显著增加",
+          "desc": "平台可采取多种处罚措施，包括扣除违约金、限制店铺权限、清退店铺等，严重违规将面临高额损失。"
+        },
+        {
+          "level": "high",
+          "title": "消费者赔付机制强化",
+          "desc": "违规订单需按比例赔付消费者，以现金券形式发放，直接增加商家成本。"
+        },
+        {
+          "level": "medium",
+          "title": "赔付范围受限",
+          "desc": "特定消费者行为（如恶意下单）不享受赔付，减少商家被恶意索赔的风险。"
+        },
+        {
+          "level": "medium",
+          "title": "多次违规加重处罚",
+          "desc": "拒不整改或多条并犯将面临更严厉处理，需注意合规经营。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "action",
+          "title": "优化发货流程",
+          "desc": "确保按时发货并更新物流轨迹，避免触发发货超时或轨迹异常。"
+        },
+        {
+          "level": "action",
+          "title": "监控库存与产能",
+          "desc": "避免缺货导致虚假发货或延迟发货，及时调整商品库存。"
+        },
+        {
+          "level": "action",
+          "title": "保留履约证据",
+          "desc": "对消费者原因导致的无法履约，保留沟通记录，以便申诉不支持赔付。"
+        },
+        {
+          "level": "action",
+          "title": "关注平台通知",
+          "desc": "及时查看违规判定和赔付发放通知，避免因余额不足导致赔付暂停。"
         }
       ]
     }
