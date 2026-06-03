@@ -69,7 +69,7 @@ cp .env.example .env
 npm run summarize
 ```
 
-3. 抓取时会顺带总结（天猫每次最多 `LLM_MAX_RULES_PER_RUN` 条，默认 20；**抖音周度**优先摘要上周公告，最多 `LLM_MAX_DOUYIN_WEEKLY` 条，默认 30）：
+3. 抓取时会顺带总结（天猫每次最多 `LLM_MAX_RULES_PER_RUN` 条，默认 20；**抖音周度**优先摘要上周公告，最多 `LLM_MAX_DOUYIN_WEEKLY` 条，默认 50）：
 ```bash
 npm run crawl
 npm run crawl:douyin

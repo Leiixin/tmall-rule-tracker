@@ -119,7 +119,7 @@ function prioritizeRules(rules, previousRules, options = {}) {
   const range = getLastWeekRange();
   const max =
     weeklyScope === "douyin"
-      ? Number(process.env.LLM_MAX_DOUYIN_WEEKLY || process.env.LLM_MAX_RULES_PER_RUN || 30)
+      ? Number(process.env.LLM_MAX_DOUYIN_WEEKLY || process.env.LLM_MAX_RULES_PER_RUN || 50)
       : Number(process.env.LLM_MAX_RULES_PER_RUN || 20);
 
   let candidates = rules.filter((rule) =>
