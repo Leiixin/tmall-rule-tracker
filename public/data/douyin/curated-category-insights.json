@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-03T02:18:17.243Z",
+  "updatedAt": "2026-06-03T06:11:00.411Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -78,49 +78,35 @@
       "pinned": false,
       "sourceId": "dy-rule-aJk964FFQKKZ",
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
-      "panelSubtitle": "新增酒类“新鲜日期”宣传要求及违规处理，细化临期标准",
-      "generatedAt": "2026-06-03T02:18:29.242Z",
+      "panelSubtitle": "新增酒类商品“新鲜日期”宣传要求及违规处理",
+      "generatedAt": "2026-06-03T06:11:11.499Z",
       "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
       "changes": [
         {
           "type": "new",
-          "title": "新增酒类“新鲜日期”宣传要求",
-          "detail": "商家或创作者宣传酒类“新鲜日期”时，须满足用户签收日期与生产日期的时间差不超过保质期的1/3。",
+          "title": "新增酒类“新鲜日期”宣传规范",
+          "detail": "新增3.7条：宣传酒类“新鲜日期”时，用户签收日期与生产日期的时间差不得超过保质期的1/3。",
           "date": "2026-06-02",
           "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
         },
         {
           "type": "new",
-          "title": "新增酒类“新鲜日期”违规处理",
-          "detail": "未按规范宣传“新鲜日期”的，平台将依据商家【虚假宣传】细则或创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则处理。",
+          "title": "新增违规处理条款",
+          "detail": "新增4.4条：酒类“新鲜日期”宣传不合规，按商家【虚假宣传】、创作者【虚假宣传】细则处理。",
           "date": "2026-06-02",
           "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
         },
         {
           "type": "modify",
-          "title": "细化临期商品标准",
-          "detail": "明确不同保质期区间的临期天数，并规定保质期计算规则：月按30天、年按365天换算，临期天数向上取整。",
+          "title": "临期商品标准表更新",
+          "detail": "调整了部分保质期区间的临期天数标准，例如保质期＜15天临期天数由原标准改为4天。",
           "date": "2026-06-02",
           "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
         },
         {
           "type": "modify",
-          "title": "明确临期商品标示要求",
-          "detail": "临期商品须在标题写明“临期商品”，并在详情页最上方显著标示“此商品为临近保质期商品”。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
-        },
-        {
-          "type": "modify",
-          "title": "新增临期商品起算时间",
-          "detail": "临期商品的起算时间以商家发货后物流系统揽收时间为准。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
-        },
-        {
-          "type": "modify",
-          "title": "新增个护家清行业临期标准引用",
-          "detail": "个护家清行业保质期临期商品标准详见《【个护家清】商品发布细则》。",
+          "title": "适用范围一级类目更新",
+          "detail": "新增“酒类”一级类目纳入适用范围，酒类商品需遵守保质期管理和宣传要求。",
           "date": "2026-06-02",
           "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
         }
@@ -128,137 +114,250 @@
       "impacts": [
         {
           "level": "high",
-          "title": "酒类商品宣传“新鲜日期”需合规",
-          "desc": "若宣传“新鲜日期”但实际不满足时间差要求，将面临<span class=\"warn\">虚假宣传</span>违规处理，影响商品流量和店铺信誉。"
-        },
-        {
-          "level": "high",
-          "title": "临期商品标示要求更严格",
-          "desc": "未按要求在标题和详情页标示临期信息，将按<span class=\"warn\">关键信息不明确</span>细则处理，可能导致商品下架或扣分。"
+          "title": "酒类商品宣传受限",
+          "desc": "宣传“新鲜日期”的酒类商品必须满足签收日期与生产日期差≤保质期1/3，否则构成虚假宣传。"
         },
         {
           "level": "medium",
-          "title": "临期天数计算方式调整",
-          "desc": "需按新规则计算临期天数（月=30天，年=365天，向上取整），可能影响部分商品的临期判定和标示。"
+          "title": "临期商品标注要求严格",
+          "desc": "临期商品须在标题和详情页显著标注“临期商品”，起算时间为物流揽收时间，违规按关键信息不明确处理。"
         },
         {
           "level": "medium",
-          "title": "临期起算时间变更",
-          "desc": "临期起算时间从发货后物流揽收开始，商家需关注发货时效，避免因物流延迟导致消费者收到临期商品。"
+          "title": "过期商品禁售风险",
+          "desc": "平台禁止销售过期商品，违规将依据发布禁售商品细则处理，可能导致商品下架或店铺处罚。"
         },
         {
           "level": "low",
-          "title": "个护家清行业需额外关注",
-          "desc": "个护家清商家需查阅《【个护家清】商品发布细则》中的临期标准，确保合规。"
+          "title": "保质期信息一致性要求",
+          "desc": "商品包装上保质期信息必须清晰一致，篡改、模糊、不一致等将按标识标志不合格处理。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "检查酒类商品宣传用语",
-          "desc": "如宣传“新鲜日期”，需确保签收日期与生产日期差≤保质期1/3，否则删除相关宣传词，避免违规。"
+          "title": "检查酒类商品生产日期",
+          "desc": "确保宣传“新鲜日期”的酒类商品，用户签收时剩余保质期≥2/3，避免违规。"
         },
         {
           "level": "action",
-          "title": "更新临期商品标示",
-          "desc": "对库存中临期商品，在标题添加“临期商品”，并在详情页顶部显著标示，确保符合新要求。"
+          "title": "临期商品及时标注",
+          "desc": "按新标准计算临期天数，在标题和详情页显著位置标注“临期商品”，并确保发货后物流揽收时间准确。"
         },
         {
           "level": "action",
-          "title": "重新计算临期天数",
-          "desc": "按新规则（月=30天，年=365天，向上取整）重新评估在售商品是否临期，及时调整标示。"
+          "title": "更新商品信息与库存",
+          "desc": "对在售商品进行保质期排查，临期商品需调整标题和详情页，过期商品立即下架。"
         },
         {
           "level": "action",
-          "title": "优化发货流程",
-          "desc": "关注物流揽收时间，避免因发货延迟导致消费者收到商品时剩余保质期过短，引发投诉。"
-        },
-        {
-          "level": "action",
-          "title": "学习个护家清行业细则",
-          "desc": "个护家清商家及时查阅《【个护家清】商品发布细则》，确保临期商品处理符合行业标准。"
+          "title": "关注个护家清行业细则",
+          "desc": "个护家清类目商家需额外遵守《【个护家清】商品发布细则》中的临期标准。"
         }
       ]
     },
     "penalty": {
       "pinned": false,
-      "sourceId": "dy-rule-aHwH9wK4JUHQ",
-      "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
-      "panelSubtitle": "明确违规发货处理手段及消费者赔付规则",
-      "generatedAt": "2026-06-03T02:18:50.082Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ",
+      "sourceId": "dy-rule-101706",
+      "ruleTitle": "商家发货行为管理规则",
+      "panelSubtitle": "本次修订主要优化违规处理措施，强化对延迟发货、缺货、虚假发货等行为的管控。",
+      "generatedAt": "2026-06-03T06:11:28.791Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/101706",
       "changes": [
         {
           "type": "modify",
-          "title": "违规处理手段细化",
-          "detail": "新增公示警告、扣除违约金、限制店铺权限、推荐降权、商品管理、扣除违规所得货款、清退店铺、关联店铺/账号处理、限制精选联盟权限、禁止投流、禁止上新、禁止上架、要求使用抖音电子面单等措施。",
-          "date": "2026-06-03",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+          "title": "违规处理措施细化",
+          "detail": "新增对超长时效未签收订单的自动退款处理，以及多次违规或批量投诉时平台可采取更严厉的处置措施，如限制店铺权限、扣除违约金等。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "new",
+          "title": "超长时效未签收订单自动退款",
+          "detail": "对符合平台定义的超长时效未签收订单，消费者发起未收到货退款申请时，将默认同意退款并从商家账户自动退款。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
         },
         {
           "type": "modify",
-          "title": "消费者赔付标准明确",
-          "detail": "赔付金额为订单实际支付金额乘以对应比例，四舍五入取整，以无门槛现金券形式发放。",
-          "date": "2026-06-03",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+          "title": "厂家自送权限违规处置升级",
+          "detail": "明确滥用或不规范使用厂家自送权限的违规情形，平台可根据情节关闭该权限7天至永久。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
         },
         {
-          "type": "new",
-          "title": "赔付发放条件",
-          "detail": "发货超时、物流轨迹超时/异常的订单，在核实违规完成后发放赔付优惠券，实际时间以系统通知为准。",
-          "date": "2026-06-03",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+          "type": "modify",
+          "title": "虚假宣传物流服务处置规则",
+          "detail": "新增商家或创作者宣传的物流服务与实际不符时，平台可依据虚假宣传规则处置，商家先行承担履约责任。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
         },
         {
-          "type": "new",
-          "title": "不支持赔付的场景",
-          "detail": "因消费者原因无法履约、非生活消费购买、异常账户、蓄意牟利、不诚信行为等，平台有权不支持赔付。",
-          "date": "2026-06-03",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JUHQ"
+          "type": "modify",
+          "title": "违规发货与商家评级挂钩",
+          "detail": "明确违规发货行为是商家评级的负向评价指标，影响评级分值及平台权益，如极速发货产品使用权益、大促活动等。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "modify",
+          "title": "申诉时效与处理时间明确",
+          "detail": "商家可在收到违规通知后7个自然日内申诉，平台在5个工作日内给予结果。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
         }
       ],
       "impacts": [
         {
           "level": "high",
-          "title": "违规成本显著增加",
-          "desc": "平台可采取多种处罚措施，包括扣除违约金、限制店铺权限、清退店铺等，严重违规将面临高额损失。"
+          "title": "超长时效未签收订单自动退款风险",
+          "desc": "若订单超长时效未签收，消费者申请退款将自动同意并退款，商家可能面临货款损失。"
         },
         {
           "level": "high",
-          "title": "消费者赔付机制强化",
-          "desc": "违规订单需按比例赔付消费者，以现金券形式发放，直接增加商家成本。"
+          "title": "多次违规或批量投诉将面临严厉处罚",
+          "desc": "多次违规或导致批量投诉的商家，可能被限制店铺权限、扣除违约金、清退店铺等。"
         },
         {
           "level": "medium",
-          "title": "赔付范围受限",
-          "desc": "特定消费者行为（如恶意下单）不享受赔付，减少商家被恶意索赔的风险。"
+          "title": "厂家自送权限违规使用后果严重",
+          "desc": "不规范使用厂家自送权限，如实际使用物流商却选择厂家自送，可能被关闭权限7天至永久。"
         },
         {
           "level": "medium",
-          "title": "多次违规加重处罚",
-          "desc": "拒不整改或多条并犯将面临更严厉处理，需注意合规经营。"
+          "title": "物流服务承诺不一致需承担履约责任",
+          "desc": "商家或创作者宣传的物流服务与实际不符，商家需先行承担履约责任，可能引发纠纷。"
+        },
+        {
+          "level": "medium",
+          "title": "违规发货影响商家评级及平台权益",
+          "desc": "违规发货记录将计入商家评级，影响极速发货、大促活动等权益。"
+        },
+        {
+          "level": "low",
+          "title": "申诉时效明确，需及时处理",
+          "desc": "商家需在7个自然日内发起申诉，逾期视为认可违规处理。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "优化发货流程",
-          "desc": "确保按时发货并更新物流轨迹，避免触发发货超时或轨迹异常。"
+          "title": "优化库存与发货管理",
+          "desc": "确保库存充足，避免缺货/无货；设置合理的发货时效，并按时发货。"
         },
         {
           "level": "action",
-          "title": "监控库存与产能",
-          "desc": "避免缺货导致虚假发货或延迟发货，及时调整商品库存。"
+          "title": "规范使用厂家自送权限",
+          "desc": "仅在实际使用厂家自送时选择该模式，避免滥用导致权限关闭。"
         },
         {
           "level": "action",
-          "title": "保留履约证据",
-          "desc": "对消费者原因导致的无法履约，保留沟通记录，以便申诉不支持赔付。"
+          "title": "确保物流服务承诺一致",
+          "desc": "商品详情页、直播等宣传的物流服务（时效、承运商等）须与实际一致，避免虚假宣传。"
         },
         {
           "level": "action",
-          "title": "关注平台通知",
-          "desc": "及时查看违规判定和赔付发放通知，避免因余额不足导致赔付暂停。"
+          "title": "关注超长时效订单，及时处理",
+          "desc": "对长时间未签收的订单主动联系消费者或物流，避免自动退款。"
+        },
+        {
+          "level": "action",
+          "title": "及时申诉违规通知",
+          "desc": "收到违规通知后，若不服可在7个自然日内通过申诉中心提交申诉，避免错过时效。"
+        },
+        {
+          "level": "action",
+          "title": "监控商家评级，维护良好记录",
+          "desc": "避免发货违规，保持良好评级以获取平台权益。"
+        }
+      ]
+    },
+    "ship": {
+      "pinned": false,
+      "sourceId": "dy-rule-101706",
+      "ruleTitle": "商家发货行为管理规则",
+      "panelSubtitle": "本次规则修订主要优化表述，发货时效核心要求不变。",
+      "generatedAt": "2026-06-03T06:11:19.331Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/101706",
+      "changes": [
+        {
+          "type": "modify",
+          "title": "规则生效时间更新",
+          "detail": "规则于2025年9月29日修订并生效实施，取代旧版生效日期。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "modify",
+          "title": "发货时间认定表述微调",
+          "detail": "明确物流公司回传信息以“已揽收/揽件”状态为准，无回传信息时以商家操作发货时间为准。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "modify",
+          "title": "QIC仓发货时效要求细化",
+          "detail": "新增质检驳回重新送仓场景，普通商品48小时内、特殊商品120小时内完成送仓及质检。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "modify",
+          "title": "违规处理措施补充",
+          "detail": "增加对超长时效未签收订单自动退款、批量违规时平台可采取限制提现、冻结货款等措施。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        },
+        {
+          "type": "modify",
+          "title": "除外场景明确不可抗力",
+          "detail": "明确因自然灾害、会议赛事等不可抗力可免责，需提供证明。",
+          "date": "2025-09-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+        }
+      ],
+      "impacts": [
+        {
+          "level": "high",
+          "title": "QIC仓质检驳回时效要求",
+          "desc": "质检驳回后重新送仓有明确时限，普通商品48小时，特殊商品120小时，超时将违规。"
+        },
+        {
+          "level": "medium",
+          "title": "超长时效未签收自动退款",
+          "desc": "符合揽收-签收超长定义的订单，消费者发起未收到货退款将默认同意并自动退款。"
+        },
+        {
+          "level": "medium",
+          "title": "批量违规处罚力度升级",
+          "desc": "批量订单违规或投诉可能导致限制提现、冻结货款、停业整顿等严厉措施。"
+        },
+        {
+          "level": "low",
+          "title": "规则表述优化",
+          "desc": "整体规则表述更清晰，但核心发货时效要求未变，商家需关注细节调整。"
+        }
+      ],
+      "strategies": [
+        {
+          "level": "action",
+          "title": "检查QIC仓发货流程",
+          "desc": "确保质检驳回后能按时重新送仓，普通商品48小时，特殊商品120小时。"
+        },
+        {
+          "level": "action",
+          "title": "监控物流轨迹时效",
+          "desc": "避免超长时效未签收订单，及时跟进物流状态，减少自动退款风险。"
+        },
+        {
+          "level": "action",
+          "title": "规范厂家自送使用",
+          "desc": "避免滥用厂家自送模式，确保实际物流与选择一致，防止权限被关闭。"
+        },
+        {
+          "level": "action",
+          "title": "保留不可抗力证明",
+          "desc": "如遇自然灾害等不可抗力，及时收集证明以备申诉。"
         }
       ]
     }

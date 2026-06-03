@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-03T02:18:17.243Z",
-  "autoPublishVersion": 5,
+  "updatedAt": "2026-06-03T06:11:00.411Z",
+  "autoPublishVersion": 7,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -19,7 +19,7 @@
           "计量规则"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期指在既定贮存条件下保持品质的期限。</li><li>保质期以月计，1月=30天；以年计，1年=365天。</li><li>临期天数计算向上取整。</li></ul>"
+        "body": "<ul><li>保质期指在既定贮存环境下保持品质的期限。</li><li>保质期以月计，1月=30天；以年计，1年=365天。</li><li>临期天数计算向上取整。</li></ul>"
       },
       {
         "cardId": "shelf:1",
@@ -29,28 +29,42 @@
         "severityText": "强制",
         "date": "2026-06-03",
         "tags": [
-          "临期标准",
+          "临期商品",
           "标注要求"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期≥365天：剩余≤45天为临期；180~364天：≤30天；90~179天：≤20天；30~89天：≤10天；15~29天：≤5天；<15天：≤4天。</li><li>临期商品标题须写明“临期商品”，详情页最上方显著标示“此商品为临近保质期商品”。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li><li>国家或地区标准严于本规则时，按更严标准执行。</li></ul>"
+        "body": "<ul><li>保质期≥365天，剩余≤45天为临期；180~364天，剩余≤30天；90~179天，剩余≤20天；30~89天，剩余≤10天；15~29天，剩余≤5天；<15天，剩余≤4天。</li><li>临期商品标题须写明“临期商品”，详情页最上方显著标示“此商品为临近保质期商品”。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li></ul>"
       },
       {
         "cardId": "shelf:2",
         "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "酒类“新鲜日期”宣传要求",
+        "title": "临期商品交付与国标优先",
         "severity": "warning",
         "severityText": "警告",
+        "date": "2026-06-03",
+        "tags": [
+          "交付要求",
+          "国标优先"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>商家应保证消费者收到的临期商品不得过期（消费者原因延迟除外）。</li><li>国家或地区临期标准严于平台标准的，按国家或地区标准执行。</li></ul>"
+      },
+      {
+        "cardId": "shelf:3",
+        "sourceId": "dy-rule-aJk964FFQKKZ",
+        "title": "酒类“新鲜日期”宣传要求",
+        "severity": "critical",
+        "severityText": "强制",
         "date": "2026-06-03",
         "tags": [
           "酒类",
           "新鲜日期"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>宣传“新鲜日期”时，用户签收日期与生产日期的时间差不得超过保质期的1/3。</li><li>违规按虚假宣传处理。</li></ul>"
+        "body": "<ul><li>宣传“新鲜日期”时，用户签收日期与生产日期的时间差不得超过保质期的1/3。</li><li>示例：保质期90天，签收日与生产日差22天（≤30天）符合标准。</li></ul>"
       },
       {
-        "cardId": "shelf:3",
+        "cardId": "shelf:4",
         "sourceId": "dy-rule-aJk964FFQKKZ",
         "title": "违规处理措施",
         "severity": "critical",
@@ -61,20 +75,7 @@
           "过期商品"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>禁止销售过期商品，违者按发布禁止商品/信息细则处理。</li><li>包装上保质期信息篡改、模糊、不一致等，按商品标识标志不合格处理。</li><li>临期商品未按要求标注，按关键信息不明确处理。</li><li>酒类“新鲜日期”宣传不符，按虚假宣传处理。</li></ul>"
-      },
-      {
-        "cardId": "shelf:4",
-        "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "适用类目范围",
-        "severity": "info",
-        "severityText": "参考",
-        "date": "2026-06-03",
-        "tags": [
-          "适用类目"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>适用类目包括：水饮冲调、休闲食品、粮油干货、水果蔬菜、肉禽蛋品、海鲜水产、母婴用品、宠物生活、彩妆香水、个人护理、酒类、传统滋补、营养保健、家清纸品等。</li><li>个护家清行业另有细则。</li></ul>"
+        "body": "<ul><li>销售过期商品：依据《发布平台禁止商品/信息》细则处理。</li><li>包装保质期信息篡改、模糊、不一致：依据《商品标识标志不合格》细则处理。</li><li>临期商品未标注：依据《关键信息不明确》细则处理。</li><li>酒类“新鲜日期”虚假宣传：依据《虚假宣传》细则处理。</li></ul>"
       }
     ]
   },
@@ -95,7 +96,7 @@
           "考核对象"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>商家体验分是反映店铺综合服务能力的重要指标，覆盖用户消费全链路。</li><li>考核对象为抖音电商平台商家（即时零售、全球购除外）。</li><li>近30天有效支付订单数＜30单为成长阶段，≥30单为正式阶段。</li></ul>"
+        "body": "<ul><li>商家体验分是反映店铺综合服务能力的重要指标，覆盖用户消费全链路。</li><li>考核对象为抖音电商平台商家（即时零售、全球购除外）。</li><li>根据近30天有效支付订单数分为成长阶段（<30单）和正式阶段（≥30单）。</li><li>考核订单为有效支付订单，赠品、福袋、低价及秒退订单不纳入。</li></ul>"
       },
       {
         "cardId": "score:1",
@@ -110,35 +111,35 @@
           "服务体验"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li><span class=\"highlight\">商品体验</span>：含商品综合评分和商品品质退货率，考核近30天物流签收订单。</li><li><span class=\"highlight\">物流体验</span>：含揽收时长平均得分、运单配送时效达成率、发货物流品退率。</li><li><span class=\"highlight\">服务体验</span>：含售后处理时长达成率和飞鸽人工平均响应时长。</li></ul>"
+        "body": "<ul><li>商品体验：包括商品综合评分和商品品质退货率，考核近30天物流签收订单。</li><li>物流体验：包括揽收时长平均得分、运单配送时效达成率和发货物流品退率。</li><li>服务体验：包括售后处理时长达成率和飞鸽人工平均响应时长。</li><li>各指标得分分档为50/60/70/80/90/100，揽收时长按实际计算。</li></ul>"
       },
       {
         "cardId": "score:2",
         "sourceId": "dy-rule-103956",
-        "title": "正式阶段体验分计算公式",
-        "severity": "warning",
-        "severityText": "警告",
+        "title": "计算公式与权重",
+        "severity": "info",
+        "severityText": "通知",
         "date": "2026-06-03",
         "tags": [
           "计算公式",
           "权重"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>正式阶段体验分 = 商品体验得分×权重 + 物流体验得分×权重 + 服务体验得分×权重 - 差行为扣分。</li><li>单项指标得分分档为50/60/70/80/90/100，揽收时长按实际计算。</li><li>不同行业权重不同，部分行业区分旗舰店与非旗舰店考核。</li></ul>"
+        "body": "<ul><li>正式阶段体验分 = 商品体验得分×权重 + 物流体验得分×权重 + 服务体验得分×权重 - 差行为扣分。</li><li>各维度权重因行业而异，旗舰店与非旗舰店可能拆分考核。</li><li>偏远地区物流服务可加3分（物流体验最高100分）。</li><li>差行为扣分：消极服务每次扣3分（累计≤15分），刷单炒信一次性扣15分。</li></ul>"
       },
       {
         "cardId": "score:3",
         "sourceId": "dy-rule-103956",
         "title": "应用场景与权益",
-        "severity": "info",
-        "severityText": "通知",
+        "severity": "warning",
+        "severityText": "警告",
         "date": "2026-06-03",
         "tags": [
           "应用场景",
           "权益"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>体验分应用于<span class=\"highlight\">千川投放</span>：低于管控要求禁止投放。</li><li>体验分用于<span class=\"highlight\">活动提报</span>：达到门槛可报名平台营销活动。</li><li>体验分用于<span class=\"highlight\">精选联盟准入</span>：满足条件方可准入。</li></ul>"
+        "body": "<ul><li>体验分影响千川投放：低于管控要求禁止投放。</li><li>体验分影响活动提报：需达到报名门槛。</li><li>体验分影响精选联盟准入：满足条件方可准入。</li><li>高体验分商家可获得更多平台支持。</li></ul>"
       },
       {
         "cardId": "score:4",
@@ -152,12 +153,12 @@
           "降分"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>消极服务/售后行为每次扣<span class=\"num\">3</span>分，近30天累计不超<span class=\"num\">15</span>分。</li><li>刷单炒信等非正常手段一次性扣<span class=\"num\">15</span>分，近30天累计不超<span class=\"num\">15</span>分。</li><li>平台有权对恶意干扰行为屏蔽体验分或设定分数上限。</li></ul>"
+        "body": "<ul><li>消极服务/售后行为每次扣3分，近30天累计≤15分。</li><li>刷单炒信等非正常手段一次性扣15分。</li><li>提供虚假凭证等恶意行为，平台可屏蔽体验分或设定上限。</li><li>成长阶段存在违规时，体验分降至60分。</li></ul>"
       },
       {
         "cardId": "score:5",
         "sourceId": "dy-rule-103956",
-        "title": "2026年新规变化要点",
+        "title": "2026年新规变化",
         "severity": "warning",
         "severityText": "警告",
         "date": "2026-06-03",
@@ -166,7 +167,7 @@
           "变化"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/103956",
-        "body": "<ul><li>成长阶段体验分由入驻时间决定，个人店不适用。</li><li>正式阶段新增<span class=\"highlight\">偏远地区物流服务加分</span>：满足条件物流体验加<span class=\"num\">3</span>分。</li><li>商品综合评分等指标在订单数少且差评≤3时得<span class=\"num\">80</span>分。</li><li>消费者展示分数与体验分映射关系细化，50-60分每提升1分展示分增0.1。</li></ul>"
+        "body": "<ul><li>本规则于2026年5月7日最新修订生效。</li><li>正式阶段体验分最低50分，最高100分。</li><li>差行为扣分明确累计上限（15分）。</li><li>偏远地区物流服务加分规则新增。</li><li>消费者展示分数与体验分映射关系细化（61-100分每4分一档，50-60分每1分一档）。</li></ul>"
       }
     ]
   },
