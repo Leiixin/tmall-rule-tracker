@@ -1807,21 +1807,52 @@ function curatedStatusLabel(status) {
   return map[status] || status || '—';
 }
 
-function renderCuratedAlertBanner() {
+function getCuratedSourceById(sourceId) {
+  return (curatedSourcesData.sources || []).find(function (s) {
+    return s.id === sourceId;
+  });
+}
+
+function curatedSourceAppliesToCategory(sourceId, categoryKey) {
+  if (!sourceId || !categoryKey) return false;
+  var source = getCuratedSourceById(sourceId);
+  return source && (source.categories || []).indexOf(categoryKey) >= 0;
+}
+
+function countChangedSourcesForCategory(categoryKey) {
+  if (!curatedWatchData || !curatedWatchData.sources || !categoryKey) return 0;
+  return (curatedSourcesData.sources || []).filter(function (s) {
+    if ((s.categories || []).indexOf(categoryKey) < 0) return false;
+    var w = curatedWatchData.sources[s.id];
+    return w && w.status === 'changed';
+  }).length;
+}
+
+function renderCuratedAlertBanner(categoryKey) {
   if (!curatedWatchData) return '';
+  var isHome = categoryKey == null;
   var summary = curatedWatchData.summary || {};
   var changed = Number(summary.changed) || 0;
   var pub = curatedWatchData.recentAutoPublish;
+
   if (pub && pub.at) {
-    return '<div class="curated-alert-banner synced">' +
-      '引用规则已于 ' + escapeHtml(formatCuratedDateTime(pub.at)) + ' 自动同步展示（' +
-      escapeHtml(pub.ruleTitle || pub.label || pub.sourceId || '') + '）。' +
-      (curatedWatchData.lastCheckedAt ? ' 最近检测：' + escapeHtml(formatCuratedDateTime(curatedWatchData.lastCheckedAt)) + '。' : '') +
-      '</div>';
+    if (!isHome && !curatedSourceAppliesToCategory(pub.sourceId, categoryKey)) {
+      // fall through to changed check
+    } else {
+      return '<div class="curated-alert-banner synced">' +
+        '引用规则已于 ' + escapeHtml(formatCuratedDateTime(pub.at)) + ' 自动同步展示（' +
+        escapeHtml(pub.ruleTitle || pub.label || pub.sourceId || '') + '）。' +
+        (curatedWatchData.lastCheckedAt ? ' 最近检测：' + escapeHtml(formatCuratedDateTime(curatedWatchData.lastCheckedAt)) + '。' : '') +
+        '</div>';
+    }
   }
-  if (changed > 0) {
+
+  var changedCount = isHome
+    ? changed
+    : countChangedSourcesForCategory(categoryKey);
+  if (changedCount > 0) {
     return '<div class="curated-alert-banner warning">' +
-      '检测到 <strong>' + changed + '</strong> 条引用规则原文有更新，等待下次定时任务自动重写卡片与变更分析（或本地运行 <code>npm run sync:curated</code>）。' +
+      '检测到 <strong>' + changedCount + '</strong> 条引用规则原文有更新，等待下次定时任务自动重写卡片与变更分析（或本地运行 <code>npm run sync:curated</code>）。' +
       ' 规则变更三栏解读需配置 <code>DEEPSEEK_API_KEY</code>（受 <code>LLM_MAX_INSIGHTS_PER_RUN</code> 预算限制）。' +
       '</div>';
   }
@@ -2050,7 +2081,7 @@ function renderHome() {
       '<h1 class="section-title">首页 · ' + escapeHtml(cfg.label) + '</h1>' +
       '<p class="section-desc">' + homeDesc + '</p>' +
     '</div>' +
-    renderCuratedAlertBanner();
+    renderCuratedAlertBanner(null);
 
   // Stats cards
   html += '<div class="home-stats">' +
@@ -2187,7 +2218,7 @@ function renderSection(key) {
       '<h1 class="section-title">' + data.title + '</h1>' +
       '<p class="section-desc">' + data.desc + '</p>' +
     '</div>' +
-    renderCuratedAlertBanner() +
+    renderCuratedAlertBanner(key) +
     '<div class="rules-grid">';
 
   data.cards.forEach(function(card) {

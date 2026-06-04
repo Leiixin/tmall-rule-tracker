@@ -7,8 +7,7 @@
     "ruleTitle": "商家发货行为管理规则",
     "label": "商家发货行为管理规则",
     "categories": [
-      "ship",
-      "penalty"
+      "ship"
     ]
   },
   "sources": {
