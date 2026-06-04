@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-04T01:59:11.693Z",
+  "lastCheckedAt": "2026-06-04T06:07:09.181Z",
   "autoPublishVersion": 7,
   "recentAutoPublish": {
     "at": "2026-06-04T01:59:11.693Z",
@@ -12,14 +12,13 @@
   },
   "sources": {
     "dy-rule-aJk964FFQKKZ": {
-      "status": "synced",
-      "message": "auto-published 1 categor(ies)",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
       "platformModifiedAt": "2026-05-26T12:20:26.000Z",
       "contentHash": "2f97b901d2169fb3",
       "bodyPublicationFingerprint": "publicity:2026-05-26..2026-06-02|effective:2026-06-02",
-      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
-      "insightsGeneratedAt": "2026-06-04T01:59:11.693Z"
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z"
     },
     "dy-rule-103956": {
       "status": "ok",
@@ -31,14 +30,13 @@
       "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
-      "status": "synced",
-      "message": "auto-published 2 categor(ies)",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家发货行为管理规则",
       "platformModifiedAt": "2025-09-29T07:13:36.000Z",
       "contentHash": "2706834cacff8ff9",
       "bodyPublicationFingerprint": "revision:2025-09-29",
-      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
-      "insightsGeneratedAt": "2026-06-04T01:59:11.693Z"
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z"
     },
     "dy-rule-aHwH9wK4JUHQ": {
       "status": "ok",
@@ -97,11 +95,11 @@
   },
   "summary": {
     "checked": 9,
-    "changed": 2,
+    "changed": 0,
     "errors": 0,
-    "published": 2,
-    "synced": 2,
-    "insightsGenerated": 2,
+    "published": 0,
+    "synced": 0,
+    "insightsGenerated": 0,
     "forced": 0
   }
 }
