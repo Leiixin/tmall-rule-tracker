@@ -35,6 +35,17 @@ function stripHtml(html) {
     .trim();
 }
 
+function countPenaltyTierLis(html) {
+  const lis = String(html || "").match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+  return lis.filter((li) => {
+    const liPlain = li.replace(/<[^>]+>/g, " ");
+    if (/认定[：:①②③④⑤⑥⑦⑧⑨]/.test(liPlain)) {
+      return false;
+    }
+    return /扣罚|赔付|实付|违约金|%/.test(liPlain);
+  }).length;
+}
+
 async function readJson(relPath) {
   const raw = await readFile(path.join(repoRoot, relPath), "utf8");
   return JSON.parse(raw.replace(/^\uFEFF/, ""));
@@ -69,6 +80,18 @@ export function auditDouyinPenaltyCards(cardsDoc) {
   for (const card of cards) {
     const plain = stripHtml(card.body);
     const key = normalizeTitle(card.title);
+
+    if (/[：:]/.test(String(card.title || ""))) {
+      issues.push(`${card.cardId}: title must not contain colon suffix`);
+    }
+
+    if (!/认定①/.test(plain)) {
+      issues.push(`${card.cardId}: body must include numbered 认定①`);
+    }
+
+    if (countPenaltyTierLis(card.body) < 2) {
+      issues.push(`${card.cardId}: body must have at least 2 separate penalty tier li items`);
+    }
 
     if (card.sourceId === "dy-rule-101706") {
       issues.push(`${card.cardId}: must not come from dy-rule-101706 (总纲只产 ship)`);

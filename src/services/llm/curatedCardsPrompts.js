@@ -1,12 +1,17 @@
 import { INLINE_HIGHLIGHT_SPAN_RULE } from "./prompts.js";
 
-export const CURATED_CARDS_PROMPT_VERSION = "3";
+export const CURATED_CARDS_PROMPT_VERSION = "4";
 
-export const DOUYIN_PENALTY_IMPLEMENTATION_RULES = `抖音发货违规实施细则卡片（必守，当前正文即该细则全文）：
-- 只输出 1 张卡片，标题为具体违规类型（与细则名称一致，如「缺货/无货」「发货超时」）。
-- body 必须包含：<li><span class="highlight">认定</span>：…</li>（违规定义/认定条件，分 li 摘录）+ 若干 li 写订单扣罚/赔付标准（比例、上下限、分承诺发货时效档位；原文有则写）。
-- 禁止 body 出现：参见、详见、参考、来源：《、违规处理细则参见 等指向其他规则的表述（页面底部已有原文链接）。
-- 只依据下方正文摘录数字与比例，禁止编造。`;
+export const DOUYIN_PENALTY_IMPLEMENTATION_RULES = `抖音发货违规实施细则卡片（必守，对齐天猫 penalty 卡片格式，当前正文即该细则全文）：
+- 只输出 1 张卡片；标题仅写违规类型名（如「缺货/无货」「发货超时」），≤10 字，禁止「：认定与扣罚」等后缀。
+- body 结构（按顺序）：
+  1) 首条 li：<span class="highlight">认定：</span> + 违规定义总括句 +「包括但不限于：」（原文有则写）
+  2) 若干 li：<span class="highlight">认定①：</span>、认定②：… 逐条摘录原文认定条件（与天猫 penalty 卡片一致）
+  3) 订单扣罚/赔付标准：每条时效档位或比例单独 1 个 li（禁止合并多档于一条），数字用 span.num
+  4) 其它处置（自然年累计、店铺处置等）可各 1 li
+- 示例认定 li：<li><span class="highlight">认定①：</span>延迟发货后 <span class="num">72</span> 小时仍未发货</li>
+- 禁止 body 出现：参见、详见、参考、来源：《、违规处理细则参见 等指向其他规则的表述。
+- 只依据下方正文摘录数字与比例，禁止编造。每条 li 15～80 字。`;
 
 const CATEGORY_META = {
   shelf: {
@@ -121,6 +126,13 @@ export function buildCuratedCardsSystemPrompt(
     options.cardCount ||
     (singleDouyinPenalty ? "1" : meta.cardCount);
 
+  const liLengthRule = singleDouyinPenalty
+    ? "每条 li 15～80 字"
+    : "每条 li 15～50 字";
+  const titleRule = singleDouyinPenalty
+    ? "标题仅违规类型名（≤10 字，禁止冒号后缀）"
+    : "卡片标题（8~30字）";
+
   return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
 
 分类侧重：${meta.focus}
@@ -129,7 +141,7 @@ ${structureBlock}
 {
   "cards": [
     {
-      "title": "卡片标题（8~30字）",
+      "title": "${titleRule}",
       "severity": "critical|warning|info|normal",
       "severityText": "强制|警告|参考|通知等",
       "date": "YYYY-MM-DD",
@@ -142,7 +154,7 @@ ${structureBlock}
 规则：
 - 生成 ${cardCount} 张卡片，按主题拆分，不要把所有内容挤进一张。
 - body 使用 <ul><li>，${INLINE_HIGHLIGHT_SPAN_RULE}。
-- 每条 li 15～50 字；只依据原文，禁止编造；信息不足则保守表述。
+- ${liLengthRule}；只依据原文，禁止编造；信息不足则保守表述。
 - date 使用用户提供的平台修订日期。
 - 不要输出 link 字段（由系统补充）。
 - 使用简体中文。`;
@@ -165,7 +177,7 @@ export function buildCuratedCardsUserPrompt({
   );
   const sourceHint = singleDouyinPenalty
     ? `\n来源：${source?.label || source?.id || "未知"}（${source?.id || ""}）
-要求：下方正文即该实施细则全文，只生成与本来源对应的一种违规的 1 张卡片，从正文摘录认定与订单扣罚，勿写参见其他规则。\n`
+要求：下方正文即该实施细则全文，只生成 1 张卡片。标题仅违规类型名；body 用「认定：总括 + 认定①②… + 扣罚标准每条独立 li」，对齐天猫 penalty 格式，勿写参见其他规则。\n`
     : source?.id
       ? `\n来源 ID：${source.id}${source.label ? `（${source.label}）` : ""}\n`
       : "";

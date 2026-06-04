@@ -43,8 +43,9 @@ export function sanitizeCuratedCardBody(body) {
   return text.trim();
 }
 
-export function validatePenaltyCardBody(body) {
-  const plain = String(body || "")
+export function validatePenaltyCardBody(body, { strictDouyin = false } = {}) {
+  const html = String(body || "");
+  const plain = html
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ");
   const hasRecognition = /认定|定义|判定|违规|情形|揽收|发运/.test(plain);
@@ -57,6 +58,35 @@ export function validatePenaltyCardBody(body) {
   }
   if (REFERENCE_BODY_RE.test(plain)) {
     throw new Error("penalty card must not reference other rules in body");
+  }
+
+  if (strictDouyin) {
+    if (!/认定①/.test(plain)) {
+      throw new Error("douyin penalty card must include numbered 认定①");
+    }
+    const lis = html.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+    const penaltyLis = lis.filter((li) => {
+      const liPlain = li.replace(/<[^>]+>/g, " ");
+      if (/认定[：:①②③④⑤⑥⑦⑧⑨]/.test(liPlain)) {
+        return false;
+      }
+      return /扣罚|赔付|实付|违约金|%/.test(liPlain);
+    });
+    if (penaltyLis.length < 2) {
+      throw new Error(
+        "douyin penalty card must have at least 2 separate penalty tier li items"
+      );
+    }
+  }
+}
+
+export function validateDouyinPenaltyCardTitle(title) {
+  const t = String(title || "").trim();
+  if (/[：:]/.test(t)) {
+    throw new Error("douyin penalty card title must not contain colon suffix");
+  }
+  if (t.length > 12) {
+    throw new Error("douyin penalty card title too long");
   }
 }
 
@@ -80,7 +110,8 @@ export function normalizeCuratedCards(
         return null;
       }
       if (strictPenalty) {
-        validatePenaltyCardBody(body);
+        validateDouyinPenaltyCardTitle(title);
+        validatePenaltyCardBody(body, { strictDouyin: true });
       }
       const severity = VALID_SEVERITY.has(card.severity)
         ? card.severity

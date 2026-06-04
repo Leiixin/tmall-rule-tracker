@@ -106,12 +106,12 @@ npm run verify:douyin:weekly-llm
 3. 链接规则 `platformModifiedAt`（API 发布时间）变更
 4. 正文提到的公示/生效/修订日期指纹变更（`bodyPublicationFingerprint`）
 
-**DeepSeek 卡片结构**（`CURATED_CARDS_PROMPT_VERSION` 当前为 **3**）：
+**DeepSeek 卡片结构**（`CURATED_CARDS_PROMPT_VERSION` 当前为 **4**）：
 
 - **效期 `shelf`**：阶段分卡；化妆品 / 隐形眼镜 / 保健品各独立成卡（原文有则写）
 - **体验分 `score`**：大指标一卡，须含计算公式或计分逻辑
 - **违规 `penalty`**：标题为具体违规行为，body 含认定条件 + 订单扣罚标准
-- **抖音 penalty 实施细则**：一条来源仅 1 张卡，正文摘录认定与扣罚，禁止写「参见/来源：《…》」
+- **抖音 penalty 实施细则**：标题仅违规类型名；body 为「认定：总括 + 认定①②… + 扣罚标准每条独立 li」（对齐天猫 penalty 格式）
 
 ```bash
 npm run test:curated-change   # 变更检测单元检查
@@ -223,7 +223,7 @@ data/
 - 强制重生成体验分锚点：`npm run sync:curated:douyin:force`（`dy-rule-101706` 仅 ship）
 - 清理 penalty 重复卡（删总纲浅卡、去掉 body「来源/参见」）：`npm run clean:douyin:penalty`
 - 强制重生成 5 条 penalty 实施细则：`ENABLE_LLM_SUMMARY=true npm run sync:curated:douyin:penalty:force`
-- penalty 防回归检查：`npm run audit:douyin:penalty`（标题不重复、正文无参见、须含认定与扣罚摘录）
+- penalty 防回归检查：`npm run audit:douyin:penalty`（标题无冒号后缀、须含认定①、扣罚分行 ≥2 条 li）
 
 ## 常用命令
 - 启动：`npm run start`

@@ -1,7 +1,7 @@
 ﻿{
   "version": 1,
-  "updatedAt": "2026-06-04T02:30:00.000Z",
-  "autoPublishVersion": 8,
+  "updatedAt": "2026-06-04T03:00:00.000Z",
+  "autoPublishVersion": 9,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -281,7 +281,7 @@
     "desc": "发货超时、缺货/无货、物流轨迹超时/异常、欺诈发货等实施细则；每条来源对应 1 张卡片，正文摘录认定与订单扣罚标准。",
     "cards": [
       {
-        "title": "发货超时：订单扣罚与店铺处置",
+        "title": "发货超时",
         "severity": "critical",
         "severityText": "强制",
         "date": "2025-09-29",
@@ -290,12 +290,12 @@
           "扣罚"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
-        "body": "<ul><li><span class=\"highlight\">定义</span>：未在承诺发货时效内发货；揽收时间以物流回传或商家发货操作认定</li><li>承诺≤<span class=\"num\">48</span>小时：超时<span class=\"num\">48</span>小时内扣实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">2</span> 元，最高 <span class=\"num\">50</span> 元）；超时<span class=\"num\">48</span>小时以上按缺货/无货处理</li><li>承诺 <span class=\"num\">48</span>～<span class=\"num\">240</span> 小时：超时<span class=\"num\">48</span>小时内 <span class=\"num\">1%</span>，超时<span class=\"num\">48</span>小时以上 <span class=\"num\">3%</span></li><li>情节严重：商品封禁 <span class=\"num\">3</span> 天、冻结货款 <span class=\"num\">3</span> 天（超时订单结算金额 <span class=\"num\">2</span> 倍，最低 <span class=\"num\">1000</span> 元）；特别严重可封禁 <span class=\"num\">7</span> 天、限制成交、冻结全部货款</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>商家未在承诺给消费者的发货时效要求内发货，发货时间认定包括但不限于：</li><li><span class=\"highlight\">认定①：</span>物流公司有回传信息时，以揽收记录（已揽收/揽件等）时间为准</li><li><span class=\"highlight\">认定②：</span>无回传信息时，以商家操作发货时间为准；底单显示更晚则取晚者</li><li>承诺发货时效≤<span class=\"num\">48</span>小时，超时<span class=\"num\">48</span>小时内：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">2</span> 元，最高 <span class=\"num\">50</span> 元）</li><li>承诺发货时效≤<span class=\"num\">48</span>小时，超时<span class=\"num\">48</span>小时以上：按缺货/无货违规处理</li><li><span class=\"num\">48</span>小时＜承诺发货时效≤<span class=\"num\">240</span>小时，超时<span class=\"num\">48</span>小时内：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">2</span> 元，最高 <span class=\"num\">50</span> 元）</li><li><span class=\"num\">48</span>小时＜承诺发货时效≤<span class=\"num\">240</span>小时，超时<span class=\"num\">48</span>小时以上：实付 <span class=\"num\">3%</span>（最低 <span class=\"num\">3</span> 元，最高 <span class=\"num\">50</span> 元）</li><li>承诺发货时效＞<span class=\"num\">240</span>小时，超时<span class=\"num\">48</span>小时内：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">3</span> 元，最高 <span class=\"num\">50</span> 元）</li><li>承诺发货时效＞<span class=\"num\">240</span>小时，超时<span class=\"num\">48</span>小时以上：实付 <span class=\"num\">5%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">50</span> 元）</li></ul>",
         "sourceId": "dy-rule-aHwH9wK4Je2N",
         "cardId": "penalty:0"
       },
       {
-        "title": "缺货/无货：认定与扣罚",
+        "title": "缺货/无货",
         "severity": "critical",
         "severityText": "强制",
         "date": "2025-09-29",
@@ -304,12 +304,12 @@
           "无货"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88",
-        "body": "<ul><li><span class=\"highlight\">认定</span>：承认缺货/拒发、联系不上、其它发货违规后仍未发货；发货超时 <span class=\"num\">48</span> 小时仍未发货等</li><li>可与发货超时扣罚<span class=\"highlight\">同时发起</span>；扣罚最高不超过 <span class=\"num\">1000</span> 元/单</li><li>承诺≤<span class=\"num\">48</span>小时：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">2</span> 元，最高 <span class=\"num\">50</span> 元）；<span class=\"num\">48</span>～<span class=\"num\">240</span> 小时：<span class=\"num\">3%</span>；&gt;<span class=\"num\">240</span> 小时：<span class=\"num\">5%</span></li><li>自然年累计：可冻结货款、限制预售/上新、店铺限单；<span class=\"num\">6</span> 次及以上可限制成交、冻结近 <span class=\"num\">7</span> 天结算货款 <span class=\"num\">2</span> 倍（最低 <span class=\"num\">1000</span> 元）</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>商家自主承认缺货/无法发货/拒绝发货，或者平台或消费者无法在发货时限内联系上商家，或者商家发生其他发货违规后在规定时限内仍未发货的，相关订单/商品将被判定为缺货/无货违规，包括但不限于：</li><li><span class=\"highlight\">认定①：</span>平台或消费者在发货时限内未能与商家取得联系，且平台有理由认为商家存在违规风险的</li><li><span class=\"highlight\">认定②：</span>订单发货超时后 <span class=\"num\">48</span> 小时内仍未发货的</li><li><span class=\"highlight\">认定③：</span>物流轨迹超时的订单在上传物流单号后 <span class=\"num\">5</span> 天内仍未真实发货的</li><li><span class=\"highlight\">认定④：</span>物流轨迹异常的订单在平台发送处罚通知后 <span class=\"num\">3</span> 天内消费者仍未收到所购商品的</li><li><span class=\"highlight\">认定⑤：</span>QIC 发货模式下，送仓商品质检不合格被驳回，自驳回时间起未在规定时效内送达并通过质检的</li><li>可与发货超时扣罚同时发起；扣罚最高不超过 <span class=\"num\">1000</span> 元/单</li><li>承诺发货时效≤<span class=\"num\">48</span>小时：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">2</span> 元，最高 <span class=\"num\">50</span> 元）</li><li><span class=\"num\">48</span>小时＜承诺发货时效≤<span class=\"num\">240</span>小时：实付 <span class=\"num\">3%</span>（最低 <span class=\"num\">3</span> 元，最高 <span class=\"num\">50</span> 元）</li><li>承诺发货时效＞<span class=\"num\">240</span>小时：实付 <span class=\"num\">5%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">50</span> 元）</li></ul>",
         "sourceId": "dy-rule-aHwHGWzbmk88",
         "cardId": "penalty:1"
       },
       {
-        "title": "物流轨迹超时：揽收与分拨",
+        "title": "物流轨迹超时",
         "severity": "critical",
         "severityText": "处罚",
         "date": "2025-09-29",
@@ -318,12 +318,12 @@
           "揽收"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHwHroCPheig",
-        "body": "<ul><li><span class=\"highlight\">揽收超时</span>：上传单号后 <span class=\"num\">24</span> 小时无揽收记录</li><li><span class=\"highlight\">发运超时</span>：首条揽收后 <span class=\"num\">24</span> 小时无分拨中心轨迹更新</li><li>赔付：承诺发货≤<span class=\"num\">48</span>小时订单实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">3</span> 元，最高 <span class=\"num\">30</span> 元）；&gt;<span class=\"num\">48</span>小时为 <span class=\"num\">5%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">50</span> 元）</li><li>同省轨迹节点超时：一般 <span class=\"num\">48</span> 小时；跨省 <span class=\"num\">72</span> 小时；偏远区域 <span class=\"num\">120</span> 小时</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>商家上传物流单号点击发货后，未在规定时效内回传揽收记录，或揽收后未在规定时效内回传分拨记录，包括但不限于：</li><li><span class=\"highlight\">认定①：</span>揽收超时：上传物流单号后 <span class=\"num\">24</span> 小时内仍无揽收记录</li><li><span class=\"highlight\">认定②：</span>发运超时：首条揽收后 <span class=\"num\">24</span> 小时内无分拨中心轨迹更新</li><li><span class=\"highlight\">认定③：</span>中转超时：同省/同区域超 <span class=\"num\">48</span> 小时、跨省超 <span class=\"num\">72</span> 小时、偏远区域超 <span class=\"num\">120</span> 小时无节点更新</li><li>承诺发货时间≤<span class=\"num\">48</span>小时：实付 <span class=\"num\">1%</span>（最低 <span class=\"num\">3</span> 元，最高 <span class=\"num\">30</span> 元）</li><li>承诺发货时间＞<span class=\"num\">48</span>小时：实付 <span class=\"num\">5%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">50</span> 元）</li></ul>",
         "sourceId": "dy-rule-aHwHroCPheig",
         "cardId": "penalty:2"
       },
       {
-        "title": "物流轨迹异常：虚假单号与处置",
+        "title": "物流轨迹异常",
         "severity": "critical",
         "severityText": "处罚",
         "date": "2025-09-29",
@@ -332,12 +332,12 @@
           "虚假单号"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
-        "body": "<ul><li><span class=\"highlight\">常见情形</span>：上传后 <span class=\"num\">48</span> 小时未揽收、揽收后 <span class=\"num\">48</span> 小时无分拨、重复轨迹/运单号、地址不符、揽收早于支付、私自召回等</li><li>通用赔付：实付 <span class=\"num\">25%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">100</span> 元）；贵金属等可提高至最高 <span class=\"num\">1000</span> 元</li><li>违规 <span class=\"num\">1</span> 次定义：日异常率&gt;<span class=\"num\">10%</span> 且异常单≥<span class=\"num\">20</span>；自然年累计可冻结货款、禁止上新、限制预售/精选联盟/成交</li><li>批量违规：可冻结近 <span class=\"num\">15</span> 天结算货款 <span class=\"num\">35%</span>（最低 <span class=\"num\">1000</span> 元）并停止结算，最长 <span class=\"num\">90</span> 天</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>上传物流单号异常或轨迹明显异常，及/或消费者合理期限内未实际收到商品，常见情形包括但不限于：</li><li><span class=\"highlight\">认定①：</span>上传物流单号后 <span class=\"num\">48</span> 小时内仍无揽收记录</li><li><span class=\"highlight\">认定②：</span>首条揽收后 <span class=\"num\">48</span> 小时内无分拨中心轨迹更新</li><li><span class=\"highlight\">认定③：</span>重复物流轨迹或不同订单重复使用同一运单号</li><li><span class=\"highlight\">认定④：</span>物流运单收件信息与订单收件信息不一致（改地址等特殊情形除外）</li><li><span class=\"highlight\">认定⑤：</span>首条物流轨迹时间早于订单支付时间，或非消费者意愿的异常退回/单号取消</li><li>通用赔付：实付 <span class=\"num\">25%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">100</span> 元）；贵金属等可提高至最高 <span class=\"num\">1000</span> 元</li><li>违规 <span class=\"num\">1</span> 次：日异常率＞<span class=\"num\">10%</span> 且异常单≥<span class=\"num\">20</span>；自然年累计可冻结货款、禁止上新、限制预售/成交</li></ul>",
         "sourceId": "dy-rule-aHzmeN9E9dBF",
         "cardId": "penalty:3"
       },
       {
-        "title": "欺诈发货：空包与加重处置",
+        "title": "欺诈发货",
         "severity": "critical",
         "severityText": "处罚",
         "date": "2025-09-29",
@@ -346,7 +346,7 @@
           "空包"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
-        "body": "<ul><li><span class=\"highlight\">定义</span>：未真实发货致物流完结消费者未收货，或发空包、买A发B、短装（数量差&gt;<span class=\"num\">50%</span>）等</li><li>赔付：实付 <span class=\"num\">30%</span>（最低 <span class=\"num\">10</span> 元，最高 <span class=\"num\">500</span> 元）；平台可主动关单退款</li><li>商品维度违规 <span class=\"num\">1</span> 次：当日欺诈发货≥<span class=\"num\">3</span> 单；自然年累计可冻结货款并停止结算（最高 <span class=\"num\">180</span> 天）、体验分扣 <span class=\"num\">15</span> 分、违约金最高 <span class=\"num\">2000</span> 元、清退</li><li>情节特别严重：可停业整顿、清退、扣除违规所得货款等</li></ul>",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>商家未真实发货，导致物流完结时消费者未收到商品包裹，或实施其他欺诈行为，包括但不限于：</li><li><span class=\"highlight\">认定①：</span>发空包：上传物流单号后消费者收到空包裹</li><li><span class=\"highlight\">认定②：</span>买A发B：收到与商品描述明显不符的其他物品</li><li><span class=\"highlight\">认定③：</span>短装：收到商品数量与承诺严重不符（比例超 <span class=\"num\">50%</span>）</li><li>消费者赔付：实付 <span class=\"num\">30%</span>（最低 <span class=\"num\">10</span> 元，最高 <span class=\"num\">500</span> 元）；平台可主动关单退款</li><li>商品维度违规 <span class=\"num\">1</span> 次：当日欺诈发货订单量≥<span class=\"num\">3</span> 单</li><li>自然年累计：可冻结货款并停止结算（最高 <span class=\"num\">180</span> 天）、体验分扣 <span class=\"num\">15</span> 分、违约金最高 <span class=\"num\">2000</span> 元、清退</li></ul>",
         "sourceId": "dy-rule-aHwH9wK4JyWJ",
         "cardId": "penalty:4"
       }
