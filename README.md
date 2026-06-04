@@ -106,11 +106,12 @@ npm run verify:douyin:weekly-llm
 3. 链接规则 `platformModifiedAt`（API 发布时间）变更
 4. 正文提到的公示/生效/修订日期指纹变更（`bodyPublicationFingerprint`）
 
-**DeepSeek 卡片结构**（`CURATED_CARDS_PROMPT_VERSION` 当前为 **2**）：
+**DeepSeek 卡片结构**（`CURATED_CARDS_PROMPT_VERSION` 当前为 **3**）：
 
 - **效期 `shelf`**：阶段分卡；化妆品 / 隐形眼镜 / 保健品各独立成卡（原文有则写）
 - **体验分 `score`**：大指标一卡，须含计算公式或计分逻辑
 - **违规 `penalty`**：标题为具体违规行为，body 含认定条件 + 订单扣罚标准
+- **抖音 penalty 实施细则**：一条来源仅 1 张卡，正文摘录认定与扣罚，禁止写「参见/来源：《…》」
 
 ```bash
 npm run test:curated-change   # 变更检测单元检查
@@ -170,7 +171,7 @@ npm run migrate:score-insights
 | `shelf` | 商品效期要求 | 《商品保质期管理和宣传规范》（[文章 aJk964FFQKKZ](https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ)） |
 | `score` | 店铺真实体验分 | 《商家体验分规范》（slug `103956`） |
 | `ship` | 发货时效 | 消极服务细则、揽收时效、物流轨迹 |
-| `penalty` | 发货违规及处罚 | 虚假交易、价格违规、禁售商品细则 |
+| `penalty` | 发货违规及处罚 | 5 条发货违规**实施细则**各 1 张卡（发货超时、缺货/无货、物流轨迹超时/异常、欺诈发货）；总纲 `101706` 仅出现在 `ship` |
 
 详情拉取走 `fetchDouyinRuleDetailForCurated`；API 失败时可参考 `data/douyin/rule-text/rule-{slug}.txt` 手工兜底。
 
@@ -219,7 +220,10 @@ data/
 - 重建分类页种子数据：`npm run build:curated:douyin`
 - 重标规则分类标签：`npm run migrate:douyin:categories`
 - 分类页来源同步：`npm run sync:curated:douyin`
-- 强制重生成体验分/虚假交易锚点：`npm run sync:curated:douyin:force`
+- 强制重生成体验分锚点：`npm run sync:curated:douyin:force`（`dy-rule-101706` 仅 ship）
+- 清理 penalty 重复卡（删总纲浅卡、去掉 body「来源/参见」）：`npm run clean:douyin:penalty`
+- 强制重生成 5 条 penalty 实施细则：`ENABLE_LLM_SUMMARY=true npm run sync:curated:douyin:penalty:force`
+- penalty 防回归检查：`npm run audit:douyin:penalty`（标题不重复、正文无参见、须含认定与扣罚摘录）
 
 ## 常用命令
 - 启动：`npm run start`

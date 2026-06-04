@@ -47,15 +47,12 @@
       "url": "https://school.jinritemai.com/doudian/web/article/101706",
       "label": "商家发货行为管理规则",
       "categories": [
-        "ship",
-        "penalty"
+        "ship"
       ],
       "cardIds": [
         "ship:0",
         "ship:1",
-        "ship:2",
-        "penalty:5",
-        "penalty:6"
+        "ship:2"
       ],
       "ruleTitle": "商家发货行为管理规则",
       "manualTextPath": "data/douyin/rule-text/rule-101706.txt"

@@ -1,6 +1,12 @@
 import { INLINE_HIGHLIGHT_SPAN_RULE } from "./prompts.js";
 
-export const CURATED_CARDS_PROMPT_VERSION = "2";
+export const CURATED_CARDS_PROMPT_VERSION = "3";
+
+export const DOUYIN_PENALTY_IMPLEMENTATION_RULES = `抖音发货违规实施细则卡片（必守，当前正文即该细则全文）：
+- 只输出 1 张卡片，标题为具体违规类型（与细则名称一致，如「缺货/无货」「发货超时」）。
+- body 必须包含：<li><span class="highlight">认定</span>：…</li>（违规定义/认定条件，分 li 摘录）+ 若干 li 写订单扣罚/赔付标准（比例、上下限、分承诺发货时效档位；原文有则写）。
+- 禁止 body 出现：参见、详见、参考、来源：《、违规处理细则参见 等指向其他规则的表述（页面底部已有原文链接）。
+- 只依据下方正文摘录数字与比例，禁止编造。`;
 
 const CATEGORY_META = {
   shelf: {
@@ -78,7 +84,19 @@ function advisorForPlatform(platform, category) {
   return "天猫商家运营顾问";
 }
 
-export function buildCuratedCardsSystemPrompt(category, platform = "tmall") {
+export function isDouyinPenaltyImplementationSource(source, category, platform) {
+  if (platform !== "douyin" || category !== "penalty" || !source) {
+    return false;
+  }
+  const blob = `${source.label || ""}${source.ruleTitle || ""}${source.id || ""}`;
+  return /实施细则/.test(blob);
+}
+
+export function buildCuratedCardsSystemPrompt(
+  category,
+  platform = "tmall",
+  options = {}
+) {
   const meta = CATEGORY_META[category] || {
     title: category,
     focus: "",
@@ -86,9 +104,22 @@ export function buildCuratedCardsSystemPrompt(category, platform = "tmall") {
     cardCount: "3～8"
   };
   const advisor = advisorForPlatform(platform, category);
-  const structureBlock = meta.structureRules
+  const singleDouyinPenalty = isDouyinPenaltyImplementationSource(
+    options.source,
+    category,
+    platform
+  );
+
+  let structureBlock = meta.structureRules
     ? `\n${meta.structureRules}\n`
     : "";
+  if (singleDouyinPenalty) {
+    structureBlock += `\n${DOUYIN_PENALTY_IMPLEMENTATION_RULES}\n`;
+  }
+
+  const cardCount =
+    options.cardCount ||
+    (singleDouyinPenalty ? "1" : meta.cardCount);
 
   return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
 
@@ -109,7 +140,7 @@ ${structureBlock}
 }
 
 规则：
-- 生成 ${meta.cardCount} 张卡片，按主题拆分，不要把所有内容挤进一张。
+- 生成 ${cardCount} 张卡片，按主题拆分，不要把所有内容挤进一张。
 - body 使用 <ul><li>，${INLINE_HIGHLIGHT_SPAN_RULE}。
 - 每条 li 15～50 字；只依据原文，禁止编造；信息不足则保守表述。
 - date 使用用户提供的平台修订日期。
@@ -122,12 +153,26 @@ export function buildCuratedCardsUserPrompt({
   ruleTitle,
   platformModifiedAt,
   content,
+  source,
+  platform = "tmall",
   maxChars = 8000
 }) {
   const meta = CATEGORY_META[category] || { title: category };
+  const singleDouyinPenalty = isDouyinPenaltyImplementationSource(
+    source,
+    category,
+    platform
+  );
+  const sourceHint = singleDouyinPenalty
+    ? `\n来源：${source?.label || source?.id || "未知"}（${source?.id || ""}）
+要求：下方正文即该实施细则全文，只生成与本来源对应的一种违规的 1 张卡片，从正文摘录认定与订单扣罚，勿写参见其他规则。\n`
+    : source?.id
+      ? `\n来源 ID：${source.id}${source.label ? `（${source.label}）` : ""}\n`
+      : "";
+
   return `分类：${meta.title}
 规则标题：${ruleTitle || "未知"}
-平台修订时间：${platformModifiedAt || "未知"}
+平台修订时间：${platformModifiedAt || "未知"}${sourceHint}
 
 正文：
 ${String(content || "").slice(0, maxChars)}
