@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-03T09:46:03.817Z",
+  "lastCheckedAt": "2026-06-04T01:59:05.734Z",
   "autoPublishVersion": 1,
   "recentAutoPublish": {
     "at": "2026-06-02T06:28:56.971Z",
@@ -26,6 +26,7 @@
       "ruleTitle": "【已失效】淘宝规则",
       "platformModifiedAt": "2012-05-20T00:00:00.000Z",
       "contentHash": "5d736fa01babf061",
+      "bodyPublicationFingerprint": "",
       "lastSyncedAt": "2026-06-02T06:28:56.971Z"
     },
     "intl-rule-11000442": {

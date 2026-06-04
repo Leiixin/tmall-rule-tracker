@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-03T09:46:10.416Z",
-  "autoPublishVersion": 5,
+  "updatedAt": "2026-06-04T01:59:11.693Z",
+  "autoPublishVersion": 7,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -10,72 +10,115 @@
       {
         "cardId": "shelf:0",
         "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "保质期定义与计量规则",
+        "title": "保质期定义与计算规则",
         "severity": "info",
-        "severityText": "参考",
-        "date": "2026-06-03",
+        "severityText": "通知",
+        "date": "2026-05-26",
         "tags": [
           "保质期",
-          "计量规则"
+          "换算规则"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期指在既定贮存环境下保持品质的期限。</li><li>保质期以月计，1月=30天；以年计，1年=365天。</li><li>临期天数计算向上取整。</li></ul>"
+        "body": "<ul><li>保质期指在既定贮存环境下保持品质的期限。</li><li>保质期以月计，按<span class=\"num\">1个月=30天</span>换算；以年计，按<span class=\"num\">1年=365天</span>换算。</li><li>临期天数计算向上取整。</li></ul>"
       },
       {
         "cardId": "shelf:1",
         "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "临期商品标准与标注要求",
+        "title": "临期商品标注与展示要求",
         "severity": "critical",
         "severityText": "强制",
-        "date": "2026-06-03",
+        "date": "2026-05-26",
         "tags": [
-          "临期商品",
-          "标注要求"
+          "临期标注",
+          "展示要求"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期≥365天，剩余≤45天为临期；180~364天，剩余≤30天；90~179天，剩余≤20天；30~89天，剩余≤10天；15~29天，剩余≤5天；<15天，剩余≤4天。</li><li>临期商品标题须写明“临期商品”，详情页最上方显著标示“此商品为临近保质期商品”。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li></ul>"
+        "body": "<ul><li>临期商品须在标题写明“临期商品”字样。</li><li>详情页最上方显著标示“此商品为临近保质期商品”。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li></ul>"
       },
       {
         "cardId": "shelf:2",
         "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "临期商品交付与国标优先",
+        "title": "临期商品分级标准（按保质期）",
         "severity": "warning",
         "severityText": "警告",
-        "date": "2026-06-03",
+        "date": "2026-05-26",
         "tags": [
-          "交付要求",
-          "国标优先"
+          "临期天数",
+          "分级标准"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>商家应保证消费者收到的临期商品不得过期（消费者原因延迟除外）。</li><li>国家或地区临期标准严于平台标准的，按国家或地区标准执行。</li></ul>"
+        "body": "<ul><li>保质期≥365天：剩余≤<span class=\"num\">45天</span>为临期。</li><li>180天≤保质期<365天：剩余≤<span class=\"num\">30天</span>为临期。</li><li>90天≤保质期<180天：剩余≤<span class=\"num\">20天</span>为临期。</li><li>30天≤保质期<90天：剩余≤<span class=\"num\">10天</span>为临期。</li><li>15天≤保质期<30天：剩余≤<span class=\"num\">5天</span>为临期。</li><li>保质期<15天：剩余≤<span class=\"num\">4天</span>为临期。</li></ul>"
       },
       {
         "cardId": "shelf:3",
         "sourceId": "dy-rule-aJk964FFQKKZ",
+        "title": "禁售过期商品及违规处理",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-05-26",
+        "tags": [
+          "禁售",
+          "过期商品",
+          "违规处理"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>平台禁止销售过期商品。</li><li>出售过期商品，依据《发布平台禁止商品/信息》细则处理。</li><li>包装保质期信息篡改、模糊、不一致等，按标识标志不合格处理。</li></ul>"
+      },
+      {
+        "cardId": "shelf:4",
+        "sourceId": "dy-rule-aJk964FFQKKZ",
+        "title": "临期未标注违规处理",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2026-05-26",
+        "tags": [
+          "临期未标注",
+          "违规处理"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>临期商品未按规范标注，依据<span class=\"highlight\">关键信息不明确</span>细则处理。</li></ul>"
+      },
+      {
+        "cardId": "shelf:5",
+        "sourceId": "dy-rule-aJk964FFQKKZ",
         "title": "酒类“新鲜日期”宣传要求",
         "severity": "critical",
         "severityText": "强制",
-        "date": "2026-06-03",
+        "date": "2026-05-26",
         "tags": [
           "酒类",
           "新鲜日期"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>宣传“新鲜日期”时，用户签收日期与生产日期的时间差不得超过保质期的1/3。</li><li>示例：保质期90天，签收日与生产日差22天（≤30天）符合标准。</li></ul>"
+        "body": "<ul><li>宣传“新鲜日期”时，用户签收日期与生产日期的时间差不得超过商品保质期的<span class=\"num\">1/3</span>。</li><li>违规按<span class=\"highlight\">虚假宣传</span>细则处理。</li></ul>"
       },
       {
-        "cardId": "shelf:4",
+        "cardId": "shelf:6",
         "sourceId": "dy-rule-aJk964FFQKKZ",
-        "title": "违规处理措施",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2026-06-03",
+        "title": "化妆品类目临期标准",
+        "severity": "info",
+        "severityText": "通知",
+        "date": "2026-05-26",
         "tags": [
-          "违规处理",
-          "过期商品"
+          "化妆品",
+          "临期标准"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>销售过期商品：依据《发布平台禁止商品/信息》细则处理。</li><li>包装保质期信息篡改、模糊、不一致：依据《商品标识标志不合格》细则处理。</li><li>临期商品未标注：依据《关键信息不明确》细则处理。</li><li>酒类“新鲜日期”虚假宣传：依据《虚假宣传》细则处理。</li></ul>"
+        "body": "<ul><li>彩妆/香水/美妆工具等适用通用临期分级标准。</li><li>个护家清行业另有细则，详见《【个护家清】商品发布细则》。</li></ul>"
+      },
+      {
+        "cardId": "shelf:7",
+        "sourceId": "dy-rule-aJk964FFQKKZ",
+        "title": "保健品及营养保健类目临期标准",
+        "severity": "info",
+        "severityText": "通知",
+        "date": "2026-05-26",
+        "tags": [
+          "保健品",
+          "营养保健"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+        "body": "<ul><li>营养保健/特医食品、传统滋补等适用通用临期分级标准。</li></ul>"
       }
     ]
   },
@@ -187,25 +230,12 @@
           "发货认定"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>消费者付款后，商家须在承诺发货时效内发货，以有利于消费者的最短时效为准。</li><li>发货时间认定：有物流回传的以揽件记录时间为准；无回传的以商家操作时间为准，若底单时间更晚取晚者。</li><li>蟹卡类目商品订单，消费者兑换实物时按选择的邮寄日期发货。</li></ul>"
+        "body": "<ul><li>发货时限：消费者付款后，商家须在承诺时效内发货，以有利于消费者的最短时效为准。</li><li>发货时间认定：有物流回传的以揽件记录时间为准；无回传的以商家操作发货时间为准，若底单更晚取晚者。</li><li>多个渠道承诺不一致时，以对消费者更短的时效为准。</li></ul>"
       },
       {
         "cardId": "ship:1",
         "sourceId": "dy-rule-101706",
-        "title": "普通商品发货时效要求",
-        "severity": "info",
-        "severityText": "参考",
-        "date": "2025-09-29",
-        "tags": [
-          "发货时限"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>极速发货：当日16:00前支付订单当日23:59:59前发货；16:00后支付次日23:59:59前发货。</li><li>次日发货：消费者支付成功后次日23:59:59前发货。</li><li>商家自主设置发货时间：须在设置的承诺时间内发货。</li><li>48小时发货：消费者支付成功后48小时内发货。</li></ul>"
-      },
-      {
-        "cardId": "ship:2",
-        "sourceId": "dy-rule-101706",
-        "title": "QIC仓发货时效要求",
+        "title": "各类发货模式时效要求",
         "severity": "info",
         "severityText": "参考",
         "date": "2025-09-29",
@@ -214,10 +244,10 @@
           "QIC仓"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>线下送仓（首次）：普通商品48小时内送至QIC仓；定制/预售类在承诺时效前送至。</li><li>快递送仓（首次）：普通商品48小时内发货至QIC仓并完成揽收；定制/预售类在承诺时效前送至。</li><li>质检驳回重新送仓：普通商品48小时内送至并通过质检；定制/预售类120小时内。</li></ul>"
+        "body": "<ul><li>极速发货：当日16:00前付款订单当日23:59:59前发货；16:00后付款次日23:59:59前发货。</li><li>次日发货：消费者付款后次日23:59:59前发货。</li><li>QIC仓普通商品：线下送仓48小时内到仓；快递送仓48小时内揽收。</li><li>QIC仓定制/预售类：按承诺时效送仓；质检驳回重新送仓普通48小时，定制120小时。</li></ul>"
       },
       {
-        "cardId": "ship:3",
+        "cardId": "ship:2",
         "sourceId": "dy-rule-101706",
         "title": "物流轨迹超时与异常认定",
         "severity": "warning",
@@ -228,12 +258,12 @@
           "物流轨迹异常"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>物流轨迹超时：上传单号后未在规定时效内回传揽收记录，或揽收后未在规定时效内回传分拨记录。</li><li>物流轨迹异常：物流单号异常或轨迹明显异常，或消费者在合理期限内未实际收到商品。</li></ul>"
+        "body": "<ul><li>物流轨迹超时：上传单号后未在规定时效内回传揽收或分拨记录。</li><li>物流轨迹异常：物流单号异常或轨迹明显异常，或消费者合理期限内未收到商品。</li><li>欺诈发货：未真实发货导致物流完结时消费者未收到包裹。</li></ul>"
       },
       {
-        "cardId": "ship:4",
+        "cardId": "ship:3",
         "sourceId": "dy-rule-101706",
-        "title": "发货违规除外场景（免责情形）",
+        "title": "免责情形与除外场景",
         "severity": "normal",
         "severityText": "通知",
         "date": "2025-09-29",
@@ -241,7 +271,7 @@
           "免责情形"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>消费者滥用发货规则或购买行为非生活消费所需。</li><li>商品本身或信息涉嫌违法违规，平台要求停止发货。</li><li>因自然灾害、会议赛事等不可抗力导致无法按时发货。</li><li>平台官方促销活动或节假日以平台通知为准。</li></ul>"
+        "body": "<ul><li>消费者滥用规则或非生活消费所需，不计违规。</li><li>商品涉嫌违法违规，平台要求停止发货的，不计违规。</li><li>因自然灾害、会议赛事等不可抗力导致无法按时发货，不计违规。</li><li>平台官方促销活动或节假日，以平台通知为准。</li></ul>"
       }
     ]
   },
@@ -323,115 +353,89 @@
       {
         "cardId": "penalty:5",
         "sourceId": "dy-rule-101706",
-        "title": "发货超时认定与处罚",
+        "title": "发货超时",
         "severity": "critical",
         "severityText": "强制",
         "date": "2025-09-29",
         "tags": [
           "发货超时",
-          "违规处理"
+          "赔付"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>商家未在承诺发货时效内发货即构成<span class='highlight'>发货超时</span>。</li><li>违规处理细则参见【商家-发货超时】实施细则。</li></ul>"
+        "body": "<ul><li>定义：商家未在承诺给消费者的发货时效内发货。</li><li>赔付标准：按订单实际支付金额的一定比例赔付，具体比例及上下限见《商家-发货超时实施细则》。</li></ul>"
       },
       {
         "cardId": "penalty:6",
         "sourceId": "dy-rule-101706",
-        "title": "缺货/无货违规及处理",
+        "title": "缺货/无货",
         "severity": "critical",
         "severityText": "强制",
         "date": "2025-09-29",
         "tags": [
           "缺货",
-          "无货"
+          "无货",
+          "赔付"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>商家自主承认缺货、无法发货或拒绝发货，或平台/消费者在发货时限内无法联系商家，判定为<span class='highlight'>缺货/无货</span>。</li><li>违规处理细则参见【商家-缺货/无货】实施细则。</li></ul>"
+        "body": "<ul><li>定义：商家自主承认缺货/无法发货/拒绝发货，或平台/消费者无法在发货时限内联系上商家，或发生其他发货违规后在规定时限内仍未发货。</li><li>赔付标准：按订单实际支付金额的一定比例赔付，具体比例及上下限见《商家-缺货/无货实施细则》。</li></ul>"
       },
       {
         "cardId": "penalty:7",
         "sourceId": "dy-rule-101706",
-        "title": "物流轨迹超时与异常",
+        "title": "物流轨迹超时",
         "severity": "warning",
         "severityText": "警告",
         "date": "2025-09-29",
         "tags": [
           "物流轨迹",
           "超时",
-          "异常"
+          "赔付"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li><span class='highlight'>物流轨迹超时</span>：上传单号后未在规定时效内回传揽收或分拨记录。</li><li><span class='highlight'>物流轨迹异常</span>：单号异常、轨迹明显异常或消费者合理期限内未收到商品。</li><li>分别参见【商家-物流轨迹超时】和【商家-物流轨迹异常】实施细则。</li></ul>"
+        "body": "<ul><li>定义：上传物流单号后未在规定时效内回传揽收记录，或揽收后未在规定时效内回传分拨记录。</li><li>赔付标准：按订单实际支付金额的一定比例赔付，具体比例及上下限见《商家-物流轨迹超时实施细则》。</li></ul>"
       },
       {
         "cardId": "penalty:8",
         "sourceId": "dy-rule-101706",
-        "title": "欺诈发货定义与处罚",
+        "title": "物流轨迹异常",
+        "severity": "warning",
+        "severityText": "警告",
+        "date": "2025-09-29",
+        "tags": [
+          "物流轨迹",
+          "异常",
+          "赔付"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/101706",
+        "body": "<ul><li>定义：物流单号异常或轨迹明显异常，或消费者在合理期限内未实际收到商品。</li><li>赔付标准：按订单实际支付金额的一定比例赔付，具体比例及上下限见《商家-物流轨迹异常实施细则》。</li></ul>"
+      },
+      {
+        "cardId": "penalty:9",
+        "sourceId": "dy-rule-101706",
+        "title": "欺诈发货",
         "severity": "critical",
         "severityText": "强制",
         "date": "2025-09-29",
         "tags": [
-          "欺诈发货"
+          "欺诈发货",
+          "赔付"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>商家未真实发货，导致物流完结时消费者未收到包裹，或实施其他欺诈行为，构成<span class='highlight'>欺诈发货</span>。</li><li>违规处理细则参见【商家-欺诈发货】实施细则。</li></ul>"
+        "body": "<ul><li>定义：商家未真实发货，导致物流完结时消费者未收到商品包裹，或实施其他欺诈行为。</li><li>赔付标准：按订单实际支付金额的一定比例赔付，具体比例及上下限见《商家-欺诈发货实施细则》。</li></ul>"
       },
       {
-        "cardId": "penalty:9",
+        "cardId": "penalty:10",
         "sourceId": "dy-rule-101706",
         "title": "其他违规发货处理措施",
         "severity": "warning",
         "severityText": "警告",
         "date": "2025-09-29",
         "tags": [
-          "预售",
-          "厂家自送",
-          "虚假宣传"
+          "违规处理",
+          "处罚"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>预售订单批量投诉或不符合门槛，平台可取消预售权限并下架商品。</li><li>滥用厂家自送权限（如实际有物流轨迹却选择厂家自送），平台可关闭权限<span class='num'>7天至永久</span>。</li><li>物流服务承诺与实际不符，按虚假宣传处置，商家先行承担履约责任。</li></ul>"
-      },
-      {
-        "cardId": "penalty:10",
-        "sourceId": "dy-rule-101706",
-        "title": "超长时效未签收及多次违规处置",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2025-09-29",
-        "tags": [
-          "超长时效",
-          "批量违规"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>超长时效未签收订单，消费者发起未收到货退款，默认同意并自动退款。</li><li>多次违规或批量投诉，平台可采取<span class='highlight'>商品管理、限制提现、停业整顿、清退店铺</span>等措施。</li></ul>"
-      },
-      {
-        "cardId": "penalty:11",
-        "sourceId": "dy-rule-101706",
-        "title": "违规发货对商家评级的影响",
-        "severity": "info",
-        "severityText": "参考",
-        "date": "2025-09-29",
-        "tags": [
-          "商家评级",
-          "权益影响"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>违规发货行为是商家评级的<span class='highlight'>负向评价指标</span>，影响评级分值和平台权益。</li><li>可能影响极速发货产品使用权益、大促活动参与等。</li></ul>"
-      },
-      {
-        "cardId": "penalty:12",
-        "sourceId": "dy-rule-101706",
-        "title": "除外场景与申诉流程",
-        "severity": "info",
-        "severityText": "通知",
-        "date": "2025-09-29",
-        "tags": [
-          "除外场景",
-          "申诉"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/101706",
-        "body": "<ul><li>除外场景：消费者滥用规则、商品涉嫌违法违规、不可抗力、平台活动调整。</li><li>商家可在收到违规通知后<span class='num'>7个自然日</span>内申诉，平台<span class='num'>5个工作日</span>内反馈结果。</li></ul>"
+        "body": "<ul><li>预售订单批量投诉或不符合门槛：取消预售权限，下架预售商品。</li><li>滥用厂家自送权限：关闭权限7天至永久。</li><li>物流服务承诺与实际不符：按虚假宣传处置，商家先行履约。</li><li>超长时效未签收订单：消费者发起未收到货退款，默认同意退款并自动退款。</li><li>多次违规或批量投诉：平台可采取公示警告、商品管理、订单关闭、限制提现、扣除违约金、清退店铺等措施。</li></ul>"
       }
     ]
   }

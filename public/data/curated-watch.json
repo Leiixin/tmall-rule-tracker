@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-03T09:45:59.121Z",
+  "lastCheckedAt": "2026-06-04T01:59:01.290Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -9,6 +9,7 @@
       "ruleTitle": "天猫商品保质期发布规范",
       "platformModifiedAt": "2023-04-03T03:04:50.000Z",
       "contentHash": "fe220e1fc25eaeea",
+      "bodyPublicationFingerprint": "",
       "lastSyncedAt": null
     },
     "rule-11002181": {
@@ -17,6 +18,7 @@
       "ruleTitle": "天猫化妆品发布规范",
       "platformModifiedAt": "2020-03-30T08:18:16.000Z",
       "contentHash": "9a189fe3eea8ae65",
+      "bodyPublicationFingerprint": "",
       "lastSyncedAt": null
     },
     "rule-20009524": {
@@ -25,6 +27,7 @@
       "ruleTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
       "platformModifiedAt": "2026-02-24T02:26:56.000Z",
       "contentHash": "ceaf17bc842ee9ab",
+      "bodyPublicationFingerprint": "",
       "lastSyncedAt": null
     },
     "rule-11000266": {
@@ -33,6 +36,7 @@
       "ruleTitle": "天猫物流时效管理规范",
       "platformModifiedAt": "2024-09-12T08:00:00.000Z",
       "contentHash": "7aac85535e932bc3",
+      "bodyPublicationFingerprint": "",
       "lastSyncedAt": null
     }
   },

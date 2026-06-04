@@ -1,8 +1,8 @@
 {
-  "lastCheckedAt": "2026-06-03T09:46:10.416Z",
-  "autoPublishVersion": 5,
+  "lastCheckedAt": "2026-06-04T01:59:11.693Z",
+  "autoPublishVersion": 7,
   "recentAutoPublish": {
-    "at": "2026-06-03T09:46:10.416Z",
+    "at": "2026-06-04T01:59:11.693Z",
     "sourceId": "dy-rule-101706",
     "ruleTitle": "商家发货行为管理规则",
     "label": "商家发货行为管理规则",
@@ -13,23 +13,23 @@
   },
   "sources": {
     "dy-rule-aJk964FFQKKZ": {
-      "status": "changed",
-      "message": "LLM publish failed: Expected ',' or '}' after property value in JSON at position 1794",
+      "status": "synced",
+      "message": "auto-published 1 categor(ies)",
       "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
       "platformModifiedAt": "2026-05-26T12:20:26.000Z",
       "contentHash": "2f97b901d2169fb3",
-      "lastSyncedAt": "2026-05-29T10:03:41.740Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z",
-      "insightsGeneratedAt": null
+      "bodyPublicationFingerprint": "publicity:2026-05-26..2026-06-02|effective:2026-06-02",
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
+      "insightsGeneratedAt": "2026-06-04T01:59:11.693Z"
     },
     "dy-rule-103956": {
-      "status": "synced",
-      "message": "auto-published 1 categor(ies)",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家体验分规范",
       "platformModifiedAt": "2026-05-07T07:05:49.000Z",
       "contentHash": "2d88780728e1c20a",
-      "lastSyncedAt": "2026-06-03T09:46:10.416Z",
-      "insightsGeneratedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
       "status": "synced",
@@ -37,68 +37,69 @@
       "ruleTitle": "商家发货行为管理规则",
       "platformModifiedAt": "2025-09-29T07:13:36.000Z",
       "contentHash": "2706834cacff8ff9",
-      "lastSyncedAt": "2026-06-03T09:46:10.416Z",
-      "insightsGeneratedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "revision:2025-09-29",
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
+      "insightsGeneratedAt": "2026-06-04T01:59:11.693Z"
     },
     "dy-rule-aHwH9wK4JUHQ": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-违规发货违规处理手段】实施细则",
       "platformModifiedAt": "2024-01-22T16:00:16.000Z",
       "contentHash": "73e40fe7c97fc63e",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4Je2N": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-发货超时】实施细则",
       "platformModifiedAt": "2026-03-31T17:04:03.000Z",
       "contentHash": "1a052a464666660a",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwHGWzbmk88": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-缺货/无货】实施细则",
       "platformModifiedAt": "2026-03-31T17:07:30.000Z",
       "contentHash": "7320aa26399a28c6",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwHroCPheig": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-物流轨迹超时】实施细则",
       "platformModifiedAt": "2025-05-13T11:21:26.000Z",
       "contentHash": "a702a5132ce722f1",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHzmeN9E9dBF": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-物流轨迹异常】实施细则",
       "platformModifiedAt": "2026-04-17T10:36:07.000Z",
       "contentHash": "3c0cceba045fa80b",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4JyWJ": {
-      "status": "changed",
-      "message": "platform content or revision changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-欺诈发货】实施细则",
       "platformModifiedAt": "2026-04-24T03:00:57.000Z",
       "contentHash": "90df21941ce38652",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-06-03T09:46:10.416Z"
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     }
   },
   "summary": {
     "checked": 9,
-    "changed": 9,
-    "errors": 1,
+    "changed": 2,
+    "errors": 0,
     "published": 2,
     "synced": 2,
     "insightsGenerated": 2,
