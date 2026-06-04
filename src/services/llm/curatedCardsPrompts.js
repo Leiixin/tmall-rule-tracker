@@ -1,14 +1,17 @@
 import { INLINE_HIGHLIGHT_SPAN_RULE } from "./prompts.js";
 
-export const CURATED_CARDS_PROMPT_VERSION = "4";
+export const CURATED_CARDS_PROMPT_VERSION = "5";
 
 export const DOUYIN_PENALTY_IMPLEMENTATION_RULES = `抖音发货违规实施细则卡片（必守，对齐天猫 penalty 卡片格式，当前正文即该细则全文）：
 - 只输出 1 张卡片；标题仅写违规类型名（如「缺货/无货」「发货超时」），≤10 字，禁止「：认定与扣罚」等后缀。
 - body 结构（按顺序）：
-  1) 首条 li：<span class="highlight">认定：</span> + 违规定义总括句 +「包括但不限于：」（原文有则写）
-  2) 若干 li：<span class="highlight">认定①：</span>、认定②：… 逐条摘录原文认定条件（与天猫 penalty 卡片一致）
-  3) 订单扣罚/赔付标准：每条时效档位或比例单独 1 个 li（禁止合并多档于一条），数字用 span.num
-  4) 其它处置（自然年累计、店铺处置等）可各 1 li
+  1) <ul> 内：首条 li <span class="highlight">认定：</span> + 总括句 +「包括但不限于：」；后续 li 为认定①、认定②…
+  2) 【发货超时】【缺货/无货】细则：扣罚标准必须用表格，格式：
+     <p class="card-penalty-heading"><span class="highlight">订单扣罚标准</span></p>
+     <div class="card-penalty-table-wrap"><table class="card-penalty-table"><thead>…</thead><tbody>…</tbody></table></div>
+     - 发货超时：3 行（承诺时效档位）× 2 列（超时48h内/外）；缺货/无货：3 行 × 1 列扣罚；缺货/无货可在表后用 <p class="card-penalty-note"> 写「可与发货超时同时发起」等说明
+  3) 其它实施细则（物流轨迹超时/异常、欺诈发货）：扣罚仍用 ul/li，每条时效档位单独 1 li
+  4) 表格/li 内数字用 span.num；禁止合并多档于一条 li（表格行除外）
 - 示例认定 li：<li><span class="highlight">认定①：</span>延迟发货后 <span class="num">72</span> 小时仍未发货</li>
 - 禁止 body 出现：参见、详见、参考、来源：《、违规处理细则参见 等指向其他规则的表述。
 - 只依据下方正文摘录数字与比例，禁止编造。每条 li 15～80 字。`;
@@ -95,6 +98,14 @@ export function isDouyinPenaltyImplementationSource(source, category, platform) 
   }
   const blob = `${source.label || ""}${source.ruleTitle || ""}${source.id || ""}`;
   return /实施细则/.test(blob);
+}
+
+export function isDouyinPenaltyTableSource(source) {
+  if (!source) {
+    return false;
+  }
+  const blob = `${source.label || ""}${source.ruleTitle || ""}`;
+  return /发货超时|缺货\/无货/.test(blob);
 }
 
 export function buildCuratedCardsSystemPrompt(

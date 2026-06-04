@@ -397,6 +397,36 @@ body::after {
 .weekly-cell-list .highlight { color: var(--red); font-weight: 500; }
 .card-body .num,
 .weekly-cell-list .num { color: var(--amber); font-weight: 500; }
+.card-penalty-heading {
+  font-size: 13px; font-weight: 600; color: var(--text-primary);
+  margin: 12px 0 8px; line-height: 1.5;
+}
+.card-penalty-note {
+  font-size: 12px; color: var(--text-secondary);
+  margin: 8px 0 0; line-height: 1.6;
+}
+.card-penalty-table-wrap {
+  width: 100%; overflow-x: auto; margin-top: 4px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-deep);
+}
+table.card-penalty-table {
+  width: 100%; min-width: 280px; border-collapse: collapse;
+}
+.card-penalty-table th,
+.card-penalty-table td {
+  padding: 8px 10px; font-size: 12px; line-height: 1.55;
+  vertical-align: top; text-align: left;
+  border-bottom: 1px solid var(--border);
+  word-wrap: break-word; overflow-wrap: anywhere;
+  color: var(--text-secondary);
+}
+.card-penalty-table th {
+  background: var(--bg-panel); color: var(--text-primary);
+  font-weight: 600; white-space: nowrap;
+}
+.card-penalty-table tbody tr:last-child td { border-bottom: none; }
+.card-penalty-table tbody tr:hover td { background: var(--bg-card-hover); }
 .card-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
 .date-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
 .card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--card-tag-bg); color: var(--text-dim); border: 1px solid var(--border); }

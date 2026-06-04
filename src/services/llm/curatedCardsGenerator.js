@@ -3,7 +3,8 @@ import {
   CURATED_CARDS_PROMPT_VERSION,
   buildCuratedCardsSystemPrompt,
   buildCuratedCardsUserPrompt,
-  isDouyinPenaltyImplementationSource
+  isDouyinPenaltyImplementationSource,
+  isDouyinPenaltyTableSource
 } from "./curatedCardsPrompts.js";
 import { buildRuleDetailUrl } from "../../utils/ruleDetailUrl.js";
 import dayjs from "dayjs";
@@ -43,7 +44,26 @@ export function sanitizeCuratedCardBody(body) {
   return text.trim();
 }
 
-export function validatePenaltyCardBody(body, { strictDouyin = false } = {}) {
+export function countPenaltyTierUnits(html) {
+  const lis = String(html || "").match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
+  let count = lis.filter((li) => {
+    const liPlain = li.replace(/<[^>]+>/g, " ");
+    if (/认定[：:①②③④⑤⑥⑦⑧⑨]/.test(liPlain)) {
+      return false;
+    }
+    return /扣罚|赔付|实付|违约金|%/.test(liPlain);
+  }).length;
+
+  const tds = String(html || "").match(/<td[^>]*>[\s\S]*?<\/td>/gi) || [];
+  count += tds.filter((td) => {
+    const tdPlain = td.replace(/<[^>]+>/g, " ");
+    return /扣罚|赔付|实付|违约金|%/.test(tdPlain);
+  }).length;
+
+  return count;
+}
+
+export function validatePenaltyCardBody(body, { strictDouyin = false, source } = {}) {
   const html = String(body || "");
   const plain = html
     .replace(/<[^>]+>/g, " ")
@@ -64,17 +84,14 @@ export function validatePenaltyCardBody(body, { strictDouyin = false } = {}) {
     if (!/认定①/.test(plain)) {
       throw new Error("douyin penalty card must include numbered 认定①");
     }
-    const lis = html.match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
-    const penaltyLis = lis.filter((li) => {
-      const liPlain = li.replace(/<[^>]+>/g, " ");
-      if (/认定[：:①②③④⑤⑥⑦⑧⑨]/.test(liPlain)) {
-        return false;
-      }
-      return /扣罚|赔付|实付|违约金|%/.test(liPlain);
-    });
-    if (penaltyLis.length < 2) {
+    if (countPenaltyTierUnits(html) < 2) {
       throw new Error(
-        "douyin penalty card must have at least 2 separate penalty tier li items"
+        "douyin penalty card must have at least 2 penalty tier units (li or table cells)"
+      );
+    }
+    if (isDouyinPenaltyTableSource(source) && !/card-penalty-table/.test(html)) {
+      throw new Error(
+        "douyin shipping timeout/stockout card must use card-penalty-table for penalties"
       );
     }
   }
@@ -111,7 +128,7 @@ export function normalizeCuratedCards(
       }
       if (strictPenalty) {
         validateDouyinPenaltyCardTitle(title);
-        validatePenaltyCardBody(body, { strictDouyin: true });
+        validatePenaltyCardBody(body, { strictDouyin: true, source });
       }
       const severity = VALID_SEVERITY.has(card.severity)
         ? card.severity

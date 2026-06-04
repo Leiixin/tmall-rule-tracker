@@ -21,6 +21,8 @@ const EXPECTED_IMPLEMENTATION_SOURCES = [
   "dy-rule-aHwH9wK4JyWJ"
 ];
 
+const PENALTY_TABLE_CARD_IDS = new Set(["penalty:0", "penalty:1"]);
+
 function normalizeTitle(title) {
   return String(title || "")
     .replace(/[：:].*$/, "")
@@ -37,13 +39,21 @@ function stripHtml(html) {
 
 function countPenaltyTierLis(html) {
   const lis = String(html || "").match(/<li[^>]*>[\s\S]*?<\/li>/gi) || [];
-  return lis.filter((li) => {
+  let count = lis.filter((li) => {
     const liPlain = li.replace(/<[^>]+>/g, " ");
     if (/认定[：:①②③④⑤⑥⑦⑧⑨]/.test(liPlain)) {
       return false;
     }
     return /扣罚|赔付|实付|违约金|%/.test(liPlain);
   }).length;
+
+  const tds = String(html || "").match(/<td[^>]*>[\s\S]*?<\/td>/gi) || [];
+  count += tds.filter((td) => {
+    const tdPlain = td.replace(/<[^>]+>/g, " ");
+    return /扣罚|赔付|实付|违约金|%/.test(tdPlain);
+  }).length;
+
+  return count;
 }
 
 async function readJson(relPath) {
@@ -90,7 +100,11 @@ export function auditDouyinPenaltyCards(cardsDoc) {
     }
 
     if (countPenaltyTierLis(card.body) < 2) {
-      issues.push(`${card.cardId}: body must have at least 2 separate penalty tier li items`);
+      issues.push(`${card.cardId}: body must have at least 2 penalty tier units (li or table cells)`);
+    }
+
+    if (PENALTY_TABLE_CARD_IDS.has(card.cardId) && !/card-penalty-table/.test(card.body || "")) {
+      issues.push(`${card.cardId}: shipping timeout/stockout must use card-penalty-table`);
     }
 
     if (card.sourceId === "dy-rule-101706") {
