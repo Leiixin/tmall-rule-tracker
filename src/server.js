@@ -1,4 +1,5 @@
 import express from "express";
+import { appendFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -47,6 +48,19 @@ async function ensurePlatformsManifest() {
 app.use(express.json());
 app.use(express.static(publicDir));
 app.use("/data", express.static(path.join(process.cwd(), "data")));
+
+const debugLogPath = path.join(process.cwd(), "..", "debug-3cfe71.log");
+app.post("/__debug_log", (req, res) => {
+  try {
+    appendFileSync(
+      debugLogPath,
+      JSON.stringify({ sessionId: "3cfe71", timestamp: Date.now(), ...req.body }) + "\n"
+    );
+  } catch (err) {
+    console.warn("debug log write failed:", err.message);
+  }
+  res.sendStatus(204);
+});
 
 async function getProcessedRules() {
   const rules = await loadRules();

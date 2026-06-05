@@ -347,7 +347,7 @@ body::after {
   color: var(--text-dim); background: var(--bg-deep);
   padding: 2px 8px; border-radius: 10px;
 }
-.main-content { flex: 1; min-height: 0; overflow-y: auto; padding: 28px 32px; position: relative; }
+.main-content { flex: 1; min-height: 0; min-width: 0; overflow-y: auto; padding: 28px 32px; position: relative; }
 .main-content::-webkit-scrollbar { width: 6px; }
 .main-content::-webkit-scrollbar-track { background: transparent; }
 .main-content::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
@@ -427,6 +427,107 @@ table.card-penalty-table {
 }
 .card-penalty-table tbody tr:last-child td { border-bottom: none; }
 .card-penalty-table tbody tr:hover td { background: var(--bg-card-hover); }
+.card-score-section { margin-bottom: 24px; min-width: 0; max-width: 100%; }
+.card-score-heading {
+  font-size: 15px; font-weight: 600; color: var(--text-primary);
+  margin: 0 0 6px; line-height: 1.5;
+}
+.card-score-subheading {
+  font-size: 12px; color: var(--text-secondary);
+  margin: 0 0 10px; line-height: 1.6;
+}
+.card-score-footnote {
+  font-size: 12px; color: var(--text-secondary);
+  margin: 10px 0 0; line-height: 1.6;
+}
+.card-metric-note {
+  display: block; margin-top: 6px;
+  font-size: 11px; color: var(--text-dim); line-height: 1.6;
+}
+.card-score-table-wrap--rule.card-penalty-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.card-score-table-wrap--rule table.card-penalty-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0 !important;
+  max-width: 100%;
+}
+.card-score-table-wrap--rule .card-penalty-table th,
+.card-score-table-wrap--rule .card-penalty-table td {
+  padding: 6px 8px;
+  font-size: 11px;
+  white-space: normal;
+  box-sizing: border-box;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(1),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(1),
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(2),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(2) {
+  white-space: nowrap;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(3),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(3),
+.card-score-table-wrap--rule .card-score-td-def {
+  white-space: normal;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-break: anywhere;
+  word-break: break-all;
+}
+.card-score-table-wrap--rule .card-penalty-table tbody td {
+  vertical-align: middle;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(4),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(4),
+.card-score-table-wrap--rule .card-score-td-period {
+  white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-score-table-wrap--rule .card-score-td-metric {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  max-width: 9em;
+}
+.card-score-table-wrap--rule .card-score-td-def {
+  overflow-x: visible;
+  overflow-y: visible;
+  contain: inline-size;
+}
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(3) .card-metric-note,
+.card-score-table-wrap--rule .card-score-td-def .card-metric-note {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-break: anywhere;
+  word-break: break-all;
+  box-sizing: border-box;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(1),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(1) {
+  width: 10%;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(2),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(2) {
+  width: 12%;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(3),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(3) {
+  width: 56%;
+}
+.card-score-table-wrap--rule .card-penalty-table th:nth-child(4),
+.card-score-table-wrap--rule .card-penalty-table td:nth-child(4) {
+  width: 22%;
+}
+.card-score-table-wrap--rule .card-penalty-table td[rowspan] {
+  vertical-align: middle;
+}
 .card-footer { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
 .date-badge { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim); background: var(--bg-deep); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); }
 .card-tag { font-size: 10px; padding: 3px 8px; border-radius: 4px; background: var(--card-tag-bg); color: var(--text-dim); border: 1px solid var(--border); }
@@ -466,7 +567,7 @@ table.card-penalty-table {
 .timeline-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 .timeline-text strong { color: var(--text-primary); font-weight: 500; }
 .content-section { display: none; }
-.content-section.active { display: block; }
+.content-section.active { display: block; min-width: 0; max-width: 100%; }
 .init-overlay {
   position: fixed; inset: 0; background: var(--bg-deep); z-index: 10000;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
@@ -2210,6 +2311,107 @@ function renderWeekly() {
   return html;
 }
 
+function getFormalStageRowCell(row, field) {
+  if (field === 'definition') {
+    return row.definitionHtml || row.detailHtml || '';
+  }
+  return row[field] || '';
+}
+
+function enhanceDouyinDefinitionHtml(html) {
+  if (!html) return html;
+  var out = html;
+  if (out.indexOf('<wbr>') === -1 && /\s\/\s/.test(out)) {
+    out = out.replace(/\s\/\s/g, ' / <wbr>');
+  }
+  if (out.indexOf('card-metric-note') !== -1) {
+    out = out.replace(/([^>\s])、(?!<wbr>)/g, '$1、<wbr>');
+    out = out.replace(/([^>\s])，(?!<wbr>)/g, '$1，<wbr>');
+  }
+  return out;
+}
+
+function getFormalStageColumnSpecs(block) {
+  var cols = block.columns || ['维度', '指标', '计算公式/说明'];
+  var map = {
+    '评分维度': { field: 'dimension', merge: true },
+    '维度': { field: 'dimension', merge: Boolean(block.mergeDimension) },
+    '细分指标': { field: 'metric' },
+    '指标': { field: 'metric' },
+    '指标定义': { field: 'definition' },
+    '计算公式/说明': { field: 'definition' },
+    '考核周期': { field: 'assessmentPeriod' }
+  };
+  return cols.map(function(label) {
+    return { label: label, field: (map[label] || { field: 'definition' }).field, merge: (map[label] || {}).merge };
+  });
+}
+
+function computeDimensionRowspans(rows, mergeDimension) {
+  if (!mergeDimension) return null;
+  var spans = new Array(rows.length);
+  var i = 0;
+  while (i < rows.length) {
+    var dim = rows[i].dimension || '';
+    var count = 1;
+    while (i + count < rows.length && (rows[i + count].dimension || '') === dim) {
+      count += 1;
+    }
+    spans[i] = count;
+    for (var j = 1; j < count; j++) spans[i + j] = 0;
+    i += count;
+  }
+  return spans;
+}
+
+function renderFormalStageMetricsTable(block) {
+  if (!block || !Array.isArray(block.rows) || !block.rows.length) return '';
+  var colSpecs = getFormalStageColumnSpecs(block);
+  var isDouyinRule = block.tableFormat === 'douyinRule';
+  var wrapClass = 'card-penalty-table-wrap' + (isDouyinRule ? ' card-score-table-wrap--rule' : '');
+  var dimSpans = computeDimensionRowspans(block.rows, block.mergeDimension);
+  var html = '<div class="card-score-section">';
+  html += '<p class="card-score-heading">' + (block.heading || '正式阶段考核指标') + '</p>';
+  if (block.subheading) {
+    html += '<p class="card-score-subheading">' + block.subheading + '</p>';
+  }
+  html += '<div class="' + wrapClass + '"><table class="card-penalty-table">';
+  if (isDouyinRule) {
+    html += '<colgroup><col style="width:9%"><col style="width:11%"><col style="width:58%"><col style="width:22%"></colgroup>';
+  }
+  html += '<thead><tr>';
+  colSpecs.forEach(function(spec) { html += '<th>' + spec.label + '</th>'; });
+  html += '</tr></thead><tbody>';
+  block.rows.forEach(function(row, rowIndex) {
+    html += '<tr>';
+    colSpecs.forEach(function(spec) {
+      if (spec.merge && dimSpans) {
+        if (dimSpans[rowIndex] === 0) return;
+        var rs = dimSpans[rowIndex] > 1 ? ' rowspan="' + dimSpans[rowIndex] + '"' : '';
+        html += '<td' + rs + '>' + (row.dimension || '') + '</td>';
+        return;
+      }
+      var cellHtml = getFormalStageRowCell(row, spec.field);
+      if (isDouyinRule && spec.field === 'definition') {
+        html += '<td class="card-score-td-def">' + enhanceDouyinDefinitionHtml(cellHtml) + '</td>';
+      } else if (isDouyinRule && spec.field === 'assessmentPeriod') {
+        html += '<td class="card-score-td-period">' + cellHtml + '</td>';
+      } else if (isDouyinRule && spec.field === 'metric') {
+        html += '<td class="card-score-td-metric">' + cellHtml + '</td>';
+      } else {
+        html += '<td>' + cellHtml + '</td>';
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  if (block.footnoteHtml) {
+    html += '<p class="card-score-footnote">' + block.footnoteHtml + '</p>';
+  }
+  html += '</div>';
+  return html;
+}
+
 function renderSection(key) {
   const data = (RULES_DATA && RULES_DATA[key]) ? RULES_DATA[key] : getRulesDataFallback()[key];
   let html = '<div class="content-section active" id="section-' + key + '">' +
@@ -2218,8 +2420,11 @@ function renderSection(key) {
       '<h1 class="section-title">' + data.title + '</h1>' +
       '<p class="section-desc">' + data.desc + '</p>' +
     '</div>' +
-    renderCuratedAlertBanner(key) +
-    '<div class="rules-grid">';
+    renderCuratedAlertBanner(key);
+  if (key === 'score' && data.formalStageMetrics) {
+    html += renderFormalStageMetricsTable(data.formalStageMetrics);
+  }
+  html += '<div class="rules-grid">';
 
   data.cards.forEach(function(card) {
     html += '<div class="rule-card" data-search="' + card.title + ' ' + card.body.replace(/<[^>]*>/g, '') + '">' +
@@ -2245,6 +2450,81 @@ function renderSection(key) {
 const mainContent = document.getElementById('mainContent');
 let currentTab = 'home';
 
+function agentDebugLog(payload) {
+  var body = JSON.stringify(Object.assign({ sessionId: '3cfe71', timestamp: Date.now() }, payload));
+  // #region agent log
+  fetch('http://127.0.0.1:7324/ingest/d2ee9fed-721c-4a42-8d2b-2114b8621b6e',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'3cfe71'},body:body}).catch(function(){});
+  if (location.protocol.indexOf('http') === 0) {
+    fetch(location.origin + '/__debug_log',{method:'POST',headers:{'Content-Type':'application/json'},body:body}).catch(function(){});
+  }
+  // #endregion
+}
+
+function debugDouyinScoreDefColumn(runId) {
+  if (currentPlatform !== 'douyin' || currentTab !== 'score') return;
+  var wrap = document.querySelector('.card-score-table-wrap--rule');
+  var dataScore = RULES_DATA && RULES_DATA.score;
+  var dataRows = dataScore && dataScore.formalStageMetrics && dataScore.formalStageMetrics.rows;
+  var dataSnippets = [];
+  if (dataRows) {
+    dataRows.forEach(function(r) {
+      if (!/发货物流品退|飞鸽平均响应/.test(r.metric || '')) return;
+      var def = String(r.definitionHtml || '');
+      dataSnippets.push({
+        metric: r.metric,
+        hasWbr: def.indexOf('wbr') !== -1,
+        hasBrAfter产生: def.indexOf('且产生<br>') !== -1,
+        hasBrInFeigeNote: def.indexOf('人工客服会话，<br>') !== -1,
+        defLen: def.length
+      });
+    });
+  }
+  if (!wrap) {
+    agentDebugLog({ runId: runId || 'post-fix', hypothesisId: 'H1', location: 'index.html:debugDouyinScoreDefColumn', message: 'no rule table wrap', data: { dataPath: getDataBasePath(), dataSnippets: dataSnippets } });
+    return;
+  }
+  var table = wrap.querySelector('table.card-penalty-table');
+  var cells = wrap.querySelectorAll('.card-score-td-def');
+  var cellMetrics = [];
+  cells.forEach(function(td) {
+    var tr = td.closest('tr');
+    var metricTd = tr && tr.querySelector('.card-score-td-metric');
+    var metric = metricTd ? metricTd.textContent.trim() : '';
+    var csTd = window.getComputedStyle(td);
+    cellMetrics.push({
+      metric: metric,
+      tdClientW: td.clientWidth,
+      tdScrollW: td.scrollWidth,
+      tdClientH: td.clientHeight,
+      tdScrollH: td.scrollHeight,
+      overflowX: td.scrollWidth > td.clientWidth + 1,
+      multiLine: td.scrollHeight > (parseFloat(csTd.lineHeight) || 16) * 1.8,
+      whiteSpaceTd: csTd.whiteSpace,
+      domHasWbr: td.innerHTML.indexOf('wbr') !== -1,
+      hasDefInner: !!td.querySelector('.card-score-def-inner')
+    });
+  });
+  var tableCs = table ? window.getComputedStyle(table) : null;
+  var tableWiderThanWrap = table && wrap && table.scrollWidth > wrap.clientWidth + 2;
+  agentDebugLog({
+    runId: runId || 'post-fix',
+    hypothesisId: 'H2-H5',
+    location: 'index.html:debugDouyinScoreDefColumn',
+    message: 'def column layout',
+    data: {
+      dataPath: getDataBasePath(),
+      wrapClientW: wrap.clientWidth,
+      tableClientW: table ? table.clientWidth : 0,
+      tableScrollW: table ? table.scrollWidth : 0,
+      tableWiderThanWrap: tableWiderThanWrap,
+      tableMinWidth: tableCs ? tableCs.minWidth : null,
+      tableLayout: tableCs ? tableCs.tableLayout : null,
+      dataSnippets: dataSnippets,
+      cells: cellMetrics
+    }
+  });
+}
+
 function showTab(key) {
   currentTab = key;
   const searchVal = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -2256,6 +2536,11 @@ function showTab(key) {
   } else {
     mainContent.innerHTML = renderSection(key);
     if (searchVal) filterCards(searchVal);
+  }
+  if (key === 'score') {
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() { debugDouyinScoreDefColumn('post-fix'); });
+    });
   }
 
   document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });

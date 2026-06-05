@@ -26,6 +26,8 @@
     "sync:curated:douyin:penalty:force": "node scripts/sync-curated-cards.mjs --platform=douyin --force-source=dy-rule-aHwH9wK4Je2N --force-source=dy-rule-aHwHGWzbmk88 --force-source=dy-rule-aHwHroCPheig --force-source=dy-rule-aHzmeN9E9dBF --force-source=dy-rule-aHwH9wK4JyWJ",
     "clean:douyin:penalty": "node scripts/clean-douyin-penalty-cards.mjs",
     "audit:douyin:penalty": "node scripts/audit-douyin-penalty-cards.mjs",
+    "audit:douyin:ship": "node scripts/audit-douyin-ship-cards.mjs",
+    "audit:score:metrics": "node scripts/audit-score-formal-metrics.mjs",
     "migrate:douyin:categories": "node scripts/migrate-douyin-category-keys.mjs",
     "build:curated:douyin": "node scripts/build-douyin-curated-data.mjs",
     "audit:fabrication": "node scripts/audit-curated-fabrication.mjs",

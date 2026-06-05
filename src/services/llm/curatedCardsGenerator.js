@@ -4,12 +4,19 @@ import {
   buildCuratedCardsSystemPrompt,
   buildCuratedCardsUserPrompt,
   isDouyinPenaltyImplementationSource,
-  isDouyinPenaltyTableSource
+  isDouyinPenaltyTableSource,
+  isDouyinShipCategory,
+  isScoreCategory
 } from "./curatedCardsPrompts.js";
 import { buildRuleDetailUrl } from "../../utils/ruleDetailUrl.js";
 import dayjs from "dayjs";
 
 const VALID_SEVERITY = new Set(["critical", "warning", "info", "normal"]);
+
+const SCORE_METRIC_TITLE_RE =
+  /商品负反馈率|商品好评率|48小时揽收|物流到货时长|物流差评率|旺旺3分钟|旺旺满意度|退款处理时长|平台求助率|商品综合评分|商品品质退货率|揽收时长|运单配送时效|发货物流品退|售后处理时长达成|飞鸽平均响应|飞鸽人工平均响应/;
+
+const DOUYIN_FORMAL_COLUMNS = ["评分维度", "细分指标", "指标定义", "考核周期"];
 
 const REFERENCE_BODY_RE =
   /来源\s*[：:]|参见|详见|违规处理细则参见|参考【|参考《|细则参见/;
@@ -63,6 +70,24 @@ export function countPenaltyTierUnits(html) {
   return count;
 }
 
+export function validateShipCardBody(body, { strictDouyin = false } = {}) {
+  const html = String(body || "");
+  const plain = html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ");
+
+  if (!html.includes('class="highlight"')) {
+    throw new Error("ship card body must include span.highlight markup");
+  }
+  if (!html.includes('class="num"')) {
+    throw new Error("ship card body must include span.num markup");
+  }
+
+  if (strictDouyin && REFERENCE_BODY_RE.test(plain)) {
+    throw new Error("ship card must not reference other rules in body");
+  }
+}
+
 export function validatePenaltyCardBody(body, { strictDouyin = false, source } = {}) {
   const html = String(body || "");
   const plain = html
@@ -107,6 +132,97 @@ export function validateDouyinPenaltyCardTitle(title) {
   }
 }
 
+export function validateScoreNoteCardTitle(title) {
+  const t = String(title || "").trim();
+  if (SCORE_METRIC_TITLE_RE.test(t)) {
+    throw new Error("score note card title must not name a formal metric");
+  }
+}
+
+export function validateFormalStageMetrics(block, { platform } = {}) {
+  const rows = Array.isArray(block?.rows) ? block.rows : [];
+  if (rows.length < 3) {
+    throw new Error("formalStageMetrics must have at least 3 rows");
+  }
+
+  const douyinRule =
+    block?.tableFormat === "douyinRule" || platform === "douyin";
+
+  if (douyinRule) {
+    const cols = Array.isArray(block.columns) ? block.columns : [];
+    if (
+      cols.length !== 4 ||
+      !DOUYIN_FORMAL_COLUMNS.every((c, i) => cols[i] === c)
+    ) {
+      throw new Error(
+        `douyin formalStageMetrics columns must be ${JSON.stringify(DOUYIN_FORMAL_COLUMNS)}`
+      );
+    }
+    for (const [index, row] of rows.entries()) {
+      const dimension = String(row?.dimension || "").trim();
+      const metric = String(row?.metric || "").trim();
+      const definitionHtml = String(
+        row?.definitionHtml || row?.detailHtml || ""
+      ).trim();
+      const assessmentPeriod = String(row?.assessmentPeriod || "").trim();
+      if (!dimension || !metric || !definitionHtml) {
+        throw new Error(
+          `formalStageMetrics row ${index} missing dimension/metric/definitionHtml`
+        );
+      }
+      if (!assessmentPeriod) {
+        throw new Error(`formalStageMetrics row ${index} missing assessmentPeriod`);
+      }
+    }
+    return {
+      heading: String(block.heading || "正式阶段考核指标").slice(0, 40),
+      subheading: block.subheading ? String(block.subheading).slice(0, 120) : "",
+      tableFormat: "douyinRule",
+      mergeDimension: Boolean(block.mergeDimension),
+      columns: DOUYIN_FORMAL_COLUMNS,
+      rows: rows.map((row) => ({
+        dimension: String(row.dimension).slice(0, 24),
+        metric: String(row.metric).slice(0, 40),
+        definitionHtml: String(row.definitionHtml || row.detailHtml).slice(0, 2000),
+        assessmentPeriod: String(row.assessmentPeriod).slice(0, 80)
+      })),
+      footnoteHtml: block.footnoteHtml
+        ? String(block.footnoteHtml).slice(0, 600)
+        : undefined
+    };
+  }
+
+  for (const [index, row] of rows.entries()) {
+    const dimension = String(row?.dimension || "").trim();
+    const metric = String(row?.metric || "").trim();
+    const detailHtml = String(row?.detailHtml || "").trim();
+    if (!dimension || !metric || !detailHtml) {
+      throw new Error(`formalStageMetrics row ${index} missing dimension/metric/detailHtml`);
+    }
+    if (!detailHtml.includes('class="highlight"')) {
+      throw new Error(`formalStageMetrics row ${index} detailHtml must include highlight`);
+    }
+    if (!detailHtml.includes('class="num"')) {
+      throw new Error(`formalStageMetrics row ${index} detailHtml must include num`);
+    }
+  }
+  return {
+    heading: String(block.heading || "正式阶段考核指标").slice(0, 40),
+    subheading: block.subheading ? String(block.subheading).slice(0, 120) : "",
+    columns: Array.isArray(block.columns) && block.columns.length
+      ? block.columns.map((c) => String(c).slice(0, 20)).slice(0, 4)
+      : ["维度", "指标", "计算公式/说明"],
+    rows: rows.map((row) => ({
+      dimension: String(row.dimension).slice(0, 24),
+      metric: String(row.metric).slice(0, 40),
+      detailHtml: String(row.detailHtml).slice(0, 500)
+    })),
+    footnoteHtml: block.footnoteHtml
+      ? String(block.footnoteHtml).slice(0, 400)
+      : undefined
+  };
+}
+
 export function normalizeCuratedCards(
   parsed,
   { source, platformModifiedAt, category, platform, limits }
@@ -129,6 +245,10 @@ export function normalizeCuratedCards(
       if (strictPenalty) {
         validateDouyinPenaltyCardTitle(title);
         validatePenaltyCardBody(body, { strictDouyin: true, source });
+      } else if (isDouyinShipCategory(category, platform)) {
+        validateShipCardBody(body, { strictDouyin: true });
+      } else if (isScoreCategory(category)) {
+        validateScoreNoteCardTitle(title);
       }
       const severity = VALID_SEVERITY.has(card.severity)
         ? card.severity
@@ -182,6 +302,12 @@ export async function generateCuratedCardsForCategory({
   });
 
   const parsed = await chatJsonRaw({ system, user });
+  let formalStageMetrics;
+  if (isScoreCategory(category) && parsed?.formalStageMetrics) {
+    formalStageMetrics = validateFormalStageMetrics(parsed.formalStageMetrics, {
+      platform
+    });
+  }
   const cards = normalizeCuratedCards(parsed, {
     source: { ...source, categories: [category] },
     platformModifiedAt: detail.publishedAt,
@@ -192,6 +318,7 @@ export async function generateCuratedCardsForCategory({
 
   return {
     cards,
+    formalStageMetrics,
     promptVersion: CURATED_CARDS_PROMPT_VERSION,
     generatedAt: new Date().toISOString()
   };

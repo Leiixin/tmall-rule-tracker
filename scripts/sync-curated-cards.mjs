@@ -211,7 +211,7 @@ async function publishCardsForSource({
     if (!categoryKeys.includes(category)) {
       continue;
     }
-    const { cards } = await generateCuratedCardsForCategory({
+    const { cards, formalStageMetrics } = await generateCuratedCardsForCategory({
       category,
       detail,
       source,
@@ -226,6 +226,9 @@ async function publishCardsForSource({
       source.id,
       cards
     );
+    if (category === "score" && formalStageMetrics) {
+      curatedCards[category].formalStageMetrics = formalStageMetrics;
+    }
     publishedCategories += 1;
   }
 

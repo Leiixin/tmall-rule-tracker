@@ -1,15 +1,15 @@
 ﻿{
-  "generatedAt": "2026-05-24T13:11:56.544Z",
+  "generatedAt": "2026-06-04T10:52:54.389Z",
   "summary": {
-    "cards": 23,
-    "liCount": 118,
-    "supported": 109,
-    "simplified": 6,
-    "fabricated": 3,
+    "cards": 19,
+    "liCount": 100,
+    "supported": 95,
+    "simplified": 5,
+    "fabricated": 0,
     "sourceUnavailableLi": 0,
-    "cardsFabricated": 2,
-    "cardsSimplified": 5,
-    "cardsSupported": 16,
+    "cardsFabricated": 0,
+    "cardsSimplified": 4,
+    "cardsSupported": 15,
     "sourcesFailed": []
   },
   "sources": [
@@ -17,7 +17,7 @@
       "id": "rule-20002796",
       "ruleId": "20002796",
       "label": "临期商品定义与标注要求",
-      "contentLength": 1066,
+      "contentLength": 1010,
       "origin": "mtop",
       "error": null
     },
@@ -25,7 +25,7 @@
       "id": "rule-11002181",
       "ruleId": "11002181",
       "label": "化妆品保质期/货架期要求",
-      "contentLength": 2523,
+      "contentLength": 2463,
       "origin": "mtop",
       "error": null
     },
@@ -34,14 +34,14 @@
       "ruleId": "20009524",
       "label": "真实体验分定义与评分区间",
       "contentLength": 2658,
-      "origin": "rules.json",
+      "origin": "mtop",
       "error": null
     },
     {
       "id": "rule-11000266",
       "ruleId": "11000266",
       "label": "发货时效规定（第五条）",
-      "contentLength": 7278,
+      "contentLength": 7010,
       "origin": "mtop",
       "error": null
     }
@@ -217,38 +217,12 @@
       ]
     },
     {
-      "category": "shelf",
-      "cardId": "shelf:4",
-      "title": "保质期规范来源与查询",
-      "sourceId": "rule-20002796",
-      "sourceTitle": "天猫商品保质期发布规范",
-      "sourceOrigin": "mtop",
-      "cardVerdict": "fabricated",
-      "li": [
-        {
-          "text": "《天猫商品保质期发布规范》 2023年4月3日生效，位于规则辞典 > 商品管理 > 商品发布规范",
-          "verdict": "fabricated",
-          "reason": "数字 2023 未在规则正文中出现"
-        },
-        {
-          "text": "规则ID： 20002796 ，可在天猫规则中心搜索“保质期”查看",
-          "verdict": "fabricated",
-          "reason": "数字 20002796 未在规则正文中出现"
-        },
-        {
-          "text": "各行业发布规范可能有特殊要求，以行业规范为准",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        }
-      ]
-    },
-    {
       "category": "score",
       "cardId": "score:0",
       "title": "真实体验分定义与评分区间",
       "sourceId": "rule-20009524",
       "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
+      "sourceOrigin": "mtop",
       "cardVerdict": "simplified",
       "li": [
         {
@@ -285,119 +259,11 @@
     },
     {
       "category": "score",
-      "cardId": "score:1",
-      "title": "宝贝质量指标（2026.3新规）",
-      "sourceId": "rule-20009524",
-      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
-      "cardVerdict": "supported",
-      "li": [
-        {
-          "text": "商品负反馈率 = 近30天物流签收订单中，因商品品质退款或描述相符1～2星评价的订单笔数 ÷ 近30天物流签收订单笔数",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "商品好评率 = 近30天描述相符4～5星评价次数 ÷ 近30天描述相符被评价数",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "宝贝质量维度由「首次品退率」「商品差评率」升级为上述两项（2026年3月16日起执行）",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "单项指标得分按卖家 主营类目得分档位标准 计算，具体以产品页面/千牛后台为准",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        }
-      ]
-    },
-    {
-      "category": "score",
-      "cardId": "score:2",
-      "title": "物流速度指标（2026.3新规）",
-      "sourceId": "rule-20009524",
-      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
-      "cardVerdict": "simplified",
-      "li": [
-        {
-          "text": "48小时揽收及时率 = 48h内揽收订单数 ÷ 应揽收订单数",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "物流到货时长 = 支付到签收的平均时间（小时）",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "部分类目含 物流差评率 = 物流差评数 ÷ 评价总数",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "新增 ：取消\"当日达/次日达覆盖率\"和\"特色服务达标占比\"",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "物流轨迹异常将纳入 违规降分 场景",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "揽收及时率、到货时长越优 → 分数越高",
-          "verdict": "simplified",
-          "reason": "运营解读性表述"
-        }
-      ]
-    },
-    {
-      "category": "score",
-      "cardId": "score:3",
-      "title": "服务保障指标",
-      "sourceId": "rule-20009524",
-      "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
-      "cardVerdict": "fabricated",
-      "li": [
-        {
-          "text": "旺旺3分钟人工响应率 ：8:00-23:00期间，3分钟内人工回复的比率",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "旺旺满意度 = 满意评价量 ÷ 参评量",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "退款处理时长 ：商家首次处理退款的平均耗时（小时）",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "平台求助率 = 求助平台介入的订单 ÷ 支付订单量",
-          "verdict": "supported",
-          "reason": "要点可在规则正文中找到依据"
-        },
-        {
-          "text": "以上四项指标均按同行排名换算体验分",
-          "verdict": "fabricated",
-          "reason": "正文为得分档位标准，非同行排名"
-        }
-      ]
-    },
-    {
-      "category": "score",
       "cardId": "score:4",
       "title": "计算公式与权重",
       "sourceId": "rule-20009524",
       "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
+      "sourceOrigin": "mtop",
       "cardVerdict": "supported",
       "li": [
         {
@@ -438,7 +304,7 @@
       "title": "应用场景",
       "sourceId": "rule-20009524",
       "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
+      "sourceOrigin": "mtop",
       "cardVerdict": "simplified",
       "li": [
         {
@@ -479,7 +345,7 @@
       "title": "违规降分与处罚",
       "sourceId": "rule-20009524",
       "sourceTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "sourceOrigin": "rules.json",
+      "sourceOrigin": "mtop",
       "cardVerdict": "supported",
       "li": [
         {

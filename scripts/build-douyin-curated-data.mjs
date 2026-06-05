@@ -85,6 +85,38 @@ const curatedSources = {
       ruleTitle: "关于修订《商品保质期管理和宣传规范》的公示通知"
     },
     {
+      id: "dy-rule-gehu-publish",
+      slug: "108445",
+      platform: "douyin",
+      ruleId: "108445",
+      url: articleUrl("108445"),
+      label: "【个护家清】商品发布细则",
+      categories: ["shelf"],
+      cardIds: ["shelf:2"],
+      ruleTitle: "【个护家清】商品发布细则"
+    },
+    {
+      id: "dy-rule-101936",
+      slug: "101936",
+      platform: "douyin",
+      ruleId: "101936",
+      url: ruleUrl("101936"),
+      label: "商家【虚假宣传】细则",
+      categories: ["shelf"],
+      cardIds: ["shelf:3"],
+      ruleTitle: "商家【虚假宣传】细则"
+    },
+    {
+      id: "dy-rule-creator-style-fake",
+      slug: "aJaqcnLx78cq",
+      platform: "douyin",
+      url: articleUrl("aJaqcnLx78cq"),
+      label: "创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则",
+      categories: ["shelf"],
+      cardIds: ["shelf:3"],
+      ruleTitle: "「虚假宣传：款式/颜色等商品信息不一致」实施细则"
+    },
+    {
       id: "dy-rule-103956",
       slug: "103956",
       platform: "douyin",
@@ -132,46 +164,46 @@ const curatedCards = {
       "抖音在售商品保质期、临期标注与禁售标准，唯一依据《商品保质期管理和宣传规范》（公示期 2026-05-26～2026-06-02，预计 2026-06-02 生效）。",
     cards: [
       {
-        title: "临期商品标题与详情标注",
-        severity: "critical",
-        severityText: "强制",
+        title: "保质期定义与计算规则",
+        severity: "info",
+        severityText: "通知",
         date: "2026-06-02",
-        tags: ["临期", "标注"],
+        tags: ["保质期", "换算规则"],
         link: SHELF_ARTICLE_URL,
-        body: "<ul><li>临期商品须在标题写明 <span class=\"highlight\">「临期商品」</span> 字样</li><li>详情页最上方显著标示「此商品为临近保质期商品」</li><li>临期起算时间以商家发货后物流公司系统 <span class=\"highlight\">揽收时间</span> 为准</li><li>来源：《商品保质期管理和宣传规范》3.3</li></ul>",
+        body: "<ul><li>保质期指在既定贮存环境下保持品质的期限。</li><li>保质期以月计，按 <span class=\"num\">1个月=30天</span> 换算；以年计，按 <span class=\"num\">1年=365天</span> 换算。</li><li>临期天数计算向上取整。</li></ul>",
         sourceId: "dy-rule-aJk964FFQKKZ",
         cardId: "shelf:0"
       },
       {
-        title: "临期天数分级标准",
+        title: "临期商品标注与展示要求",
         severity: "critical",
         severityText: "强制",
         date: "2026-06-02",
-        tags: ["保质期", "临期"],
+        tags: ["临期标注", "展示要求"],
         link: SHELF_ARTICLE_URL,
-        body: "<ul><li><span class=\"highlight\">换算规则</span>：保质期以「月」计按 <span class=\"num\">1月=30天</span>；以「年」计按 <span class=\"num\">1年=365天</span>；临期天数<strong>向上取整</strong></li><li><span class=\"highlight\">365天≤保质期</span>：剩余保质期 <span class=\"num\">0～45天</span>（含）为临期</li><li><span class=\"highlight\">180天≤保质期＜365天</span>：剩余 <span class=\"num\">0～30天</span>（含）为临期</li><li><span class=\"highlight\">90天≤保质期＜180天</span>：剩余 <span class=\"num\">0～20天</span>（含）为临期</li><li><span class=\"highlight\">30天≤保质期＜90天</span>：剩余 <span class=\"num\">0～10天</span>（含）为临期</li><li><span class=\"highlight\">15天≤保质期＜30天</span>：剩余 <span class=\"num\">0～5天</span>（含）为临期</li><li><span class=\"highlight\">保质期＜15天</span>：剩余 <span class=\"num\">0～4天</span>（含）为临期</li><li>国家/地区临期标准严于上述时，按更严标准执行；个护家清行业另见《【个护家清】商品发布细则》</li><li>来源：《商品保质期管理和宣传规范》3.2、3.5、3.6</li></ul>",
+        body: "<ul><li>临期商品须在标题写明「临期商品」字样。</li><li>详情页最上方显著标示「此商品为临近保质期商品」。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li><li>对于已标明「临期」的商品，商家应保证消费者收到的商品时不得为过期商品（因消费者自身原因导致的收货延迟除外）。</li></ul>",
         sourceId: "dy-rule-aJk964FFQKKZ",
         cardId: "shelf:1"
       },
       {
-        title: "酒类「新鲜日期」宣传要求",
+        title: "临期商品分级标准（按保质期）",
         severity: "warning",
         severityText: "警告",
         date: "2026-06-02",
-        tags: ["酒类", "宣传"],
+        tags: ["临期天数", "分级标准"],
         link: SHELF_ARTICLE_URL,
-        body: "<ul><li>宣传酒类「新鲜日期」时，<span class=\"highlight\">签收日期与生产日期时间差</span>不得超过保质期的 <span class=\"num\">1/3</span></li><li>例：保质期90天、差值22天，未超30天（1/3）即符合标准</li><li>违规按商家【虚假宣传】、创作者虚假宣传细则处理</li><li>来源：《商品保质期管理和宣传规范》3.7</li></ul>",
+        body: "<ul><li>保质期≥365天：剩余≤ <span class=\"num\">45天</span> 为临期。</li><li>180天≤保质期&lt;365天：剩余≤ <span class=\"num\">30天</span> 为临期。</li><li>90天≤保质期&lt;180天：剩余≤ <span class=\"num\">20天</span> 为临期。</li><li>30天≤保质期&lt;90天：剩余≤ <span class=\"num\">10天</span> 为临期。</li><li>15天≤保质期&lt;30天：剩余≤ <span class=\"num\">5天</span> 为临期。</li><li>保质期&lt;15天：剩余≤ <span class=\"num\">4天</span> 为临期。</li><li>个护家清行业保质期临期商品标准详见 <a href=\"https://school.jinritemai.com/doudian/web/article/108445\" target=\"_blank\" rel=\"noopener\">【个护家清】商品发布细则</a>。</li></ul>",
         sourceId: "dy-rule-aJk964FFQKKZ",
         cardId: "shelf:2"
       },
       {
-        title: "过期禁售与效期违规处理",
+        title: "禁售过期商品及违规处理",
         severity: "critical",
-        severityText: "处罚",
+        severityText: "强制",
         date: "2026-06-02",
-        tags: ["过期", "违规"],
+        tags: ["禁售", "过期商品", "违规处理", "酒类", "新鲜日期"],
         link: SHELF_ARTICLE_URL,
-        body: "<ul><li>平台 <span class=\"highlight\">禁止销售过期商品</span>，违者按禁售商品细则处理</li><li>包装篡改/手写/模糊保质期、内外包装日期不一致：按商品标识标志不合格细则处理</li><li>临期商品未按 3.3 提示临期特性：按关键信息不明确细则处理</li><li>适用类目含水饮冲调、休闲食品、酒类、母婴、个护家清等（见规则正文）</li></ul>",
+        body: "<ul><li>平台禁止销售过期商品。</li><li>出售已过期商品，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/ajtm8pqejf51\" target=\"_blank\" rel=\"noopener\">【发布平台禁止商品/信息】细则</a>、<a href=\"https://school.jinritemai.com/doudian/web/rules/101805\" target=\"_blank\" rel=\"noopener\">【发布法规禁止商品/信息】细则</a> 处理。</li><li>包装出现篡改、手写、模糊保质期信息标示，或中英文保质期信息不一致，或内外包装生产日期/保质期不一致等，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/aJHXGrf78jvz\" target=\"_blank\" rel=\"noopener\">商家【商品标识标志不合格】细则</a> 处理。</li><li>临期商品未按规范在标题与详情页标注临期特性，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/aJCmA2QwDbES\" target=\"_blank\" rel=\"noopener\">商家【关键信息不明确】细则</a> 处理。</li><li>宣传酒类「新鲜日期」时，用户签收日期与生产日期的时间差不得超过商品保质期的 <span class=\"num\">1/3</span>。</li><li>若商家/创作者宣传酒类商品为「新鲜日期」，但未按 3.7 条规范要求宣传，平台将依据 <a href=\"https://school.jinritemai.com/doudian/web/rules/101936\" target=\"_blank\" rel=\"noopener\">商家【虚假宣传】细则</a>、<a href=\"https://school.jinritemai.com/doudian/web/article/aJaqcnLx78cq\" target=\"_blank\" rel=\"noopener\">创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则</a> 处理。</li></ul>",
         sourceId: "dy-rule-aJk964FFQKKZ",
         cardId: "shelf:3"
       }

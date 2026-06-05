@@ -65,6 +65,59 @@
     "tag": "EXPERIENCE SCORE",
     "title": "店铺真实体验分",
     "desc": "基于《淘宝平台店铺真实体验分规范》，涵盖宝贝质量、物流速度、服务保障三大维度，直接影响搜索排序、活动准入及流量分配。2026年3月16日起执行最新调整。",
+    "formalStageMetrics": {
+      "heading": "正式阶段考核指标",
+      "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
+      "columns": ["维度", "指标", "计算公式/说明"],
+      "rows": [
+        {
+          "dimension": "宝贝质量",
+          "metric": "商品负反馈率",
+          "detailHtml": "<span class=\"highlight\">商品负反馈率</span> = 近<span class=\"num\">30</span>天物流签收订单中，因商品品质退款或描述相符<span class=\"num\">1</span>～<span class=\"num\">2</span>星评价的订单笔数 ÷ 近<span class=\"num\">30</span>天物流签收订单笔数"
+        },
+        {
+          "dimension": "宝贝质量",
+          "metric": "商品好评率",
+          "detailHtml": "<span class=\"highlight\">商品好评率</span> = 近<span class=\"num\">30</span>天描述相符<span class=\"num\">4</span>～<span class=\"num\">5</span>星评价次数 ÷ 近<span class=\"num\">30</span>天描述相符被评价数"
+        },
+        {
+          "dimension": "物流速度",
+          "metric": "48小时揽收及时率",
+          "detailHtml": "<span class=\"highlight\">48小时揽收及时率</span> = <span class=\"num\">48</span>小时内揽收订单数 ÷ 应揽收订单数"
+        },
+        {
+          "dimension": "物流速度",
+          "metric": "物流到货时长",
+          "detailHtml": "近<span class=\"num\">30</span>天 <span class=\"highlight\">物流到货时长</span> = 支付到签收的平均时间（小时）；越优分数越高"
+        },
+        {
+          "dimension": "物流速度",
+          "metric": "物流差评率（部分类目）",
+          "detailHtml": "近<span class=\"num\">30</span>天 <span class=\"highlight\">物流差评率</span> = 物流差评数 ÷ 评价总数（部分类目考核）"
+        },
+        {
+          "dimension": "服务保障",
+          "metric": "旺旺3分钟人工响应率",
+          "detailHtml": "<span class=\"highlight\">旺旺3分钟人工响应率</span> = 近<span class=\"num\">30</span>天 <span class=\"num\">8:00-23:00</span> 期间，买家提问后 <span class=\"num\">3</span> 分钟内人工回复的对话轮次 ÷ 该时段总对话轮次"
+        },
+        {
+          "dimension": "服务保障",
+          "metric": "旺旺满意度",
+          "detailHtml": "<span class=\"highlight\">旺旺满意度</span> = 近<span class=\"num\">30</span>天旺旺满意评价量（剔除未解决）÷ 近<span class=\"num\">30</span>天旺旺收到评价数"
+        },
+        {
+          "dimension": "服务保障",
+          "metric": "退款处理时长",
+          "detailHtml": "<span class=\"highlight\">退款处理时长</span> = 近<span class=\"num\">30</span>天卖家处理退款总时长 ÷ 退款完结总笔数"
+        },
+        {
+          "dimension": "服务保障",
+          "metric": "平台求助率",
+          "detailHtml": "<span class=\"highlight\">平台求助率</span> =（近<span class=\"num\">30</span>天纠纷笔数+投诉笔数+咨询平台笔数）÷ 近<span class=\"num\">30</span>天支付订单笔数"
+        }
+      ],
+      "footnoteHtml": "单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准；宝贝质量维度自 <span class=\"num\">2026-03-16</span> 起由「首次品退率」「商品差评率」升级为上述两项"
+    },
     "cards": [
       {
         "title": "真实体验分定义与评分区间",
@@ -79,48 +132,6 @@
         "body": "<ul><li>真实体验分 = 综合反映店铺 <span class=\"highlight\">商品与服务</span> 的指标体系</li><li>满分 <span class=\"num\">5分</span>，最低 <span class=\"num\">3分</span></li><li>计算前提：近30天支付订单量 ≥ <span class=\"num\">30笔</span>，否则不展示分值</li><li>更新频率：<span class=\"highlight\">每天更新</span>，基于近30天滚动数据</li><li>三大维度：<span class=\"highlight\">宝贝质量</span> + <span class=\"highlight\">物流速度</span> + <span class=\"highlight\">服务保障</span></li><li>公示日期：<span class=\"num\">2026-02-24</span>｜生效：<span class=\"num\">2026-03-05</span>｜执行：<span class=\"num\">2026-03-16</span></li></ul>",
         "sourceId": "rule-20009524",
         "cardId": "score:0"
-      },
-      {
-        "title": "宝贝质量指标（2026.3新规）",
-        "severity": "critical",
-        "severityText": "新规",
-        "date": "2026-03-16",
-        "tags": [
-          "宝贝质量",
-          "指标升级"
-        ],
-        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">商品负反馈率</span> = 近30天物流签收订单中，因商品品质退款或描述相符1～2星评价的订单笔数 ÷ 近30天物流签收订单笔数</li><li><span class=\"highlight\">商品好评率</span> = 近30天描述相符4～5星评价次数 ÷ 近30天描述相符被评价数</li><li>宝贝质量维度由「首次品退率」「商品差评率」升级为上述两项（2026年3月16日起执行）</li><li>单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准</li></ul>",
-        "sourceId": "rule-20009524",
-        "cardId": "score:1"
-      },
-      {
-        "title": "物流速度指标（2026.3新规）",
-        "severity": "critical",
-        "severityText": "新规",
-        "date": "2026-03-16",
-        "tags": [
-          "物流速度",
-          "指标升级"
-        ],
-        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">48小时揽收及时率</span> = 48h内揽收订单数 ÷ 应揽收订单数</li><li><span class=\"highlight\">物流到货时长</span> = 支付到签收的平均时间（小时）</li><li>部分类目含 <span class=\"highlight\">物流差评率</span> = 物流差评数 ÷ 评价总数</li><li><span class=\"highlight\">新增</span>：取消\"当日达/次日达覆盖率\"和\"特色服务达标占比\"</li><li>物流轨迹异常将纳入 <span class=\"highlight\">违规降分</span> 场景</li><li>揽收及时率、到货时长越优 → 分数越高</li></ul>",
-        "sourceId": "rule-20009524",
-        "cardId": "score:2"
-      },
-      {
-        "title": "服务保障指标",
-        "severity": "warning",
-        "severityText": "核心",
-        "date": "2026-03-16",
-        "tags": [
-          "服务保障",
-          "考核指标"
-        ],
-        "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20009524&cId=395#/rule/detail?ruleId=20009524&cId=395",
-        "body": "<ul><li><span class=\"highlight\">旺旺3分钟人工响应率</span> = 近30天8:00-23:00期间，买家提问后3分钟内人工回复的对话轮次 ÷ 该时段总对话轮次</li><li><span class=\"highlight\">旺旺满意度</span> = 近30天旺旺满意评价量（剔除未解决）÷ 近30天旺旺收到评价数</li><li><span class=\"highlight\">退款处理时长</span> = 近30天卖家处理退款总时长 ÷ 退款完结总笔数</li><li><span class=\"highlight\">平台求助率</span> =（近30天纠纷笔数+投诉笔数+咨询平台笔数）÷ 近30天支付订单笔数</li><li>单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准</li></ul>",
-        "sourceId": "rule-20009524",
-        "cardId": "score:3"
       },
       {
         "title": "计算公式与权重",

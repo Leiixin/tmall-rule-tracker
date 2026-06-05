@@ -1,6 +1,31 @@
 import { INLINE_HIGHLIGHT_SPAN_RULE } from "./prompts.js";
 
-export const CURATED_CARDS_PROMPT_VERSION = "5";
+export const CURATED_CARDS_PROMPT_VERSION = "7";
+
+export const SCORE_FORMAL_METRICS_RULES = `体验分分类页结构（必守，正式阶段指标表格 + 注意事项卡片）：
+- 输出 JSON 须同时含 formalStageMetrics 与 cards。
+- formalStageMetrics：正式阶段（近30天有效/支付订单 ≥ 30 单）各维度考核指标，每项占 rows 一行。
+  - rows 每项：dimension（维度名）、metric（指标名）、detailHtml（计算公式/说明，须含 span.highlight 与 span.num）
+  - 可选 footnoteHtml、subheading；heading 固定为「正式阶段考核指标」
+- cards：只写非指标注意事项（定义与阶段分界、正式阶段计算公式与权重、应用场景、差行为/违规降分、加分与特殊计分等）；禁止单独建「成长阶段体验分规则」卡片（成长阶段仅在定义卡一句带过）
+- 禁止为单项考核指标单独建卡（指标只进 formalStageMetrics.rows）`;
+
+export const DOUYIN_SCORE_TABLE_RULES = `抖音体验分正式阶段指标表格（必守，对齐《商家体验分规范》2.3.1 评分维度表）：
+- formalStageMetrics 须设 tableFormat: "douyinRule"、mergeDimension: true。
+- columns 固定为 ["评分维度", "细分指标", "指标定义", "考核周期"]。
+- rows 每项：dimension、metric、definitionHtml（指标定义与 *注 说明须照抄规则原文，禁止改写公式；*注 用 <br><span class="card-metric-note">*注：…</span>）、assessmentPeriod（考核周期原文）。超长 *注 须在顿号、逗号或列举项之间插入 <br> 或 <wbr> 辅助折行，勿仅依赖 CSS。
+- 禁止在 definitionHtml 中强行添加 span.highlight / span.num（与天猫不同）。
+- footnoteHtml 可不填或留空（六档分档、揽收时长例外等写在「正式阶段计算公式与分档」卡片，勿写表下脚注）；80 分兜底、偏远物流加分写在「加分与特殊分数计算」卡片。
+- 指标名须与规则一致（如「飞鸽平均响应时长」，禁止「飞鸽人工平均响应时长」）。
+- cards：禁止「成长阶段体验分规则」独立卡片；「加分与特殊分数计算」卡片中 80 分兜底用一条 li 概括（订单数＜300 或 500 按行业、差评/品退≤3），勿用内嵌表格。正式阶段表：rows 逐行输出 metric、assessmentPeriod、definitionHtml；前端仅合并评分维度列，细分指标/考核周期每行独立并纵向居中，指标定义列在格内折行；无横向滚动。
+- 禁止为单项考核指标单独建卡。`;
+
+export const DOUYIN_SHIP_STRUCTURE_RULES = `抖音发货时效分类页卡片（必守，对齐天猫 ship 卡片 highlight/num 格式）：
+- body 使用 <ul><li>；每条 li 15～50 字，只写发货时限、认定、轨迹超时/异常认定、免责情形；禁止写扣罚比例、赔付金额（留给 penalty 分类）。
+- 时效数字、截止时刻、小时/天数阈值必须用 <span class="num">...</span>（如 16:00、23:59:59、48 小时）。
+- 发货模式名、认定口径、轨迹超时/异常/欺诈发货等类型名、最短时效等要点必须用 <span class="highlight">...</span>。
+- 示例 li：<li><span class="highlight">极速发货</span>：当日<span class="num">16:00</span>前付款订单当日<span class="num">23:59:59</span>前发货</li>
+- 禁止 body 出现：参见、详见、参考、来源：《 等指向其他规则的表述。`;
 
 export const DOUYIN_PENALTY_IMPLEMENTATION_RULES = `抖音发货违规实施细则卡片（必守，对齐天猫 penalty 卡片格式，当前正文即该细则全文）：
 - 只输出 1 张卡片；标题仅写违规类型名（如「缺货/无货」「发货超时」），≤10 字，禁止「：认定与扣罚」等后缀。
@@ -22,20 +47,17 @@ const CATEGORY_META = {
     focus:
       "保质期、临期标注、禁售阈值；面向商家运营可执行的要点。",
     structureRules: `效期分类页卡片结构（必守）：
-- 不同效期阶段/场景须分卡，禁止混在一张：临期标注与详情展示、临期天数分级或剩余比例阈值、禁售阈值、换算规则（如1月=30天）等各自独立成卡（原文有则写，无则跳过）。
-- 原文涉及以下品类时，须各用独立卡片（标题点明品类）：化妆品（含美妆护肤等）、隐形眼镜（含护理液等关联品）、保健品（含保健食品/膳食补充/保健用品等原文表述）。
-- 通用食品/其他类目可另卡；每张卡 body 只写该阶段或该品类要点。`,
-    cardCount: "4～10"
+- 不同效期阶段/场景须分卡，禁止混在一张：保质期定义与换算、临期标注与详情展示、临期天数分级、禁售与违规处理（含 3.7 酒类「新鲜日期」宣传标准与 4.4 违规处理外链）等（原文有则写，无则跳过）；禁止单独建「酒类新鲜日期」卡。
+- 禁止单独建「临期未标注」「化妆品类目临期」「保健品类目临期」等冗余卡；临期未标注等违规处理写在「禁售过期商品及违规处理」卡，个护家清临期标准写在「临期商品分级标准」卡并附《【个护家清】商品发布细则》外链。
+- 违规处理卡须附对应细则链接（发布平台/法规禁止商品、标识标志不合格、关键信息不明确、商家虚假宣传、创作者款式/颜色虚假宣传等）；每张卡 body 只写该阶段要点。`,
+    cardCount: "4～5"
   },
   score: {
     title: "店铺真实体验分",
     focus:
       "真实体验分定义、各维度指标、计算公式、应用场景、违规降分；突出新规变化。",
-    structureRules: `体验分分类页卡片结构（必守）：
-- 按原文顶层大指标分卡（如商品体验、物流体验、服务/售后体验等，以原文指标名为准，一指标一卡）。
-- 每张卡 body 须含该指标的计算公式或计分逻辑（权重、分子分母、统计窗口、剔除规则等；原文有则摘录，无公式则写原文计分说明，禁止编造公式）。
-- 可另卡写：体验分定义与星级区间、应用场景（活动/投放/联盟门槛）、违规降分（若原文有且属本分类）。`,
-    cardCount: "4～10"
+    structureRules: SCORE_FORMAL_METRICS_RULES,
+    cardCount: "4～8"
   },
   ship: {
     title: "发货时效",
@@ -100,6 +122,14 @@ export function isDouyinPenaltyImplementationSource(source, category, platform) 
   return /实施细则/.test(blob);
 }
 
+export function isDouyinShipCategory(category, platform) {
+  return platform === "douyin" && category === "ship";
+}
+
+export function isScoreCategory(category) {
+  return category === "score";
+}
+
 export function isDouyinPenaltyTableSource(source) {
   if (!source) {
     return false;
@@ -125,12 +155,18 @@ export function buildCuratedCardsSystemPrompt(
     category,
     platform
   );
+  const douyinShip = isDouyinShipCategory(category, platform);
+  const douyinScore = platform === "douyin" && isScoreCategory(category);
 
   let structureBlock = meta.structureRules
     ? `\n${meta.structureRules}\n`
     : "";
-  if (singleDouyinPenalty) {
+  if (douyinScore) {
+    structureBlock = `\n${DOUYIN_SCORE_TABLE_RULES}\n`;
+  } else if (singleDouyinPenalty) {
     structureBlock += `\n${DOUYIN_PENALTY_IMPLEMENTATION_RULES}\n`;
+  } else if (douyinShip) {
+    structureBlock += `\n${DOUYIN_SHIP_STRUCTURE_RULES}\n`;
   }
 
   const cardCount =
@@ -144,12 +180,25 @@ export function buildCuratedCardsSystemPrompt(
     ? "标题仅违规类型名（≤10 字，禁止冒号后缀）"
     : "卡片标题（8~30字）";
 
-  return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示卡片 JSON（不要 markdown）。
-
-分类侧重：${meta.focus}
-${structureBlock}
-输出格式：
-{
+  const outputFormat = isScoreCategory(category)
+    ? douyinScore
+      ? `{
+  "formalStageMetrics": {
+    "heading": "正式阶段考核指标",
+    "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
+    "tableFormat": "douyinRule",
+    "columns": ["评分维度", "细分指标", "指标定义", "考核周期"],
+    "mergeDimension": true,
+    "rows": [
+      {
+        "dimension": "商品体验",
+        "metric": "商品综合评分",
+        "definitionHtml": "商品综合评分 = 近30天物流签收订单中…（照抄规则原文）",
+        "assessmentPeriod": "近30天物流签收订单"
+      }
+    ],
+    "footnoteHtml": "规则表外说明（分档、兜底分等）"
+  },
   "cards": [
     {
       "title": "${titleRule}",
@@ -160,10 +209,54 @@ ${structureBlock}
       "body": "<ul><li>要点</li></ul>"
     }
   ]
-}
+}`
+      : `{
+  "formalStageMetrics": {
+    "heading": "正式阶段考核指标",
+    "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
+    "columns": ["维度", "指标", "计算公式/说明"],
+    "rows": [
+      {
+        "dimension": "维度名",
+        "metric": "指标名",
+        "detailHtml": "<span class=\\"highlight\\">…</span> = … <span class=\\"num\\">30</span> …"
+      }
+    ],
+    "footnoteHtml": "可选脚注"
+  },
+  "cards": [
+    {
+      "title": "${titleRule}",
+      "severity": "critical|warning|info|normal",
+      "severityText": "强制|警告|参考|通知等",
+      "date": "YYYY-MM-DD",
+      "tags": ["标签1", "标签2"],
+      "body": "<ul><li>要点</li></ul>"
+    }
+  ]
+}`
+    : `{
+  "cards": [
+    {
+      "title": "${titleRule}",
+      "severity": "critical|warning|info|normal",
+      "severityText": "强制|警告|参考|通知等",
+      "date": "YYYY-MM-DD",
+      "tags": ["标签1", "标签2"],
+      "body": "<ul><li>要点</li></ul>"
+    }
+  ]
+}`;
+
+  return `你是${advisor}。根据用户提供的规则原文，为「${meta.title}」分类页生成展示 JSON（不要 markdown）。
+
+分类侧重：${meta.focus}
+${structureBlock}
+输出格式：
+${outputFormat}
 
 规则：
-- 生成 ${cardCount} 张卡片，按主题拆分，不要把所有内容挤进一张。
+- 生成 ${cardCount} 张 cards${isScoreCategory(category) ? "（不含单项考核指标卡）" : ""}，按主题拆分，不要把所有内容挤进一张。
 - body 使用 <ul><li>，${INLINE_HIGHLIGHT_SPAN_RULE}。
 - ${liLengthRule}；只依据原文，禁止编造；信息不足则保守表述。
 - date 使用用户提供的平台修订日期。
@@ -200,5 +293,5 @@ export function buildCuratedCardsUserPrompt({
 正文：
 ${String(content || "").slice(0, maxChars)}
 
-请输出 cards JSON，仅包含本分类相关要点。`;
+请输出${isScoreCategory(category) ? " formalStageMetrics + cards " : " cards "}JSON，仅包含本分类相关要点。`;
 }
