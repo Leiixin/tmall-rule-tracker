@@ -68,7 +68,11 @@
     "formalStageMetrics": {
       "heading": "正式阶段考核指标",
       "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
-      "columns": ["维度", "指标", "计算公式/说明"],
+      "columns": [
+        "维度",
+        "指标",
+        "计算公式/说明"
+      ],
       "rows": [
         {
           "dimension": "宝贝质量",

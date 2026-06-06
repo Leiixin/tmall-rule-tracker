@@ -1,13 +1,13 @@
 {
-  "lastCheckedAt": "2026-06-05T05:28:46.679Z",
-  "autoPublishVersion": 7,
+  "lastCheckedAt": "2026-06-06T05:03:22.239Z",
+  "autoPublishVersion": 9,
   "recentAutoPublish": {
-    "at": "2026-06-04T01:59:11.693Z",
-    "sourceId": "dy-rule-101706",
-    "ruleTitle": "商家发货行为管理规则",
-    "label": "商家发货行为管理规则",
+    "at": "2026-06-06T05:03:22.239Z",
+    "sourceId": "dy-rule-101936",
+    "ruleTitle": "商家【虚假宣传】细则",
+    "label": "商家【虚假宣传】细则",
     "categories": [
-      "ship"
+      "shelf"
     ]
   },
   "sources": {
@@ -19,6 +19,36 @@
       "contentHash": "2f97b901d2169fb3",
       "bodyPublicationFingerprint": "publicity:2026-05-26..2026-06-02|effective:2026-06-02",
       "lastSyncedAt": "2026-06-04T01:59:11.693Z"
+    },
+    "dy-rule-gehu-publish": {
+      "status": "synced",
+      "message": "auto-published 1 categor(ies)",
+      "ruleTitle": "【个护家清】商品发布细则",
+      "platformModifiedAt": "2021-08-19T05:53:01.000Z",
+      "contentHash": "21648e80f00e1700",
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-06-06T05:03:22.239Z",
+      "insightsGeneratedAt": "2026-06-06T05:03:22.239Z"
+    },
+    "dy-rule-101936": {
+      "status": "synced",
+      "message": "auto-published 1 categor(ies)",
+      "ruleTitle": "商家【虚假宣传】细则",
+      "platformModifiedAt": "2026-04-29T03:00:04.000Z",
+      "contentHash": "c49455c9b1644cc4",
+      "bodyPublicationFingerprint": "",
+      "lastSyncedAt": "2026-06-06T05:03:22.239Z",
+      "insightsGeneratedAt": "2026-06-06T05:03:22.239Z"
+    },
+    "dy-rule-creator-style-fake": {
+      "status": "changed",
+      "message": "first watch; platformModifiedAt changed",
+      "ruleTitle": "关于修订《「虚假宣传：款式/颜色等商品信息不一致」实施细则》的公示通知",
+      "platformModifiedAt": "2025-11-26T06:08:12.000Z",
+      "contentHash": "cac7eaa2ec90f75d",
+      "bodyPublicationFingerprint": "publicity:2025-11-26..2025-12-02|effective:2025-12-03",
+      "lastSyncedAt": null,
+      "detectedAt": "2026-06-06T05:03:22.239Z"
     },
     "dy-rule-103956": {
       "status": "ok",
@@ -94,12 +124,12 @@
     }
   },
   "summary": {
-    "checked": 9,
-    "changed": 0,
+    "checked": 12,
+    "changed": 3,
     "errors": 0,
-    "published": 0,
-    "synced": 0,
-    "insightsGenerated": 0,
+    "published": 2,
+    "synced": 2,
+    "insightsGenerated": 2,
     "forced": 0
   }
 }

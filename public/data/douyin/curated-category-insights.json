@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-05T05:28:46.679Z",
+  "updatedAt": "2026-06-06T05:03:22.239Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -76,90 +76,100 @@
     },
     "shelf": {
       "pinned": false,
-      "sourceId": "dy-rule-aJk964FFQKKZ",
-      "ruleTitle": "关于修订《商品保质期管理和宣传规范》的公示通知",
-      "panelSubtitle": "新增酒类商品“新鲜日期”宣传要求及违规处理",
-      "generatedAt": "2026-06-04T01:59:22.555Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
+      "sourceId": "dy-rule-101936",
+      "ruleTitle": "商家【虚假宣传】细则",
+      "panelSubtitle": "平台更新虚假宣传细则，明确违规类型与阶梯处置标准",
+      "generatedAt": "2026-06-06T05:03:44.388Z",
+      "link": "https://school.jinritemai.com/doudian/web/rules/101936",
       "changes": [
         {
+          "type": "modify",
+          "title": "违规定义与类型细化",
+          "detail": "新增基础信息虚假、功效效果虚假、服务履约虚假三大类，并列举常见场景，如专利、功效、预售等。",
+          "date": "2026-04-29",
+          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
+        },
+        {
+          "type": "modify",
+          "title": "违规处置阶梯化",
+          "detail": "按情节轻微、一般、严重、特别严重分档，并区分首次/重复/多次违规，处置包括商品下架/封禁、冻结货款、停业整顿、扣除违约金等。",
+          "date": "2026-04-29",
+          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
+        },
+        {
           "type": "new",
-          "title": "新增酒类“新鲜日期”宣传规范",
-          "detail": "新增3.7条：宣传酒类“新鲜日期”时，用户签收日期与生产日期的时间差不得超过保质期的1/3。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+          "title": "关联主体升档处置",
+          "detail": "关联主体存在情节严重违规时，平台有权对商家首次违规按情节一般处置。",
+          "date": "2026-04-29",
+          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
         },
         {
           "type": "new",
-          "title": "新增酒类“新鲜日期”违规处理",
-          "detail": "新增4.4条：未按3.7条宣传酒类“新鲜日期”的，按商家【虚假宣传】、创作者【虚假宣传】处理。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+          "title": "特殊功效虚假场景单独列示",
+          "detail": "针对丰胸、壮阳、减肥、增高四类特殊功效虚假宣传，设置独立违规次数与处置标准。",
+          "date": "2026-04-29",
+          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
         },
         {
           "type": "modify",
-          "title": "临期商品标准表更新",
-          "detail": "临期天数计算规则明确：保质期以月/年计分别按30天/365天换算，临期天数向上取整。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
-        },
-        {
-          "type": "modify",
-          "title": "临期商品标示要求细化",
-          "detail": "临期商品标题须写“临期商品”，详情页最上方显著标示“此商品为临近保质期商品”，起算时间以物流揽收为准。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
-        },
-        {
-          "type": "modify",
-          "title": "违规处理条款整合",
-          "detail": "过期商品、标识不合格、临期未标示等违规分别引用对应细则处理，新增酒类虚假宣传处理。",
-          "date": "2026-06-02",
-          "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ"
+          "title": "申诉时效明确",
+          "detail": "商家需在收到判罚通知后7天内发起申诉，超时将无法申诉。",
+          "date": "2026-04-29",
+          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
         }
       ],
       "impacts": [
         {
           "level": "high",
-          "title": "酒类商品宣传受限",
-          "desc": "宣传“新鲜日期”需确保签收日期与生产日期差≤保质期1/3，否则构成虚假宣传。"
+          "title": "商品信息需严格一致",
+          "desc": "宣传信息与实物不一致将触发违规，可能导致商品下架/封禁，影响正常销售。"
+        },
+        {
+          "level": "high",
+          "title": "特殊功效宣传风险极高",
+          "desc": "丰胸、壮阳、减肥、增高类虚假宣传首次即按情节一般处置，多次违规将面临清退。"
         },
         {
           "level": "medium",
-          "title": "临期商品标示要求严格",
-          "desc": "临期商品必须在标题和详情页显著标示，起算时间以物流揽收为准，否则按关键信息不明确处理。"
+          "title": "关联主体违规可能升级自身处罚",
+          "desc": "若关联店铺有严重违规，自身首次虚假宣传可能被按情节一般处置，加重后果。"
         },
         {
           "level": "medium",
-          "title": "保质期计算规则明确",
-          "desc": "保质期换算标准统一（月=30天，年=365天），临期天数向上取整，需调整库存管理。"
+          "title": "违规次数累计影响处置力度",
+          "desc": "同一场景多次违规将升级为情节严重或特别严重，导致货款冻结、停业整顿甚至清退。"
         },
         {
           "level": "low",
-          "title": "个护家清行业适用专项细则",
-          "desc": "个护家清行业临期标准需参照《【个护家清】商品发布细则》，非本规则通用表。"
+          "title": "申诉时效缩短",
+          "desc": "7天申诉期，超时无法申诉，需及时处理违规通知。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "检查酒类商品宣传用语",
-          "desc": "若宣传“新鲜日期”，需确保发货后用户签收时剩余保质期≥2/3，否则删除相关宣传。"
+          "title": "全面自查商品宣传信息",
+          "desc": "确保商品标题、详情、直播话术中的基础信息、功效、服务承诺与实物一致，无虚假夸大。"
         },
         {
           "level": "action",
-          "title": "临期商品标示自查",
-          "desc": "对库存中临期商品，在标题加“临期商品”，详情页顶部加显著提示，并确认起算时间设置。"
+          "title": "删除无依据的宣传内容",
+          "desc": "对无法提供证明的专利、功效、销量等宣传，立即删除或修改，避免违规。"
         },
         {
           "level": "action",
-          "title": "更新保质期计算逻辑",
-          "desc": "按规则统一换算标准（月=30天，年=365天），调整系统临期预警天数，避免误判。"
+          "title": "特殊功效商品谨慎宣传",
+          "desc": "丰胸、壮阳、减肥、增高类商品避免使用绝对化承诺，需明确效果因人而异。"
         },
         {
           "level": "action",
-          "title": "关注个护家清专项细则",
-          "desc": "个护家清商家需查阅《【个护家清】商品发布细则》，确保临期标示符合行业要求。"
+          "title": "关注关联主体合规状态",
+          "desc": "检查关联店铺是否存在严重违规，提前整改，防止自身被升档处置。"
+        },
+        {
+          "level": "action",
+          "title": "及时处理违规通知并申诉",
+          "desc": "收到判罚后7天内通过抖店后台提交申诉，避免超时丧失申诉机会。"
         }
       ]
     },
