@@ -1,4 +1,4 @@
-{
+﻿{
   "version": 1,
   "updatedAt": "2026-06-12T06:00:13.233Z",
   "categories": {
@@ -71,105 +71,6 @@
           "level": "action",
           "title": "关注揽收与售后时效",
           "desc": "重点优化揽收时长、配送时效达成率、售后处理时长及飞鸽响应时长，均为正式阶段核心考核项。"
-        }
-      ]
-    },
-    "shelf": {
-      "pinned": false,
-      "sourceId": "dy-rule-101936",
-      "ruleTitle": "商家【虚假宣传】细则",
-      "panelSubtitle": "平台更新虚假宣传细则，明确违规类型与阶梯处置标准",
-      "generatedAt": "2026-06-06T05:03:44.388Z",
-      "link": "https://school.jinritemai.com/doudian/web/rules/101936",
-      "changes": [
-        {
-          "type": "modify",
-          "title": "违规定义与类型细化",
-          "detail": "新增基础信息虚假、功效效果虚假、服务履约虚假三大类，并列举常见场景，如专利、功效、预售等。",
-          "date": "2026-04-29",
-          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
-        },
-        {
-          "type": "modify",
-          "title": "违规处置阶梯化",
-          "detail": "按情节轻微、一般、严重、特别严重分档，并区分首次/重复/多次违规，处置包括商品下架/封禁、冻结货款、停业整顿、扣除违约金等。",
-          "date": "2026-04-29",
-          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
-        },
-        {
-          "type": "new",
-          "title": "关联主体升档处置",
-          "detail": "关联主体存在情节严重违规时，平台有权对商家首次违规按情节一般处置。",
-          "date": "2026-04-29",
-          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
-        },
-        {
-          "type": "new",
-          "title": "特殊功效虚假场景单独列示",
-          "detail": "针对丰胸、壮阳、减肥、增高四类特殊功效虚假宣传，设置独立违规次数与处置标准。",
-          "date": "2026-04-29",
-          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
-        },
-        {
-          "type": "modify",
-          "title": "申诉时效明确",
-          "detail": "商家需在收到判罚通知后7天内发起申诉，超时将无法申诉。",
-          "date": "2026-04-29",
-          "link": "https://school.jinritemai.com/doudian/web/rules/101936"
-        }
-      ],
-      "impacts": [
-        {
-          "level": "high",
-          "title": "商品信息需严格一致",
-          "desc": "宣传信息与实物不一致将触发违规，可能导致商品下架/封禁，影响正常销售。"
-        },
-        {
-          "level": "high",
-          "title": "特殊功效宣传风险极高",
-          "desc": "丰胸、壮阳、减肥、增高类虚假宣传首次即按情节一般处置，多次违规将面临清退。"
-        },
-        {
-          "level": "medium",
-          "title": "关联主体违规可能升级自身处罚",
-          "desc": "若关联店铺有严重违规，自身首次虚假宣传可能被按情节一般处置，加重后果。"
-        },
-        {
-          "level": "medium",
-          "title": "违规次数累计影响处置力度",
-          "desc": "同一场景多次违规将升级为情节严重或特别严重，导致货款冻结、停业整顿甚至清退。"
-        },
-        {
-          "level": "low",
-          "title": "申诉时效缩短",
-          "desc": "7天申诉期，超时无法申诉，需及时处理违规通知。"
-        }
-      ],
-      "strategies": [
-        {
-          "level": "action",
-          "title": "全面自查商品宣传信息",
-          "desc": "确保商品标题、详情、直播话术中的基础信息、功效、服务承诺与实物一致，无虚假夸大。"
-        },
-        {
-          "level": "action",
-          "title": "删除无依据的宣传内容",
-          "desc": "对无法提供证明的专利、功效、销量等宣传，立即删除或修改，避免违规。"
-        },
-        {
-          "level": "action",
-          "title": "特殊功效商品谨慎宣传",
-          "desc": "丰胸、壮阳、减肥、增高类商品避免使用绝对化承诺，需明确效果因人而异。"
-        },
-        {
-          "level": "action",
-          "title": "关注关联主体合规状态",
-          "desc": "检查关联店铺是否存在严重违规，提前整改，防止自身被升档处置。"
-        },
-        {
-          "level": "action",
-          "title": "及时处理违规通知并申诉",
-          "desc": "收到判罚后7天内通过抖店后台提交申诉，避免超时丧失申诉机会。"
         }
       ]
     },

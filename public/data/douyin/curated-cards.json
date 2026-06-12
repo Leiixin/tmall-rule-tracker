@@ -1,6 +1,6 @@
-{
+﻿{
   "version": 1,
-  "updatedAt": "2026-06-06T05:03:22.239Z",
+  "updatedAt": "2026-06-12T03:47:38.000Z",
   "autoPublishVersion": 9,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
@@ -65,120 +65,6 @@
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
         "body": "<ul><li>平台禁止销售过期商品。</li><li>出售已过期商品，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/ajtm8pqejf51\" target=\"_blank\" rel=\"noopener\">【发布平台禁止商品/信息】细则</a>、<a href=\"https://school.jinritemai.com/doudian/web/rules/101805\" target=\"_blank\" rel=\"noopener\">【发布法规禁止商品/信息】细则</a> 处理。</li><li>包装出现篡改、手写、模糊保质期信息标示，或中英文保质期信息不一致，或内外包装生产日期/保质期不一致等，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/aJHXGrf78jvz\" target=\"_blank\" rel=\"noopener\">商家【商品标识标志不合格】细则</a> 处理。</li><li>临期商品未按规范在标题与详情页标注临期特性，依据 <a href=\"https://school.jinritemai.com/doudian/web/article/aJCmA2QwDbES\" target=\"_blank\" rel=\"noopener\">商家【关键信息不明确】细则</a> 处理。</li><li>宣传酒类「新鲜日期」时，用户签收日期与生产日期的时间差不得超过商品保质期的 <span class=\"num\">1/3</span>。</li><li>若商家/创作者宣传酒类商品为「新鲜日期」，但未按 3.7 条规范要求宣传，平台将依据 <a href=\"https://school.jinritemai.com/doudian/web/rules/101936\" target=\"_blank\" rel=\"noopener\">商家【虚假宣传】细则</a>、<a href=\"https://school.jinritemai.com/doudian/web/article/aJaqcnLx78cq\" target=\"_blank\" rel=\"noopener\">创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则</a> 处理。</li></ul>"
-      },
-      {
-        "cardId": "shelf:4",
-        "sourceId": "dy-rule-gehu-publish",
-        "title": "保质期定义与换算标准",
-        "severity": "info",
-        "severityText": "参考",
-        "date": "2021-08-19",
-        "tags": [
-          "保质期",
-          "换算"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/108445",
-        "body": "<ul><li>保质期按天数划分：<span class=\"num\">2天≤保质期＜6天</span>、<span class=\"num\">6天≤保质期＜15天</span>、<span class=\"num\">15天≤保质期＜30天</span>、<span class=\"num\">30天≤保质期＜90天</span>、<span class=\"num\">90天≤保质期＜180天</span>、<span class=\"num\">180天≤保质期＜365天</span>、<span class=\"num\">365天≤保质期＜730天</span>、<span class=\"num\">730天≤保质期</span>。</li><li>不同保质期对应不同的临期天数计算方式，如<span class=\"highlight\">1/3保质期</span>、<span class=\"highlight\">1/2保质期</span>等。</li></ul>"
-      },
-      {
-        "cardId": "shelf:5",
-        "sourceId": "dy-rule-gehu-publish",
-        "title": "临期商品分级标准",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2021-08-19",
-        "tags": [
-          "临期",
-          "分级"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/108445",
-        "body": "<ul><li>保质期<span class=\"num\">2天≤保质期＜6天</span>：临期标准为<span class=\"num\">1天≤临近保质期＜2天</span>，<span class=\"highlight\">不可销售临期商品</span>。</li><li>保质期<span class=\"num\">6天≤保质期＜15天</span>：临期标准为<span class=\"num\">2天≤临近保质期＜1/3保质期（至多5天）</span>。</li><li>保质期<span class=\"num\">15天≤保质期＜30天</span>：临期标准为<span class=\"num\">5天≤临近保质期＜1/2保质期（至多10天）</span>。</li><li>保质期<span class=\"num\">30天≤保质期＜90天</span>：临期标准为<span class=\"num\">10天≤临近保质期＜1/3保质期（至多20天）</span>。</li><li>保质期<span class=\"num\">90天≤保质期＜180天</span>：临期标准为<span class=\"num\">20天≤临近保质期＜1/3保质期（至多40天）</span>。</li><li>保质期<span class=\"num\">180天≤保质期＜365天</span>：临期标准为<span class=\"num\">45天≤临近保质期＜90天</span>。</li><li>保质期<span class=\"num\">365天≤保质期＜730天</span>：临期标准为<span class=\"num\">90天≤临近保质期＜150天</span>。</li><li>保质期<span class=\"num\">730天≤保质期</span>：临期标准为<span class=\"num\">30天≤临近保质期＜60天</span>。</li></ul>"
-      },
-      {
-        "cardId": "shelf:6",
-        "sourceId": "dy-rule-gehu-publish",
-        "title": "临期标注与详情展示要求",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2021-08-19",
-        "tags": [
-          "临期标注",
-          "详情展示"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/108445",
-        "body": "<ul><li>如商品临近保质期，须在<span class=\"highlight\">商品详情页醒目位置</span>明确标注“<span class=\"highlight\">临期商品</span>”，并说明剩余使用日期。</li><li>商品主图及商详页<span class=\"highlight\">不得宣称“大牌平替”</span>，不得出现治疗疾病或替代药物文字。</li><li>消字号商品不得宣称化妆品功效；化妆品不得宣传消毒、杀菌、抑菌等。</li><li>不得出现友商信息、平台外链接或水印，不得低俗诱导或色情暗示。</li><li>需展示商品外包装图片，清晰体现品牌、名称、生产者、资质编号、生产日期或限制使用日期。</li></ul>"
-      },
-      {
-        "cardId": "shelf:7",
-        "sourceId": "dy-rule-gehu-publish",
-        "title": "禁售过期商品及违规处理",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2021-08-19",
-        "tags": [
-          "禁售",
-          "违规处理"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/108445",
-        "body": "<ul><li>保质期<span class=\"num\">2天≤保质期＜6天</span>的商品<span class=\"highlight\">不可销售临期商品</span>，即禁止销售。</li><li>临期商品未按要求标注或违规宣传，将按平台规则处理。</li><li>违规情形包括：<span class=\"highlight\">发布平台/法规禁止商品</span>、<span class=\"highlight\">标识标志不合格</span>、<span class=\"highlight\">关键信息不明确</span>、<span class=\"highlight\">商家虚假宣传</span>等。</li></ul>"
-      },
-      {
-        "cardId": "shelf:8",
-        "sourceId": "dy-rule-101936",
-        "title": "虚假宣传定义与常见类型",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2026-04-29",
-        "tags": [
-          "虚假宣传",
-          "定义",
-          "类型"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/101936",
-        "body": "<ul><li>虚假宣传指对商品或服务作与实际不符的虚假、夸大或引人误解的信息，导致用户错误认知。</li><li>常见类型包括：<span class=\"highlight\">基础信息虚假</span>（如专利、产地、材质）、<span class=\"highlight\">功效效果虚假</span>（如减肥、壮阳）、<span class=\"highlight\">服务履约虚假</span>（如预售、国补）。</li></ul>"
-      },
-      {
-        "cardId": "shelf:9",
-        "sourceId": "dy-rule-101936",
-        "title": "违规处置措施与分级标准",
-        "severity": "critical",
-        "severityText": "强制",
-        "date": "2026-04-29",
-        "tags": [
-          "违规处置",
-          "分级",
-          "违约金"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/101936",
-        "body": "<ul><li>处置措施包括：公示警告、商品下架/封禁、搜索降权、店铺权限限制、扣除违约金等。</li><li>情节严重：商品封禁、冻结违规商品近<span class=\"num\">60</span>天货款、停业整顿<span class=\"num\">3</span>天、扣除违约金<span class=\"num\">5000</span>元。</li><li>情节特别严重：商品封禁、冻结货款最长<span class=\"num\">365</span>天、店铺清退、扣除违约金<span class=\"num\">20000</span>元（可升级至<span class=\"num\">100000</span>元）。</li></ul>"
-      },
-      {
-        "cardId": "shelf:10",
-        "sourceId": "dy-rule-101936",
-        "title": "违规次数与情节判定规则",
-        "severity": "warning",
-        "severityText": "警告",
-        "date": "2026-04-29",
-        "tags": [
-          "违规次数",
-          "情节判定"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/101936",
-        "body": "<ul><li>情节轻微：同一场景<span class=\"num\">1-2</span>次违规；情节一般：<span class=\"num\">3-4</span>次；情节严重：<span class=\"num\">5-6</span>次；情节特别严重：<span class=\"num\">7</span>次及以上。</li><li>主观恶意行为（如遮挡关键信息、虚构商品）将直接升档处置。</li><li>关联主体存在严重违规时，平台有权对商家升档处置。</li></ul>"
-      },
-      {
-        "cardId": "shelf:11",
-        "sourceId": "dy-rule-101936",
-        "title": "整改建议与申诉流程",
-        "severity": "info",
-        "severityText": "参考",
-        "date": "2026-04-29",
-        "tags": [
-          "整改",
-          "申诉"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/rules/101936",
-        "body": "<ul><li>商家需确保宣传信息与实物一致，无依据的宣传内容须删除。</li><li>申诉时效：收到判罚通知后<span class=\"num\">7</span>天内发起，超时无法申诉。</li><li>申诉路径：抖店电脑端【违规管理-违规列表-可申诉】或APP端【首页-违规管理】。</li></ul>"
       }
     ]
   },
