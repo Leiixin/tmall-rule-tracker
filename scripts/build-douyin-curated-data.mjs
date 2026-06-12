@@ -91,7 +91,7 @@ const curatedSources = {
       ruleId: "108445",
       url: articleUrl("108445"),
       label: "【个护家清】商品发布细则",
-      categories: ["shelf"],
+      categories: [],
       cardIds: ["shelf:2"],
       ruleTitle: "【个护家清】商品发布细则"
     },
@@ -102,7 +102,7 @@ const curatedSources = {
       ruleId: "101936",
       url: ruleUrl("101936"),
       label: "商家【虚假宣传】细则",
-      categories: ["shelf"],
+      categories: [],
       cardIds: ["shelf:3"],
       ruleTitle: "商家【虚假宣传】细则"
     },
@@ -112,7 +112,7 @@ const curatedSources = {
       platform: "douyin",
       url: articleUrl("aJaqcnLx78cq"),
       label: "创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则",
-      categories: ["shelf"],
+      categories: [],
       cardIds: ["shelf:3"],
       ruleTitle: "「虚假宣传：款式/颜色等商品信息不一致」实施细则"
     },
@@ -192,7 +192,7 @@ const curatedCards = {
         date: "2026-06-02",
         tags: ["临期天数", "分级标准"],
         link: SHELF_ARTICLE_URL,
-        body: "<ul><li>保质期≥365天：剩余≤ <span class=\"num\">45天</span> 为临期。</li><li>180天≤保质期&lt;365天：剩余≤ <span class=\"num\">30天</span> 为临期。</li><li>90天≤保质期&lt;180天：剩余≤ <span class=\"num\">20天</span> 为临期。</li><li>30天≤保质期&lt;90天：剩余≤ <span class=\"num\">10天</span> 为临期。</li><li>15天≤保质期&lt;30天：剩余≤ <span class=\"num\">5天</span> 为临期。</li><li>保质期&lt;15天：剩余≤ <span class=\"num\">4天</span> 为临期。</li><li>个护家清行业保质期临期商品标准详见 <a href=\"https://school.jinritemai.com/doudian/web/article/108445\" target=\"_blank\" rel=\"noopener\">【个护家清】商品发布细则</a>。</li></ul>",
+        body: "<ul><li>保质期以月计，按 <span class=\"num\">1个月=30天</span> 换算；以年计，按 <span class=\"num\">1年=365天</span> 换算；临期天数向上取整。</li></ul><div class=\"card-penalty-table-wrap\"><table class=\"card-penalty-table\"><thead><tr><th>保质期</th><th>临期标准（剩余保质期）</th></tr></thead><tbody><tr><td>≥<span class=\"num\">365</span> 天</td><td>≤<span class=\"num\">45</span> 天</td></tr><tr><td><span class=\"num\">180</span> 天≤保质期&lt;<span class=\"num\">365</span> 天</td><td>≤<span class=\"num\">30</span> 天</td></tr><tr><td><span class=\"num\">90</span> 天≤保质期&lt;<span class=\"num\">180</span> 天</td><td>≤<span class=\"num\">20</span> 天</td></tr><tr><td><span class=\"num\">30</span> 天≤保质期&lt;<span class=\"num\">90</span> 天</td><td>≤<span class=\"num\">10</span> 天</td></tr><tr><td><span class=\"num\">15</span> 天≤保质期&lt;<span class=\"num\">30</span> 天</td><td>≤<span class=\"num\">5</span> 天</td></tr><tr><td>保质期&lt;<span class=\"num\">15</span> 天</td><td>≤<span class=\"num\">4</span> 天</td></tr></tbody></table></div><ul><li>个护家清行业保质期临期商品标准详见 <a href=\"https://school.jinritemai.com/doudian/web/article/108445\" target=\"_blank\" rel=\"noopener\">【个护家清】商品发布细则</a>。</li></ul>",
         sourceId: "dy-rule-aJk964FFQKKZ",
         cardId: "shelf:2"
       },

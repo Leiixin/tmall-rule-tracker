@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" data-theme="light">
 <head>
 <script>
 (function () {
   try {
     var t = localStorage.getItem('tmall-theme');
-    if (t !== 'light' && t !== 'dark') t = 'dark';
+    if (t !== 'light' && t !== 'dark') t = 'light';
     document.documentElement.setAttribute('data-theme', t);
     var d = localStorage.getItem('tmall-density');
     if (d !== 'compact' && d !== 'comfortable') d = 'compact';
     document.documentElement.setAttribute('data-density', d);
   } catch (e) {
-    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'light');
     document.documentElement.setAttribute('data-density', 'compact');
   }
 })();
@@ -888,7 +888,7 @@ html[data-density="compact"] .tab-icon { width: 28px; height: 28px; font-size: 1
   <div class="status-time" id="cronInfo">定时抓取: 每天09:00</div>
   <div class="status-bar-right">
     <button type="button" class="theme-toggle-btn" id="densityToggleBtn" aria-label="切换紧凑/舒适显示">紧凑</button>
-    <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="切换白天/黑夜模式">🌙 黑夜</button>
+    <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="当前为白天模式，点击切换为黑夜">☀ 白天</button>
   </div>
 </div>
 <!-- APP LAYOUT -->
@@ -2419,13 +2419,14 @@ function renderSection(key) {
   html += '<div class="rules-grid">';
 
   data.cards.forEach(function(card) {
+    var showCardLink = card.link && !(currentPlatform === 'douyin' && key === 'shelf');
     html += '<div class="rule-card" data-search="' + card.title + ' ' + card.body.replace(/<[^>]*>/g, '') + '">' +
       '<div class="card-top"><div class="card-title">' + card.title + '</div>' +
       '<span class="severity-badge ' + card.severity + '">' + card.severityText + '</span></div>' +
       '<div class="card-body">' + card.body + '</div>' +
       '<div class="card-footer"><span class="date-badge">' + card.date + '</span>' +
       card.tags.map(function(t) { return '<span class="card-tag">' + t + '</span>'; }).join('') +
-      (card.link ? '<a class="card-link" href="' + normalizeRuleDetailLink(card.link) + '" target="_blank" rel="noopener">查看原文 ↗</a>' : '') +
+      (showCardLink ? '<a class="card-link" href="' + normalizeRuleDetailLink(card.link) + '" target="_blank" rel="noopener">查看原文 ↗</a>' : '') +
       '</div></div>';
   });
   html += '</div>';

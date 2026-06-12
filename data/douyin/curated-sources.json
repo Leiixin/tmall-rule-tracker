@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-04T05:00:00.000Z",
+  "updatedAt": "2026-06-04T12:00:00.000Z",
   "repoEditUrl": "https://github.com/Leiixin/tmall-rule-tracker/edit/main/data/douyin/curated-sources.json",
   "sources": [
     {
@@ -28,9 +28,7 @@
       "ruleId": "108445",
       "url": "https://school.jinritemai.com/doudian/web/article/108445",
       "label": "【个护家清】商品发布细则",
-      "categories": [
-        "shelf"
-      ],
+      "categories": [],
       "cardIds": [
         "shelf:2"
       ],
@@ -43,9 +41,7 @@
       "ruleId": "101936",
       "url": "https://school.jinritemai.com/doudian/web/rules/101936",
       "label": "商家【虚假宣传】细则",
-      "categories": [
-        "shelf"
-      ],
+      "categories": [],
       "cardIds": [
         "shelf:3"
       ],
@@ -57,9 +53,7 @@
       "platform": "douyin",
       "url": "https://school.jinritemai.com/doudian/web/article/aJaqcnLx78cq",
       "label": "创作者【虚假宣传:款式/颜色等商品信息不一致】实施细则",
-      "categories": [
-        "shelf"
-      ],
+      "categories": [],
       "cardIds": [
         "shelf:3"
       ],

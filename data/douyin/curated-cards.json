@@ -33,7 +33,7 @@
           "展示要求"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>临期商品须在标题写明“临期商品”字样。</li><li>详情页最上方显著标示“此商品为临近保质期商品”。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li><li>对于已标明“临期”的商品，商家应保证消费者收到的商品时不得为过期商品（因消费者自身原因导致的收货延迟除外）。</li></ul>"
+        "body": "<ul><li>临期商品须在标题写明「临期商品」字样。</li><li>详情页最上方显著标示「此商品为临近保质期商品」。</li><li>临期起算时间以商家发货后物流系统揽收时间为准。</li><li>对于已标明「临期」的商品，商家应保证消费者收到的商品时不得为过期商品（因消费者自身原因导致的收货延迟除外）。</li></ul>"
       },
       {
         "cardId": "shelf:2",
@@ -47,7 +47,7 @@
           "分级标准"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aJk964FFQKKZ",
-        "body": "<ul><li>保质期≥365天：剩余≤<span class=\"num\">45天</span>为临期。</li><li>180天≤保质期<365天：剩余≤<span class=\"num\">30天</span>为临期。</li><li>90天≤保质期<180天：剩余≤<span class=\"num\">20天</span>为临期。</li><li>30天≤保质期<90天：剩余≤<span class=\"num\">10天</span>为临期。</li><li>15天≤保质期<30天：剩余≤<span class=\"num\">5天</span>为临期。</li><li>保质期<15天：剩余≤<span class=\"num\">4天</span>为临期。</li><li>个护家清行业保质期临期商品标准详见 <a href=\"https://school.jinritemai.com/doudian/web/article/108445\" target=\"_blank\" rel=\"noopener\">【个护家清】商品发布细则</a>。</li></ul>"
+        "body": "<ul><li>保质期以月计，按 <span class=\"num\">1个月=30天</span> 换算；以年计，按 <span class=\"num\">1年=365天</span> 换算；临期天数向上取整。</li></ul><div class=\"card-penalty-table-wrap\"><table class=\"card-penalty-table\"><thead><tr><th>保质期</th><th>临期标准（剩余保质期）</th></tr></thead><tbody><tr><td>≥<span class=\"num\">365</span> 天</td><td>≤<span class=\"num\">45</span> 天</td></tr><tr><td><span class=\"num\">180</span> 天≤保质期&lt;<span class=\"num\">365</span> 天</td><td>≤<span class=\"num\">30</span> 天</td></tr><tr><td><span class=\"num\">90</span> 天≤保质期&lt;<span class=\"num\">180</span> 天</td><td>≤<span class=\"num\">20</span> 天</td></tr><tr><td><span class=\"num\">30</span> 天≤保质期&lt;<span class=\"num\">90</span> 天</td><td>≤<span class=\"num\">10</span> 天</td></tr><tr><td><span class=\"num\">15</span> 天≤保质期&lt;<span class=\"num\">30</span> 天</td><td>≤<span class=\"num\">5</span> 天</td></tr><tr><td>保质期&lt;<span class=\"num\">15</span> 天</td><td>≤<span class=\"num\">4</span> 天</td></tr></tbody></table></div><ul><li>个护家清行业保质期临期商品标准详见 <a href=\"https://school.jinritemai.com/doudian/web/article/108445\" target=\"_blank\" rel=\"noopener\">【个护家清】商品发布细则</a>。</li></ul>"
       },
       {
         "cardId": "shelf:3",
