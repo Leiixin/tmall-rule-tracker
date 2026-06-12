@@ -5,8 +5,11 @@ export const CURATED_CARDS_PROMPT_VERSION = "7";
 export const SCORE_FORMAL_METRICS_RULES = `体验分分类页结构（必守，正式阶段指标表格 + 注意事项卡片）：
 - 输出 JSON 须同时含 formalStageMetrics 与 cards。
 - formalStageMetrics：正式阶段（近30天有效/支付订单 ≥ 30 单）各维度考核指标，每项占 rows 一行。
-  - rows 每项：dimension（维度名）、metric（指标名）、detailHtml（计算公式/说明，须含 span.highlight 与 span.num）
-  - 可选 footnoteHtml、subheading；heading 固定为「正式阶段考核指标」
+  - 须设 tableFormat: "douyinRule"、mergeDimension: true。
+  - columns 固定为 ["评分维度", "细分指标", "指标定义", "考核周期"]。
+  - rows 每项：dimension（维度名，如宝贝质量/物流速度/服务保障）、metric（指标名）、definitionHtml（计算公式/说明，须含 span.highlight 与 span.num）、assessmentPeriod（考核周期，从公式分母归纳，如「近30天物流签收订单」）。
+  - 可选 subheading；heading 固定为「正式阶段考核指标」；subheading 可注明部分类目统计周期为近90天；footnoteHtml 留空或不填（档位标准、指标升级说明写在 cards，勿写表下脚注）。
+  - 部分类目单独考核等指标可用 <br><span class="card-metric-note">*注：…</span> 写在 definitionHtml 内。
 - cards：只写非指标注意事项（定义与阶段分界、正式阶段计算公式与权重、应用场景、差行为/违规降分、加分与特殊计分等）；禁止单独建「成长阶段体验分规则」卡片（成长阶段仅在定义卡一句带过）
 - 禁止为单项考核指标单独建卡（指标只进 formalStageMetrics.rows）`;
 
@@ -49,6 +52,7 @@ const CATEGORY_META = {
     structureRules: `效期分类页卡片结构（必守）：
 - 不同效期阶段/场景须分卡，禁止混在一张：保质期定义与换算、临期标注与详情展示、临期天数分级、禁售与违规处理（含 3.7 酒类「新鲜日期」宣传标准与 4.4 违规处理外链）等（原文有则写，无则跳过）；禁止单独建「酒类新鲜日期」卡。
 - 禁止单独建「临期未标注」「化妆品类目临期」「保健品类目临期」等冗余卡；临期未标注等违规处理写在「禁售过期商品及违规处理」卡，个护家清临期标准写在「临期商品分级标准」卡并附《【个护家清】商品发布细则》外链。
+- 天猫「临期商品定义与标注要求」卡（shelf:0）：表上 1 条 li 写标注要求；临保期 9 档须用 <div class="card-penalty-table-wrap"><table class="card-penalty-table"> 两列（保质期 / 临保期）展示；表外 li 写来源。
 - 「临期商品分级标准（按保质期）」卡：表上方 1 条 li 写换算规则；6 档分级须用 <div class="card-penalty-table-wrap"><table class="card-penalty-table"> 两列（保质期 / 临期标准剩余保质期）展示；表外 li 附个护家清细则外链。
 - 违规处理卡须附对应细则链接（发布平台/法规禁止商品、标识标志不合格、关键信息不明确、商家虚假宣传、创作者款式/颜色虚假宣传等）；每张卡 body 只写该阶段要点。`,
     cardCount: "4～5"
@@ -214,16 +218,18 @@ export function buildCuratedCardsSystemPrompt(
       : `{
   "formalStageMetrics": {
     "heading": "正式阶段考核指标",
-    "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
-    "columns": ["维度", "指标", "计算公式/说明"],
+    "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段；部分类目统计周期为近90天）",
+    "tableFormat": "douyinRule",
+    "mergeDimension": true,
+    "columns": ["评分维度", "细分指标", "指标定义", "考核周期"],
     "rows": [
       {
-        "dimension": "维度名",
-        "metric": "指标名",
-        "detailHtml": "<span class=\\"highlight\\">…</span> = … <span class=\\"num\\">30</span> …"
+        "dimension": "宝贝质量",
+        "metric": "商品负反馈率",
+        "definitionHtml": "<span class=\\"highlight\\">商品负反馈率</span> = 近<span class=\\"num\\">30</span>天…",
+        "assessmentPeriod": "近30天物流签收订单"
       }
-    ],
-    "footnoteHtml": "可选脚注"
+    ]
   },
   "cards": [
     {

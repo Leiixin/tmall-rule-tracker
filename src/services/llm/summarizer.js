@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 
 import { saveRules } from "../storage.js";
 import { getLastWeekRange } from "../weeklyReport.js";
-import { isDouyinWeeklyRule } from "../../utils/weeklyEligibility.js";
+import { isRuleInWeeklyWindow } from "../../utils/weeklyEligibility.js";
 import {
   PROMPT_VERSION,
   buildRuleSummaryUserPrompt,
@@ -82,7 +82,7 @@ export async function summarizeRule(rule, options = {}) {
       `[llm] retry (tighter extraction): ${rule.title?.slice(0, 40) || "rule"}`
     );
     try {
-      const retryUser = `${user}\n\n【补充要求】上次摘要遗漏了原文中的处罚依据规则名称、5天未寄出或30元赔付红包等要点，请严格按原文分条补全「核心变化」与「不利」。`;
+      const retryUser = `${user}\n\n【补充要求】上次摘要遗漏了原文中的处罚依据规则名称、5天未寄出或30元赔付红包等要点，或 highlights/impacts 要点缺少 span.highlight；请严格按原文分条补全「核心变化」与「不利」，每条至少一处 highlight。`;
       parsed = await chatJson({
         system,
         user: retryUser,
@@ -91,7 +91,7 @@ export async function summarizeRule(rule, options = {}) {
       if (summaryNeedsQualityRetry(rule, parsed)) {
         // eslint-disable-next-line no-console
         console.warn(
-          `[llm] retry still incomplete: ${rule.title?.slice(0, 40) || "rule"}`
+          `[llm] retry still incomplete (missing highlight or key facts): ${rule.title?.slice(0, 40) || "rule"}`
         );
       }
     } catch (err) {
@@ -114,7 +114,7 @@ export async function summarizeRule(rule, options = {}) {
 }
 
 function prioritizeRules(rules, previousRules, options = {}) {
-  const { weeklyScope } = options;
+  const { weeklyScope, weeklyOnly = false } = options;
   const prevMap = new Map(previousRules.map((r) => [ruleKey(r), r]));
   const range = getLastWeekRange();
   const max =
@@ -126,8 +126,10 @@ function prioritizeRules(rules, previousRules, options = {}) {
     needsAiSummary(rule, prevMap.get(ruleKey(rule)))
   );
 
-  if (weeklyScope === "douyin") {
-    candidates = candidates.filter((rule) => isDouyinWeeklyRule(rule, range));
+  if (weeklyOnly || weeklyScope === "douyin") {
+    candidates = candidates.filter((rule) =>
+      isRuleInWeeklyWindow(rule, range, weeklyScope)
+    );
   }
 
   const weekStart = range.start.valueOf();
@@ -159,7 +161,8 @@ export async function enrichRulesWithAiSummary(rules, options = {}) {
     previousRules = [],
     persist = true,
     platform,
-    weeklyScope
+    weeklyScope,
+    weeklyOnly = false
   } = options;
   const llmPlatform =
     platform || (weeklyScope === "douyin" ? "douyin" : weeklyScope === "intl" ? "intl" : "tmall");
@@ -169,7 +172,8 @@ export async function enrichRulesWithAiSummary(rules, options = {}) {
   }
 
   const { candidates, skipped } = prioritizeRules(rules, previousRules, {
-    weeklyScope
+    weeklyScope,
+    weeklyOnly
   });
   const delayMs = Number(process.env.LLM_REQUEST_DELAY_MS || 500);
   let summarized = 0;

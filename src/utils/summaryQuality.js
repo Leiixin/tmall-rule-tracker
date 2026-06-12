@@ -24,9 +24,25 @@ export function summaryMissRedPacketCompensation(rule, summary) {
   return !/30|三十|红包/.test(blob);
 }
 
+export function summaryMissHighlightMarkup(summary) {
+  const sections = [
+    ...(summary?.highlightsStructured?.["核心变化"] || []),
+    ...(summary?.highlightsStructured?.["适用范围"] || []),
+    ...(summary?.highlightsStructured?.["生效时间"] || []),
+    ...(summary?.impactsStructured?.["不利"] || []),
+    ...(summary?.impactsStructured?.["有利"] || []),
+    ...(summary?.impactsStructured?.["中性"] || [])
+  ];
+  if (!sections.length) {
+    return true;
+  }
+  return sections.some((point) => !/class="highlight"/i.test(String(point || "")));
+}
+
 export function summaryNeedsQualityRetry(rule, summary) {
   return (
     highlightsMissBreachPromiseRule(rule, summary) ||
-    summaryMissRedPacketCompensation(rule, summary)
+    summaryMissRedPacketCompensation(rule, summary) ||
+    summaryMissHighlightMarkup(summary)
   );
 }

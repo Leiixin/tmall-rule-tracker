@@ -114,7 +114,12 @@ async function repairFile(relPath) {
   return { filePath, rules: rules.length, pointsFixed, rulesTruncated };
 }
 
-const targets = ["data/rules.json", "public/data/rules.json"];
+const targets = [
+  "data/rules.json",
+  "public/data/rules.json",
+  "data/douyin/rules.json",
+  "public/data/douyin/rules.json"
+];
 const results = [];
 for (const rel of targets) {
   results.push(await repairFile(rel));

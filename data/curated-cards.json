@@ -16,7 +16,7 @@
           "全类目"
         ],
         "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20002796&cId=45005#/rule/detail?ruleId=20002796&cId=45005",
-        "body": "<ul><li>临期商品必须在标题或详情页最上方展示 <span class=\"highlight\">“临期商品”</span> 或 “X年X月到期” 字样</li><li>保质期 ≥ <span class=\"num\">1080天</span>：临保期 = <span class=\"num\">180天</span></li><li>保质期 730～1080天：临保期 = <span class=\"num\">150天</span></li><li>保质期 365～730天：临保期 = <span class=\"num\">90天</span></li><li>保质期 180～365天：临保期 = <span class=\"num\">60天</span></li><li>保质期 90～180天：临保期 = 1/3保质期（至多40天）</li><li>保质期 30～90天：临保期 = 1/3保质期（至多20天）</li><li>来源：《天猫商品保质期发布规范》第一条/第二条</li></ul>",
+        "body": "<ul><li>临期商品必须在标题或详情页最上方展示 <span class=\"highlight\">「临期商品」</span> 或「X年X月到期」字样</li></ul><div class=\"card-penalty-table-wrap\"><table class=\"card-penalty-table\"><thead><tr><th>保质期</th><th>临保期</th></tr></thead><tbody><tr><td>≥<span class=\"num\">1080</span> 天</td><td><span class=\"num\">180</span> 天</td></tr><tr><td><span class=\"num\">730</span> 天≤保质期&lt;<span class=\"num\">1080</span> 天</td><td><span class=\"num\">150</span> 天</td></tr><tr><td><span class=\"num\">365</span> 天≤保质期&lt;<span class=\"num\">730</span> 天</td><td><span class=\"num\">90</span> 天</td></tr><tr><td><span class=\"num\">180</span> 天≤保质期&lt;<span class=\"num\">365</span> 天</td><td><span class=\"num\">60</span> 天</td></tr><tr><td><span class=\"num\">90</span> 天≤保质期&lt;<span class=\"num\">180</span> 天</td><td>1/3 保质期（至多 <span class=\"num\">40</span> 天）</td></tr><tr><td><span class=\"num\">30</span> 天≤保质期&lt;<span class=\"num\">90</span> 天</td><td>1/3 保质期（至多 <span class=\"num\">20</span> 天）</td></tr><tr><td><span class=\"num\">15</span> 天≤保质期&lt;<span class=\"num\">30</span> 天</td><td>1/2 保质期（至多 <span class=\"num\">10</span> 天）</td></tr><tr><td><span class=\"num\">6</span> 天≤保质期&lt;<span class=\"num\">15</span> 天</td><td>1/2 保质期（至多 <span class=\"num\">5</span> 天）</td></tr><tr><td><span class=\"num\">3</span> 天≤保质期&lt;<span class=\"num\">6</span> 天</td><td>1/2 保质期</td></tr></tbody></table></div><ul><li>来源：《天猫商品保质期发布规范》第一条/第二条</li></ul>",
         "sourceId": "rule-20002796",
         "cardId": "shelf:0"
       },
@@ -67,60 +67,71 @@
     "desc": "基于《淘宝平台店铺真实体验分规范》，涵盖宝贝质量、物流速度、服务保障三大维度，直接影响搜索排序、活动准入及流量分配。2026年3月16日起执行最新调整。",
     "formalStageMetrics": {
       "heading": "正式阶段考核指标",
-      "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段）",
+      "subheading": "近30天有效支付订单 ≥ 30 单（正式阶段；部分类目统计周期为近90天）",
+      "tableFormat": "douyinRule",
+      "mergeDimension": true,
       "columns": [
-        "维度",
-        "指标",
-        "计算公式/说明"
+        "评分维度",
+        "细分指标",
+        "指标定义",
+        "考核周期"
       ],
       "rows": [
         {
           "dimension": "宝贝质量",
           "metric": "商品负反馈率",
-          "detailHtml": "<span class=\"highlight\">商品负反馈率</span> = 近<span class=\"num\">30</span>天物流签收订单中，因商品品质退款或描述相符<span class=\"num\">1</span>～<span class=\"num\">2</span>星评价的订单笔数 ÷ 近<span class=\"num\">30</span>天物流签收订单笔数"
+          "definitionHtml": "<span class=\"highlight\">商品负反馈率</span> = 近<span class=\"num\">30</span>天物流签收订单中，因商品品质退款或描述相符<span class=\"num\">1</span>～<span class=\"num\">2</span>星评价的订单笔数 ÷ 近<span class=\"num\">30</span>天物流签收订单笔数",
+          "assessmentPeriod": "近30天物流签收订单"
         },
         {
           "dimension": "宝贝质量",
           "metric": "商品好评率",
-          "detailHtml": "<span class=\"highlight\">商品好评率</span> = 近<span class=\"num\">30</span>天描述相符<span class=\"num\">4</span>～<span class=\"num\">5</span>星评价次数 ÷ 近<span class=\"num\">30</span>天描述相符被评价数"
+          "definitionHtml": "<span class=\"highlight\">商品好评率</span> = 近<span class=\"num\">30</span>天描述相符<span class=\"num\">4</span>～<span class=\"num\">5</span>星评价次数 ÷ 近<span class=\"num\">30</span>天描述相符被评价数",
+          "assessmentPeriod": "近30天描述相符被评价"
         },
         {
           "dimension": "物流速度",
           "metric": "48小时揽收及时率",
-          "detailHtml": "<span class=\"highlight\">48小时揽收及时率</span> = <span class=\"num\">48</span>小时内揽收订单数 ÷ 应揽收订单数"
+          "definitionHtml": "<span class=\"highlight\">48小时揽收及时率</span> = 近<span class=\"num\">30</span>天揽收时间（支付到揽收）早于或等于 <span class=\"num\">48</span> 小时的订单笔数 ÷ 近<span class=\"num\">30</span>天应揽收订单笔数",
+          "assessmentPeriod": "近30天应揽收订单"
         },
         {
           "dimension": "物流速度",
           "metric": "物流到货时长",
-          "detailHtml": "近<span class=\"num\">30</span>天 <span class=\"highlight\">物流到货时长</span> = 支付到签收的平均时间（小时）；越优分数越高"
+          "definitionHtml": "<span class=\"highlight\">物流到货时长</span> = 近<span class=\"num\">30</span>天支付（货到付款为下单）至签收的总时长 ÷ 支付且已签收订单笔数",
+          "assessmentPeriod": "近30天支付且已签收订单"
         },
         {
           "dimension": "物流速度",
           "metric": "物流差评率（部分类目）",
-          "detailHtml": "近<span class=\"num\">30</span>天 <span class=\"highlight\">物流差评率</span> = 物流差评数 ÷ 评价总数（部分类目考核）"
+          "definitionHtml": "<span class=\"highlight\">物流差评率</span> = 近<span class=\"num\">30</span>天物流服务被评 <span class=\"num\">1</span>～<span class=\"num\">2</span> 星的次数 ÷ 近<span class=\"num\">30</span>天确认收货订单笔数<br><span class=\"card-metric-note\">*注：部分类目单独考核，具体以产品页面显示为准</span>",
+          "assessmentPeriod": "近30天确认收货订单"
         },
         {
           "dimension": "服务保障",
           "metric": "旺旺3分钟人工响应率",
-          "detailHtml": "<span class=\"highlight\">旺旺3分钟人工响应率</span> = 近<span class=\"num\">30</span>天 <span class=\"num\">8:00-23:00</span> 期间，买家提问后 <span class=\"num\">3</span> 分钟内人工回复的对话轮次 ÷ 该时段总对话轮次"
+          "definitionHtml": "<span class=\"highlight\">旺旺3分钟人工响应率</span> = 近<span class=\"num\">30</span>天 <span class=\"num\">8:00-23:00</span> 期间，买家提问后 <span class=\"num\">3</span> 分钟内人工回复的对话轮次 ÷ 该时段总对话轮次",
+          "assessmentPeriod": "近30天8:00-23:00人工对话"
         },
         {
           "dimension": "服务保障",
           "metric": "旺旺满意度",
-          "detailHtml": "<span class=\"highlight\">旺旺满意度</span> = 近<span class=\"num\">30</span>天旺旺满意评价量（剔除未解决）÷ 近<span class=\"num\">30</span>天旺旺收到评价数"
+          "definitionHtml": "<span class=\"highlight\">旺旺满意度</span> = 近<span class=\"num\">30</span>天旺旺满意评价量（剔除未解决）÷ 近<span class=\"num\">30</span>天旺旺收到评价数",
+          "assessmentPeriod": "近30天旺旺收到评价"
         },
         {
           "dimension": "服务保障",
           "metric": "退款处理时长",
-          "detailHtml": "<span class=\"highlight\">退款处理时长</span> = 近<span class=\"num\">30</span>天卖家处理退款总时长 ÷ 退款完结总笔数"
+          "definitionHtml": "<span class=\"highlight\">退款处理时长</span> = 近<span class=\"num\">30</span>天卖家处理退款总时长 ÷ 退款完结总笔数",
+          "assessmentPeriod": "近30天退款完结"
         },
         {
           "dimension": "服务保障",
           "metric": "平台求助率",
-          "detailHtml": "<span class=\"highlight\">平台求助率</span> =（近<span class=\"num\">30</span>天纠纷笔数+投诉笔数+咨询平台笔数）÷ 近<span class=\"num\">30</span>天支付订单笔数"
+          "definitionHtml": "<span class=\"highlight\">平台求助率</span> =（近<span class=\"num\">30</span>天纠纷笔数+投诉笔数+咨询平台笔数）÷ 近<span class=\"num\">30</span>天支付订单笔数",
+          "assessmentPeriod": "近30天支付订单"
         }
-      ],
-      "footnoteHtml": "单项指标得分按卖家<span class=\"highlight\">主营类目得分档位标准</span>计算，具体以产品页面/千牛后台为准；宝贝质量维度自 <span class=\"num\">2026-03-16</span> 起由「首次品退率」「商品差评率」升级为上述两项"
+      ]
     },
     "cards": [
       {

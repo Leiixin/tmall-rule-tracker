@@ -309,6 +309,7 @@ function normalizeSummaryPayload(parsed) {
 
 export {
   highlightsMissBreachPromiseRule,
+  summaryMissHighlightMarkup,
   summaryMissRedPacketCompensation,
   summaryNeedsQualityRetry
 } from "../../utils/summaryQuality.js";

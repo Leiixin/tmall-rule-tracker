@@ -35,6 +35,10 @@ def looks_truncated(text: str) -> bool:
     return bool(re.search(r"以<$|</sp(?:an)?$|<span[^>]*$|<[^>]*$", t, re.I))
 
 
+def repair_point(text: str) -> str:
+    return normalize_weekly_span_markup(text)
+
+
 def repair_structured(structured):
     truncated = False
     if not isinstance(structured, dict):
@@ -48,7 +52,7 @@ def repair_structured(structured):
             raw = str(point or "")
             if looks_truncated(raw):
                 truncated = True
-            out[key].append(normalize_weekly_span_markup(raw))
+            out[key].append(repair_point(raw))
     return out, truncated
 
 
@@ -89,15 +93,13 @@ def repair_file(rel_path: str):
                 ai["highlightsStructured"], SECTION_KEYS["highlightsStructured"]
             )
         elif ai.get("highlights"):
-            ai["highlights"] = [
-                normalize_weekly_span_markup(x) for x in ai["highlights"]
-            ]
+            ai["highlights"] = [repair_point(x) for x in ai["highlights"]]
         if ai.get("impactsStructured"):
             ai["impacts"] = flatten(
                 ai["impactsStructured"], SECTION_KEYS["impactsStructured"]
             )
         elif ai.get("impacts"):
-            ai["impacts"] = [normalize_weekly_span_markup(x) for x in ai["impacts"]]
+            ai["impacts"] = [repair_point(x) for x in ai["impacts"]]
         if ai.get("actionsStructured"):
             ai["actions"] = flatten(
                 ai["actionsStructured"], SECTION_KEYS["actionsStructured"]
@@ -105,7 +107,7 @@ def repair_file(rel_path: str):
         elif ai.get("actions"):
             ai["actions"] = [normalize_weekly_span_markup(x) for x in ai["actions"]]
         if ai.get("highlight"):
-            ai["highlight"] = normalize_weekly_span_markup(ai["highlight"])
+            ai["highlight"] = repair_point(ai["highlight"])
         if rule_truncated:
             rules_truncated += 1
             ai.pop("contentHash", None)
@@ -123,5 +125,7 @@ if __name__ == "__main__":
     results = [
         repair_file("data/rules.json"),
         repair_file("public/data/rules.json"),
+        repair_file("data/douyin/rules.json"),
+        repair_file("public/data/douyin/rules.json"),
     ]
     print(json.dumps({"ok": True, "results": results}, ensure_ascii=False, indent=2))
