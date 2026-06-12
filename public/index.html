@@ -1363,13 +1363,27 @@ var ACTION_SECTION_KEYS = ['运营组', '客服组', '物流组'];
 
 var INLINE_HIGHLIGHT_PLACEHOLDER = '\x00';
 
+function stripBrokenHtmlTailClient(text) {
+  var t = String(text || '');
+  var openIdx = t.lastIndexOf('<span');
+  if (openIdx !== -1 && t.indexOf('</span>', openIdx) === -1) {
+    t = t.slice(0, openIdx).trim();
+  }
+  return t
+    .replace(/<span[^>]*$/i, '')
+    .replace(/<\/?span[^>]*$/i, '')
+    .replace(/<\/?sp(?:an)?[^>]*$/i, '')
+    .replace(/<[^>]*$/i, '')
+    .trim();
+}
+
 function sanitizeInlineHighlightHtml(text) {
-  var input = String(text || '');
+  var input = stripBrokenHtmlTailClient(String(text || ''));
   if (!input) return '';
 
   var spans = [];
   var withoutSpans = input.replace(
-    /<span class="(num|highlight)">([\s\S]*?)<\/span>/gi,
+    /<span class=['"](num|highlight)['"]>([\s\S]*?)<\/span>/gi,
     function (_full, cls, inner) {
       var idx = spans.length;
       spans.push({ cls: cls.toLowerCase(), inner: escapeHtml(inner) });
@@ -1378,6 +1392,8 @@ function sanitizeInlineHighlightHtml(text) {
   );
 
   var safe = escapeHtml(withoutSpans);
+  safe = safe.replace(/&lt;span class=['"]?(num|highlight)['"]?&gt;/gi, '');
+  safe = safe.replace(/&lt;\/span&gt;/gi, '');
   spans.forEach(function (sp, idx) {
     var token = INLINE_HIGHLIGHT_PLACEHOLDER + idx + INLINE_HIGHLIGHT_PLACEHOLDER;
     safe = safe.split(token).join(

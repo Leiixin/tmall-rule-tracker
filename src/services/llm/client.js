@@ -74,11 +74,84 @@ function normalizeCore(text) {
     .toLowerCase();
 }
 
+const WEEKLY_POINT_MAX_VISIBLE_CHARS = 120;
+
+function stripWeeklySpanTags(text) {
+  return String(text || "").replace(
+    /<span class=['"](num|highlight)['"]>([\s\S]*?)<\/span>/gi,
+    "$2"
+  );
+}
+
+function stripBrokenHtmlTail(text) {
+  let t = String(text || "");
+  const openIdx = t.lastIndexOf("<span");
+  if (openIdx !== -1 && t.indexOf("</span>", openIdx) === -1) {
+    t = t.slice(0, openIdx).trim();
+  }
+  return t
+    .replace(/<span[^>]*$/i, "")
+    .replace(/<\/?span[^>]*$/i, "")
+    .replace(/<\/?sp(?:an)?[^>]*$/i, "")
+    .replace(/<[^>]*$/i, "")
+    .trim();
+}
+
+export function normalizeWeeklySpanMarkup(text) {
+  const normalized = String(text || "").replace(
+    /<span class='(num|highlight)'>([\s\S]*?)<\/span>/gi,
+    '<span class="$1">$2</span>'
+  );
+  return stripBrokenHtmlTail(normalized);
+}
+
+function truncateWeeklyPoint(text, maxVisible = WEEKLY_POINT_MAX_VISIBLE_CHARS) {
+  const normalized = normalizeWeeklySpanMarkup(text);
+  const visible = stripWeeklySpanTags(normalized);
+  if (visible.length <= maxVisible) {
+    return normalized;
+  }
+
+  let visibleCount = 0;
+  let result = "";
+  let i = 0;
+  while (i < normalized.length && visibleCount < maxVisible) {
+    const spanOpen = normalized.slice(i).match(/^<span class="(num|highlight)">/i);
+    if (spanOpen) {
+      const closeIdx = normalized.indexOf("</span>", i);
+      if (closeIdx === -1) {
+        break;
+      }
+      const fullSpan = normalized.slice(i, closeIdx + 7);
+      const inner = fullSpan
+        .replace(/^<span class="(?:num|highlight)">/i, "")
+        .replace(/<\/span>$/i, "");
+      if (visibleCount + inner.length <= maxVisible) {
+        result += fullSpan;
+        visibleCount += inner.length;
+        i = closeIdx + 7;
+      } else {
+        const remain = maxVisible - visibleCount;
+        if (remain > 0) {
+          result += `<span class="${spanOpen[1].toLowerCase()}">${inner.slice(0, remain)}</span>`;
+        }
+        break;
+      }
+      continue;
+    }
+    result += normalized[i];
+    visibleCount += 1;
+    i += 1;
+  }
+  return stripBrokenHtmlTail(result);
+}
+
 function stripEnumPrefix(text) {
-  return String(text || "")
-    .replace(/^\d+[.、．]\s*/, "")
-    .trim()
-    .slice(0, 120);
+  return truncateWeeklyPoint(
+    String(text || "")
+      .replace(/^\d+[.、．]\s*/, "")
+      .trim()
+  );
 }
 
 function migrateFlatToStructured(lines, legacyMap) {
@@ -160,7 +233,7 @@ export function normalizeHighlightsStructured(parsed) {
 
   if (!Object.keys(structured).length && parsed?.highlight) {
     structured["核心变化"] = [
-      stripEnumPrefix(String(parsed.highlight).slice(0, 240))
+      stripEnumPrefix(String(parsed.highlight))
     ].filter(Boolean);
   }
 

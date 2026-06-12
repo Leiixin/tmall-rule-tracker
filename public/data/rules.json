@@ -23,7 +23,7 @@
         "核心变化": [
           "商家须在消费者签收后48小时内发起的服务申请中，<span class=\"highlight\">24小时内有效响应</span>，否则系统默认达成服务申请。",
           "商品不新鲜（签收日期与生产日期差超过保质期1/3），商家需提供退货退款或按不符合商品实付金额<span class=\"num\">20%</span>退款。",
-          "商家未履行或超时履行服务，平台介入判责成立后，除支持退款外，还需以每个子订单实付金额<span class=\"num\">20%</span>（最低<span class=\"num\">5</span>元，最高<span class=\"num\"",
+          "商家未履行或超时履行服务，平台介入判责成立后，除支持退款外，还需以每个子订单实付金额<span class=\"num\">20%</span>（最低<span class=\"num\">5</span>元，最高",
           "同一消费者近<span class=\"num\">30</span>天内最多享受<span class=\"num\">3</span>次赔偿，同一商品多次购买仅享<span class=\"num\">1</span>次。"
         ],
         "适用范围": [
@@ -36,7 +36,7 @@
       "highlights": [
         "核心变化：商家须在消费者签收后48小时内发起的服务申请中，<span class=\"highlight\">24小时内有效响应</span>，否则系统默认达成服务申请。",
         "核心变化：商品不新鲜（签收日期与生产日期差超过保质期1/3），商家需提供退货退款或按不符合商品实付金额<span class=\"num\">20%</span>退款。",
-        "核心变化：商家未履行或超时履行服务，平台介入判责成立后，除支持退款外，还需以每个子订单实付金额<span class=\"num\">20%</span>（最低<span class=\"num\">5</span>元，最高<span class=\"num\"",
+        "核心变化：商家未履行或超时履行服务，平台介入判责成立后，除支持退款外，还需以每个子订单实付金额<span class=\"num\">20%</span>（最低<span class=\"num\">5</span>元，最高",
         "核心变化：同一消费者近<span class=\"num\">30</span>天内最多享受<span class=\"num\">3</span>次赔偿，同一商品多次购买仅享<span class=\"num\">1</span>次。",
         "适用范围：适用于加入“新鲜日期”服务的天猫商家，覆盖零食/坚果/特产、咖啡/麦片/冲饮、粮油调味/速食/干货/烘焙、茶、酒类、水产肉类/新鲜蔬果/熟食、宠物/宠物食品及用品下部分食品类目。",
         "生效时间：最新修订于<span class=\"num\">2026年6月8日</span>"
@@ -68,7 +68,7 @@
       "actionsStructured": {
         "运营组": [
           "检查店铺真实体验分宝贝质量得分是否≥4.2分，确保符合准入要求。",
-          "监控“新鲜日期”特定退款原因下的退款发起率≤3%、退款转纠纷率<5%且量<5起。",
+          "监控“新鲜日期”特定退款原因下的退款发起率≤3%、退款转纠纷率",
           "定期查看商品维度退款发起率是否≤0.5%，避免被清退。"
         ],
         "客服组": [
@@ -83,7 +83,7 @@
       },
       "actions": [
         "运营组：检查店铺真实体验分宝贝质量得分是否≥4.2分，确保符合准入要求。",
-        "运营组：监控“新鲜日期”特定退款原因下的退款发起率≤3%、退款转纠纷率<5%且量<5起。",
+        "运营组：监控“新鲜日期”特定退款原因下的退款发起率≤3%、退款转纠纷率",
         "运营组：定期查看商品维度退款发起率是否≤0.5%，避免被清退。",
         "客服组：在消费者签收后48小时内发起的服务申请中，确保24小时内有效响应。",
         "客服组：审核消费者提供的图片凭证（生产日期、保质期清晰可见），确认是否满足“不新鲜”条件。",
@@ -91,7 +91,6 @@
         "物流组：确保发货商品的生产日期与签收日期的时间差不超过保质期的1/3。",
         "物流组：对于无物流节点回传的订单，发货3天后视为签收，需提前规划库存周转。"
       ],
-      "contentHash": "ece55b0bc2558334",
       "model": "deepseek-chat",
       "promptVersion": "8",
       "generatedAt": "2026-06-12T05:51:58.554Z"
@@ -121,28 +120,28 @@
     "aiSummary": {
       "highlightsStructured": {
         "核心变化": [
-          "出售过期食品或生产日期造假，须退款并支付<span class='num'>10</span>倍赔偿金，不足<span class='num'>1000</span>元按<span class='num'>1000</span>元赔付，以<",
-          "其他明知危害健康的食品，同样适用<span class='num'>10</span>倍赔偿且最低<span class='num'>1000</span>元赔付红包。",
-          "商家怠于召回问题食品，天猫可采取<span class='highlight'>下架商品</span>、<span class='highlight'>删除商品</span>、<span class='highlight'>监管商品</sp"
+          "出售过期食品或生产日期造假，须退款并支付<span class=\"num\">10</span>倍赔偿金，不足<span class=\"num\">1000</span>元按<span class=\"num\">1000</span>元赔付，以",
+          "其他明知危害健康的食品，同样适用<span class=\"num\">10</span>倍赔偿且最低<span class=\"num\">1000</span>元赔付红包。",
+          "商家怠于召回问题食品，天猫可采取<span class=\"highlight\">下架商品</span>、<span class=\"highlight\">删除商品</span>、"
         ],
         "适用范围": [
-          "适用于天猫健康食品行业，包括<span class='highlight'>传统滋补营养品</span>、<span class='highlight'>保健食品/膳食营养补充食品</span>。"
+          "适用于天猫健康食品行业，包括<span class=\"highlight\">传统滋补营养品</span>、<span class=\"highlight\">保健食品/膳食营养补充食品</span>。"
         ],
         "生效时间": [
-          "本规范于<span class='num'>2026年1月12日</span>首次发布，最近修订于<span class='num'>2026年6月4日</span>。"
+          "本规范于<span class=\"num\">2026年1月12日</span>首次发布，最近修订于<span class=\"num\">2026年6月4日</span>。"
         ]
       },
       "highlights": [
-        "核心变化：出售过期食品或生产日期造假，须退款并支付<span class='num'>10</span>倍赔偿金，不足<span class='num'>1000</span>元按<span class='num'>1000</span>元赔付，以<",
-        "核心变化：其他明知危害健康的食品，同样适用<span class='num'>10</span>倍赔偿且最低<span class='num'>1000</span>元赔付红包。",
-        "核心变化：商家怠于召回问题食品，天猫可采取<span class='highlight'>下架商品</span>、<span class='highlight'>删除商品</span>、<span class='highlight'>监管商品</sp",
-        "适用范围：适用于天猫健康食品行业，包括<span class='highlight'>传统滋补营养品</span>、<span class='highlight'>保健食品/膳食营养补充食品</span>。",
-        "生效时间：本规范于<span class='num'>2026年1月12日</span>首次发布，最近修订于<span class='num'>2026年6月4日</span>。"
+        "核心变化：出售过期食品或生产日期造假，须退款并支付<span class=\"num\">10</span>倍赔偿金，不足<span class=\"num\">1000</span>元按<span class=\"num\">1000</span>元赔付，以",
+        "核心变化：其他明知危害健康的食品，同样适用<span class=\"num\">10</span>倍赔偿且最低<span class=\"num\">1000</span>元赔付红包。",
+        "核心变化：商家怠于召回问题食品，天猫可采取<span class=\"highlight\">下架商品</span>、<span class=\"highlight\">删除商品</span>、",
+        "适用范围：适用于天猫健康食品行业，包括<span class=\"highlight\">传统滋补营养品</span>、<span class=\"highlight\">保健食品/膳食营养补充食品</span>。",
+        "生效时间：本规范于<span class=\"num\">2026年1月12日</span>首次发布，最近修订于<span class=\"num\">2026年6月4日</span>。"
       ],
       "impactsStructured": {
         "不利": [
-          "出售过期或生产日期造假食品，需承担<span class='num'>10</span>倍赔偿（最低<span class='num'>1000</span>元）的赔付红包成本。",
-          "其他明知危害健康的食品，同样面临<span class='num'>10</span>倍赔偿（最低<span class='num'>1000</span>元）的赔付红包成本。",
+          "出售过期或生产日期造假食品，需承担<span class=\"num\">10</span>倍赔偿（最低<span class=\"num\">1000</span>元）的赔付红包成本。",
+          "其他明知危害健康的食品，同样面临<span class=\"num\">10</span>倍赔偿（最低<span class=\"num\">1000</span>元）的赔付红包成本。",
           "怠于召回问题食品，可能被平台采取下架、删除商品、屏蔽店铺甚至查封账户等严厉管控。",
           "商品描述不符或未披露必要信息，将按《天猫市场管理规范》中描述不符处理，可能面临违规扣分。"
         ],
@@ -152,8 +151,8 @@
         ]
       },
       "impacts": [
-        "不利：出售过期或生产日期造假食品，需承担<span class='num'>10</span>倍赔偿（最低<span class='num'>1000</span>元）的赔付红包成本。",
-        "不利：其他明知危害健康的食品，同样面临<span class='num'>10</span>倍赔偿（最低<span class='num'>1000</span>元）的赔付红包成本。",
+        "不利：出售过期或生产日期造假食品，需承担<span class=\"num\">10</span>倍赔偿（最低<span class=\"num\">1000</span>元）的赔付红包成本。",
+        "不利：其他明知危害健康的食品，同样面临<span class=\"num\">10</span>倍赔偿（最低<span class=\"num\">1000</span>元）的赔付红包成本。",
         "不利：怠于召回问题食品，可能被平台采取下架、删除商品、屏蔽店铺甚至查封账户等严厉管控。",
         "不利：商品描述不符或未披露必要信息，将按《天猫市场管理规范》中描述不符处理，可能面临违规扣分。",
         "中性：需按《天猫入驻标准》提供资质并持续符合在营资质标准，属于合规经营成本。",
@@ -166,8 +165,8 @@
           "关注抽检结果，对不合格商品立即下架并配合召回。"
         ],
         "客服组": [
-          "对消费者关于食品保质期、生产日期的咨询，需在<span class='num'>24</span>小时内准确回复。",
-          "接到食品安全投诉，立即上报并协助核实，避免升级为<span class='num'>10</span>倍赔偿。"
+          "对消费者关于食品保质期、生产日期的咨询，需在<span class=\"num\">24</span>小时内准确回复。",
+          "接到食品安全投诉，立即上报并协助核实，避免升级为<span class=\"num\">10</span>倍赔偿。"
         ],
         "物流组": [
           "发货前检查商品保质期，确保不发出过期或临期未标注的商品。",
@@ -178,12 +177,11 @@
         "运营组：确保商品发布符合《天猫保健食品/特医食品发布规范》等要求，避免滥发信息或发布非约定商品。",
         "运营组：定期自查商品描述，确保与实物一致，并披露保质期、生产日期等必要信息。",
         "运营组：关注抽检结果，对不合格商品立即下架并配合召回。",
-        "客服组：对消费者关于食品保质期、生产日期的咨询，需在<span class='num'>24</span>小时内准确回复。",
-        "客服组：接到食品安全投诉，立即上报并协助核实，避免升级为<span class='num'>10</span>倍赔偿。",
+        "客服组：对消费者关于食品保质期、生产日期的咨询，需在<span class=\"num\">24</span>小时内准确回复。",
+        "客服组：接到食品安全投诉，立即上报并协助核实，避免升级为<span class=\"num\">10</span>倍赔偿。",
         "物流组：发货前检查商品保质期，确保不发出过期或临期未标注的商品。",
         "物流组：如遇召回，立即停止发货并配合退回问题商品。"
       ],
-      "contentHash": "cf75842c85fb1e51",
       "model": "deepseek-chat",
       "promptVersion": "8",
       "generatedAt": "2026-06-12T05:51:14.729Z"
@@ -522,7 +520,7 @@
         "核心变化": [
           "新增服务适用的类目，覆盖零食/坚果/特产、咖啡/麦片/冲饮、粮油调味/速食/干货/烘焙、茶、酒类、水产肉类/新鲜蔬果/熟食、宠物/宠物食品及用品下部分食品相关类目。",
           "调整退款金额计算方式，删除套组与非套组的区分，改为按不符合要求的商品数量乘以商品单价（以子订单实际支付金额折算）的<span class=\"num\">20%</span>退款。",
-          "商家未在<span class=\"num\">24</span>小时内有效响应或未履行服务，平台介入判责成立后，商家需以每个子订单实付金额的<span class=\"num\">20%</span>（最低<span class=\"num\">5<",
+          "商家未在<span class=\"num\">24</span>小时内有效响应或未履行服务，平台介入判责成立后，商家需以每个子订单实付金额的<span class=\"num\">20%</span>（最低",
           "消费者需在签收后<span class=\"num\">48</span>小时内以指定原因发起服务申请，且同一消费者近<span class=\"num\">30</span>天内最多享受<span class=\"num\">3</span>次赔偿，"
         ],
         "适用范围": [
@@ -535,14 +533,14 @@
       "highlights": [
         "核心变化：新增服务适用的类目，覆盖零食/坚果/特产、咖啡/麦片/冲饮、粮油调味/速食/干货/烘焙、茶、酒类、水产肉类/新鲜蔬果/熟食、宠物/宠物食品及用品下部分食品相关类目。",
         "核心变化：调整退款金额计算方式，删除套组与非套组的区分，改为按不符合要求的商品数量乘以商品单价（以子订单实际支付金额折算）的<span class=\"num\">20%</span>退款。",
-        "核心变化：商家未在<span class=\"num\">24</span>小时内有效响应或未履行服务，平台介入判责成立后，商家需以每个子订单实付金额的<span class=\"num\">20%</span>（最低<span class=\"num\">5<",
+        "核心变化：商家未在<span class=\"num\">24</span>小时内有效响应或未履行服务，平台介入判责成立后，商家需以每个子订单实付金额的<span class=\"num\">20%</span>（最低",
         "核心变化：消费者需在签收后<span class=\"num\">48</span>小时内以指定原因发起服务申请，且同一消费者近<span class=\"num\">30</span>天内最多享受<span class=\"num\">3</span>次赔偿，",
         "适用范围：适用于加入“新鲜日期”服务的天猫商家，经营指定食品及宠物食品类目。",
         "生效时间：规则于<span class=\"num\">2026年6月8日</span>正式生效，<span class=\"num\">6月8日12点</span>前订单按原规范执行。"
       ],
       "impactsStructured": {
         "不利": [
-          "商家未在<span class=\"num\">24</span>小时内响应或未履行服务，需承担每个子订单实付金额<span class=\"num\">20%</span>（<span class=\"num\">5</span>～<span cla",
+          "商家未在<span class=\"num\">24</span>小时内响应或未履行服务，需承担每个子订单实付金额<span class=\"num\">20%</span>（<span class=\"num\">5</span>～",
           "商家需承担退货运费，且未履行服务可能影响店铺体验分，触发服务清退（宝贝质量得分＜<span class=\"num\">4.2</span>分或退款发起率＞<span class=\"num\">3%</span>等）。",
           "消费者滥用服务申请可能影响商家指标，但平台不支持赔付。"
         ],
@@ -555,7 +553,7 @@
         ]
       },
       "impacts": [
-        "不利：商家未在<span class=\"num\">24</span>小时内响应或未履行服务，需承担每个子订单实付金额<span class=\"num\">20%</span>（<span class=\"num\">5</span>～<span cla",
+        "不利：商家未在<span class=\"num\">24</span>小时内响应或未履行服务，需承担每个子订单实付金额<span class=\"num\">20%</span>（<span class=\"num\">5</span>～",
         "不利：商家需承担退货运费，且未履行服务可能影响店铺体验分，触发服务清退（宝贝质量得分＜<span class=\"num\">4.2</span>分或退款发起率＞<span class=\"num\">3%</span>等）。",
         "不利：消费者滥用服务申请可能影响商家指标，但平台不支持赔付。",
         "有利：商家完成赔付后，该未履行行为不再属于《天猫规则》中“违背承诺”的投诉受理范围。",
@@ -588,7 +586,6 @@
         "物流组：确保发货商品生产日期与签收日期的时间差不超过保质期的<span class=\"num\">1/3</span>，避免触发服务。",
         "物流组：关注物流签收时间，若物流无回传信息，需在发货后<span class=\"num\">3</span>天内视为签收。"
       ],
-      "contentHash": "a2a636e851c56f32",
       "model": "deepseek-chat",
       "promptVersion": "8",
       "generatedAt": "2026-06-12T05:51:49.685Z"
@@ -1168,10 +1165,10 @@
     "aiSummary": {
       "highlightsStructured": {
         "核心变化": [
-          "生鲜提货券资金冻结周期最长<span class=\"num\">6</span>个月，分<span class=\"num\">6</span>期解冻，每期解冻比例上限<span class=\"num\">16%</span>或<span clas",
-          "提货券商家须保证每日可预约卡券数量不低于<span class=\"num\">1000</span>份，且近<span class=\"num\">7</span>天内至少<span class=\"num\">3</span>天可预约；未满足需按<",
+          "生鲜提货券资金冻结周期最长<span class=\"num\">6</span>个月，分<span class=\"num\">6</span>期解冻，每期解冻比例上限<span class=\"num\">16%</span>或",
+          "提货券商家须保证每日可预约卡券数量不低于<span class=\"num\">1000</span>份，且近<span class=\"num\">7</span>天内至少<span class=\"num\">3</span>天可预约；未满足需按",
           "同一自然年兑付期内第<span class=\"num\">2</span>次及以上未满足预约要求，每次向天猫支付违约金<span class=\"num\">500</span>元。",
-          "经营<span class=\"highlight\">“水产肉类/新鲜蔬果/熟食”</span>类目默认开通<span class=\"highlight\">“坏单包退”</span>服务；鱼类、大闸蟹、车厘子/樱桃、榴莲类目默认开通<span"
+          "经营<span class=\"highlight\">“水产肉类/新鲜蔬果/熟食”</span>类目默认开通<span class=\"highlight\">“坏单包退”</span>服务；鱼类、大闸蟹、车厘子/樱桃、榴莲类目默认开通"
         ],
         "适用范围": [
           "适用于水产肉类/新鲜蔬果/熟食、低温乳制品、粮油调味/速食/干货/烘焙、儿童速食、火锅/肉类/米饭类速食、烘焙半成品/蛋挞/披萨、低温乳类、烘焙原料、面点/西式速食、零食/坚果/特产、新鲜蛋糕/低温糕点/短保烘焙、餐饮美食卡券、甜品/冰淇淋"
@@ -1181,10 +1178,10 @@
         ]
       },
       "highlights": [
-        "核心变化：生鲜提货券资金冻结周期最长<span class=\"num\">6</span>个月，分<span class=\"num\">6</span>期解冻，每期解冻比例上限<span class=\"num\">16%</span>或<span clas",
-        "核心变化：提货券商家须保证每日可预约卡券数量不低于<span class=\"num\">1000</span>份，且近<span class=\"num\">7</span>天内至少<span class=\"num\">3</span>天可预约；未满足需按<",
+        "核心变化：生鲜提货券资金冻结周期最长<span class=\"num\">6</span>个月，分<span class=\"num\">6</span>期解冻，每期解冻比例上限<span class=\"num\">16%</span>或",
+        "核心变化：提货券商家须保证每日可预约卡券数量不低于<span class=\"num\">1000</span>份，且近<span class=\"num\">7</span>天内至少<span class=\"num\">3</span>天可预约；未满足需按",
         "核心变化：同一自然年兑付期内第<span class=\"num\">2</span>次及以上未满足预约要求，每次向天猫支付违约金<span class=\"num\">500</span>元。",
-        "核心变化：经营<span class=\"highlight\">“水产肉类/新鲜蔬果/熟食”</span>类目默认开通<span class=\"highlight\">“坏单包退”</span>服务；鱼类、大闸蟹、车厘子/樱桃、榴莲类目默认开通<span",
+        "核心变化：经营<span class=\"highlight\">“水产肉类/新鲜蔬果/熟食”</span>类目默认开通<span class=\"highlight\">“坏单包退”</span>服务；鱼类、大闸蟹、车厘子/樱桃、榴莲类目默认开通",
         "适用范围：适用于水产肉类/新鲜蔬果/熟食、低温乳制品、粮油调味/速食/干货/烘焙、儿童速食、火锅/肉类/米饭类速食、烘焙半成品/蛋挞/披萨、低温乳类、烘焙原料、面点/西式速食、零食/坚果/特产、新鲜蛋糕/低温糕点/短保烘焙、餐饮美食卡券、甜品/冰淇淋",
         "生效时间：最新修订于<span class=\"num\">2026年5月15日</span>，首次生效于<span class=\"num\">2024年8月16日</span>。"
       ],
@@ -1242,7 +1239,6 @@
         "物流组：确保发货时效符合<span class=\"highlight\">《天猫物流时效管理规范》</span>。",
         "物流组：商品包装按<span class=\"highlight\">《淘宝平台食品生鲜商品包装规范》</span>执行，保障运输安全。"
       ],
-      "contentHash": "895ef5870e8c53d1",
       "model": "deepseek-chat",
       "promptVersion": "8",
       "generatedAt": "2026-06-12T05:52:53.733Z"
@@ -1699,7 +1695,7 @@
       "highlightsStructured": {
         "核心变化": [
           "新增履约标准：商家/服务商需在发货后或商品到站后<span class=\"num\">24</span>小时内联系消费者确认上门时间，并在约定日期<span class=\"num\">23:59:59</span>前完成服务。",
-          "优化保障体系：未提供拆旧服务赔付<span class=\"num\">300</span>元/单，未按时提供赔付<span class=\"num\">50</span>元/单，乱收费退还多收费用并赔付<span class=\"num\">200<",
+          "优化保障体系：未提供拆旧服务赔付<span class=\"num\">300</span>元/单，未按时提供赔付<span class=\"num\">50</span>元/单，乱收费退还多收费用并赔付",
           "服务范围拓展至住宅家具等更多类目，并明确免费与付费拆旧服务类型。"
         ],
         "适用范围": [
@@ -1711,7 +1707,7 @@
       },
       "highlights": [
         "核心变化：新增履约标准：商家/服务商需在发货后或商品到站后<span class=\"num\">24</span>小时内联系消费者确认上门时间，并在约定日期<span class=\"num\">23:59:59</span>前完成服务。",
-        "核心变化：优化保障体系：未提供拆旧服务赔付<span class=\"num\">300</span>元/单，未按时提供赔付<span class=\"num\">50</span>元/单，乱收费退还多收费用并赔付<span class=\"num\">200<",
+        "核心变化：优化保障体系：未提供拆旧服务赔付<span class=\"num\">300</span>元/单，未按时提供赔付<span class=\"num\">50</span>元/单，乱收费退还多收费用并赔付",
         "核心变化：服务范围拓展至住宅家具等更多类目，并明确免费与付费拆旧服务类型。",
         "适用范围：适用于加入“拆旧”或“拆送装一体”服务的天猫在营商家。",
         "生效时间：规则于<span class=\"num\">2026年5月3日</span>公示，<span class=\"num\">2026年5月10日</span>正式生效。"
@@ -1764,7 +1760,6 @@
         "物流组：确保物流节点信息回传，支持24小时内联系消费者确认时间。",
         "物流组：协调服务商在约定日期<span class=\"num\">23:59:59</span>前完成拆旧服务，并上传签到时间。"
       ],
-      "contentHash": "26c6732e9d494305",
       "model": "deepseek-chat",
       "promptVersion": "8",
       "generatedAt": "2026-06-12T05:53:55.492Z"
