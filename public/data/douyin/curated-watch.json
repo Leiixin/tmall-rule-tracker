@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-15T06:45:04.543Z",
+  "lastCheckedAt": "2026-06-16T06:55:07.786Z",
   "autoPublishVersion": 9,
   "recentAutoPublish": {
     "at": "2026-06-06T05:03:22.239Z",
@@ -30,13 +30,14 @@
       "lastSyncedAt": "2026-06-06T05:03:22.239Z"
     },
     "dy-rule-101936": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "contentHash changed; platformModifiedAt changed",
       "ruleTitle": "商家【虚假宣传】细则",
-      "platformModifiedAt": "2026-04-29T03:00:04.000Z",
-      "contentHash": "c49455c9b1644cc4",
+      "platformModifiedAt": "2026-06-15T07:19:06.000Z",
+      "contentHash": "10f301a5ae9c9557",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-06T05:03:22.239Z"
+      "lastSyncedAt": "2026-06-06T05:03:22.239Z",
+      "detectedAt": "2026-06-16T06:55:07.786Z"
     },
     "dy-rule-creator-style-fake": {
       "status": "ok",
@@ -122,7 +123,7 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
+    "changed": 1,
     "errors": 0,
     "published": 0,
     "synced": 0,
