@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-21T06:20:43.083Z",
+  "updatedAt": "2026-06-22T06:47:47.718Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -76,100 +76,107 @@
     },
     "penalty": {
       "pinned": false,
-      "sourceId": "dy-rule-101706",
-      "ruleTitle": "商家发货行为管理规则",
-      "panelSubtitle": "本次修订主要优化违规处理措施，细化赔付与店铺处罚规则。",
-      "generatedAt": "2026-06-04T01:59:38.858Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/101706",
+      "sourceId": "dy-rule-aHwH9wK4JyWJ",
+      "ruleTitle": "【商家-欺诈发货】实施细则",
+      "panelSubtitle": "欺诈发货规则细化，新增特殊情形处置与赔付上限调整",
+      "generatedAt": "2026-06-22T06:48:00.973Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
       "changes": [
         {
           "type": "modify",
-          "title": "违规处理措施细化",
-          "detail": "新增对超长时效未签收订单的自动退款处理，以及多次违规或批量投诉时平台可采取更严厉的处罚措施。",
-          "date": "2025-09-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+          "title": "欺诈发货定义扩展",
+          "detail": "新增误导提前确认收货、违规预售/寄养、货到付款引导线下交易等场景，明确欺诈行为范围。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
         },
         {
           "type": "modify",
-          "title": "厂家自送权限违规处置",
-          "detail": "明确滥用厂家自送权限的违规情形，平台可根据情节关闭权限7天至永久。",
-          "date": "2025-09-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+          "title": "消费者赔付上限调整",
+          "detail": "投资足金、铂金、银类等贵金属类目订单赔付上限从500元提升至<span class=\"new-val\">1000元</span>。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
         },
         {
           "type": "modify",
-          "title": "物流服务承诺不一致处置",
-          "detail": "商家或创作者宣传的物流服务与实际不符，平台按虚假宣传规则处置，商家先行承担履约责任。",
-          "date": "2025-09-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+          "title": "违规处置梯度优化",
+          "detail": "自然年1次违规增加<span class=\"new-val\">停业整顿7天</span>；2次及以上取消<span class=\"old\">扣除违约金</span>，改为<span class=\"new-val\">清退</span>。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+        },
+        {
+          "type": "new",
+          "title": "新增特殊情形处置",
+          "detail": "针对高风险交易模式、批量欺诈、重复违规等情形，新增<span class=\"new-val\">商品封禁、限制发品、禁止投流、关联主体清退</span>等阶梯措施。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
         },
         {
           "type": "modify",
-          "title": "违规发货影响商家评级",
-          "detail": "违规判定记录同步计算在商家评级分值中，影响极速发货、大促活动等权益。",
-          "date": "2025-09-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+          "title": "违规次数认定规则明确",
+          "detail": "明确<span class=\"new-val\">店铺日维度欺诈发货订单量≥3单计作1次违规</span>，替代原“商品维度违规1次”表述。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
         },
         {
-          "type": "modify",
-          "title": "蟹卡类目订单违规处理",
-          "detail": "蟹卡及实物兑换订单可同时被处置，实物兑换订单赔付金额等同于蟹卡订单支付金额。",
-          "date": "2025-09-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/101706"
+          "type": "new",
+          "title": "新增经营建议与申诉指引",
+          "detail": "新增库存管理、协商发货工具使用、申诉路径及时效说明，帮助商家合规经营。",
+          "date": "2026-06-22",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
         }
       ],
       "impacts": [
         {
           "level": "high",
-          "title": "超长时效未签收自动退款",
-          "desc": "消费者发起未收到货退款申请，平台将默认同意并从商家账户自动退款，增加资金风险。"
+          "title": "贵金属类目赔付成本上升",
+          "desc": "投资足金、铂金、银类订单赔付上限提高至<span class=\"warn\">1000元</span>，违规成本显著增加。"
         },
         {
           "level": "high",
-          "title": "多次违规面临更严处罚",
-          "desc": "被判罚多次或批量投诉，平台可采取限制提现、停业整顿、清退店铺等严厉措施。"
+          "title": "重复违规处罚加重",
+          "desc": "自然年2次及以上违规直接<span class=\"warn\">清退</span>，取消违约金选项，违规风险大幅提升。"
         },
         {
           "level": "medium",
-          "title": "厂家自送权限受限",
-          "desc": "滥用厂家自送权限将导致权限关闭7天至永久，影响正常发货模式。"
+          "title": "特殊情形面临更严管控",
+          "desc": "高风险交易模式、批量欺诈等情形可能被<span class=\"warn\">商品封禁、禁止投流、关联主体清退</span>，影响范围扩大。"
         },
         {
           "level": "medium",
-          "title": "物流宣传不符需担责",
-          "desc": "商家需为创作者宣传的物流服务不符先行承担履约责任，增加纠纷处理成本。"
+          "title": "违规次数认定更清晰",
+          "desc": "日维度订单量≥3单即计1次违规，商家需更严格监控每日发货订单。"
         },
         {
-          "level": "medium",
-          "title": "评级分值影响权益",
-          "desc": "违规记录影响商家评级，进而影响极速发货、大促活动等平台权益。"
+          "level": "low",
+          "title": "新增申诉指引",
+          "desc": "申诉时效7天，超时无法申诉，商家需及时处理违规通知。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "确保发货时效与承诺一致",
-          "desc": "严格按照商品详情页、直播等承诺的发货时效发货，避免发货超时。"
+          "title": "定期盘点库存，避免缺货",
+          "desc": "及时下架缺货商品，合理设置可售库存，防止爆单后欺诈发货。"
         },
         {
           "level": "action",
-          "title": "规范使用厂家自送权限",
-          "desc": "仅在实际无物流轨迹回传时使用厂家自送，避免滥用导致权限关闭。"
+          "title": "使用协商发货工具",
+          "desc": "缺货时主动与消费者沟通，使用平台<span class=\"good\">发货报备/协商/豁免工具</span>，避免发空包或赠品。"
         },
         {
           "level": "action",
-          "title": "监控物流轨迹并及时处理异常",
-          "desc": "定期检查物流轨迹，确保揽收、分拨记录在规定时效内回传，避免轨迹超时或异常。"
+          "title": "确保线上运单号为主品",
+          "desc": "切勿先发空包或赠品再线下补发主品，线上运单号必须与主品一致。"
         },
         {
           "level": "action",
-          "title": "妥善处理缺货/无货订单",
-          "desc": "如无法发货，及时与消费者协商退款，避免被判定缺货/无货违规。"
+          "title": "规范引导消费者重新下单",
+          "desc": "若需使用优惠券重新下单，引导消费者<span class=\"good\">先退款原订单再重新下单</span>，避免新旧订单交叉违规。"
         },
         {
           "level": "action",
-          "title": "关注超长时效未签收订单",
-          "desc": "主动联系消费者确认收货状态，避免因未签收导致自动退款。"
+          "title": "关注违规通知及时申诉",
+          "desc": "收到判罚后<span class=\"good\">7天内</span>发起申诉，超时将无法申诉，定期查看抖店后台违规管理。"
         }
       ]
     },

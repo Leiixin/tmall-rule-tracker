@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-06-21T06:20:43.083Z",
+  "lastCheckedAt": "2026-06-22T06:47:47.718Z",
   "autoPublishVersion": 9,
   "recentAutoPublish": {
     "at": "2026-06-06T05:03:22.239Z",
@@ -111,22 +111,24 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4JyWJ": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: douyin penalty card must have at least 2 penalty tier units (li or table cells)",
       "ruleTitle": "【商家-欺诈发货】实施细则",
-      "platformModifiedAt": "2026-04-24T03:00:57.000Z",
-      "contentHash": "90df21941ce38652",
+      "platformModifiedAt": "2026-06-22T05:51:58.000Z",
+      "contentHash": "18a538fe342e8a7f",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
+      "detectedAt": "2026-06-22T06:47:47.718Z",
+      "insightsGeneratedAt": null
     }
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
-    "errors": 0,
+    "changed": 1,
+    "errors": 1,
     "published": 0,
     "synced": 0,
-    "insightsGenerated": 0,
+    "insightsGenerated": 1,
     "forced": 0
   }
 }

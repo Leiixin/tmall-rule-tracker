@@ -1,6 +1,21 @@
 ﻿{
-  "lastUpdated": "2026-06-21T06:09:55.377Z",
+  "lastUpdated": "2026-06-22T06:34:56.718Z",
   "items": [
+    {
+      "date": "06-22",
+      "text": "淘宝网商品发布数量限制规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=780&cId=1138"
+    },
+    {
+      "date": "06-22",
+      "text": "淘宝网商品评价、销量特殊计算逻辑说明",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=4149&cId=1151"
+    },
+    {
+      "date": "06-22",
+      "text": "《淘宝网超时说明》特殊商品付款时效细则",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20004502&cId=64005"
+    },
     {
       "date": "06-19",
       "text": "淘宝平台游戏服务类商品争议处理规范",
@@ -65,21 +80,6 @@
       "date": "06-09",
       "text": "关于变更《淘宝网全球购市场管理规范》的意见征集结果反馈",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20010257&cId=161"
-    },
-    {
-      "date": "06-08",
-      "text": "关于淘宝平台物流轨迹异常等违规行为的治理公告",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010246&cId=1162"
-    },
-    {
-      "date": "06-04",
-      "text": "淘宝平台生鲜类商品争议处理规范",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=11003608&cId=1155"
-    },
-    {
-      "date": "06-02",
-      "text": "关于变更《淘宝直播平台限制推广商品的实施细则》的公示",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010232&cId=81"
     }
   ]
 }
