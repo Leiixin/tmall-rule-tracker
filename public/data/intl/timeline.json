@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-06-24T05:07:24.819Z",
+  "lastUpdated": "2026-06-25T05:11:11.797Z",
   "items": [
+    {
+      "date": "06-24",
+      "text": "淘宝网会员一般违规节点处理详解",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=11001321&cId=87"
+    },
     {
       "date": "06-22",
       "text": "淘宝网商品发布数量限制规范",
@@ -75,11 +80,6 @@
       "date": "06-09",
       "text": "关于变更《淘宝网全球购市场管理规范》的公示通知",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20010258&cId=81"
-    },
-    {
-      "date": "06-09",
-      "text": "关于变更《淘宝网全球购市场管理规范》的意见征集结果反馈",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010257&cId=161"
     }
   ]
 }

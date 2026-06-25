@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-24T05:18:27.866Z",
+  "updatedAt": "2026-06-25T05:20:43.579Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -76,107 +76,97 @@
     },
     "penalty": {
       "pinned": false,
-      "sourceId": "dy-rule-aHwH9wK4JyWJ",
-      "ruleTitle": "【商家-欺诈发货】实施细则",
-      "panelSubtitle": "欺诈发货规则细化，新增特殊情形处置与赔付上限调整",
-      "generatedAt": "2026-06-22T06:48:00.973Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
+      "sourceId": "dy-rule-aHzmeN9E9dBF",
+      "ruleTitle": "【商家-物流轨迹异常】实施细则",
+      "panelSubtitle": "物流轨迹异常规则更新，新增违规情形并调整处罚力度",
+      "generatedAt": "2026-06-25T05:20:57.927Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
       "changes": [
         {
           "type": "modify",
-          "title": "欺诈发货定义扩展",
-          "detail": "新增误导提前确认收货、违规预售/寄养、货到付款引导线下交易等场景，明确欺诈行为范围。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
-        },
-        {
-          "type": "modify",
-          "title": "消费者赔付上限调整",
-          "detail": "投资足金、铂金、银类等贵金属类目订单赔付上限从500元提升至<span class=\"new-val\">1000元</span>。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
-        },
-        {
-          "type": "modify",
-          "title": "违规处置梯度优化",
-          "detail": "自然年1次违规增加<span class=\"new-val\">停业整顿7天</span>；2次及以上取消<span class=\"old\">扣除违约金</span>，改为<span class=\"new-val\">清退</span>。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+          "title": "新增“私自召回或物流终止”情形",
+          "detail": "将原“私自召回”扩展为“私自召回或物流终止”，明确包括快递单号取消、物流终止等行为。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
         },
         {
           "type": "new",
-          "title": "新增特殊情形处置",
-          "detail": "针对高风险交易模式、批量欺诈、重复违规等情形，新增<span class=\"new-val\">商品封禁、限制发品、禁止投流、关联主体清退</span>等阶梯措施。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+          "title": "新增“重新发货异常”情形",
+          "detail": "商家在同一订单内多次发货并上传多个物流单号，且订单存在发货超时异常，视为轨迹异常。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
         },
         {
           "type": "modify",
-          "title": "违规次数认定规则明确",
-          "detail": "明确<span class=\"new-val\">店铺日维度欺诈发货订单量≥3单计作1次违规</span>，替代原“商品维度违规1次”表述。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+          "title": "合并质检仓发货规则",
+          "detail": "将QIC仓“快递送仓”与二手3C送检订单合并为统一表述：签收后24小时无质检或入仓扫描记录即违规。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
         },
         {
-          "type": "new",
-          "title": "新增经营建议与申诉指引",
-          "detail": "新增库存管理、协商发货工具使用、申诉路径及时效说明，帮助商家合规经营。",
-          "date": "2026-06-22",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ"
+          "type": "modify",
+          "title": "调整违规处置表中“禁止上新”天数",
+          "detail": "自然年1次违规起，禁止上新从<span class=\"old\">3天</span>改为<span class=\"new-val\">7天</span>，2次及以上仍为7天。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+        },
+        {
+          "type": "modify",
+          "title": "调整违规处置表中“限制预售权限”天数",
+          "detail": "自然年1次违规起，限制预售权限从<span class=\"old\">7天</span>改为<span class=\"new-val\">15天</span>，2次及以上仍为15天。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+        },
+        {
+          "type": "modify",
+          "title": "调整违规处置表中“限制成交”天数",
+          "detail": "自然年3次违规时，限制成交从<span class=\"old\">15天</span>改为<span class=\"new-val\">30天</span>，4次及以上仍为30天。",
+          "date": "2026-06-25",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
         }
       ],
       "impacts": [
         {
           "level": "high",
-          "title": "贵金属类目赔付成本上升",
-          "desc": "投资足金、铂金、银类订单赔付上限提高至<span class=\"warn\">1000元</span>，违规成本显著增加。"
+          "title": "违规情形增加，触发风险上升",
+          "desc": "新增“重新发货异常”和“私自召回或物流终止”，商家需避免多次发货或取消物流，否则易被判违规。"
         },
         {
           "level": "high",
-          "title": "重复违规处罚加重",
-          "desc": "自然年2次及以上违规直接<span class=\"warn\">清退</span>，取消违约金选项，违规风险大幅提升。"
+          "title": "禁止上新和限制预售权限加重",
+          "desc": "首次违规即面临<span class=\"warn\">禁止上新7天</span>（原3天）和<span class=\"warn\">限制预售15天</span>（原7天），影响新品发布和预售活动。"
         },
         {
           "level": "medium",
-          "title": "特殊情形面临更严管控",
-          "desc": "高风险交易模式、批量欺诈等情形可能被<span class=\"warn\">商品封禁、禁止投流、关联主体清退</span>，影响范围扩大。"
-        },
-        {
-          "level": "medium",
-          "title": "违规次数认定更清晰",
-          "desc": "日维度订单量≥3单即计1次违规，商家需更严格监控每日发货订单。"
+          "title": "限制成交处罚提前升级",
+          "desc": "自然年3次违规时，限制成交从15天延长至30天，与4次违规处罚一致，加速处罚升级。"
         },
         {
           "level": "low",
-          "title": "新增申诉指引",
-          "desc": "申诉时效7天，超时无法申诉，商家需及时处理违规通知。"
+          "title": "质检仓规则统一，减少歧义",
+          "desc": "合并QIC仓和二手3C送检规则，表述更清晰，但商家需注意签收后24小时履约要求。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "定期盘点库存，避免缺货",
-          "desc": "及时下架缺货商品，合理设置可售库存，防止爆单后欺诈发货。"
+          "title": "避免同一订单多次发货",
+          "desc": "确保一次性正确发货，若需更换物流，应先取消原单号再重新发货，避免触发“重新发货异常”。"
         },
         {
           "level": "action",
-          "title": "使用协商发货工具",
-          "desc": "缺货时主动与消费者沟通，使用平台<span class=\"good\">发货报备/协商/豁免工具</span>，避免发空包或赠品。"
+          "title": "及时处理物流终止或退回",
+          "desc": "若物流出现异常退回或取消，应主动联系消费者协商退款或补发，避免被判定为“私自召回或物流终止”。"
         },
         {
           "level": "action",
-          "title": "确保线上运单号为主品",
-          "desc": "切勿先发空包或赠品再线下补发主品，线上运单号必须与主品一致。"
+          "title": "加强质检仓订单跟进",
+          "desc": "对于需送检或入仓的订单，确保签收后24小时内完成质检或入仓扫描，避免轨迹异常。"
         },
         {
           "level": "action",
-          "title": "规范引导消费者重新下单",
-          "desc": "若需使用优惠券重新下单，引导消费者<span class=\"good\">先退款原订单再重新下单</span>，避免新旧订单交叉违规。"
-        },
-        {
-          "level": "action",
-          "title": "关注违规通知及时申诉",
-          "desc": "收到判罚后<span class=\"good\">7天内</span>发起申诉，超时将无法申诉，定期查看抖店后台违规管理。"
+          "title": "关注违规次数，避免处罚升级",
+          "desc": "每日监控物流轨迹异常率，控制在10%以下且异常单量少于20单，防止自然年违规次数累积。"
         }
       ]
     },

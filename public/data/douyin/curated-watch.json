@@ -1,13 +1,13 @@
 {
-  "lastCheckedAt": "2026-06-24T05:18:27.866Z",
-  "autoPublishVersion": 9,
+  "lastCheckedAt": "2026-06-25T05:20:43.579Z",
+  "autoPublishVersion": 10,
   "recentAutoPublish": {
-    "at": "2026-06-06T05:03:22.239Z",
-    "sourceId": "dy-rule-101936",
-    "ruleTitle": "商家【虚假宣传】细则",
-    "label": "商家【虚假宣传】细则",
+    "at": "2026-06-25T05:20:43.579Z",
+    "sourceId": "dy-rule-aHzmeN9E9dBF",
+    "ruleTitle": "【商家-物流轨迹异常】实施细则",
+    "label": "【商家-物流轨迹异常】实施细则",
     "categories": [
-      "shelf"
+      "penalty"
     ]
   },
   "sources": {
@@ -102,13 +102,14 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHzmeN9E9dBF": {
-      "status": "ok",
-      "message": "no change",
+      "status": "synced",
+      "message": "auto-published 1 categor(ies)",
       "ruleTitle": "【商家-物流轨迹异常】实施细则",
-      "platformModifiedAt": "2026-04-17T10:36:07.000Z",
-      "contentHash": "3c0cceba045fa80b",
+      "platformModifiedAt": "2026-06-25T03:25:52.000Z",
+      "contentHash": "66d225005211b828",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
+      "lastSyncedAt": "2026-06-25T05:20:43.579Z",
+      "insightsGeneratedAt": "2026-06-25T05:20:43.579Z"
     },
     "dy-rule-aHwH9wK4JyWJ": {
       "status": "ok",
@@ -122,11 +123,11 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
+    "changed": 1,
     "errors": 0,
-    "published": 0,
-    "synced": 0,
-    "insightsGenerated": 0,
+    "published": 1,
+    "synced": 1,
+    "insightsGenerated": 1,
     "forced": 0
   }
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-12T03:47:38.000Z",
-  "autoPublishVersion": 9,
+  "updatedAt": "2026-06-25T05:20:43.579Z",
+  "autoPublishVersion": 10,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -314,20 +314,6 @@
         "cardId": "penalty:2"
       },
       {
-        "title": "物流轨迹异常",
-        "severity": "critical",
-        "severityText": "处罚",
-        "date": "2025-09-29",
-        "tags": [
-          "轨迹异常",
-          "虚假单号"
-        ],
-        "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
-        "body": "<ul><li><span class=\"highlight\">认定：</span>上传物流单号异常或轨迹明显异常，及/或消费者合理期限内未实际收到商品，常见情形包括但不限于：</li><li><span class=\"highlight\">认定①：</span>上传物流单号后 <span class=\"num\">48</span> 小时内仍无揽收记录</li><li><span class=\"highlight\">认定②：</span>首条揽收后 <span class=\"num\">48</span> 小时内无分拨中心轨迹更新</li><li><span class=\"highlight\">认定③：</span>重复物流轨迹或不同订单重复使用同一运单号</li><li><span class=\"highlight\">认定④：</span>物流运单收件信息与订单收件信息不一致（改地址等特殊情形除外）</li><li><span class=\"highlight\">认定⑤：</span>首条物流轨迹时间早于订单支付时间，或非消费者意愿的异常退回/单号取消</li><li>通用赔付：实付 <span class=\"num\">25%</span>（最低 <span class=\"num\">5</span> 元，最高 <span class=\"num\">100</span> 元）；贵金属等可提高至最高 <span class=\"num\">1000</span> 元</li><li>违规 <span class=\"num\">1</span> 次：日异常率＞<span class=\"num\">10%</span> 且异常单≥<span class=\"num\">20</span>；自然年累计可冻结货款、禁止上新、限制预售/成交</li></ul>",
-        "sourceId": "dy-rule-aHzmeN9E9dBF",
-        "cardId": "penalty:3"
-      },
-      {
         "title": "欺诈发货",
         "severity": "critical",
         "severityText": "处罚",
@@ -339,7 +325,21 @@
         "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4JyWJ",
         "body": "<ul><li><span class=\"highlight\">认定：</span>商家未真实发货，导致物流完结时消费者未收到商品包裹，或实施其他欺诈行为，包括但不限于：</li><li><span class=\"highlight\">认定①：</span>发空包：上传物流单号后消费者收到空包裹</li><li><span class=\"highlight\">认定②：</span>买A发B：收到与商品描述明显不符的其他物品</li><li><span class=\"highlight\">认定③：</span>短装：收到商品数量与承诺严重不符（比例超 <span class=\"num\">50%</span>）</li><li>消费者赔付：实付 <span class=\"num\">30%</span>（最低 <span class=\"num\">10</span> 元，最高 <span class=\"num\">500</span> 元）；平台可主动关单退款</li><li>商品维度违规 <span class=\"num\">1</span> 次：当日欺诈发货订单量≥<span class=\"num\">3</span> 单</li><li>自然年累计：可冻结货款并停止结算（最高 <span class=\"num\">180</span> 天）、体验分扣 <span class=\"num\">15</span> 分、违约金最高 <span class=\"num\">2000</span> 元、清退</li></ul>",
         "sourceId": "dy-rule-aHwH9wK4JyWJ",
-        "cardId": "penalty:4"
+        "cardId": "penalty:3"
+      },
+      {
+        "cardId": "penalty:4",
+        "sourceId": "dy-rule-aHzmeN9E9dBF",
+        "title": "物流轨迹异常",
+        "severity": "critical",
+        "severityText": "强制",
+        "date": "2026-06-25",
+        "tags": [
+          "物流轨迹",
+          "违规处罚"
+        ],
+        "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
+        "body": "<ul><li><span class=\"highlight\">认定：</span>物流轨迹异常包括物流轨迹超时异常和虚假单号/轨迹异常，包括但不限于：</li><li><span class=\"highlight\">认定①：</span>发货后<span class=\"num\">48</span>小时未揽收。</li><li><span class=\"highlight\">认定②：</span>揽收后<span class=\"num\">48</span>小时无分拨记录。</li><li><span class=\"highlight\">认定③：</span>重复物流轨迹或重复运单号。</li><li><span class=\"highlight\">认定④：</span>收货地址不符（消费者改地址等特殊情形除外）。</li><li><span class=\"highlight\">认定⑤：</span>揽收时间早于订单支付时间。</li><li><span class=\"highlight\">认定⑥：</span>私自召回或物流终止。</li><li><span class=\"highlight\">认定⑦：</span>重新发货异常。</li><li><span class=\"highlight\">认定⑧：</span>厂家自送模式下，商家未在<span class=\"num\">24</span>小时内反馈物流进度或电话无法接通。</li><li><span class=\"highlight\">认定⑨：</span>【宠物/宠物食品及用品】厂家自送，未在承诺送达时间内到货。</li><li><span class=\"highlight\">认定⑩：</span>质检仓发货模式下，签收后<span class=\"num\">24</span>小时无质检或入仓记录。</li><li><span class=\"highlight\">消费者赔付：</span>通用标准：订单实付金额<span class=\"num\">25%</span>，最低<span class=\"num\">5</span>元，最高<span class=\"num\">100</span>元。</li><li><span class=\"highlight\">特殊赔付：</span>【宠物/宠物食品及用品】厂家自送：<span class=\"num\">30%</span>，最低<span class=\"num\">10</span>元，最高<span class=\"num\">100</span>元。</li><li><span class=\"highlight\">特殊赔付：</span>二手3C数码送检订单：<span class=\"num\">5%</span>，最低<span class=\"num\">5</span>元，最高<span class=\"num\">100</span>元。</li><li><span class=\"highlight\">特殊赔付：</span>贵金属等类目，最高可提高至<span class=\"num\">1000</span>元。</li><li><span class=\"highlight\">违规处理：</span>日物流轨迹异常率&gt;<span class=\"num\">10%</span>且异常单量≥<span class=\"num\">20</span>单计为<span class=\"num\">1</span>次违规。</li><li><span class=\"highlight\">类型1（超时为主）：</span>自然年<span class=\"num\">1</span>次：冻结货款（近<span class=\"num\">30</span>天异常订单结算金额<span class=\"num\">2</span>倍，最低<span class=\"num\">1000</span>元）并停止结算<span class=\"num\">30</span>天，禁止上新<span class=\"num\">7</span>天，限制预售<span class=\"num\">15</span>天；<span class=\"num\">2</span>次：同上+限制精选联盟<span class=\"num\">3</span>天，限制成交<span class=\"num\">7</span>天；<span class=\"num\">3</span>次：同上+限制精选联盟<span class=\"num\">5</span>天，限制成交<span class=\"num\">15</span>天；<span class=\"num\">4</span>次：同上+限制精选联盟<span class=\"num\">7</span>天，限制成交<span class=\"num\">15</span>天；<span class=\"num\">5</span>次及以上：同上+限制精选联盟<span class=\"num\">15</span>天，限制成交<span class=\"num\">30</span>天。</li><li><span class=\"highlight\">类型2（虚假为主）：</span>自然年<span class=\"num\">1</span>次：冻结货款（近<span class=\"num\">30</span>天异常订单结算金额<span class=\"num\">2</span>倍，最低<span class=\"num\">1000</span>元）并停止结算<span class=\"num\">30</span>天，禁止上新<span class=\"num\">3</span>天，限制预售<span class=\"num\">7</span>天；<span class=\"num\">2</span>次：同上+限制精选联盟<span class=\"num\">3</span>天，限制成交<span class=\"num\">7</span>天；<span class=\"num\">3</span>次：同上+限制精选联盟<span class=\"num\">5</span>天，限制成交<span class=\"num\">15</span>天；<span class=\"num\">4</span>次：同上+限制精选联盟<span class=\"num\">7</span>天，限制成交<span class=\"num\">15</span>天；<span class=\"num\">5</span>次及以上：同上+限制精选联盟<span class=\"num\">15</span>天，限制成交<span class=\"num\">30</span>天。</li><li><span class=\"highlight\">其他处置：</span>批量违规或导致批量投诉，可限单冻款，冻结近<span class=\"num\">15</span>天结算货款的<span class=\"num\">35%</span>（最低<span class=\"num\">1000</span>元），最长<span class=\"num\">90</span>天。</li><li><span class=\"highlight\">其他处置：</span>连续多日异常或引发舆情等，可采取限制成交、冻结货款、提高保证金、停业整顿、解除协议、清退等。</li></ul>"
       }
     ]
   }
