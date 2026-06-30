@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-29T06:10:37.038Z",
+  "updatedAt": "2026-06-30T05:21:56.813Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -76,97 +76,107 @@
     },
     "penalty": {
       "pinned": false,
-      "sourceId": "dy-rule-aHzmeN9E9dBF",
-      "ruleTitle": "【商家-物流轨迹异常】实施细则",
-      "panelSubtitle": "物流轨迹异常规则更新，新增违规情形并调整处罚力度",
-      "generatedAt": "2026-06-25T05:20:57.927Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF",
+      "sourceId": "dy-rule-aHwH9wK4Je2N",
+      "ruleTitle": "【商家-发货超时】实施细则",
+      "panelSubtitle": "发货超时违规处理措施细化，新增商品/店铺维度处置标准及解除条件",
+      "generatedAt": "2026-06-30T05:22:10.756Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
       "changes": [
         {
           "type": "modify",
-          "title": "新增“私自召回或物流终止”情形",
-          "detail": "将原“私自召回”扩展为“私自召回或物流终止”，明确包括快递单号取消、物流终止等行为。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
-        },
-        {
-          "type": "new",
-          "title": "新增“重新发货异常”情形",
-          "detail": "商家在同一订单内多次发货并上传多个物流单号，且订单存在发货超时异常，视为轨迹异常。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+          "title": "违规处理措施调整",
+          "detail": "原按超时率分严重/特别严重两档，现改为按商品/店铺维度分三档，并明确处置解除条件。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
         },
         {
           "type": "modify",
-          "title": "合并质检仓发货规则",
-          "detail": "将QIC仓“快递送仓”与二手3C送检订单合并为统一表述：签收后24小时无质检或入仓扫描记录即违规。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+          "title": "订单扣罚标准不变",
+          "detail": "订单扣罚标准未变更，仍按发货超时48小时以内/以上及承诺时效分档赔付。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
         },
         {
           "type": "modify",
-          "title": "调整违规处置表中“禁止上新”天数",
-          "detail": "自然年1次违规起，禁止上新从<span class=\"old\">3天</span>改为<span class=\"new-val\">7天</span>，2次及以上仍为7天。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+          "title": "预约到货赔付标准明确",
+          "detail": "预约到货未按时送达的赔付标准从“违规订单赔付标准”明确为订单实付金额5%，最低5元最高50元。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
         },
         {
           "type": "modify",
-          "title": "调整违规处置表中“限制预售权限”天数",
-          "detail": "自然年1次违规起，限制预售权限从<span class=\"old\">7天</span>改为<span class=\"new-val\">15天</span>，2次及以上仍为15天。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+          "title": "不规范操作范围扩大",
+          "detail": "原仅提“错放类目”，现增加“未准确填写发货方式/上传错误物流单号”等不规范操作。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
         },
         {
-          "type": "modify",
-          "title": "调整违规处置表中“限制成交”天数",
-          "detail": "自然年3次违规时，限制成交从<span class=\"old\">15天</span>改为<span class=\"new-val\">30天</span>，4次及以上仍为30天。",
-          "date": "2026-06-25",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHzmeN9E9dBF"
+          "type": "remove",
+          "title": "删除发货超时后48小时未发货的缺货处理条款",
+          "detail": "原规则中“发货超时后48小时内仍未发货按缺货处理”的条款被移除。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+        },
+        {
+          "type": "remove",
+          "title": "删除物流轨迹异常自动退款条款",
+          "detail": "原规则中“上传物流单号后超48小时无揽件信息，消费者退款自动同意”的条款被移除。",
+          "date": "2026-06-29",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
         }
       ],
       "impacts": [
         {
           "level": "high",
-          "title": "违规情形增加，触发风险上升",
-          "desc": "新增“重新发货异常”和“私自召回或物流终止”，商家需避免多次发货或取消物流，否则易被判违规。"
+          "title": "新增商品/店铺维度处置标准",
+          "desc": "商品超时率≥50%且超时单量≥100单将导致商品封禁及货款冻结7天，影响正常经营。"
         },
         {
           "level": "high",
-          "title": "禁止上新和限制预售权限加重",
-          "desc": "首次违规即面临<span class=\"warn\">禁止上新7天</span>（原3天）和<span class=\"warn\">限制预售15天</span>（原7天），影响新品发布和预售活动。"
+          "title": "店铺维度处置更严格",
+          "desc": "店铺连续2日超时率≥40%且超时单量≥200单，限制成交100单/日；超时率≥50%则限制成交0单/日，均冻结货款7天。"
         },
         {
           "level": "medium",
-          "title": "限制成交处罚提前升级",
-          "desc": "自然年3次违规时，限制成交从15天延长至30天，与4次违规处罚一致，加速处罚升级。"
+          "title": "处置解除条件明确",
+          "desc": "处置前已有超时订单完成发货并揽收，次日即可解除，鼓励商家尽快履约。"
+        },
+        {
+          "level": "medium",
+          "title": "不规范操作风险增加",
+          "desc": "错放类目、填写错误物流单号等不规范操作导致违规的，商家自行承担风险。"
         },
         {
           "level": "low",
-          "title": "质检仓规则统一，减少歧义",
-          "desc": "合并QIC仓和二手3C送检规则，表述更清晰，但商家需注意签收后24小时履约要求。"
+          "title": "预约到货赔付标准统一",
+          "desc": "预约到货未按时送达赔付标准明确为5%，与之前一致，无实质变化。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "避免同一订单多次发货",
-          "desc": "确保一次性正确发货，若需更换物流，应先取消原单号再重新发货，避免触发“重新发货异常”。"
+          "title": "监控商品发货超时率",
+          "desc": "确保商品日维度发货超时率低于50%，超时单量低于100单，避免商品封禁。"
         },
         {
           "level": "action",
-          "title": "及时处理物流终止或退回",
-          "desc": "若物流出现异常退回或取消，应主动联系消费者协商退款或补发，避免被判定为“私自召回或物流终止”。"
+          "title": "控制店铺整体超时率",
+          "desc": "保持店铺日发货超时率低于40%，连续2日不超40%且超时单量低于200单，避免限制成交。"
         },
         {
           "level": "action",
-          "title": "加强质检仓订单跟进",
-          "desc": "对于需送检或入仓的订单，确保签收后24小时内完成质检或入仓扫描，避免轨迹异常。"
+          "title": "及时处理超时订单",
+          "desc": "超时订单尽快完成发货并揽收，满足解除条件后可提前解除处置。"
         },
         {
           "level": "action",
-          "title": "关注违规次数，避免处罚升级",
-          "desc": "每日监控物流轨迹异常率，控制在10%以下且异常单量少于20单，防止自然年违规次数累积。"
+          "title": "规范操作避免违规",
+          "desc": "准确填写类目、发货方式及物流单号，避免因不规范操作导致发货违规。"
+        },
+        {
+          "level": "action",
+          "title": "关注预约到货履约",
+          "desc": "对于支持预约到货的订单，确保在约定到货时效内送达，避免5%赔付。"
         }
       ]
     },
