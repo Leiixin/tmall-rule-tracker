@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-07-02T04:59:09.036Z",
+  "lastUpdated": "2026-07-03T04:43:50.090Z",
   "items": [
+    {
+      "date": "07-02",
+      "text": "天猫生鲜行业管理规范",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20005940&cId=384#/rule/detail?type=detail&ruleId=20005940&cId=384"
+    },
     {
       "date": "07-01",
       "text": "天猫保证金履约险限时权益政策（2026 年 7 月 -9 月）",
@@ -75,11 +80,6 @@
       "date": "05-26",
       "text": "关于新增《天猫“品牌质保”服务规范》的公示通知",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010205&cId=395#/rule/detail?type=detail&ruleId=20010205&cId=395"
-    },
-    {
-      "date": "05-25",
-      "text": "关于变更《天猫在营商家资质标准》等规则的公示通知",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010189&cId=396#/rule/detail?type=detail&ruleId=20010189&cId=396"
     }
   ]
 }
