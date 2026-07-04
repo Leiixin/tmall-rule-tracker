@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-30T05:21:56.813Z",
-  "autoPublishVersion": 11,
+  "updatedAt": "2026-07-04T04:51:33.931Z",
+  "autoPublishVersion": 12,
   "shelf": {
     "tag": "SHELF-LIFE RULES",
     "title": "商品效期要求",
@@ -336,11 +336,11 @@
         "date": "2026-06-29",
         "tags": [
           "发货超时",
-          "订单扣罚",
+          "订单扣款",
           "违规处理"
         ],
         "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
-        "body": "<ul><li><span class=\"highlight\">认定：</span>商家未在承诺给消费者的发货时效内发货。包括但不限于：</li><li><span class=\"highlight\">认定①：</span>物流公司回传揽件记录时间晚于承诺时效。</li><li><span class=\"highlight\">认定②：</span>无物流回传信息时，以商家操作发货时间为准；若提供底单显示更晚，取晚者。</li></ul><p class=\"card-penalty-heading\"><span class=\"highlight\">订单扣罚标准</span></p><div class=\"card-penalty-table-wrap\"><table class=\"card-penalty-table\"><thead><tr><th>承诺发货时效</th><th>超时48小时以内</th><th>超时48小时以上</th></tr></thead><tbody><tr><td>≤48小时</td><td>—</td><td>订单实付金额<span class=\"num\">1%</span>，最低<span class=\"num\">2</span>元，最高<span class=\"num\">50</span>元</td></tr><tr><td>48小时～240小时</td><td>订单实付金额<span class=\"num\">1%</span>，最低<span class=\"num\">2</span>元，最高<span class=\"num\">50</span>元</td><td>订单实付金额<span class=\"num\">3%</span>，最低<span class=\"num\">3</span>元，最高<span class=\"num\">50</span>元</td></tr><tr><td>>240小时</td><td>订单实付金额<span class=\"num\">1%</span>，最低<span class=\"num\">3</span>元，最高<span class=\"num\">50</span>元</td><td>订单实付金额<span class=\"num\">5%</span>，最低<span class=\"num\">5</span>元，最高<span class=\"num\">50</span>元</td></tr></tbody></table></div><ul><li><span class=\"highlight\">商品维度处置：</span>日发货超时率≥<span class=\"num\">50%</span>且超时单量≥<span class=\"num\">100</span>单，商品封禁，违规订单货款冻结<span class=\"num\">7</span>天。</li><li><span class=\"highlight\">店铺维度处置：</span>连续2日超时率≥<span class=\"num\">40%</span>且超时单量≥<span class=\"num\">200</span>单，限制成交<span class=\"num\">100</span>单/日，执行<span class=\"num\">7</span>天，货款冻结<span class=\"num\">7</span>天。</li><li><span class=\"highlight\">店铺维度处置：</span>日超时率≥<span class=\"num\">50%</span>且超时单量≥<span class=\"num\">200</span>单，限制成交<span class=\"num\">0</span>单/日，执行<span class=\"num\">7</span>天，货款冻结<span class=\"num\">7</span>天。</li><li><span class=\"highlight\">其他措施：</span>下单起<span class=\"num\">365</span>天未发货且未退款，订单自动关闭并退款。</li><li><span class=\"highlight\">预约到货超时：</span>按订单实付金额<span class=\"num\">5%</span>赔付，最低<span class=\"num\">5</span>元，最高<span class=\"num\">50</span>元。</li></ul>"
+        "body": "<ul><li><span class=\"highlight\">认定：</span>商家未在承诺给消费者的发货时效内发货。包括但不限于：</li><li><span class=\"highlight\">认定①：</span>物流公司有回传信息的，以系统回传揽件记录时间为准；</li><li><span class=\"highlight\">认定②：</span>无物流回传信息的，以商家操作发货时间为准；若提供底单显示更晚，取晚者。</li></ul><p class=\"card-penalty-heading\"><span class=\"highlight\">订单扣罚标准</span></p><div class=\"card-penalty-table-wrap\"><table class=\"card-penalty-table\"><thead><tr><th>承诺发货时效</th><th>超时48小时以内</th><th>超时48小时以上</th></tr></thead><tbody><tr><td>≤48小时</td><td>/</td><td>订单实付金额的<span class=\"num\">1%</span>，最低<span class=\"num\">2</span>元，最高<span class=\"num\">50</span>元</td></tr><tr><td>48小时＜时效≤240小时</td><td>订单实付金额的<span class=\"num\">1%</span>，最低<span class=\"num\">2</span>元，最高<span class=\"num\">50</span>元</td><td>订单实付金额的<span class=\"num\">3%</span>，最低<span class=\"num\">3</span>元，最高<span class=\"num\">50</span>元</td></tr><tr><td>＞240小时</td><td>订单实付金额的<span class=\"num\">1%</span>，最低<span class=\"num\">3</span>元，最高<span class=\"num\">50</span>元</td><td>订单实付金额的<span class=\"num\">5%</span>，最低<span class=\"num\">5</span>元，最高<span class=\"num\">50</span>元</td></tr></tbody></table></div><ul><li><span class=\"highlight\">商品维度：</span>日发货超时率≥<span class=\"num\">50%</span>且超时单量≥<span class=\"num\">100</span>单，商品封禁，违规订单货款冻结<span class=\"num\">7</span>天；完成发货揽收后次日解除。</li><li><span class=\"highlight\">店铺维度：</span>连续2日超时率≥<span class=\"num\">40%</span>且超时单量≥<span class=\"num\">200</span>单，限制成交<span class=\"num\">100</span>单/日，执行<span class=\"num\">7</span>天，货款冻结<span class=\"num\">7</span>天；完成发货揽收后次日解除。</li><li><span class=\"highlight\">店铺维度：</span>日超时率≥<span class=\"num\">50%</span>且超时单量≥<span class=\"num\">200</span>单，限制成交<span class=\"num\">0</span>单/日，执行<span class=\"num\">7</span>天，货款冻结<span class=\"num\">7</span>天；完成发货揽收后次日解除。</li><li><span class=\"highlight\">其他处理：</span>下单<span class=\"num\">365</span>天内未发货且未退款的订单，自动关闭并退款；预约到货类未按时送达，按实付<span class=\"num\">5%</span>赔付，最低<span class=\"num\">5</span>元，最高<span class=\"num\">50</span>元。</li></ul>"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-03T04:58:24.193Z",
+  "updatedAt": "2026-07-04T04:51:33.931Z",
   "categories": {
     "score": {
       "pinned": true,
@@ -76,107 +76,80 @@
     },
     "penalty": {
       "pinned": false,
-      "sourceId": "dy-rule-aHwH9wK4Je2N",
-      "ruleTitle": "【商家-发货超时】实施细则",
-      "panelSubtitle": "发货超时违规处理措施细化，新增商品/店铺维度处置标准及解除条件",
-      "generatedAt": "2026-06-30T05:22:10.756Z",
-      "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N",
+      "sourceId": "dy-rule-aHwHGWzbmk88",
+      "ruleTitle": "【商家-缺货/无货】实施细则",
+      "panelSubtitle": "缺货/无货规则变更：优化表述，核心处罚标准不变",
+      "generatedAt": "2026-07-04T04:51:53.769Z",
+      "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88",
       "changes": [
         {
           "type": "modify",
-          "title": "违规处理措施调整",
-          "detail": "原按超时率分严重/特别严重两档，现改为按商品/店铺维度分三档，并明确处置解除条件。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+          "title": "违规处理章节标题调整",
+          "detail": "原“订单扣罚标准”改为“订单扣款标准”，表述更统一。",
+          "date": "2026-03-31",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
         },
         {
           "type": "modify",
-          "title": "订单扣罚标准不变",
-          "detail": "订单扣罚标准未变更，仍按发货超时48小时以内/以上及承诺时效分档赔付。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+          "title": "扣罚/扣款标准表述优化",
+          "detail": "原“扣罚”统一改为“扣款”，金额标准不变。",
+          "date": "2026-03-31",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
         },
         {
           "type": "modify",
-          "title": "预约到货赔付标准明确",
-          "detail": "预约到货未按时送达的赔付标准从“违规订单赔付标准”明确为订单实付金额5%，最低5元最高50元。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+          "title": "物流轨迹异常处置通知时限调整",
+          "detail": "原“处罚通知”改为“处置通知”，时限仍为3天。",
+          "date": "2026-03-31",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
         },
         {
           "type": "modify",
-          "title": "不规范操作范围扩大",
-          "detail": "原仅提“错放类目”，现增加“未准确填写发货方式/上传错误物流单号”等不规范操作。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+          "title": "违规次数定义表述微调",
+          "detail": "违规1次定义中“缺货订单占比＞30%且缺货订单量≥30单”未变，表述更清晰。",
+          "date": "2026-03-31",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
         },
         {
-          "type": "remove",
-          "title": "删除发货超时后48小时未发货的缺货处理条款",
-          "detail": "原规则中“发货超时后48小时内仍未发货按缺货处理”的条款被移除。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
-        },
-        {
-          "type": "remove",
-          "title": "删除物流轨迹异常自动退款条款",
-          "detail": "原规则中“上传物流单号后超48小时无揽件信息，消费者退款自动同意”的条款被移除。",
-          "date": "2026-06-29",
-          "link": "https://school.jinritemai.com/doudian/web/article/aHwH9wK4Je2N"
+          "type": "modify",
+          "title": "其他处理措施中冻结货款表述调整",
+          "detail": "原“冻结货款（超时发货订单结算金额2倍，最低1000元）”未变，但表格中自然年2次违规增加为期1天冻结。",
+          "date": "2026-03-31",
+          "link": "https://school.jinritemai.com/doudian/web/article/aHwHGWzbmk88"
         }
       ],
       "impacts": [
         {
-          "level": "high",
-          "title": "新增商品/店铺维度处置标准",
-          "desc": "商品超时率≥50%且超时单量≥100单将导致商品封禁及货款冻结7天，影响正常经营。"
-        },
-        {
-          "level": "high",
-          "title": "店铺维度处置更严格",
-          "desc": "店铺连续2日超时率≥40%且超时单量≥200单，限制成交100单/日；超时率≥50%则限制成交0单/日，均冻结货款7天。"
+          "level": "low",
+          "title": "核心处罚标准不变",
+          "desc": "缺货扣款比例、金额上限、违规处置阶梯均未调整，商家原有合规要求不变。"
         },
         {
           "level": "medium",
-          "title": "处置解除条件明确",
-          "desc": "处置前已有超时订单完成发货并揽收，次日即可解除，鼓励商家尽快履约。"
-        },
-        {
-          "level": "medium",
-          "title": "不规范操作风险增加",
-          "desc": "错放类目、填写错误物流单号等不规范操作导致违规的，商家自行承担风险。"
+          "title": "自然年2次违规新增冻结货款",
+          "desc": "自然年2次违规新增<span class=\"warn\">冻结货款为期1天</span>，处罚力度略有提升。"
         },
         {
           "level": "low",
-          "title": "预约到货赔付标准统一",
-          "desc": "预约到货未按时送达赔付标准明确为5%，与之前一致，无实质变化。"
+          "title": "表述统一减少歧义",
+          "desc": "“扣罚”改为“扣款”、“处罚通知”改为“处置通知”，规则更清晰。"
         }
       ],
       "strategies": [
         {
           "level": "action",
-          "title": "监控商品发货超时率",
-          "desc": "确保商品日维度发货超时率低于50%，超时单量低于100单，避免商品封禁。"
+          "title": "关注自然年2次违规新增处罚",
+          "desc": "确保缺货订单占比和数量不触发违规，避免<span class=\"good\">冻结货款</span>影响资金周转。"
         },
         {
           "level": "action",
-          "title": "控制店铺整体超时率",
-          "desc": "保持店铺日发货超时率低于40%，连续2日不超40%且超时单量低于200单，避免限制成交。"
+          "title": "及时处理物流轨迹异常",
+          "desc": "收到<span class=\"good\">处置通知</span>后3天内确保消费者收货，避免升级为缺货。"
         },
         {
           "level": "action",
-          "title": "及时处理超时订单",
-          "desc": "超时订单尽快完成发货并揽收，满足解除条件后可提前解除处置。"
-        },
-        {
-          "level": "action",
-          "title": "规范操作避免违规",
-          "desc": "准确填写类目、发货方式及物流单号，避免因不规范操作导致发货违规。"
-        },
-        {
-          "level": "action",
-          "title": "关注预约到货履约",
-          "desc": "对于支持预约到货的订单，确保在约定到货时效内送达，避免5%赔付。"
+          "title": "优化库存管理",
+          "desc": "定期盘点库存，设置安全库存预警，减少缺货订单占比。"
         }
       ]
     },

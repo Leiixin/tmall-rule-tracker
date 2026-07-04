@@ -1,8 +1,8 @@
 {
-  "lastCheckedAt": "2026-07-03T04:58:24.193Z",
-  "autoPublishVersion": 11,
+  "lastCheckedAt": "2026-07-04T04:51:33.931Z",
+  "autoPublishVersion": 12,
   "recentAutoPublish": {
-    "at": "2026-06-30T05:21:56.813Z",
+    "at": "2026-07-04T04:51:33.931Z",
     "sourceId": "dy-rule-aHwH9wK4Je2N",
     "ruleTitle": "【商家-发货超时】实施细则",
     "label": "【商家-发货超时】实施细则",
@@ -75,22 +75,25 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4Je2N": {
-      "status": "ok",
-      "message": "no change",
+      "status": "synced",
+      "message": "auto-published 1 categor(ies)",
       "ruleTitle": "【商家-发货超时】实施细则",
       "platformModifiedAt": "2026-06-29T09:12:24.000Z",
-      "contentHash": "8debf76b91a5220a",
+      "contentHash": "2afc16107b1bbe3e",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-30T05:21:56.813Z"
+      "lastSyncedAt": "2026-07-04T04:51:33.931Z",
+      "insightsGeneratedAt": "2026-07-04T04:51:33.931Z"
     },
     "dy-rule-aHwHGWzbmk88": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: douyin shipping timeout/stockout card must use card-penalty-table for penalties",
       "ruleTitle": "【商家-缺货/无货】实施细则",
       "platformModifiedAt": "2026-03-31T17:07:30.000Z",
-      "contentHash": "7320aa26399a28c6",
+      "contentHash": "27f7e72a7f87b83b",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
+      "detectedAt": "2026-07-04T04:51:33.931Z",
+      "insightsGeneratedAt": null
     },
     "dy-rule-aHwHroCPheig": {
       "status": "ok",
@@ -122,11 +125,11 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
-    "errors": 0,
-    "published": 0,
-    "synced": 0,
-    "insightsGenerated": 0,
+    "changed": 2,
+    "errors": 1,
+    "published": 1,
+    "synced": 1,
+    "insightsGenerated": 1,
     "forced": 0
   }
 }
