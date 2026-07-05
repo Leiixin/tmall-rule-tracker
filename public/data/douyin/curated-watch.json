@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-07-04T04:51:33.931Z",
+  "lastCheckedAt": "2026-07-05T05:14:10.296Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -75,25 +75,22 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4Je2N": {
-      "status": "synced",
-      "message": "auto-published 1 categor(ies)",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-发货超时】实施细则",
       "platformModifiedAt": "2026-06-29T09:12:24.000Z",
       "contentHash": "2afc16107b1bbe3e",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-07-04T04:51:33.931Z",
-      "insightsGeneratedAt": "2026-07-04T04:51:33.931Z"
+      "lastSyncedAt": "2026-07-04T04:51:33.931Z"
     },
     "dy-rule-aHwHGWzbmk88": {
-      "status": "changed",
-      "message": "LLM publish failed: douyin shipping timeout/stockout card must use card-penalty-table for penalties",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-缺货/无货】实施细则",
       "platformModifiedAt": "2026-03-31T17:07:30.000Z",
       "contentHash": "27f7e72a7f87b83b",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
-      "detectedAt": "2026-07-04T04:51:33.931Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwHroCPheig": {
       "status": "ok",
@@ -125,11 +122,11 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 2,
-    "errors": 1,
-    "published": 1,
-    "synced": 1,
-    "insightsGenerated": 1,
+    "changed": 0,
+    "errors": 0,
+    "published": 0,
+    "synced": 0,
+    "insightsGenerated": 0,
     "forced": 0
   }
 }
