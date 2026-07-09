@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-07-08T04:18:57.931Z",
+  "lastCheckedAt": "2026-07-09T05:08:42.309Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -57,13 +57,15 @@
       "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: Request failed with status code 402",
       "ruleTitle": "商家发货行为管理规则",
-      "platformModifiedAt": "2025-09-29T07:13:36.000Z",
-      "contentHash": "2706834cacff8ff9",
-      "bodyPublicationFingerprint": "revision:2025-09-29",
-      "lastSyncedAt": "2026-06-04T01:59:11.693Z"
+      "platformModifiedAt": "2026-07-08T13:32:53.000Z",
+      "contentHash": "135d1a76f805dada",
+      "bodyPublicationFingerprint": "revision:2026-07-08",
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
+      "detectedAt": "2026-07-09T05:08:42.309Z",
+      "insightsGeneratedAt": null
     },
     "dy-rule-aHwH9wK4JUHQ": {
       "status": "ok",
@@ -122,8 +124,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
-    "errors": 0,
+    "changed": 1,
+    "errors": 1,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
