@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-07-09T05:08:42.309Z",
+  "lastCheckedAt": "2026-07-10T04:56:32.983Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -57,15 +57,13 @@
       "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
-      "status": "changed",
-      "message": "LLM publish failed: Request failed with status code 402",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家发货行为管理规则",
       "platformModifiedAt": "2026-07-08T13:32:53.000Z",
       "contentHash": "135d1a76f805dada",
       "bodyPublicationFingerprint": "revision:2026-07-08",
-      "lastSyncedAt": "2026-06-04T01:59:11.693Z",
-      "detectedAt": "2026-07-09T05:08:42.309Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": "2026-06-04T01:59:11.693Z"
     },
     "dy-rule-aHwH9wK4JUHQ": {
       "status": "ok",
@@ -95,22 +93,26 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwHroCPheig": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: Request failed with status code 402",
       "ruleTitle": "【商家-物流轨迹超时】实施细则",
-      "platformModifiedAt": "2025-05-13T11:21:26.000Z",
-      "contentHash": "a702a5132ce722f1",
+      "platformModifiedAt": "2026-07-09T15:27:30.000Z",
+      "contentHash": "d251b13ee1813979",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-05-22T12:00:00.000Z"
+      "lastSyncedAt": "2026-05-22T12:00:00.000Z",
+      "detectedAt": "2026-07-10T04:56:32.983Z",
+      "insightsGeneratedAt": null
     },
     "dy-rule-aHzmeN9E9dBF": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: Request failed with status code 402",
       "ruleTitle": "【商家-物流轨迹异常】实施细则",
-      "platformModifiedAt": "2026-06-25T03:25:52.000Z",
-      "contentHash": "66d225005211b828",
+      "platformModifiedAt": "2026-07-09T15:32:55.000Z",
+      "contentHash": "859d24288c52d973",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-25T05:20:43.579Z"
+      "lastSyncedAt": "2026-06-25T05:20:43.579Z",
+      "detectedAt": "2026-07-10T04:56:32.983Z",
+      "insightsGeneratedAt": null
     },
     "dy-rule-aHwH9wK4JyWJ": {
       "status": "ok",
@@ -124,8 +126,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 1,
-    "errors": 1,
+    "changed": 2,
+    "errors": 2,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
