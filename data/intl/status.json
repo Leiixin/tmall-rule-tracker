@@ -1,23 +1,23 @@
 ﻿{
-  "lastFetchTime": "2026-07-12T04:26:39.797Z",
-  "fetchCount": 47,
+  "lastFetchTime": "2026-07-13T04:32:10.331Z",
+  "fetchCount": 48,
   "totalRules": 119,
   "newRulesCount": 119,
   "sources": {
     "天猫国际（rule.tmall.hk / MTOP）": {
       "status": "online",
-      "lastCheck": "2026-07-12T04:26:39.797Z",
+      "lastCheck": "2026-07-13T04:32:10.331Z",
       "count": 119
     },
     "天猫国际（规则公示 / MTOP）": {
       "status": "error",
-      "lastCheck": "2026-07-12T04:26:39.797Z",
+      "lastCheck": "2026-07-13T04:32:10.331Z",
       "count": 0,
       "message": "未获取到公示栏规则"
     },
     "天猫国际规则中心（网页）": {
       "status": "skipped",
-      "lastCheck": "2026-07-12T04:26:39.797Z",
+      "lastCheck": "2026-07-13T04:32:10.331Z",
       "count": 0,
       "message": "MTOP 已满足阈值，本次未执行网页抓取"
     }
