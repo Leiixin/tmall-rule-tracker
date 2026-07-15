@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-07-14T04:00:46.437Z",
+  "lastCheckedAt": "2026-07-15T04:09:47.806Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -30,14 +30,13 @@
       "lastSyncedAt": "2026-06-06T05:03:22.239Z"
     },
     "dy-rule-101936": {
-      "status": "changed",
-      "message": "contentHash changed; platformModifiedAt changed",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家【虚假宣传】细则",
       "platformModifiedAt": "2026-07-13T07:31:38.000Z",
       "contentHash": "d7e411fbc5aabeb0",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-06T05:03:22.239Z",
-      "detectedAt": "2026-07-14T04:00:46.437Z"
+      "lastSyncedAt": "2026-06-06T05:03:22.239Z"
     },
     "dy-rule-creator-style-fake": {
       "status": "ok",
@@ -49,15 +48,13 @@
       "lastSyncedAt": null
     },
     "dy-rule-103956": {
-      "status": "changed",
-      "message": "LLM publish failed: Request failed with status code 402",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家体验分规范",
       "platformModifiedAt": "2026-07-14T02:55:18.000Z",
       "contentHash": "0339ef0901fbaa3d",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-03T09:46:10.416Z",
-      "detectedAt": "2026-07-14T04:00:46.437Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
       "status": "ok",
@@ -125,8 +122,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 2,
-    "errors": 1,
+    "changed": 0,
+    "errors": 0,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,

@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-07-14T04:00:35.104Z",
+  "lastCheckedAt": "2026-07-15T04:09:37.211Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -13,15 +13,13 @@
       "lastSyncedAt": null
     },
     "rule-11002181": {
-      "status": "changed",
-      "message": "LLM publish failed: Request failed with status code 402",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "天猫化妆品发布规范",
       "platformModifiedAt": "2020-03-30T08:18:16.000Z",
       "contentHash": "f104b42612fa82b9",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null,
-      "detectedAt": "2026-07-14T04:00:35.104Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": null
     },
     "rule-20009524": {
       "status": "ok",
@@ -44,8 +42,8 @@
   },
   "summary": {
     "checked": 4,
-    "changed": 1,
-    "errors": 1,
+    "changed": 0,
+    "errors": 0,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
