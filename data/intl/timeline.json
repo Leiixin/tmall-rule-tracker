@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-07-16T04:10:18.325Z",
+  "lastUpdated": "2026-07-17T04:09:05.554Z",
   "items": [
+    {
+      "date": "07-17",
+      "text": "【26年7月17日更新】关于谨慎选择质检机构的风险提醒公告",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20008524&cId=1162"
+    },
     {
       "date": "07-15",
       "text": "关于《淘宝平台价格管理规则》变更公示通知",
@@ -75,11 +80,6 @@
       "date": "06-22",
       "text": "淘宝网商品评价、销量特殊计算逻辑说明",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=4149&cId=1151"
-    },
-    {
-      "date": "06-22",
-      "text": "《淘宝网超时说明》特殊商品付款时效细则",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20004502&cId=64005"
     }
   ]
 }
