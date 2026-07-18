@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-07-17T04:09:05.554Z",
+  "lastUpdated": "2026-07-18T03:56:50.896Z",
   "items": [
+    {
+      "date": "07-17",
+      "text": "淘宝平台关于商品图片不失真的规则解读",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20007379&cId=64005"
+    },
     {
       "date": "07-17",
       "text": "【26年7月17日更新】关于谨慎选择质检机构的风险提醒公告",
@@ -75,11 +80,6 @@
       "date": "06-22",
       "text": "淘宝网商品发布数量限制规范",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=780&cId=1138"
-    },
-    {
-      "date": "06-22",
-      "text": "淘宝网商品评价、销量特殊计算逻辑说明",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=4149&cId=1151"
     }
   ]
 }
