@@ -1,17 +1,17 @@
 ﻿{
-  "lastFetchTime": "2026-07-23T04:24:09.256Z",
-  "fetchCount": 58,
-  "totalRules": 869,
-  "newRulesCount": 869,
+  "lastFetchTime": "2026-07-24T04:20:58.553Z",
+  "fetchCount": 59,
+  "totalRules": 864,
+  "newRulesCount": 864,
   "sources": {
     "抖音电商规则中心": {
       "status": "online",
-      "lastCheck": "2026-07-23T04:24:09.256Z",
-      "count": 869
+      "lastCheck": "2026-07-24T04:20:58.553Z",
+      "count": 864
     },
     "规则中心网页（兜底）": {
       "status": "error",
-      "lastCheck": "2026-07-23T04:24:09.256Z",
+      "lastCheck": "2026-07-24T04:20:58.553Z",
       "count": 0,
       "message": "未获取到规则"
     }
