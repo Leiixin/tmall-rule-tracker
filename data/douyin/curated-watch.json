@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-08-11T03:07:29.781Z",
+  "lastCheckedAt": "2026-08-12T03:26:29.417Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -75,15 +75,13 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHwH9wK4Je2N": {
-      "status": "changed",
-      "message": "LLM publish failed: Request failed with status code 402",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "【商家-发货超时】实施细则",
       "platformModifiedAt": "2026-08-10T07:39:41.000Z",
       "contentHash": "9bb5ca5181c14a23",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-07-04T04:51:33.931Z",
-      "detectedAt": "2026-08-11T03:07:29.781Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": "2026-07-04T04:51:33.931Z"
     },
     "dy-rule-aHwHGWzbmk88": {
       "status": "ok",
@@ -124,8 +122,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 1,
-    "errors": 1,
+    "changed": 0,
+    "errors": 0,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
