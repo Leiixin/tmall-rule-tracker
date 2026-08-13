@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-08-12T03:24:08.240Z",
+  "lastUpdated": "2026-08-13T03:27:54.548Z",
   "items": [
+    {
+      "date": "08-12",
+      "text": "淘宝网评价规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=2352&cId=1151"
+    },
     {
       "date": "08-11",
       "text": "关于新增《淘宝网“安心充电”服务规范》的公示通知",
@@ -75,11 +80,6 @@
       "date": "08-03",
       "text": "淘宝平台商品信息质量分管理规范",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20004997&cId=1138"
-    },
-    {
-      "date": "07-31",
-      "text": "关于变更《飞猪旅行集市租车商品消费者保障标准》的公示通知",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010511&cId=81"
     }
   ]
 }
