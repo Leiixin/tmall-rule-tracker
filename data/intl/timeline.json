@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-08-18T02:16:29.389Z",
+  "lastUpdated": "2026-08-19T02:19:16.754Z",
   "items": [
+    {
+      "date": "08-18",
+      "text": "淘宝网“安心充电”服务规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010592&cId=1150"
+    },
     {
       "date": "08-14",
       "text": "【更新260815】关于自然灾害影响地区发货及考核调整公告",
@@ -75,11 +80,6 @@
       "date": "08-07",
       "text": "淘宝网体验抽检标准（鞋类）",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20005426&cId=64005"
-    },
-    {
-      "date": "08-07",
-      "text": "淘宝网体验抽检标准-纸巾",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20005425&cId=64005"
     }
   ]
 }
