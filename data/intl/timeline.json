@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-08-24T02:23:17.604Z",
+  "lastUpdated": "2026-08-25T02:19:12.278Z",
   "items": [
+    {
+      "date": "08-25",
+      "text": "关于变更《淘宝网“退货宝”服务规范》的公示通知",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010657&cId=81"
+    },
     {
       "date": "08-20",
       "text": "关于变更《淘宝网3C数码配件行业管理规范》的公示通知",
@@ -75,11 +80,6 @@
       "date": "08-07",
       "text": "（二十六）不符合国家生产标准商品类",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=11002629&cId=64005"
-    },
-    {
-      "date": "08-07",
-      "text": "淘宝网体验抽检标准（食品）",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20005428&cId=64005"
     }
   ]
 }
