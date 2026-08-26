@@ -1,6 +1,16 @@
 ﻿{
-  "lastUpdated": "2026-08-25T02:18:27.659Z",
+  "lastUpdated": "2026-08-26T02:24:45.072Z",
   "items": [
+    {
+      "date": "08-25",
+      "text": "天猫在营店铺资质管理办法",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=5&cId=378#/rule/detail?type=detail&ruleId=5&cId=378"
+    },
+    {
+      "date": "08-25",
+      "text": "未按约定提供相关资质",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000238&cId=387#/rule/detail?type=detail&ruleId=11000238&cId=387"
+    },
     {
       "date": "08-25",
       "text": "关于变更《退货宝服务规范》的公示通知",
@@ -38,7 +48,7 @@
     },
     {
       "date": "08-17",
-      "text": "关于《天猫在营商家资质管理办法》的变更公示",
+      "text": "关于《天猫在营店铺资质管理办法》的变更公示",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010615&cId=396#/rule/detail?type=detail&ruleId=20010615&cId=396"
     },
     {
@@ -70,16 +80,6 @@
       "date": "08-12",
       "text": "天猫评价管理规范",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000225&cId=382#/rule/detail?type=detail&ruleId=11000225&cId=382"
-    },
-    {
-      "date": "08-11",
-      "text": "关于变更《天猫“安心充电”服务规范》的公示通知",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010580&cId=395#/rule/detail?type=detail&ruleId=20010580&cId=395"
-    },
-    {
-      "date": "08-10",
-      "text": "天猫“品质优选”服务规范",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010481&cId=393#/rule/detail?type=detail&ruleId=20010481&cId=393"
     }
   ]
 }
