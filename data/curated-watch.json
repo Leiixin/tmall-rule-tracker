@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-09-08T05:44:24.162Z",
+  "lastCheckedAt": "2026-09-09T05:50:04.121Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
@@ -31,19 +31,21 @@
       "lastSyncedAt": null
     },
     "rule-11000266": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: Request failed with status code 402",
       "ruleTitle": "天猫物流时效管理规范",
-      "platformModifiedAt": "2024-09-12T08:00:00.000Z",
-      "contentHash": "7aac85535e932bc3",
+      "platformModifiedAt": "2026-09-08T11:36:24.000Z",
+      "contentHash": "5f5f0da5edfe4aac",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": null,
+      "detectedAt": "2026-09-09T05:50:04.121Z",
+      "insightsGeneratedAt": null
     }
   },
   "summary": {
     "checked": 4,
-    "changed": 0,
-    "errors": 0,
+    "changed": 1,
+    "errors": 1,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
