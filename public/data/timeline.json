@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-09-09T05:47:07.643Z",
+  "lastUpdated": "2026-09-10T05:41:26.042Z",
   "items": [
+    {
+      "date": "09-09",
+      "text": "关于变更《天猫交易时效规定》特殊商品付款时效细则的公示通知",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010793&cId=395#/rule/detail?type=detail&ruleId=20010793&cId=395"
+    },
     {
       "date": "09-08",
       "text": "关于变更《大件运费险适用类目》及《退货宝不适用类目》的公示通知",
@@ -75,11 +80,6 @@
       "date": "08-25",
       "text": "天猫在营店铺资质管理办法",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=5&cId=378#/rule/detail?type=detail&ruleId=5&cId=378"
-    },
-    {
-      "date": "08-25",
-      "text": "未按约定提供相关资质",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=11000238&cId=387#/rule/detail?type=detail&ruleId=11000238&cId=387"
     }
   ]
 }

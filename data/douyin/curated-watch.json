@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-09-09T05:50:16.167Z",
+  "lastCheckedAt": "2026-09-10T05:44:27.474Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -48,15 +48,13 @@
       "lastSyncedAt": null
     },
     "dy-rule-103956": {
-      "status": "changed",
-      "message": "LLM publish failed: Request failed with status code 402",
+      "status": "ok",
+      "message": "no change",
       "ruleTitle": "商家体验分规范",
       "platformModifiedAt": "2026-09-08T06:43:12.000Z",
       "contentHash": "8e8899a32361eede",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-03T09:46:10.416Z",
-      "detectedAt": "2026-09-09T05:50:16.167Z",
-      "insightsGeneratedAt": null
+      "lastSyncedAt": "2026-06-03T09:46:10.416Z"
     },
     "dy-rule-101706": {
       "status": "ok",
@@ -124,8 +122,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 1,
-    "errors": 1,
+    "changed": 0,
+    "errors": 0,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,
