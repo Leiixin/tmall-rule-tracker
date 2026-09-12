@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-09-11T05:41:38.378Z",
+  "lastUpdated": "2026-09-12T05:28:56.722Z",
   "items": [
+    {
+      "date": "09-11",
+      "text": "淘宝网“产地直发”服务规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20004501&cId=1150"
+    },
     {
       "date": "09-10",
       "text": "关于变更《淘宝网超时说明》特殊商品付款时效细则的公示通知",
@@ -75,11 +80,6 @@
       "date": "09-01",
       "text": "关于变更《淘宝网发货管理规范》的公示通知",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20010742&cId=81"
-    },
-    {
-      "date": "09-01",
-      "text": "关于变更《淘宝网发货管理规范》的意见征集结果反馈",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010741&cId=161"
     }
   ]
 }

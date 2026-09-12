@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-09-11T05:40:59.277Z",
+  "lastUpdated": "2026-09-12T05:28:13.271Z",
   "items": [
+    {
+      "date": "09-11",
+      "text": "天猫“产地直发”服务规范",
+      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20004500&cId=393#/rule/detail?type=detail&ruleId=20004500&cId=393"
+    },
     {
       "date": "09-10",
       "text": "关于变更《天猫市场管理规范》及《扰乱市场秩序的规则与实施细则》的公示通知",
@@ -75,11 +80,6 @@
       "date": "08-26",
       "text": "关于下线《渠道运营中心管理规范》、《《渠道运营中心》招商资质细则》、《渠道运营中心“预售”时效保障规范》的公示通知",
       "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010684&cId=395#/rule/detail?type=detail&ruleId=20010684&cId=395"
-    },
-    {
-      "date": "08-26",
-      "text": "关于变更《天猫“新鲜日期”服务规范》的公示通知",
-      "link": "https://rulechannel.tmall.com/?type=detail&ruleId=20010680&cId=395#/rule/detail?type=detail&ruleId=20010680&cId=395"
     }
   ]
 }
