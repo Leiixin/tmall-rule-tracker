@@ -1,48 +1,52 @@
 {
-  "lastCheckedAt": "2026-09-27T06:26:18.579Z",
+  "lastCheckedAt": "2026-09-28T07:03:29.839Z",
   "autoPublishVersion": 0,
   "recentAutoPublish": null,
   "sources": {
     "rule-20002796": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "platformModifiedAt changed",
       "ruleTitle": "天猫商品保质期发布规范",
-      "platformModifiedAt": "2023-04-03T03:04:50.000Z",
+      "platformModifiedAt": "2023-04-03T11:04:50.000Z",
       "contentHash": "fe220e1fc25eaeea",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": null,
+      "detectedAt": "2026-09-28T07:03:29.839Z"
     },
     "rule-11002181": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "platformModifiedAt changed",
       "ruleTitle": "天猫化妆品发布规范",
-      "platformModifiedAt": "2020-03-30T08:18:16.000Z",
+      "platformModifiedAt": "2020-03-30T16:18:16.000Z",
       "contentHash": "f104b42612fa82b9",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": null,
+      "detectedAt": "2026-09-28T07:03:29.839Z"
     },
     "rule-20009524": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "platformModifiedAt changed",
       "ruleTitle": "关于变更《淘宝平台店铺真实体验分规范》的公示通知",
-      "platformModifiedAt": "2026-02-24T02:26:56.000Z",
+      "platformModifiedAt": "2026-02-24T10:26:56.000Z",
       "contentHash": "ceaf17bc842ee9ab",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": null,
+      "detectedAt": "2026-09-28T07:03:29.839Z"
     },
     "rule-11000266": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "platformModifiedAt changed",
       "ruleTitle": "天猫物流时效管理规范",
-      "platformModifiedAt": "2026-09-08T11:36:24.000Z",
+      "platformModifiedAt": "2026-09-08T19:36:24.000Z",
       "contentHash": "5f5f0da5edfe4aac",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": null
+      "lastSyncedAt": null,
+      "detectedAt": "2026-09-28T07:03:29.839Z"
     }
   },
   "summary": {
     "checked": 4,
-    "changed": 0,
+    "changed": 4,
     "errors": 0,
     "published": 0,
     "synced": 0,
