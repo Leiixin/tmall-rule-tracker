@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-10-10T06:47:34.400Z",
+  "lastUpdated": "2026-10-11T06:54:38.780Z",
   "items": [
+    {
+      "date": "10-10",
+      "text": "淘宝网“极速换货”服务规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010999&cId=1150"
+    },
     {
       "date": "10-08",
       "text": "淘宝网珍玩行业管理规范",
@@ -75,11 +80,6 @@
       "date": "09-23",
       "text": "关于修订度假包车业务保险相关规定的意见征集反馈",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20010913&cId=161"
-    },
-    {
-      "date": "09-23",
-      "text": "淘宝网生鲜行业管理规范",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20004493&cId=1135"
     }
   ]
 }
