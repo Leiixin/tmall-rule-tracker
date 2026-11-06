@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-11-05T07:46:34.472Z",
+  "lastUpdated": "2026-11-06T07:46:07.542Z",
   "items": [
+    {
+      "date": "11-06",
+      "text": "关于规范售卖白芷商品的公告",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20011125&cId=1162"
+    },
     {
       "date": "11-03",
       "text": "关于变更《热浪引擎平台资费规则》的公示通知",
@@ -75,11 +80,6 @@
       "date": "10-05",
       "text": "淘宝网商品发布数量限制规范",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=780&cId=1138"
-    },
-    {
-      "date": "09-30",
-      "text": "淘宝网\"支持专票\"服务规范",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20010967&cId=1150"
     }
   ]
 }
