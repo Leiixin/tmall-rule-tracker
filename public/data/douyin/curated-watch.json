@@ -1,5 +1,5 @@
 {
-  "lastCheckedAt": "2026-11-09T07:47:23.222Z",
+  "lastCheckedAt": "2026-11-10T08:06:40.763Z",
   "autoPublishVersion": 12,
   "recentAutoPublish": {
     "at": "2026-07-04T04:51:33.931Z",
@@ -102,13 +102,15 @@
       "lastSyncedAt": "2026-05-22T12:00:00.000Z"
     },
     "dy-rule-aHzmeN9E9dBF": {
-      "status": "ok",
-      "message": "no change",
+      "status": "changed",
+      "message": "LLM publish failed: Request failed with status code 402",
       "ruleTitle": "【商家-物流轨迹异常】实施细则",
-      "platformModifiedAt": "2026-07-09T15:32:55.000Z",
-      "contentHash": "4be34a04e08a0585",
+      "platformModifiedAt": "2026-11-10T06:42:13.000Z",
+      "contentHash": "55d3bd564ab97c87",
       "bodyPublicationFingerprint": "",
-      "lastSyncedAt": "2026-06-25T05:20:43.579Z"
+      "lastSyncedAt": "2026-06-25T05:20:43.579Z",
+      "detectedAt": "2026-11-10T08:06:40.763Z",
+      "insightsGeneratedAt": null
     },
     "dy-rule-aHwH9wK4JyWJ": {
       "status": "ok",
@@ -122,8 +124,8 @@
   },
   "summary": {
     "checked": 12,
-    "changed": 0,
-    "errors": 0,
+    "changed": 1,
+    "errors": 1,
     "published": 0,
     "synced": 0,
     "insightsGenerated": 0,

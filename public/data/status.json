@@ -1,23 +1,23 @@
 ﻿{
-  "lastFetchTime": "2026-11-09T07:44:13.719Z",
-  "fetchCount": 252,
+  "lastFetchTime": "2026-11-10T08:03:40.545Z",
+  "fetchCount": 253,
   "totalRules": 120,
   "newRulesCount": 120,
   "sources": {
     "天猫规则中心（MTOP）": {
       "status": "online",
-      "lastCheck": "2026-11-09T07:44:13.719Z",
+      "lastCheck": "2026-11-10T08:03:40.545Z",
       "count": 120
     },
     "天猫规则频道（网页）": {
       "status": "skipped",
-      "lastCheck": "2026-11-09T07:44:13.719Z",
+      "lastCheck": "2026-11-10T08:03:40.545Z",
       "count": 0,
       "message": "MTOP 已满足阈值，本次未执行网页抓取"
     },
     "天猫规则中心（网页）": {
       "status": "skipped",
-      "lastCheck": "2026-11-09T07:44:13.719Z",
+      "lastCheck": "2026-11-10T08:03:40.545Z",
       "count": 0,
       "message": "MTOP 已满足阈值，本次未执行网页抓取"
     }
