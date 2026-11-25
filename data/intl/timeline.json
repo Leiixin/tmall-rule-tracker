@@ -1,6 +1,16 @@
 ﻿{
-  "lastUpdated": "2026-11-24T10:44:14.143Z",
+  "lastUpdated": "2026-11-25T09:39:43.983Z",
   "items": [
+    {
+      "date": "11-25",
+      "text": "关于变更《淘宝网超时说明》的公示通知",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20011207&cId=81"
+    },
+    {
+      "date": "11-25",
+      "text": "关于变更《淘宝网“极有家严选”市场管理规范》、《极有家严选商品标准》的公示通知",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20011206&cId=81"
+    },
     {
       "date": "11-24",
       "text": "关于调整下线电子/电工等类目《淘宝网“破损包赔”服务规范》的公示通知",
@@ -70,16 +80,6 @@
       "date": "10-28",
       "text": "关于变更《淘宝平台违禁信息管理规则》的公示通知",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20011051&cId=81"
-    },
-    {
-      "date": "10-23",
-      "text": "淘宝服饰平台质检市场管理规范",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20008086&cId=1136"
-    },
-    {
-      "date": "10-23",
-      "text": "淘宝网“不符包赔” 服务规范",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20008050&cId=1150"
     }
   ]
 }
