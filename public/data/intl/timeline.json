@@ -1,6 +1,11 @@
 ﻿{
-  "lastUpdated": "2026-11-25T09:39:43.983Z",
+  "lastUpdated": "2026-11-26T09:14:24.767Z",
   "items": [
+    {
+      "date": "11-26",
+      "text": "淘宝网生鲜行业管理规范",
+      "link": "https://rule.tmall.hk/?type=detail&ruleId=20004493&cId=1135"
+    },
     {
       "date": "11-25",
       "text": "关于变更《淘宝网超时说明》的公示通知",
@@ -75,11 +80,6 @@
       "date": "11-02",
       "text": "淘宝网“免费安装”服务规范",
       "link": "https://rule.tmall.hk/?type=detail&ruleId=20011068&cId=1150"
-    },
-    {
-      "date": "10-28",
-      "text": "关于变更《淘宝平台违禁信息管理规则》的公示通知",
-      "link": "https://rule.tmall.hk/?type=detail&ruleId=20011051&cId=81"
     }
   ]
 }
